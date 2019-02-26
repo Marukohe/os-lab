@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     assert(argv[i]); // always true
     printf("argv[%d] = %s\n", i, argv[i]);
   }
-  if(argv[1]=="V")
+  if(argv[1]=='V')
   	printf("pstree1.0 made by HEWEI");
   assert(!argv[argc]); // always true
   return 0;
