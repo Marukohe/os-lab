@@ -35,7 +35,7 @@ void read_list(const char *dirPath){
 		//printf("filename: %s\n",file->d_name);
 		if(is_digit(file->d_name[0])){
 			int pidnum = atoi(file->d_name);
-			//printf("num: %d\n",pidnum);
+			printf("num: %d\n",pidnum);
 			char path[100];
 			strcpy(path,DEFAULT_DIR);
 			strcat(path,file->d_name);
