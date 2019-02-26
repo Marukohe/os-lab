@@ -50,7 +50,7 @@ void read_list(const char *dirPath){
 			}
 		}
 	}
-	closrdir(dirPath);
+	closedir(dirPath);
 }
 
 int main(int argc, char *argv[]) {
