@@ -34,32 +34,42 @@ void read_list(const char *dirPath){
 	while((file = readdir(dir))!=NULL){
 		//printf("filename: %s\n",file->d_name);
 		if(is_digit(file->d_name[0])){
-			int pidnum = atoi(file->d_name);
+			//int pidnum = atoi(file->d_name);
 			printf("num: %d\n",pidnum);
 			char path[100];
 			strcpy(path,DEFAULT_DIR);
 			strcat(path,file->d_name);
 			strcat(path,"/status");
-			printf("%s\n",path);
+			//printf("%s\n",path);
 			FILE * fp = fopen(path,"r");
 			assert(fp!=NULL);
 			char str[100];
-			if(strcmp(file->d_name,"1")==0){
+			//if(strcmp(file->d_name,"1")==0){
 			while(!feof(fp)){
 				fgets(str,100,fp);
-				printf("%s",str);
+				//printf("%s",str);
 				int size = strlen(str);
 				if(strncmp(str,"Name",4)==0){
 					int k=0;
 					for(int i = 4;i<size;i++){
 						if(str[i]>'a' && str[i]<'z')
 							P[pidnum].pidname[k++] = str[i];
-					}
+			 		}
 					P[pidnum].pidname[k] = '\0';
+			 	}
+				//printf("%s\n",P[pidnum].pidname);
+				if(strcmp(str,"PPid",4)==0){
+					char fanum[10];
+					int j=0;
+					for(int i = 4;i<size;i++){
+						if(str[i]>='0' && str[i]<='9')
+							fanum[j++] = str[i];
+					}
+					printf("fanum : %d\n",atoi(fanum));
+					P[pidnum].fa = atoi(fanum);
 				}
-				printf("%s\n",P[pidnum].pidname);
 			}
-			}
+			//}
 			fclose(fp);
 		}
 	}
