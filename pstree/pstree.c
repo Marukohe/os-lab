@@ -48,7 +48,7 @@ void read_list(const char *dirPath){
         	//	printf("%d: %s\n", i, str);
         	//	i++;
     		//}
-			while(!feop(fp)){
+			while(!feof(fp)){
 				fgets(str,1025,fp);
 				printf("%s\n",str);
 			}
