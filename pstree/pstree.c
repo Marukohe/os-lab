@@ -13,6 +13,7 @@ void output_version(){
 void read_list(const char *dirPath){
 	DIR * dir;
 	dir = opendir(dirPath);
+	assert(!dir);
 	struct dirent * file;
 	while((file = readdir(dir))!=NULL){
 		printf("filename: %s\n",file->d_name);
