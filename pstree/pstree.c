@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include <dirent.h>
+#include <stdlib.h>
+
 #define DEFAULT_DIR "/proc/"
 
 void output_version(){
@@ -12,13 +15,13 @@ void read_list(const char *dirPath){
 	dir = opendir(dirPath);
 	struct dirent * file;
 	while((file = readdir(dir))!=NULL){
-		print("filename: %s\n",file.d_name);
-	}
+		print("filename: %s\n",file->d_name);
+	 }
 }
 
 int main(int argc, char *argv[]) {
   printf("Hello, World!\n");
-  int i;
+  //int i;
   //for (i = 0; i < argc; i++) {
   //  assert(argv[i]); // always true
   //  printf("argv[%d] = %s\n", i, argv[i]);
