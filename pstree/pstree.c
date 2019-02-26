@@ -38,7 +38,7 @@ void read_list(const char *dirPath){
 			strcpy(path,DEFAULT_DIR);
 			strcat(path,file->d_name);
 			strcat(path,"/status");
-			//printf("%s\n",path);
+			printf("%s\n",path);
 			FILE * fp = fopen(path,"r");
 			assert(!fp);
 			char str[100];
