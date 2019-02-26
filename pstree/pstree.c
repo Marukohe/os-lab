@@ -34,7 +34,7 @@ void read_list(const char *dirPath){
 	while((file = readdir(dir))!=NULL){
 		//printf("filename: %s\n",file->d_name);
 		if(is_digit(file->d_name[0])){
-			char * path;
+			char path[100];
 			strcpy(path,DEFAULT_DIR);
 			strcat(path,file->d_name);
 			strcat(path,"/status");
