@@ -49,7 +49,7 @@ void read_list(const char *dirPath){
         	//	i++;
     		//}
 			while(!feof(fp)){
-				fgets(str,1025,fp);
+				fgets(str,100,fp);
 				printf("%s\n",str);
 			}
 			}
