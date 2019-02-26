@@ -6,6 +6,13 @@
 
 #define DEFAULT_DIR "/proc/"
 
+struct pst{
+	char pidname[200];
+	int fa;
+	int son;
+	bool flag = false;
+}P[200000];
+
 void output_version(){
 	printf("pstree1.0 made by HEWEI.\n");
 }
