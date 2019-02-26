@@ -10,7 +10,7 @@ struct pst{
 	char pidname[200];
 	int fa;
 	int son;
-	int flag = 0;
+	int flag;
 }P[200000];
 
 void output_version(){
