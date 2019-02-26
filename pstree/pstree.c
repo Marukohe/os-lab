@@ -65,7 +65,7 @@ void read_list(const char *dirPath){
 						if(str[i]>='0' && str[i]<='9')
 							fanum[j++] = str[i];
 					}
-					printf("fanum : %d\n",atoi(fanum));
+					printf("fanum : %d %d\n",pidnum,atoi(fanum));
 					P[pidnum].fa = atoi(fanum);
 				}
 			}
