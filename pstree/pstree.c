@@ -58,7 +58,7 @@ void read_list(const char *dirPath){
 					P[pidnum].pidname[k] = '\0';
 			 	}
 				//printf("%s\n",P[pidnum].pidname);
-				if(strcmp(str,"PPid",4)==0){
+				if(strncmp(str,"PPid",4)==0){
 					char fanum[10];
 					int j=0;
 					for(int i = 4;i<size;i++){
