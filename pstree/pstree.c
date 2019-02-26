@@ -8,7 +8,8 @@ int main(int argc, char *argv[]) {
     assert(argv[i]); // always true
     printf("argv[%d] = %s\n", i, argv[i]);
   }
-  switch('argv[1]'){
+  int chosen = argv[1]-'0';
+  switch(chosen){
 	  case 'V':
 		  printf("pstree1.0 made by HEWEI");
 		  break;
