@@ -43,12 +43,17 @@ void read_list(const char *dirPath){
 			assert(!fp);
 			char str[100];
 			if(strcmp(file->d_name,"1")==0){
-		    int i=0;
-			while(fgets(str, 1025, fp) != NULL){
-        		printf("%d: %s\n", i, str);
-        		i++;
-    		}
+		    //int i=0;
+			//while(fgets(str, 1025, fp) != NULL){
+        	//	printf("%d: %s\n", i, str);
+        	//	i++;
+    		//}
+			while(!feop(fp)){
+				fgets(str,1025,fp);
+				printf("%s\n",str);
 			}
+			}
+			fclose(fp);
 		}
 	}
 	closedir(dir);
