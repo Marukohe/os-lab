@@ -15,7 +15,7 @@ void read_list(const char *dirPath){
 	dir = opendir(dirPath);
 	struct dirent * file;
 	while((file = readdir(dir))!=NULL){
-		print("filename: %s\n",file->d_name);
+		printf("filename: %s\n",file->d_name);
 	 }
 }
 
