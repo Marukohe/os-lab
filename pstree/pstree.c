@@ -38,9 +38,19 @@ void read_list(const char *dirPath){
 			strcpy(path,DEFAULT_DIR);
 			strcat(path,file->d_name);
 			strcat(path,"/status");
-			printf("%s\n",path);
+			//printf("%s\n",path);
+			FILE * fp = fopen(path,"r");
+			assert(!fp);
+			char str[100];
+			if(strcmp(file->d_name,"1")==0){
+			while(fgets(str, 1025, fp) != NULL){
+        		printf("%d: %s\n", i, str);
+        		i++;
+    		}
+			}
 		}
-	 }
+	}
+	closrdir(dirPath);
 }
 
 int main(int argc, char *argv[]) {
