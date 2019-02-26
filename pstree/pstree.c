@@ -32,7 +32,7 @@ void read_list(const char *dirPath){
 	//assert(!dir);
 	struct dirent * file;
 	while((file = readdir(dir))!=NULL){
-		//printf("filename: %s\n",file->d_name);
+		printf("filename: %s\n",file->d_name);
 		if(is_digit(file->d_name[0])){
 			int pidnum = atoi(file->d_name);
 			printf("num: %d\n",pidnum);
