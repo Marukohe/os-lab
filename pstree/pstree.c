@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   //}
   if(argc!=1 && strcmp(argv[1],"-V")==0)
 	  output_version();
-  read_list("~/NJU/");
+  read_list("~/NJU");
   assert(!argv[argc]); // always true
   return 0;
 }
