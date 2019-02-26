@@ -34,6 +34,8 @@ void read_list(const char *dirPath){
 	while((file = readdir(dir))!=NULL){
 		//printf("filename: %s\n",file->d_name);
 		if(is_digit(file->d_name[0])){
+			int pidnum = atoi(file->d_name);
+			printf("num: %d\n",pidnum);
 			char path[100];
 			strcpy(path,DEFAULT_DIR);
 			strcat(path,file->d_name);
@@ -43,14 +45,19 @@ void read_list(const char *dirPath){
 			assert(fp!=NULL);
 			char str[100];
 			if(strcmp(file->d_name,"1")==0){
-		    //int i=0;
-			//while(fgets(str, 1025, fp) != NULL){
-        	//	printf("%d: %s\n", i, str);
-        	//	i++;
-    		//}
 			while(!feof(fp)){
 				fgets(str,100,fp);
 				printf("%s",str);
+				int size = strlen(str);
+				if(strncmp(str,"Name",4)==0){
+					int k=0;
+					for(int i = 4;i<size;i++){
+						if(str[i]>'a' && str[i]<'z')
+							P[pidnum].pidname[k++] = str[i];
+					}
+					P[pidnum].pidname[k] = '\0';
+				}
+				printf("%s\n",P[pidnum].pidname);
 			}
 			}
 			fclose(fp);
