@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     assert(argv[i]); // always true
     printf("argv[%d] = %s\n", i, argv[i]);
   }
-  if(argc!=0 && strcmp(argv[1],"-V")==0)
+  if(argc!=1 && strcmp(argv[1],"-V")==0)
 	  output_version();
  // read_list("~/NJU/");
   assert(!argv[argc]); // always true
