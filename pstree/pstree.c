@@ -20,7 +20,7 @@ void output_version(){
 }
 
 bool is_digit(char n){
-	if(n-'0'>=0 && n-'0'<=9)
+	if(n >='0' && n <='9')
 		return true;
 	else
 		return false;
