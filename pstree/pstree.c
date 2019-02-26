@@ -40,7 +40,7 @@ void read_list(const char *dirPath){
 			strcat(path,"/status");
 			printf("%s\n",path);
 			FILE * fp = fopen(path,"r");
-			assert(fp==NULL);
+			assert(fp!=NULL);
 			char str[100];
 			if(strcmp(file->d_name,"1")==0){
 		    //int i=0;
