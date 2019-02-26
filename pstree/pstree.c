@@ -32,11 +32,14 @@ void read_list(const char *dirPath){
 	//assert(!dir);
 	struct dirent * file;
 	while((file = readdir(dir))!=NULL){
-		printf("filename: %s\n",file->d_name);
-		//if(is_digit(file->d_name[0])){
-		//	char * path;
-		//	strcpy(path,);
-		//}
+		//printf("filename: %s\n",file->d_name);
+		if(is_digit(file->d_name[0])){
+			char * path;
+			strcpy(path,DEFAULT_DIR);
+			strcat(path,file->d_name);
+			strcat(path,"/status");
+			printf("%s\n",path);
+		}
 	 }
 }
 
