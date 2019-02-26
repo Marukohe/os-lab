@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <dirent.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define DEFAULT_DIR "/proc/"
 
