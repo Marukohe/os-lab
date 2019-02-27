@@ -148,8 +148,10 @@ void rec(int ppid,bool is_p){
 	int pid_s = search_tree(ppid);
 	printf("%s",P[pid_s].pidname);
 	cnt_is_above += strlen(P[pid_s].pidname);
-	if(is_p) printf("(%d)",P[pid_s].pid);
-	cnt_is_above += (number_count(P[pid_s].pid)+2);
+	if(is_p) {
+		printf("(%d)",P[pid_s].pid);
+		cnt_is_above += (number_count(P[pid_s].pid)+2);
+	}
    	for(int i=0;i<P[pid_s].cntson;i++){
 		if(P[pid_s].cntson==1) printf("───");
 		else if(i==0) {
@@ -162,6 +164,7 @@ void rec(int ppid,bool is_p){
 			while(is_above[k]!=2){
 				if(is_above[k]==1) printf("│");
 				if(is_above[k]==0) printf(" ");
+				k++;
 			}
 			printf("└─");
 			cnt_is_above+=2;
@@ -172,6 +175,7 @@ void rec(int ppid,bool is_p){
 			while(is_above[k]!=2){
 				if(is_above[k]==1) printf("│");
 				if(is_above[k]==0) printf(" ");
+				k++
 			}
 			printf("├─");
 			cnt_is_above+=2;
