@@ -34,8 +34,12 @@ int cmp1( const void *a ,const void *b)
      return ((struct pst *)a)->pid - ((struct pst *)b)->pid;
 }
 
-int cmp2(struct pst a, struct pst b){
-	return a.pidname[0]<b.pidname[0];
+//int cmp2(struct pst a, struct pst b){
+//	return a.pidname[0]<b.pidname[0];
+//}
+int cmp2( const void *a , const void *b )
+{
+     return strcmp( ((struct pst *)a)->pidname , ((struct pst *)b)->pidname );
 }
 
 void output_version(){
@@ -130,7 +134,7 @@ void print_tree(bool is_n, bool is_p){
 	if(is_n){
 		qsort(P,MAX_LEN,sizeof(P[0]),cmp1);
 	}else{
-		qsort(P,MAX_LEN,sizeof(P[0]),cmp1);
+		qsort(P,MAX_LEN,sizeof(P[0]),cmp2);
 	}
 
 	for(int i=0;i<MAX_LEN;i++){
