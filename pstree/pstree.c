@@ -144,10 +144,10 @@ void print_tree(bool is_n, bool is_p){
 		qsort(P,MAX_LEN,sizeof(P[0]),cmp2);
 	}
 
-	//for(int i=0;i<MAX_LEN;i++){
-	//	if(P[i].pid!=0)
-	//		printf("pid: %d, fa: %d, name: %s\n",P[i].pid, P[i].fa,P[i].pidname);
-	//}
+	for(int i=0;i<MAX_LEN;i++){
+		if(P[i].pid!=0)
+			printf("pid: %d, fa: %d, name: %s\n",P[i].pid, P[i].fa,P[i].pidname);
+	}
 	printf("%s\n",P[search_tree(1)].pidname);
 }
 
