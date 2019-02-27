@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <ctype.h>
-
+#define MAX_LEN 200000
 #define DEFAULT_DIR "/proc/"
 #define Assert(_con,...) \
 do{\
@@ -24,7 +24,7 @@ struct pst{
 	int son[1000];
 	int cntson;
 	int flag;       //是否已经输出
-}P[200000]={};
+}P[MAX_LINE]={};
 
 bool cmp1(struct pst a, struct pst b){
 	return a.pid<b.pid;
