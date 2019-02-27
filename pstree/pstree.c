@@ -175,7 +175,7 @@ void rec(int ppid,bool is_p){
 			while(is_above[k]!=2){
 				if(is_above[k]==1) printf("│");
 				if(is_above[k]==0) printf(" ");
-				k++
+				k++;
 			}
 			printf("├─");
 			cnt_is_above+=2;
