@@ -153,7 +153,7 @@ void print_tree(bool is_n, bool is_p){
 }
 
 int main(int argc, char *argv[]) {
-  printf("Hello, World!\n");
+  //printf("Hello, World!\n");
   //int i;
   //for (i = 0; i < argc; i++) {
   //  assert(argv[i]); // always true
@@ -172,11 +172,11 @@ int main(int argc, char *argv[]) {
 			  break;
 		  case 'n':
 			  is_n = true;
-			  printf("-n\n");
+			  //printf("-n\n");
 			  break;
 		  case 'p':
 			  is_p = true;
-			  printf("-p\n");
+			  //printf("-p\n");
 			  break;
 		  default:
 			  Assert(0,"invalid usage\n"); 
