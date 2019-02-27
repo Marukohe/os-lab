@@ -26,7 +26,7 @@ struct pst{
 	int flag;
 }P[200000]={};
 
-bool cmp1(pst &a, pst &b){
+bool cmp1(pst a, pst b){
 	return a.pid<b.pid;
 }
 
