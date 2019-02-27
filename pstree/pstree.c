@@ -118,7 +118,7 @@ void read_list(const char *dirPath){
 			struct dirent * file2;
 			while((file2 = readdir(dir1))!=NULL){
 				int pidnum2 = atoi(file2->d_name);
-				if(pidnum != pidnum2){
+				if(pidnum != pidnum2 && pidnum!=0){
 					P[pidnum2].pid = pidnum2;
 					P[pidnum2].fa = pidnum;
 					P[pidnum].son[P[pidnum].cntson++] = pidnum2;
