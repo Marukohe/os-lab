@@ -140,7 +140,7 @@ void rec(int ppid,bool is_p){
    	for(int i=0;i<P[pid_s].cntson;i++){
 		if(P[pid_s].cntson==1) printf("───");
 		else if(i==0) printf("─┬─");
-		else if(i==cntson-1) printf("└─");
+		else if(i==P[pid_s].cntson-1) printf("└─");
 		else printf("├─");
 		int pid_ss = search_tree(P[pid_s].son[i]);
 		printf("%s",P[pid_ss].pidname);
