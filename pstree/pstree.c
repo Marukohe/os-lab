@@ -194,7 +194,13 @@ void rec(int ppid,bool is_p,int init_above){
 				}
 				printf("└─");
 				cnt_is_above1+=2;
-				is_above[cnt_is_above1-2]=0;
+				//is_above[cnt_is_above1-2]=0;
+				for(int j = MAX_LEN;j>=0;j--){
+					if(is_above[j]==2){
+						is_above[j]=1;
+						break;
+					}
+				}
 				for(int j = MAX_LEN;j>=0;j--){
 					if(is_above[j]==1){
 						is_above[j]=2;
