@@ -158,14 +158,15 @@ void rec(int ppid,bool is_p,int init_above){
 	int count_son = 0;
 	for(int i=0;i<MAX_LEN;i++){
 		if(P[i].fa == P[pid_s].pid && P[i].flag==0){
+			int cnt_is_above1 = cnt_is_above;
 			if(P[pid_s].cntson==1) printf("───");
 			else if(count_son==0) {
 				printf("─┬─");
-				cnt_is_above+=3;
+				cnt_is_above1+=3;
 				if(P[i].cntson==0)
-					is_above[cnt_is_above-1]=2;
+					is_above[cnt_is_above1-1]=2;
 				else
-					is_above[cnt_is_above-1]=1;
+					is_above[cnt_is_above1-1]=1;
 				count_son++;
 			}
 			else if(count_son==P[pid_s].cntson-1){ 
@@ -176,8 +177,8 @@ void rec(int ppid,bool is_p,int init_above){
 					k++;
 				}
 				printf("└─");
-				cnt_is_above+=2;
-				is_above[cnt_is_above-1]=0;
+				cnt_is_above1+=2;
+				is_above[cnt_is_above1-1]=0;
 				count_son++;
 			}
 			else{ 
@@ -188,15 +189,15 @@ void rec(int ppid,bool is_p,int init_above){
 					k++;
 				}
 				printf("├─");
-				cnt_is_above+=2;
-				is_above[cnt_is_above-1]=1;
+				cnt_is_above1+=2;
+				is_above[cnt_is_above1-1]=1;
 				count_son++;
 			}
 			//int pid_ss = search_tree(P[pid_s].son[count_son]);
 			//int pid_ss = P[i].pid;
 			//printf("%s",P[pid_ss].pidname);
 			//if(is_p) printf("(%d)",P[pid_ss].pid);
-			rec(P[i].pid,is_p,cnt_is_above);
+			rec(P[i].pid,is_p,cnt_is_above1);
 		}
 	}	
 	printf("\n");
