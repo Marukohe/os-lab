@@ -152,48 +152,52 @@ void rec(int ppid,bool is_p){
 		printf("(%d)",P[pid_s].pid);
 		cnt_is_above += (number_count(P[pid_s].pid)+2);
 	}
-   	for(int i=0;i<P[pid_s].cntson;i++){
-		if(P[pid_s].cntson==1) printf("───");
-		else if(i==0) {
-			printf("─┬─");
-			cnt_is_above+=3;
-			is_above[cnt_is_above-1]=2;
-		}
-		else if(i==P[pid_s].cntson-1){ 
-			int k = 0;
-			while(is_above[k]!=2){
-				if(is_above[k]==1) printf("│");
-				if(is_above[k]==0) printf(" ");
-				k++;
+   	//for(int i=0;i<P[pid_s].cntson;i++){
+	int count_son = 0;
+	for(int i=0;i<MAX_LEN;i++){
+		if(P[i].fa == P[pid_s].pid){
+			if(P[pid_s].cntson==1) printf("───");
+			else if(count_son==0) {
+				printf("─┬─");
+				cnt_is_above+=3;
+				is_above[cnt_is_above-1]=2;
+				count_son++;
 			}
-			printf("└─");
-			cnt_is_above+=2;
-			is_above[cnt_is_above-1]=0;
-		}
-		else{ 
-			int k = 0;
-			while(is_above[k]!=2){
-				if(is_above[k]==1) printf("│");
-				if(is_above[k]==0) printf(" ");
-				k++;
+			else if(count_son==P[pid_s].cntson-1){ 
+				int k = 0;
+				while(is_above[k]!=2){
+					if(is_above[k]==1) printf("│");
+					if(is_above[k]==0) printf(" ");
+					k++;
+				}
+				printf("└─");
+				cnt_is_above+=2;
+				is_above[cnt_is_above-1]=0;
+				count_son++;
 			}
-			printf("├─");
-			cnt_is_above+=2;
-			is_above[cnt_is_above-1]=1;
+			else{ 
+				int k = 0;
+				while(is_above[k]!=2){
+					if(is_above[k]==1) printf("│");
+					if(is_above[k]==0) printf(" ");
+					k++;
+				}
+				printf("├─");
+				cnt_is_above+=2;
+				is_above[cnt_is_above-1]=1;
+				count_son++;
+			}
+			//int pid_ss = search_tree(P[pid_s].son[count_son]);
+			int pid_ss = P[i].pid;
+			//printf("%s",P[pid_ss].pidname);
+			//if(is_p) printf("(%d)",P[pid_ss].pid);
+			rec(P[pid_ss].pid,is_p);
 		}
-		int pid_ss = search_tree(P[pid_s].son[i]);
-		//printf("%s",P[pid_ss].pidname);
-		//if(is_p) printf("(%d)",P[pid_ss].pid);
-		rec(P[pid_ss].pid,is_p);
 	}	
 	printf("\n");
 }
 
 void print_tree(bool is_n, bool is_p){
-	//for(int i=0;i<MAX_LEN;i++){
-	//	if(P[i].pid!=0)
-	//		printf("pid: %d, fa: %d, name: %s\n",P[i].pid, P[i].fa,P[i].pidname);
-	//}
 	if(is_n){
 		qsort(P,MAX_LEN,sizeof(P[0]),cmp1);
 	}else{
