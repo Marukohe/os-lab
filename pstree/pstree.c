@@ -26,7 +26,7 @@ struct pst{
 	int flag;       //是否已经输出
 }P[MAX_LEN]={};
 
-int is_above[MAX_LEN];
+int is_above[MAX_LEN+5];
 //int cmp1(struct pst a, struct pst b){
 //	return a.pid<b.pid;
 //}
