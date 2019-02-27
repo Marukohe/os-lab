@@ -23,7 +23,7 @@ struct pst{
 	int son[1000];
 	int cntson;
 	int flag;
-}P[200000];
+}P[200000]={};
 
 void output_version(){
 	printf("pstree1.0 made by HEWEI.\n");
