@@ -24,7 +24,7 @@ struct pst{
 	int son[1000];
 	int cntson;
 	int flag;       //是否已经输出
-}P[MAX_LINE]={};
+}P[MAX_LEN]={};
 
 bool cmp1(struct pst a, struct pst b){
 	return a.pid<b.pid;
