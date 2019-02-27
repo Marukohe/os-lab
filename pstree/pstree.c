@@ -226,7 +226,7 @@ void rec(int ppid,bool is_p,int init_above){
 					k++;
 				}
 				printf("├─");
-				cnt_is_above1+=2;
+				cnt_is_above1+=3;
 				is_above[cnt_is_above1-1]=1;
 				count_son++;
 			}
