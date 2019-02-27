@@ -133,6 +133,17 @@ void read_list(const char *dirPath){
 	closedir(dir);
 }
 
+void rec(int ppid,bool is_p){
+	int pid_s = search_tree(ppid);
+	printf("%s",P[pid_s].pidname);
+	if(is_p) printf("(%d)",P[pid_s].pid);
+   	for(int i=0;i<P[pid_s].cntson;i++){
+		if(i==0) printf("─┬─");
+		int pid_ss = search_tree(P[pid_s].son[i]);
+		printf("%s");
+	}	
+}
+
 void print_tree(bool is_n, bool is_p){
 	//for(int i=0;i<MAX_LEN;i++){
 	//	if(P[i].pid!=0)
