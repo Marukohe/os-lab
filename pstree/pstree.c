@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
 			  printf("-p\n");
 			  break;
 		  default:
-			  printf("default\n"); 
+			  Assert(0,"invalid usage\n"); 
 			  break;
 	  }
   }
