@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <ctype.h>
 
 #define DEFAULT_DIR "/proc/"
 #define Assert(_con...) \
