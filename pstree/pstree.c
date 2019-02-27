@@ -176,10 +176,10 @@ void rec(int ppid,bool is_p,int init_above){
 						break;
 					}
 				}
-				if(P[i].cntson==0)
-					is_above[cnt_is_above1-1]=2;
-				else
-					is_above[cnt_is_above1-1]=1;
+				//if(P[i].cntson==0)
+				is_above[cnt_is_above1-1]=2;
+				//else
+				//	is_above[cnt_is_above1-1]=1;
 				count_son++;
 			}
 			else if(count_son==P[pid_s].cntson-1){ 
