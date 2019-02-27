@@ -124,9 +124,9 @@ void print_tree(bool is_n, bool is_p){
 	//		printf("pid: %d, fa: %d, name: %s\n",P[i].pid, P[i].fa,P[i].pidname);
 	//}
 	if(is_n){
-		sort(P,P+MAX_LEN,cmp1);
+		qsort(P,MAX_LEN,sizeof(P[0]),cmp1);
 	}else{
-		sort(P,P+MAX_LEN,cmp1);
+		qsort(P,MAX_LEN,sizeof(P[0]),cmp1);
 	}
 
 	for(int i=0;i<MAX_LEN;i++){
