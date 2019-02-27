@@ -138,9 +138,14 @@ void rec(int ppid,bool is_p){
 	printf("%s",P[pid_s].pidname);
 	if(is_p) printf("(%d)",P[pid_s].pid);
    	for(int i=0;i<P[pid_s].cntson;i++){
-		if(i==0) printf("─┬─");
+		if(P[pid_s].cntson==1) printf("───");
+		else if(i==0) printf("─┬─");
+		else if(i==cntson-1) printf("└─");
+		else printf("├─");
 		int pid_ss = search_tree(P[pid_s].son[i]);
-		printf("%s");
+		printf("%s",P[pid_ss].pidname);
+		if(is_p) printf("(%d)",P[pid_ss].pid);
+		rec(P[pid_ss].pidi,is_p);
 	}	
 }
 
@@ -159,8 +164,9 @@ void print_tree(bool is_n, bool is_p){
 	//	if(P[i].pid!=0)
 	//		printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
 	//}
-	printf("%s",P[search_tree(1)].pidname);
-	if(is_p) printf("(%d)\n",P[search_tree(1)].pid); 
+	//printf("%s",P[search_tree(1)].pidname);
+	//if(is_p) printf("(%d)\n",P[search_tree(1)].pid); 
+	rec(1,is_p);
 }
 
 int main(int argc, char *argv[]) {
