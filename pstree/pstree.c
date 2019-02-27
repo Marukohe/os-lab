@@ -149,7 +149,7 @@ void print_tree(bool is_n, bool is_p){
 	//		printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
 	//}
 	printf("%s",P[search_tree(1)].pidname);
-	if(is_p) printf("(%d)",P[search_tree(1)].pid); 
+	if(is_p) printf("(%d\n)",P[search_tree(1)].pid); 
 }
 
 int main(int argc, char *argv[]) {
