@@ -145,7 +145,7 @@ void rec(int ppid,bool is_p){
 		int pid_ss = search_tree(P[pid_s].son[i]);
 		printf("%s",P[pid_ss].pidname);
 		if(is_p) printf("(%d)",P[pid_ss].pid);
-		rec(P[pid_ss].pidi,is_p);
+		rec(P[pid_ss].pid,is_p);
 	}	
 }
 
