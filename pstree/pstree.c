@@ -4,6 +4,7 @@
 #include <dirent.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 #define DEFAULT_DIR "/proc/"
 
@@ -77,7 +78,7 @@ void read_list(const char *dirPath){
 }
 
 void print_tree(){
-	print()
+	printf("\n");
 }
 
 int main(int argc, char *argv[]) {
