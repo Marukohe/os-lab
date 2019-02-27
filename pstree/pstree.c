@@ -45,6 +45,10 @@ int cmp2( const void *a , const void *b )
 
 void output_version(){
 	printf("pstree1.0 made by HEWEI.\n");
+	printf("[-V] print the version\n");
+	printf("[-n] print the pstree in the order of characters\n");
+	printf("[-p] display the pid\n");
+	printf("You can also use the combined command like [-np]\n");
 }
 
 bool is_digit(char n){
@@ -243,24 +247,16 @@ void print_tree(bool is_n, bool is_p){
 		qsort(P,MAX_LEN,sizeof(P[0]),cmp2);
 	}
 
-	//for(int i=0;i<MAX_LEN;i++){
-	//	if(P[i].pid!=0)
-	//		printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
-	//}
-	//printf("%s",P[search_tree(1)].pidname);
-	//if(is_p) printf("(%d)\n",P[search_tree(1)].pid); 
 	rec(1,is_p,0);
 }
 
 int main(int argc, char *argv[]) {
   //printf("Hello, World!\n");
   //int i;
-  //for (i = 0; i < argc; i++) {
+  //for (i = 0; i < argc; i++) {G
   //  assert(argv[i]); // always true
   //  printf("argv[%d] = %s\n", i, argv[i]);
   //}
-  //if(argc!=1 && strcmp(argv[1],"-V")==0)
-  //	  output_version();
   read_list(DEFAULT_DIR);
   int o;
   bool is_n = false;
