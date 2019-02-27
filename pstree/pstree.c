@@ -26,11 +26,11 @@ struct pst{
 	int flag;       //是否已经输出
 }P[MAX_LEN]={};
 
-bool cmp1(struct pst a, struct pst b){
+int cmp1(struct pst a, struct pst b){
 	return a.pid<b.pid;
 }
 
-bool cmp2(struct pst a, struct pst b){
+int cmp2(struct pst a, struct pst b){
 	return a.pidname[0]<b.pidname[0];
 }
 
