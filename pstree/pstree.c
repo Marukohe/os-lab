@@ -23,11 +23,15 @@ struct pst{
 	int fa;
 	int son[1000];
 	int cntson;
-	int flag;
+	int flag;       //是否已经输出
 }P[200000]={};
 
 bool cmp1(struct pst a, struct pst b){
 	return a.pid<b.pid;
+}
+
+bool cmp2(struct pst a, struct pst b){
+	return a.pidname[0]<b.pidname[0];
 }
 
 void output_version(){
@@ -50,6 +54,7 @@ void read_list(const char *dirPath){
 		//printf("filename: %s\n",file->d_name);
 		if(is_digit(file->d_name[0])){
 			int pidnum = atoi(file->d_name);
+			P[pidnum].pid = pidnum;
 			//printf("num: %d\n",pidnum);
 			char path[100];
 			strcpy(path,DEFAULT_DIR);
@@ -81,11 +86,33 @@ void read_list(const char *dirPath){
 							fanum[j++] = str[i];
 					}
 					//printf("fanum : %d %d\n",pidnum,atoi(fanum));
-					P[pidnum].fa = atoi(fanum);
+					P[pidnum].fa = atoi(fanum);  //记录父亲节点
+					P[atoi(fanum)].son[P[atoi(fanum)].cntson++] = pidnum; //记录儿子节点
 				}
 			}
 			//}
 			fclose(fp);
+			char path2[100];
+			strcpy(path2,DEFAULT_DIR);
+			strcat(path2,file->d_name);
+			strcat(path2,"/task/");
+
+			DIR * dir1;
+			dir1 = opendir(path2);
+			//assert(!dir);
+			struct dirent * file2;
+			while((file2 = readdir(dir1))!=NULL){
+				int pidnum2 = atoi(file2->d_name);
+				if(pidnum != pidnum2){
+					P[pidnum2].pid = pidnum2;
+					P[pidnum2].fa = pidnum;
+					P[pidnum].son[P[pdinum].cntson++] = pidnum2;
+					strcpy(P[pidnum2].name,"{");
+					strcat(P[pidnum2].name,file2->d_name);
+					strcat(P[pidnum2].name,"}");
+				}
+			}
+			closedir(dir1);
 		}
 	}
 	closedir(dir);
