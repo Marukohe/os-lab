@@ -147,6 +147,7 @@ void rec(int ppid,bool is_p){
 	int cnt_is_above = 0;
 	int pid_s = search_tree(ppid);
 	printf("%s",P[pid_s].pidname);
+	P[pid_s].flag = 1;
 	cnt_is_above += strlen(P[pid_s].pidname);
 	if(is_p) {
 		printf("(%d)",P[pid_s].pid);
@@ -155,7 +156,7 @@ void rec(int ppid,bool is_p){
    	//for(int i=0;i<P[pid_s].cntson;i++){
 	int count_son = 0;
 	for(int i=0;i<MAX_LEN;i++){
-		if(P[i].fa == P[pid_s].pid){
+		if(P[i].fa == P[pid_s].pid && P[i].flag==0){
 			if(P[pid_s].cntson==1) printf("───");
 			else if(count_son==0) {
 				printf("─┬─");
@@ -188,10 +189,10 @@ void rec(int ppid,bool is_p){
 				count_son++;
 			}
 			//int pid_ss = search_tree(P[pid_s].son[count_son]);
-			int pid_ss = P[i].pid;
+			//int pid_ss = P[i].pid;
 			//printf("%s",P[pid_ss].pidname);
 			//if(is_p) printf("(%d)",P[pid_ss].pid);
-			rec(P[pid_ss].pid,is_p);
+			rec(P[i].pid,is_p);
 		}
 	}	
 	printf("\n");
