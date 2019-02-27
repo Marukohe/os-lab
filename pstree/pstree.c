@@ -168,7 +168,7 @@ void rec(int ppid,bool is_p){
 				count_son++;
 			}
 			else if(count_son==P[pid_s].cntson-1){ 
-				int k = 0;
+				int k = 1;
 				while(is_above[k]!=2){
 					if(is_above[k]==1) printf("│");
 					if(is_above[k]==0) printf(" ");
@@ -180,7 +180,7 @@ void rec(int ppid,bool is_p){
 				count_son++;
 			}
 			else{ 
-				int k = 0;
+				int k = 1;
 				while(is_above[k]!=2){
 					if(is_above[k]==1) printf("│");
 					if(is_above[k]==0) printf(" ");
