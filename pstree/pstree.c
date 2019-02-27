@@ -134,15 +134,49 @@ void read_list(const char *dirPath){
 	closedir(dir);
 }
 
+int number_count(int a){
+	int k=0;
+	while(a!=0){
+		a/=10;
+		k++;
+	}
+	return k;
+}
+
 void rec(int ppid,bool is_p){
+	int cnt_is_above = 0;
 	int pid_s = search_tree(ppid);
 	printf("%s",P[pid_s].pidname);
+	cnt_is_above += strlen(P[pid_s].pidname);
 	if(is_p) printf("(%d)",P[pid_s].pid);
+	cnt_is_above += (number_count(P[pid_s].pid)+2);
    	for(int i=0;i<P[pid_s].cntson;i++){
 		if(P[pid_s].cntson==1) printf("───");
-		else if(i==0) printf("─┬─");
-		else if(i==P[pid_s].cntson-1) printf("└─");
-		else printf("├─");
+		else if(i==0) {
+			printf("─┬─");
+			cnt_is_above+=3;
+			is_above[cnt_is_above-1]=2;
+		};
+		else if(i==P[pid_s].cntson-1){ 
+			int k = 0;
+			while(is_above[k]!=2){
+				if(is_above[k]==1) printf("│");
+				if(is_above[k]==0) printf(" ");
+			}
+			printf("└─");
+			cnt_is_above+=2;
+			is_above[cnt_is_above-1]=0;
+		}
+		else{ 
+			int k = 0;
+			while(is_above[k]!=2){
+				if(is_above[k]==1) printf("│");
+				if(is_above[k]==0) printf(" ");
+			}
+			printf("├─");
+			cnt_is_above+=2;
+			is_above[cnt_is_above-1]=1;
+		}
 		int pid_ss = search_tree(P[pid_s].son[i]);
 		//printf("%s",P[pid_ss].pidname);
 		//if(is_p) printf("(%d)",P[pid_ss].pid);
@@ -162,13 +196,13 @@ void print_tree(bool is_n, bool is_p){
 		qsort(P,MAX_LEN,sizeof(P[0]),cmp2);
 	}
 
-	for(int i=0;i<MAX_LEN;i++){
-		if(P[i].pid!=0)
-			printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
-	}
+	//for(int i=0;i<MAX_LEN;i++){
+	//	if(P[i].pid!=0)
+	//		printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
+	//}
 	//printf("%s",P[search_tree(1)].pidname);
 	//if(is_p) printf("(%d)\n",P[search_tree(1)].pid); 
-	//rec(1,is_p);
+	rec(1,is_p);
 }
 
 int main(int argc, char *argv[]) {
