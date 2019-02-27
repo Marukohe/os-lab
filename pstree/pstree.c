@@ -107,9 +107,9 @@ void read_list(const char *dirPath){
 					P[pidnum2].pid = pidnum2;
 					P[pidnum2].fa = pidnum;
 					P[pidnum].son[P[pdinum].cntson++] = pidnum2;
-					strcpy(P[pidnum2].name,"{");
-					strcat(P[pidnum2].name,file2->d_name);
-					strcat(P[pidnum2].name,"}");
+					strcpy(P[pidnum2].pidname,"{");
+					strcat(P[pidnum2].pidname,file2->d_name);
+					strcat(P[pidnum2].pidname,"}");
 				}
 			}
 			closedir(dir1);
