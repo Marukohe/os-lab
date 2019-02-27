@@ -26,8 +26,12 @@ struct pst{
 	int flag;       //是否已经输出
 }P[MAX_LEN]={};
 
-int cmp1(struct pst a, struct pst b){
-	return a.pid<b.pid;
+//int cmp1(struct pst a, struct pst b){
+//	return a.pid<b.pid;
+//}
+int cmp1( const void *a ,const void *b)
+{
+     return ((pst *)a)->pid - ((pst *)b)->pid;
 }
 
 int cmp2(struct pst a, struct pst b){
