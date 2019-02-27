@@ -147,6 +147,7 @@ void rec(int ppid,bool is_p){
 		if(is_p) printf("(%d)",P[pid_ss].pid);
 		rec(P[pid_ss].pid,is_p);
 	}	
+	printf("\n");
 }
 
 void print_tree(bool is_n, bool is_p){
