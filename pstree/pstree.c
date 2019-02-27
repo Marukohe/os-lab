@@ -161,7 +161,10 @@ void rec(int ppid,bool is_p){
 			else if(count_son==0) {
 				printf("─┬─");
 				cnt_is_above+=3;
-				is_above[cnt_is_above-1]=2;
+				if(P[i].cntson==0)
+					is_above[cnt_is_above-1]=2;
+				else
+					is_above[cnt_is_above-1]=1;
 				count_son++;
 			}
 			else if(count_son==P[pid_s].cntson-1){ 
