@@ -57,6 +57,7 @@ int search_tree(int pidd){
 	for(int i=0;i<MAX_LEN;i++)
 		if(P[i].pid == pidd)
 			return i;
+	return -1;
 }
 
 void read_list(const char *dirPath){
