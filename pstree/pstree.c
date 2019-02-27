@@ -118,8 +118,11 @@ void read_list(const char *dirPath){
 	closedir(dir);
 }
 
-void print_tree(){
-	printf("\n");
+void print_tree(bool is_n, bool is_p){
+	for(int i=0;i<MAX_LEN;i++){
+		if(P[i].pid!=0)
+			printf("pid: %d, fa: %d, name: %s\n",P[i].pid, P[i].fa,P[i].pidname);
+	}
 }
 
 int main(int argc, char *argv[]) {
