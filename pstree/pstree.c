@@ -179,6 +179,12 @@ void rec(int ppid,bool is_p,int init_above){
 				printf("└─");
 				cnt_is_above1+=2;
 				is_above[cnt_is_above1-1]=0;
+				for(int j = MAX_LEN;j>=0;j--){
+					if(is_above[j]==1){
+						is_above[j]=2;
+						break;
+					}
+				}
 				count_son++;
 			}
 			else{ 
@@ -193,10 +199,6 @@ void rec(int ppid,bool is_p,int init_above){
 				is_above[cnt_is_above1-1]=1;
 				count_son++;
 			}
-			//int pid_ss = search_tree(P[pid_s].son[count_son]);
-			//int pid_ss = P[i].pid;
-			//printf("%s",P[pid_ss].pidname);
-			//if(is_p) printf("(%d)",P[pid_ss].pid);
 			rec(P[i].pid,is_p,cnt_is_above1);
 		}
 	}	
