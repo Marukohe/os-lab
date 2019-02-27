@@ -18,12 +18,17 @@ do{\
 }while(0)
 
 struct pst{
+	int pid;
 	char pidname[200];
 	int fa;
 	int son[1000];
 	int cntson;
 	int flag;
 }P[200000]={};
+
+bool cmp1(pst &a, pst &b){
+	return a.pid<b.pid;
+}
 
 void output_version(){
 	printf("pstree1.0 made by HEWEI.\n");
@@ -101,15 +106,19 @@ int main(int argc, char *argv[]) {
   //	  output_version();
   read_list(DEFAULT_DIR);
   int o;
+  bool is_n = false;
+  bool is_p = false;
   while((o = getopt(argc,argv,"-pnV"))!= -1){
 	  switch(o){
 		  case 'V':
 			  output_version();
 			  break;
 		  case 'n':
+			  is_n = true;
 			  printf("-n\n");
 			  break;
 		  case 'p':
+			  is_p = true;
 			  printf("-p\n");
 			  break;
 		  default:
@@ -117,6 +126,7 @@ int main(int argc, char *argv[]) {
 			  break;
 	  }
   }
+  print_tree(is_n, is_p);
   assert(!argv[argc]); // always true
   return 0;
 }
