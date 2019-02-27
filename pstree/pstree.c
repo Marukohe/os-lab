@@ -163,7 +163,10 @@ void rec(int ppid,bool is_p,int init_above){
 	for(int i=0;i<MAX_LEN;i++){
 		if(P[i].fa == P[pid_s].pid && P[i].flag==0){
 			int cnt_is_above1 = cnt_is_above;
-			if(P[pid_s].cntson==1) printf("───");
+			if(P[pid_s].cntson==1){
+				printf("───");
+				cnt_is_above1+=3;
+			}
 			else if(count_son==0) {
 				printf("─┬─");
 				cnt_is_above1+=3;
@@ -197,7 +200,7 @@ void rec(int ppid,bool is_p,int init_above){
 				//is_above[cnt_is_above1-2]=0;
 				for(int j = MAX_LEN;j>0;j--){
 					if(is_above[j]==2){
-						is_above[j]=1;
+						is_above[j]=0;
 						break;
 					}
 				}
