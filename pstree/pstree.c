@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 			  printf("-p\n");
 			  break;
 		  default:
-			  Assert("invalid usage\n"); 
+			  Assert(0,"invalid usage\n"); 
 			  break;
 	  }
   }
