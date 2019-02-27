@@ -182,8 +182,14 @@ void rec(int ppid,bool is_p,int init_above){
 			else if(count_son==P[pid_s].cntson-1){ 
 				int k = 1;
 				while(is_above[k]!=2){
-					if(is_above[k]==1) printf("│");
-					if(is_above[k]==0) printf(" ");
+					if(is_above[k]==1) {
+						printf("│");
+						cnt_is_above1++;
+					}
+					if(is_above[k]==0){
+						printf(" ");
+						cnt_is_above1++;
+					}
 					k++;
 				}
 				printf("└─");
@@ -200,8 +206,14 @@ void rec(int ppid,bool is_p,int init_above){
 			else{ 
 				int k = 1;
 				while(is_above[k]!=2){
-					if(is_above[k]==1) printf("│");
-					if(is_above[k]==0) printf(" ");
+					if(is_above[k]==1) {
+						printf("│");
+						cnt_is_above1++;
+					}
+					if(is_above[k]==0){
+					   	printf(" ");
+						cnt_is_above1++;
+					}
 					k++;
 				}
 				printf("├─");
