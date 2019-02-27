@@ -143,8 +143,9 @@ int number_count(int a){
 	return k;
 }
 
-void rec(int ppid,bool is_p){
+void rec(int ppid,bool is_p,int init_above){
 	int cnt_is_above = 0;
+	cnt_is_above += init_above;
 	int pid_s = search_tree(ppid);
 	printf("%s",P[pid_s].pidname);
 	P[pid_s].flag = 1;
@@ -195,7 +196,7 @@ void rec(int ppid,bool is_p){
 			//int pid_ss = P[i].pid;
 			//printf("%s",P[pid_ss].pidname);
 			//if(is_p) printf("(%d)",P[pid_ss].pid);
-			rec(P[i].pid,is_p);
+			rec(P[i].pid,is_p,cnt_is_above);
 		}
 	}	
 	printf("\n");
@@ -214,7 +215,7 @@ void print_tree(bool is_n, bool is_p){
 	//}
 	//printf("%s",P[search_tree(1)].pidname);
 	//if(is_p) printf("(%d)\n",P[search_tree(1)].pid); 
-	rec(1,is_p);
+	rec(1,is_p,0);
 }
 
 int main(int argc, char *argv[]) {
