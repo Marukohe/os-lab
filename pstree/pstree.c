@@ -9,7 +9,7 @@
 #include <ctype.h>
 
 #define DEFAULT_DIR "/proc/"
-#define Assert(_con...) \
+#define Assert(_con,...) \
 do{\
 	if(!(_con)){\
 		fprintf(stderr,__VA_ARGS__)\
