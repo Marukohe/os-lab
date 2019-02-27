@@ -187,11 +187,11 @@ void rec(int ppid,bool is_p,int init_above){
 				while(is_above[k]!=2){
 					if(is_above[k]==1) {
 						printf("│");
-						cnt_is_above1++;
+						//cnt_is_above1++;
 					}
 					if(is_above[k]==0){
 						printf(" ");
-						cnt_is_above1++;
+						//cnt_is_above1++;
 					}
 					k++;
 				}
@@ -217,11 +217,11 @@ void rec(int ppid,bool is_p,int init_above){
 				while(is_above[k]!=2){
 					if(is_above[k]==1) {
 						printf("│");
-						cnt_is_above1++;
+						//cnt_is_above1++;
 					}
 					if(is_above[k]==0){
 					   	printf(" ");
-						cnt_is_above1++;
+						//cnt_is_above1++;
 					}
 					k++;
 				}
