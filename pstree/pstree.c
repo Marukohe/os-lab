@@ -156,7 +156,7 @@ void rec(int ppid,bool is_p){
 			printf("─┬─");
 			cnt_is_above+=3;
 			is_above[cnt_is_above-1]=2;
-		};
+		}
 		else if(i==P[pid_s].cntson-1){ 
 			int k = 0;
 			while(is_above[k]!=2){
