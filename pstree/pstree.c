@@ -26,6 +26,7 @@ struct pst{
 	int flag;       //是否已经输出
 }P[MAX_LEN]={};
 
+int is_above[MAX_LEN];
 //int cmp1(struct pst a, struct pst b){
 //	return a.pid<b.pid;
 //}
@@ -161,13 +162,13 @@ void print_tree(bool is_n, bool is_p){
 		qsort(P,MAX_LEN,sizeof(P[0]),cmp2);
 	}
 
-	//for(int i=0;i<MAX_LEN;i++){
-	//	if(P[i].pid!=0)
-	//		printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
-	//}
+	for(int i=0;i<MAX_LEN;i++){
+		if(P[i].pid!=0)
+			printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
+	}
 	//printf("%s",P[search_tree(1)].pidname);
 	//if(is_p) printf("(%d)\n",P[search_tree(1)].pid); 
-	rec(1,is_p);
+	//rec(1,is_p);
 }
 
 int main(int argc, char *argv[]) {
