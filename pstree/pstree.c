@@ -31,7 +31,7 @@ struct pst{
 //}
 int cmp1( const void *a ,const void *b)
 {
-     return ((pst *)a)->pid - ((pst *)b)->pid;
+     return ((struct pst *)a)->pid - ((struct pst *)b)->pid;
 }
 
 int cmp2(struct pst a, struct pst b){
