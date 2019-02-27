@@ -144,15 +144,12 @@ void print_tree(bool is_n, bool is_p){
 		qsort(P,MAX_LEN,sizeof(P[0]),cmp2);
 	}
 
-	for(int i=0;i<MAX_LEN;i++){
-		if(P[i].pid!=0)
-			printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
-	}
-	printf("%s\n",P[search_tree(1)].pidname);
-	printf("%d\n",P[search_tree(926)].son[0]);
-	printf("%d\n",P[search_tree(926)].son[1]);
-	printf("%d\n",P[search_tree(926)].son[2]);
-	printf("%d\n",P[search_tree(926)].son[3]);
+	//for(int i=0;i<MAX_LEN;i++){
+	//	if(P[i].pid!=0)
+	//		printf("pid: %d, fa: %d, name: %s, cntson: %d\n",P[i].pid, P[i].fa,P[i].pidname,P[i].cntson);
+	//}
+	printf("%s",P[search_tree(1)].pidname);
+	if(is_p) printf("(%d)",P[search(1)].pid); 
 }
 
 int main(int argc, char *argv[]) {
