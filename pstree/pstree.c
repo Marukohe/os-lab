@@ -35,7 +35,7 @@ void read_list(const char *dirPath){
 		//printf("filename: %s\n",file->d_name);
 		if(is_digit(file->d_name[0])){
 			int pidnum = atoi(file->d_name);
-			printf("num: %d\n",pidnum);
+			//printf("num: %d\n",pidnum);
 			char path[100];
 			strcpy(path,DEFAULT_DIR);
 			strcat(path,file->d_name);
@@ -76,6 +76,10 @@ void read_list(const char *dirPath){
 	closedir(dir);
 }
 
+void print_tree(){
+	print()
+}
+
 int main(int argc, char *argv[]) {
   printf("Hello, World!\n");
   //int i;
@@ -83,9 +87,26 @@ int main(int argc, char *argv[]) {
   //  assert(argv[i]); // always true
   //  printf("argv[%d] = %s\n", i, argv[i]);
   //}
-  if(argc!=1 && strcmp(argv[1],"-V")==0)
-	  output_version();
+  //if(argc!=1 && strcmp(argv[1],"-V")==0)
+  //	  output_version();
   read_list(DEFAULT_DIR);
+  int o;
+  while((o = getopt(argc,argv,"-pnV"))!= -1){
+	  switch(o){
+		  case 'V':
+			  output_version();
+			  break;
+		  case 'n':
+			  printf("-n\n");
+			  break;
+		  case 'p':
+			  printf("-p\n");
+			  break;
+		  default:
+			  printf("default\n"); 
+			  break;
+	  }
+  }
   assert(!argv[argc]); // always true
   return 0;
 }
