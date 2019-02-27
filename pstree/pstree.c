@@ -82,7 +82,10 @@ void read_list(const char *dirPath){
 			strcat(path,"/status");
 			//printf("%s\n",path);
 			FILE * fp = fopen(path,"r");
-			assert(fp!=NULL);
+			//assert(fp!=NULL);
+			if(fp==NULL){
+				continue;
+			}
 			char str[100];
 			//if(strcmp(file->d_name,"1")==0){
 			while(!feof(fp)){
