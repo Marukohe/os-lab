@@ -7,6 +7,13 @@
 #include <unistd.h>
 
 #define DEFAULT_DIR "/proc/"
+#define Assert(_con...) \
+do{\
+	if(!(_con)){\
+		fprintf(stderr,__VA_ARGS__)\
+		assert(0);\
+	}\
+}while(0)
 
 struct pst{
 	char pidname[200];
