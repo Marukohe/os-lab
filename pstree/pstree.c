@@ -265,7 +265,7 @@ int main(int argc, char *argv[]) {
 	  switch(o){
 		  case 'V':
 			  output_version();
-			  break;
+			  return 0;
 		  case 'n':
 			  is_n = true;
 			  //printf("-n\n");
