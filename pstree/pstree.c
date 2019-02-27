@@ -80,7 +80,7 @@ void read_list(const char *dirPath){
 				if(strncmp(str,"Name",4)==0){
 					int k=0;
 					for(int i = 4;i<size;i++){
-						if(str[i]>'a' && str[i]<'z')
+						if(str[i]>'A' && str[i]<'z')
 							P[pidnum].pidname[k++] = str[i];
 			 		}
 					P[pidnum].pidname[k] = '\0';
