@@ -154,6 +154,10 @@ void rec(int ppid,bool is_p,int init_above){
 		printf("(%d)",P[pid_s].pid);
 		cnt_is_above += (number_count(P[pid_s].pid)+2);
 	}
+	if(P[pid_s].cntson==0){
+		printf("\n");
+		return;
+	}
    	//for(int i=0;i<P[pid_s].cntson;i++){
 	int count_son = 0;
 	for(int i=0;i<MAX_LEN;i++){
@@ -202,7 +206,7 @@ void rec(int ppid,bool is_p,int init_above){
 			rec(P[i].pid,is_p,cnt_is_above1);
 		}
 	}	
-	printf("\n");
+	//printf("\n");
 }
 
 void print_tree(bool is_n, bool is_p){
