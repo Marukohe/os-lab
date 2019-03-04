@@ -57,7 +57,7 @@ void splash() {
       //if ((x & 1) ^ (y & 1)) {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
-	  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x233333);
+	  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2);
     }
   }
 }
