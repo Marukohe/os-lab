@@ -2,11 +2,11 @@
 
 void init_screen();
 void splash();
-void read_key();
+int read_key();
 
 struct snake snake_;
 void init_snake();
-void update_snake(char A);
+void update_snake(int op);
 
 int is_in(int x,int y,int x1,int y1,int x2,int y2){
 	if(y1==y2 && y1==y){
@@ -37,14 +37,15 @@ int main() {
   printf("%d %d\n",snake_.head[0],snake_.head[1]);
   splash();
   //char ch;
+  int op=0;
   while (1) {
-    read_key();
-	
+    op=read_key();
+	update_snake(op);
   }
   return 0;
 }
 
-void read_key() {
+int read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
@@ -55,9 +56,10 @@ void read_key() {
   if (event.keycode != _KEY_NONE && event.keydown) {
     puts("Key pressed: ");
     puts(key_names[event.keycode]);
-	printf("%d",event.keycode);
+	//printf("%d",event.keycode);
     puts("\n");
   }
+	return event.keycode;
 }
 
 int w, h;
@@ -71,10 +73,10 @@ void init_screen() {
 }
 
 void init_snake(){
-	snake_.head[0] = w/2;
-	snake_.head[1] = h/2;
-	snake_.tail[0] = w/2-SIDE;
-	snake_.tail[1] = h/2;
+	snake_.head[0] = (w/SIDE)/2*SIDE;
+	snake_.head[1] = (h/SIDE)/2*SIDE;
+	snake_.tail[0] = (w/SIDE)/2*SIDE-SIDE;
+	snake_.tail[1] = (h/SIDE)/2*SIDE;
 }
 
 void draw_rect(int x, int y, int w, int h, uint32_t color) {
