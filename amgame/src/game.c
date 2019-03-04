@@ -14,14 +14,6 @@ struct snake snake_;
 void init_snake();
 int update_snake(int op);
 /*
-int ps(){
-	return snake_.pnum_start%15;
-}
-
-int pe(int i){
-	return (snake_.pnum_end+15-i)%15;
-}
-
 int is_in(int x,int y,int x1,int y1,int x2,int y2){
 	if(y1==y2 && y1==y){
 		if(x1<=x2 && x1<=x && x<=x2)
@@ -68,10 +60,17 @@ int main() {
   printf("%d %d\n",snake_.head[0],snake_.head[1]);
   splash();
   //char ch;
-  int op=0;
+  int op=76;
+  unsigned long long current = 0;
+  unsigned long long last = 0;
   while (1) {
-    op=read_keys();
-	update_snake(op);
+    if(73<=read_keys() && read_keys()<=76)
+		op = read_keys();
+	current = uptime();
+	if(current - last>=100){
+		update_snake(op);
+		last = current;
+	}
   }
   return 0;
 }
@@ -89,8 +88,9 @@ int read_keys() {
     puts(key_names[event.keycode]);
 	//printf("%d",event.keycode);
     puts("\n");
-  }
 	return event.keycode;
+  }
+	return 0;
 }
 
 
@@ -161,6 +161,7 @@ int diretail(){
 			return 0;
 		else
 			printf("×××，为什么！？\n");
+			
 	}
 	else if(snake_.tail[1] ==sshy[snake_.ss]){
 		if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]+1)
