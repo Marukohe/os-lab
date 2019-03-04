@@ -1,5 +1,7 @@
 #include <game.h>
 
+#define FIAL 233
+
 void init_screen();
 void splash();
 int read_key();
@@ -7,6 +9,14 @@ int read_key();
 struct snake snake_;
 void init_snake();
 void update_snake(int op);
+
+int ps(){
+	return snake_.pnum_start%15;
+}
+
+int pe(int i){
+	return (snake_.pnum_end+15-i)%15;
+}
 
 int is_in(int x,int y,int x1,int y1,int x2,int y2){
 	if(y1==y2 && y1==y){
@@ -34,16 +44,16 @@ int is_in_p(int x, int y){
 	if(snake_.pnum == 0)
 		return is_in(x, y, snake_.head[0], snake_.head[1], snake_.tail[0], snake_.tail[1]);
 	else{
-		flag = is_in(x, y, snake_.head[0], snake_.head[1], snake_.pivot[0][0], snake_.pivot[0][1]);
+		flag = is_in(x, y, snake_.head[0], snake_.head[1], snake_.pivot[pe(0)][0], snake_.pivot[pe(0)][1]);
 		if(flag==1)
 			return 1;
 	}
 	for(int i=1;i<snake_.pnum-1;i++){
-		flag = is_in(x, y, snake_.pivot[i][0], snake_.pivot[i][1], snake_.pivot[i+1][0], snake_.pivot[i+1][1]);
+		flag = is_in(x, y, snake_.pivot[pe(i)][0], snake_.pivot[pe(i)][1], snake_.pivot[pe(i+1)][0], snake_.pivot[pe(i+1)][1]);
 		if(flag == 1)
 			return 1;
 	}
-	return is_in(x, y, snake_.pivot[snake_.pnum-1][0], snake_.pivot[snake_.pnum-1][1], snake_.tail[0], snake_.tail[1]);
+	return is_in(x, y, snake_.pivot[ps()][0], snake_.pivot[ps()][1], snake_.tail[0], snake_.tail[1]);
 }
 
 int main() {
@@ -95,7 +105,10 @@ void init_snake(){
 	snake_.tail[0] = (w/SIDE)/2*SIDE-SIDE;
 	snake_.tail[1] = (h/SIDE)/2*SIDE;
 	snake_.pnum = 0;
-	snake_.dire = 1;
+	snake_.pnum_start = 0;
+	snake_.pnum_end = 0;
+	snake_.dire_head = 1;
+	snake_.dire_tail = 1;
 }
 
 void draw_rect(int x, int y, int w, int h, uint32_t color) {
@@ -127,5 +140,71 @@ void splash() {
 
 
 void update_snake(int op){
+	switch(op){
+		case 73:
+			switch(snake_.dire_head){
+				case 0:
+					snake_.head[0]-=SIDE;
+					if(snake_.head[0]<=0)
+						return FAIL;
+				case 1:
+				case 2: break;
+				case 3:
+				default:
+			}
+			switch(snake_.dire){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				default:
+			}
+		case 74:
+			switch(snake_.dire){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				default:
+			}
+			switch(snake_.dire){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				default:
+			}
+		case 75:
+			switch(snake_.dire){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				default:
+			}
+			switch(snake_.dire){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				default:
+			}
+		case 76:
+			switch(snake_.dire){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				default:
+			}
+			switch(snake_.dire){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				default:
+			}
+		default:
+	}
 	return;
 }
