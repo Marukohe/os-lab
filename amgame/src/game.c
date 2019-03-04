@@ -4,6 +4,30 @@ void init_screen();
 void splash();
 void read_key();
 
+struct snake snake_;
+void init_snake();
+
+int is_in(int x,int y,int x1,int y1,int x2,int y2){
+	if(y1==y2 && y1==y){
+		if(x1<=x2 && x1<=x && x<=x2)
+			return 1;
+		else if(x1>=x2 && x1>=x && x>=x2)
+			return 1;
+		else
+			return 0;
+	}
+	else if(x1==x2 && x1==x){
+		if(y1<=y2 && y1<=y && y<=2)
+			return 1;
+		else if(y1>=y2 && y1>=y && y>=y2)
+			return 1;
+		else
+			return 0;
+	}
+	else
+		return 0;
+}
+
 int main() {
   // Operating system is a C program
   _ioe_init();
@@ -39,6 +63,13 @@ void init_screen() {
   h = info.height;
 }
 
+void init_snake(){
+	snake_.head[0] = w/2;
+	snake_.head[1] = h/2;
+	snake_.tail[0] = w/2;
+	snake_.tail[1] = h/2;
+}
+
 void draw_rect(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // WARNING: allocated on stack
   _DEV_VIDEO_FBCTL_t event = {
@@ -57,7 +88,11 @@ void splash() {
       //if ((x & 1) ^ (y & 1)) {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
-	  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue
+	    if(is_in(x,y,snake_.head[0],snake_.head[1],snake_.tail[0],snake_.tail[1]))
+	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //blue
+	    else
+	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue
     }
   }
 }
+
