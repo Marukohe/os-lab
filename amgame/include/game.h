@@ -20,6 +20,8 @@ struct snake{
 */
 
 int disp[maxdisp][maxdisp]={};
+int sshx[100]={};
+int sshy[100]={};
 
 struct snake{
 	int head[3];
@@ -28,6 +30,9 @@ struct snake{
 	//int pnum_start;
 	//int pnum_end;
 	//int pnum;
+	int l;
+	int ss;
+	int se;
 	int dire_head;   // 0 up, 1 right, 2 down, 3 left 
 	int dire_tail;
 };

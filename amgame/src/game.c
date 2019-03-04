@@ -1,14 +1,18 @@
 #include <game.h>
 
-#define FIAL 233
+#define FAIL 233
+#define SUCC 666
+#define maxl 50
+
+int w, h;
 
 void init_screen();
 void splash();
-int read_key();
+int read_keys();
 
 struct snake snake_;
 void init_snake();
-void update_snake(int op){};
+int update_snake(int op);
 /*
 int ps(){
 	return snake_.pnum_start%15;
@@ -66,13 +70,13 @@ int main() {
   //char ch;
   int op=0;
   while (1) {
-    op=read_key();
+    op=read_keys();
 	update_snake(op);
   }
   return 0;
 }
 
-int read_key() {
+int read_keys() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
@@ -89,7 +93,6 @@ int read_key() {
 	return event.keycode;
 }
 
-int w, h;
 
 void init_screen() {
   _DEV_VIDEO_INFO_t info = {0};
@@ -108,9 +111,16 @@ void init_snake(){
 	snake_.dire_tail = 1;
 	disp[snake_.head[0]][snake_.head[1]]=1;
 	disp[snake_.tail[0]][snake_.tail[1]]=1;
+	snake_.ss = 0;
+	snake_.se = 1;
+	sshx[snake_.ss] = snake_.tail[0];
+	sshy[snake_.ss] = snake_.tail[1];
+	sshx[snake_.se] = snake_.head[0];
+	sshy[snake_.se] = snake_.head[1];
+	snake_.l = 2;
 }
 
-void draw_rect(int x, int y, int w, int h, uint32_t color) {
+void draw_rects(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // WARNING: allocated on stack
   _DEV_VIDEO_FBCTL_t event = {
     .x = x, .y = y, .w = w, .h = h, .sync = 1,
@@ -129,82 +139,148 @@ void splash() {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
 	    if(disp[x][y]==1)
-	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //green
+	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //green
 	    else
-	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); //blue
+	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); //blue
 	  		//draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue
     }
   }
 }
 
-/*
-void update_snake(int op){
+void uph(){
+	snake_.se = (snake_.se+1) % maxl;
+	sshx[snake_.se] = snake_.head[0];
+	sshy[snake_.se] = snake_.head[1];
+}
+
+int diretail(){
+	if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]){
+		if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]+1)
+			return 2;
+		else if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]-1)
+			return 0;
+		else
+			printf("×××，为什么！？\n");
+	}
+	else if(snake_.tail[1] ==sshy[snake_.ss]){
+		if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]+1)
+			return 1;
+		else if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]-1)
+			return 3;
+		else
+			printf("×××，为什么！？\n");
+	}
+	else 
+		printf("×××，为什么！？\n");
+	return FAIL;
+}
+
+int update_snake(int op){
 	switch(op){
 		case 73:
 			switch(snake_.dire_head){
-				case 0:
-					snake_.head[0]-=SIDE;
-					if(snake_.head[0]<=0)
+				case 0: case 1: case 3:    //up
+					snake_.head[1]-=1;
+					if(snake_.head[1]<0 || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
-				case 1:
-				case 2: break;
-				case 3:
+					disp[snake_.head[0]][snake_.head[1]]=1;
+					snake_.dire_head = 0;
+					uph();
+					break;
+				case 2:                    //down
+					snake_.head[1] +=1;
+					if(snake_.head[1]>h/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+						return FAIL;
+					disp[snake_.head[0]][snake_.head[1]]=1;
+					uph();
+					break;
 				default:
-			}
-			switch(snake_.dire){
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-				default:
+					break;
 			}
 		case 74:
-			switch(snake_.dire){
+			switch(snake_.dire_head){
 				case 0:
-				case 1:
-				case 2:
-				case 3:
+					snake_.head[1]-=1;
+					if(snake_.head[1]<0 || disp[snake_.head[0]][snake_.head[1]]==1)
+						return FAIL;
+					disp[snake_.head[0]][snake_.head[1]]=1;
+					uph();
+					break;
+				case 1: case 2: case 3:
+					snake_.head[1] +=1;
+					if(snake_.head[1]>h/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+						return FAIL;
+					disp[snake_.head[0]][snake_.head[1]]=1;
+					snake_.dire_head = 2;
+					uph();
+					break;
 				default:
-			}
-			switch(snake_.dire){
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-				default:
+					break;
 			}
 		case 75:
-			switch(snake_.dire){
-				case 0:
+			switch(snake_.dire_head){
+				case 0: case 2: case 3:
+					snake_.head[0] -= 1;
+					if(snake_.head[0]<0 || disp[snake_.head[0]][snake_.head[1]]==1)
+						return FAIL;
+					disp[snake_.head[0]][snake_.head[1]] = 1;
+					snake_.dire_head = 3;
+					uph();
+					break;
 				case 1:
-				case 2:
-				case 3:
+					snake_.head[0] += 1;
+					if(snake_.head[0]>w/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+						return FAIL;
+					disp[snake_.head[0]][snake_.head[1]] = 1;
+					uph();
+					break;
 				default:
-			}
-			switch(snake_.dire){
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-				default:
+					break;
 			}
 		case 76:
-			switch(snake_.dire){
-				case 0:
-				case 1:
-				case 2:
+			switch(snake_.dire_head){
+				case 0: case 1: case 2:
+					snake_.head[0] += 1;
+					if(snake_.head[0]>w/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+						return FAIL;
+					disp[snake_.head[0]][snake_.head[1]] = 1;
+					snake_.dire_head = 1;
+					uph();
+					break;
 				case 3:
+					snake_.head[0] -= 1;
+					if(snake_.head[0]<0 || disp[snake_.head[0]][snake_.head[1]]==1)
+						return FAIL;
+					disp[snake_.head[0]][snake_.head[1]] = 1;
+					uph();
+					break;
 				default:
+					break;
 			}
-			switch(snake_.dire){
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-				default:
-			}
-		default:
+		default: break;
 	}
-	return;
+	int dt = diretail();
+	switch(dt){
+		case 0:
+			disp[snake_.tail[0]][snake_.tail[1]]=0;
+			snake_.tail[1] -= 1;
+			snake_.ss = (snake_.ss+1) % maxl;
+			break;
+		case 1:
+			disp[snake_.tail[0]][snake_.tail[1]]=0;
+			snake_.tail[0] += 1;
+			snake_.ss = (snake_.ss+1) % maxl;	
+		case 2:
+			disp[snake_.tail[0]][snake_.tail[1]]=0;
+			snake_.tail[1] += 1;
+			snake_.ss = (snake_.ss+1) % maxl;
+		case 3:
+			disp[snake_.tail[0]][snake_.tail[1]]=0;
+			snake_.tail[0] -= 1;
+			snake_.ss = (snake_.ss+1) % maxl;
+		default:
+			return FAIL;
+	}
+	return SUCC;
 }
-*/
+
