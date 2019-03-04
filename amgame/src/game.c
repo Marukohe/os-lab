@@ -68,6 +68,7 @@ int main() {
 		op = read_keys();
 	current = uptime();
 	if(current - last>=100){
+		printf("op:     %d\n",op);
 		update_snake(op);
 		last = current;
 	}
