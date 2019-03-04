@@ -2,7 +2,7 @@
 #include <amdev.h>
 
 //#define SIDE 16
-#define SIDE 4
+#define SIDE 16
 //0 for x 1 for y
 struct snake{
 	int head[3];

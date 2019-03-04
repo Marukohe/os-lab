@@ -90,7 +90,7 @@ void splash() {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
 	    if(is_in(x,y,snake_.head[0],snake_.head[1],snake_.tail[0],snake_.tail[1]))
-	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //blue
+	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //green
 	    else
 	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue
     }
