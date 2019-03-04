@@ -64,8 +64,9 @@ int main() {
   unsigned long long current = 0;
   unsigned long long last = 0;
   while (1) {
-    if(73<=read_keys() && read_keys()<=76)
-		op = read_keys();
+	int tmp = read_keys();
+    if(73<=tmp && tmp<=76)
+		op = tmp;
 	current = uptime();
 	if(current - last>=100){
 		printf("op:     %d\n",op);
