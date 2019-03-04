@@ -63,6 +63,7 @@ void init_screen() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
+  printf("w: %d h: %d\n",w,h);
 }
 
 void init_snake(){
