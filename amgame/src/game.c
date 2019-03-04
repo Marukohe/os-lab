@@ -6,7 +6,7 @@ int read_key();
 
 struct snake snake_;
 void init_snake();
-void update_snake(int op){};
+void update_snake(int op);
 
 int is_in(int x,int y,int x1,int y1,int x2,int y2){
 	if(y1==y2 && y1==y){
@@ -27,6 +27,23 @@ int is_in(int x,int y,int x1,int y1,int x2,int y2){
 	}
 	else
 		return 0;
+}
+
+int is_in_p(int x, int y){
+	int flag = 0;
+	if(snake_.pnum == 0)
+		return is_in(x, y, snake_.head[0], snake_.head[1], snake_.tail[0], snake_.tail[1]);
+	else{
+		flag = is_in(x, y, snake_.head[0], snake_.head[1], snake_.pivot[0][0], snake_.pivot[0][1]);
+		if(flag==1)
+			return 1;
+	}
+	for(int i=1;i<snake_.pnum-1;i++){
+		flag = is_in(x, y, snake_.pivot[i][0], snake_.pivot[i][1], snake_.pivot[i+1][0], snake_.pivot[i+1][1]);
+		if(flag == 1)
+			return 1;
+	}
+	return is_in(x, y, snake_.pivot[snake_.pnum-1][0], snake_.pivot[snake_.pnum-1][1], snake_.tail[0], snake_.tail[1]);
 }
 
 int main() {
@@ -77,6 +94,8 @@ void init_snake(){
 	snake_.head[1] = (h/SIDE)/2*SIDE;
 	snake_.tail[0] = (w/SIDE)/2*SIDE-SIDE;
 	snake_.tail[1] = (h/SIDE)/2*SIDE;
+	snake_.pnum = 0;
+	snake_.dire = 1;
 }
 
 void draw_rect(int x, int y, int w, int h, uint32_t color) {
@@ -97,7 +116,7 @@ void splash() {
       //if ((x & 1) ^ (y & 1)) {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
-	    if(is_in(x*SIDE,y*SIDE,snake_.head[0],snake_.head[1],snake_.tail[0],snake_.tail[1]))
+	    if(is_in_p(x*SIDE,y*SIDE))
 	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //green
 	    else
 	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); //blue
@@ -106,3 +125,7 @@ void splash() {
   }
 }
 
+
+void update_snake(int op){
+	return;
+}
