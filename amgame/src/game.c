@@ -70,7 +70,7 @@ void init_screen() {
 void init_snake(){
 	snake_.head[0] = w/2;
 	snake_.head[1] = h/2;
-	snake_.tail[0] = w/2;
+	snake_.tail[0] = w/2-SIDE;
 	snake_.tail[1] = h/2;
 }
 
