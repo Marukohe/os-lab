@@ -264,6 +264,7 @@ int update_snake(int op){
 		default: break;
 	}
 	int dt = diretail();
+	printf("dt:  %d\n",dt);
 	switch(dt){
 		case 0:
 			disp[snake_.tail[0]][snake_.tail[1]]=0;
