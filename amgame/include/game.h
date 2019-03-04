@@ -4,6 +4,7 @@
 
 //#define SIDE 16
 #define SIDE 16
+#define maxdisp 400
 //0 for x 1 for y
 /*
 struct snake{
@@ -17,6 +18,9 @@ struct snake{
 	int dire_tail;
 };
 */
+
+int disp[maxdisp][maxdisp]={};
+
 struct snake{
 	int head[3];
 	int tail[3];

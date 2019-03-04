@@ -8,8 +8,8 @@ int read_key();
 
 struct snake snake_;
 void init_snake();
-void update_snake(int op);
-
+void update_snake(int op){};
+/*
 int ps(){
 	return snake_.pnum_start%15;
 }
@@ -55,7 +55,7 @@ int is_in_p(int x, int y){
 	}
 	return is_in(x, y, snake_.pivot[ps()][0], snake_.pivot[ps()][1], snake_.tail[0], snake_.tail[1]);
 }
-
+*/
 int main() {
   // Operating system is a C program
   _ioe_init();
@@ -100,15 +100,14 @@ void init_screen() {
 }
 
 void init_snake(){
-	snake_.head[0] = (w/SIDE)/2*SIDE;
-	snake_.head[1] = (h/SIDE)/2*SIDE;
-	snake_.tail[0] = (w/SIDE)/2*SIDE-SIDE;
-	snake_.tail[1] = (h/SIDE)/2*SIDE;
-	snake_.pnum = 0;
-	snake_.pnum_start = 0;
-	snake_.pnum_end = 0;
+	snake_.head[0] = (w/SIDE)/2;
+	snake_.head[1] = (h/SIDE)/2;
+	snake_.tail[0] = (w/SIDE)/2-1;
+	snake_.tail[1] = (h/SIDE)/2;
 	snake_.dire_head = 1;
 	snake_.dire_tail = 1;
+	disp[snake_.head[0]][snake_.head[1]]=1;
+	disp[snake_.tail[0]][snake_.tail[1]]=1;
 }
 
 void draw_rect(int x, int y, int w, int h, uint32_t color) {
@@ -129,7 +128,7 @@ void splash() {
       //if ((x & 1) ^ (y & 1)) {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
-	    if(is_in_p(x*SIDE,y*SIDE))
+	    if(disp[x][y]==1)
 	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //green
 	    else
 	  		draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); //blue
@@ -138,7 +137,7 @@ void splash() {
   }
 }
 
-
+/*
 void update_snake(int op){
 	switch(op){
 		case 73:
@@ -208,3 +207,4 @@ void update_snake(int op){
 	}
 	return;
 }
+*/
