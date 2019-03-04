@@ -54,9 +54,10 @@ void draw_rect(int x, int y, int w, int h, uint32_t color) {
 void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
-      if ((x & 1) ^ (y & 1)) {
-        draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
-      }
+      //if ((x & 1) ^ (y & 1)) {
+      //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
+      //}
+	  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x233333);
     }
   }
 }
