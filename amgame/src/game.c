@@ -162,7 +162,7 @@ int diretail(){
 		else if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]-1)
 			return 0;
 		else
-			printf("×××，为什么！？\n");
+			printf("001，为什么！？\n");
 			
 	}
 	else if(snake_.tail[1] ==sshy[snake_.ss]){
@@ -171,10 +171,10 @@ int diretail(){
 		else if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]-1)
 			return 3;
 		else
-			printf("×××，为什么！？\n");
+			printf("002，为什么！？\n");
 	}
 	else 
-		printf("×××，为什么！？\n");
+		printf("003，为什么！？\n");
 	return FAIL;
 }
 
