@@ -3,7 +3,7 @@
 #include <klib.h>
 
 //#define SIDE 16
-#define SIDE 16
+#define SIDE 12
 //0 for x 1 for y
 struct snake{
 	int head[3];
