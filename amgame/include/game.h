@@ -8,7 +8,7 @@
 struct snake{
 	int head[3];
 	int tail[3];
-	int pivot[20]; //turning point
+	int pivot[20][2]; //turning point
 };
 
 static inline void puts(const char *s) {

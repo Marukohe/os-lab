@@ -36,8 +36,10 @@ int main() {
   init_snake();
   printf("%d %d\n",snake_.head[0],snake_.head[1]);
   splash();
+  //char ch;
   while (1) {
     read_key();
+	
   }
   return 0;
 }
