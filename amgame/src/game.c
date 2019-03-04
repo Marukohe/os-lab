@@ -31,8 +31,8 @@ int is_in(int x,int y,int x1,int y1,int x2,int y2){
 int main() {
   // Operating system is a C program
   _ioe_init();
-  init_snake();
   init_screen();
+  init_snake();
   splash();
   while (1) {
     read_key();
