@@ -159,18 +159,18 @@ void uph(){
 int diretail(){
 	if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]){
 		if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]+1)
-			return 2;
-		else if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]-1)
 			return 0;
+		else if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]-1)
+			return 1;
 		else
 			printf("001，为什么！？\n");
 			
 	}
 	else if(snake_.tail[1] ==sshy[snake_.ss]){
 		if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]+1)
-			return 1;
-		else if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]-1)
 			return 3;
+		else if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]-1)
+			return 1;
 		else
 			printf("002，为什么！？\n");
 	}
