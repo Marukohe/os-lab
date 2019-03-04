@@ -33,6 +33,7 @@ int main() {
   _ioe_init();
   init_screen();
   init_snake();
+  printf("%d %d\n",snake_.head[0],snake_.head[1]);
   splash();
   while (1) {
     read_key();
