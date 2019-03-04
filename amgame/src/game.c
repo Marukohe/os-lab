@@ -72,6 +72,7 @@ int main() {
 		printf("op:     %d\n",op);
 		update_snake(op);
 		last = current;
+		splash();
 	}
   }
   return 0;
