@@ -42,15 +42,15 @@ int main() {
 			Log("Fail. Please try it again.");
 			break;
 		}
-		//Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
-		//Log("head direcrion of the snake: %d",snake_.dire_head);
-		last = current;
-		splash();
 		if(is_fail==SUCC){
 			//splash();
 			Log("Amazing! You pass the game.");
 			break;
 		}
+		//Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
+		//Log("head direcrion of the snake: %d",snake_.dire_head);
+		last = current;
+		splash();
 	}
   }
   return 0;
