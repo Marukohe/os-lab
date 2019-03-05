@@ -118,7 +118,7 @@ void draw_rects(int x, int y, int w, int h, uint32_t color) {
 
 void draw_food(int x,int y){
 	for(int j=0;j<4;j++)
-		draw_rects(x * FSIZE, (y+j) * FSIZE, FSIZE, FSIZE, WITHE);
+		draw_rects(x*FSIZE, (y+j) * FSIZE, FSIZE, FSIZE, WITHE);
 	for(int i=1;i<=2;i++){
 		draw_rects((x+i) * FSIZE, y * FSIZE, FSIZE, FSIZE, WITHE);
 		draw_rects((x+i) * FSIZE, (y+1) * FSIZE, FSIZE, FSIZE, RED);
@@ -133,7 +133,7 @@ void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
 	  	if(x==foody.x && y == foody.y)
-			draw_food(x,y);
+			draw_food(x*SIDE,y*SIDE);
 	    if(disp[x][y]==1)
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
