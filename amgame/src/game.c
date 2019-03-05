@@ -135,8 +135,8 @@ void draw_food(int x,int y){
 }
 
 void splash() {
-  for (int x = 0; x * SIDE < w-SIDE; x ++) {
-    for (int y = 0; y * SIDE < h-SIDE; y++) {
+  for (int x = 0; x * SIDE < w; x ++) {
+    for (int y = 0; y * SIDE < h; y++) {
 	  	if(x==foody.x && y == foody.y){
 			draw_food(x*SIDE,y*SIDE);
 			continue;
@@ -146,8 +146,8 @@ void splash() {
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
-		//if((y+1)*SIDE-h>0)
-	  		//draw_rects(x * SIDE, (y+1) * SIDE, SIDE, SIDE, BLACK); 
+		if((y+1)*SIDE-h>0)
+	  		draw_rects(x * SIDE, (y+1) * SIDE, SIDE, SIDE, BLACK); 
     }
   }
 }
