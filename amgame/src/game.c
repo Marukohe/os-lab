@@ -37,7 +37,7 @@ int main() {
 		Log("op  :%d",op);
 		update_snake(op);
 		Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
-		Log("head direcrion of the snake: %d",snake_.dire_head);
+		//Log("head direcrion of the snake: %d",snake_.dire_head);
 		last = current;
 		splash();
 	}
@@ -132,6 +132,7 @@ void draw_food(int x,int y){
 void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
+		Log("where is the food x: %d y: %d fx: %d fy: %d",x,y,foody.x,foody.y);
 	  	if(x==foody.x && y == foody.y)
 			//draw_food(x*SIDE,y*SIDE);
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
