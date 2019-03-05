@@ -54,15 +54,15 @@ int read_keys() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
-  static const char *key_names[] = {
-    _KEYS(KEYNAME)
-  };
+  //static const char *key_names[] = {
+  //  _KEYS(KEYNAME)
+  //};
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &event, sizeof(event));
   if (event.keycode != _KEY_NONE && event.keydown) {
-    puts("Key pressed: ");
-    puts(key_names[event.keycode]);
-	printf("%d",event.keycode);
-    puts("\n");
+    //puts("Key pressed: ");
+    //puts(key_names[event.keycode]);
+	//printf("%d",event.keycode);
+    //puts("\n");
 	return event.keycode;
   }
 	return 0;
@@ -74,7 +74,7 @@ void init_screen() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  Log("w: %d h: %d\n",w,h);
+  //Log("w: %d h: %d\n",w,h);
 }
 
 int rand_red(){
@@ -106,7 +106,7 @@ void init_snake(){
 	sshy[snake_.se] = snake_.head[1];
 	snake_.l = 2;
 	rand_red();
-	Log("food position: x %d y %d",foody.x,foody.y);
+	//Log("food position: x %d y %d",foody.x,foody.y);
 }
 
 void draw_rects(int x, int y, int w, int h, uint32_t color) {
