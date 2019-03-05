@@ -22,6 +22,7 @@ int main() {
   init_screen();
   init_snake();
   //printf("%d %d\n",snake_.head[0],snake_.head[1]);
+  printf("The length of snake is : %d\n",snake_.l);
   splash();
   //char ch;
   int op=76;
@@ -33,11 +34,9 @@ int main() {
     if(73<=tmp && tmp<=76)
 		op = tmp;
 	current = uptime();
-	if(current - last>=400){
-		//printf("op:     %d\n",op);
-		//Log("op  :%d",op);
+	if(current - last>=300){
 		is_fail=update_snake(op);
-		Log("%d",snake_.l);
+		//Log("%d",snake_.l);
 		if(is_fail==FAIL){
 			Log("Fail. Please try it again.");
 			break;
@@ -47,8 +46,6 @@ int main() {
 			Log("Amazing! You pass the game.");
 			break;
 		}
-		//Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
-		//Log("head direcrion of the snake: %d",snake_.dire_head);
 		last = current;
 		splash();
 	}
@@ -61,15 +58,8 @@ int read_keys() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
-  //static const char *key_names[] = {
-  //  _KEYS(KEYNAME)
-  //};
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &event, sizeof(event));
   if (event.keycode != _KEY_NONE && event.keydown) {
-    //puts("Key pressed: ");
-    //puts(key_names[event.keycode]);
-	//printf("%d",event.keycode);
-    //puts("\n");
 	return event.keycode;
   }
 	return 0;
@@ -299,9 +289,11 @@ int update_snake(int op){
 		snake_.tail[0] = sshx[snake_.ss];
 		snake_.tail[1] = sshy[snake_.ss];
 	}
-	else
+	else{
 		snake_.l += 1;
-	if(snake_.l==30)
+		Log("The length of sanke: %d",snake_.l);
+	}
+	if(snake_.l==20)
 		return SUCC;
 	else return 0;
 }
