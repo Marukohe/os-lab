@@ -202,6 +202,7 @@ int update_snake(int op){
 				default:
 					break;
 			}
+			break;
 		case 74:
 			switch(snake_.dire_head){
 				case 0:
@@ -222,6 +223,7 @@ int update_snake(int op){
 				default:
 					break;
 			}
+			break;
 		case 75:
 			switch(snake_.dire_head){
 				case 0: case 2: case 3:
@@ -242,6 +244,7 @@ int update_snake(int op){
 				default:
 					break;
 			}
+			break;
 		case 76:
 			switch(snake_.dire_head){
 				case 0: case 1: case 2:
@@ -262,6 +265,7 @@ int update_snake(int op){
 				default:
 					break;
 			}
+			break;
 		default: break;
 	}
 	disp[snake_.tail[0]][snake_.tail[1]]=0;
