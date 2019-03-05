@@ -135,8 +135,8 @@ void draw_food(int x,int y){
 }
 
 void splash() {
-  for (int x = 1; x * SIDE <= w; x ++) {
-    for (int y = 1; y * SIDE <= h; y++) {
+  for (int x = 0; x * SIDE <= w; x ++) {
+    for (int y = 0; y * SIDE <= h; y++) {
 	  	if(x==foody.x && y == foody.y){
 			draw_food(x*SIDE,y*SIDE);
 			continue;
@@ -177,7 +177,7 @@ int update_snake(int op){
 					break;
 				case 2:                    //down
 					snake_.head[1] +=1;
-					if(snake_.head[1]>h/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+					if(snake_.head[1]>=h/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]]=1;
 					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
@@ -205,7 +205,7 @@ int update_snake(int op){
 					break;
 				case 1: case 2: case 3:
 					snake_.head[1] +=1;
-					if(snake_.head[1]>h/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+					if(snake_.head[1]>=h/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]]=1;
 					snake_.dire_head = 2;
@@ -235,7 +235,7 @@ int update_snake(int op){
 					break;
 				case 1:
 					snake_.head[0] += 1;
-					if(snake_.head[0]>w/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+					if(snake_.head[0]>=w/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]] = 1;
 					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
@@ -252,7 +252,7 @@ int update_snake(int op){
 			switch(snake_.dire_head){
 				case 0: case 1: case 2:
 					snake_.head[0] += 1;
-					if(snake_.head[0]>w/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
+					if(snake_.head[0]>=w/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]] = 1;
 					snake_.dire_head = 1;
