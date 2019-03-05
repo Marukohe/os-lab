@@ -42,3 +42,8 @@ static inline void puts(const char *s) {
   for (; *s; s++) _putc(*s);
 }
 
+
+#define Log(format, ...) \
+  printf("\33[1;35m[%s,%d,%s] " format "\33[0m\n", \
+      __FILE__, __LINE__, __func__, ## __VA_ARGS__)
+

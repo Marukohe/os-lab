@@ -33,7 +33,8 @@ int main() {
 		op = tmp;
 	current = uptime();
 	if(current - last>=400){
-		printf("op:     %d\n",op);
+		//printf("op:     %d\n",op);
+		Log("op  :%d\n",op);
 		update_snake(op);
 		printf("head direcrion of the snake: %d\n",snake_.dire_head);
 		last = current;
@@ -129,9 +130,6 @@ void draw_food(int x,int y){
 void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
-      //if ((x & 1) ^ (y & 1)) {
-      //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
-      //}
 	  	if(x==foody.x && y == foody.y)
 			draw_food(x,y);
 	    if(disp[x][y]==1)
