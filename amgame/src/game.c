@@ -22,7 +22,7 @@ int main() {
   init_screen();
   init_snake();
   //printf("%d %d\n",snake_.head[0],snake_.head[1]);
-  printf("The length of snake is : %d\n",snake_.l);
+  Log("The length of snake is : %d",snake_.l);
   splash();
   //char ch;
   int op=76;
