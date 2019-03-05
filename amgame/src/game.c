@@ -48,8 +48,6 @@ int main() {
 		}
 		last = current;
 		splash();
-		if(is_fail==SUCC)
-			break;
 	}
   }
   //splash();
