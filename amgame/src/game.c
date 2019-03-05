@@ -9,49 +9,12 @@ int w, h;
 void init_screen();
 void splash();
 int read_keys();
+int rand_red();
 
 struct snake snake_;
 void init_snake();
 int update_snake(int op);
-/*
-int is_in(int x,int y,int x1,int y1,int x2,int y2){
-	if(y1==y2 && y1==y){
-		if(x1<=x2 && x1<=x && x<=x2)
-			return 1;
-		else if(x1>=x2 && x1>=x && x>=x2)
-			return 1;
-		else
-			return 0;
-	}
-	else if(x1==x2 && x1==x){
-		if(y1<=y2 && y1<=y && y<=2)
-			return 1;
-		else if(y1>=y2 && y1>=y && y>=y2)
-			return 1;
-		else
-			return 0;
-	}
-	else
-		return 0;
-}
 
-int is_in_p(int x, int y){
-	int flag = 0;
-	if(snake_.pnum == 0)
-		return is_in(x, y, snake_.head[0], snake_.head[1], snake_.tail[0], snake_.tail[1]);
-	else{
-		flag = is_in(x, y, snake_.head[0], snake_.head[1], snake_.pivot[pe(0)][0], snake_.pivot[pe(0)][1]);
-		if(flag==1)
-			return 1;
-	}
-	for(int i=1;i<snake_.pnum-1;i++){
-		flag = is_in(x, y, snake_.pivot[pe(i)][0], snake_.pivot[pe(i)][1], snake_.pivot[pe(i+1)][0], snake_.pivot[pe(i+1)][1]);
-		if(flag == 1)
-			return 1;
-	}
-	return is_in(x, y, snake_.pivot[ps()][0], snake_.pivot[ps()][1], snake_.tail[0], snake_.tail[1]);
-}
-*/
 int main() {
   // Operating system is a C program
   _ioe_init();
@@ -106,6 +69,11 @@ void init_screen() {
   printf("w: %d h: %d\n",w,h);
 }
 
+int rand_red(){
+	int red = rand();
+	return red;
+}
+
 void init_snake(){
 	snake_.head[0] = (w/SIDE)/2;
 	snake_.head[1] = (h/SIDE)/2;
@@ -156,30 +124,7 @@ void uph(){
 	sshx[snake_.se] = snake_.head[0];
 	sshy[snake_.se] = snake_.head[1];
 }
-/*
-int diretail(){
-	if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]){
-		if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]+1)
-			return 0;
-		else if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]-1)
-			return 1;
-		else
-			printf("001，为什么！？\n");
-			
-	}
-	else if(snake_.tail[1] ==sshy[snake_.ss]){
-		if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]+1)
-			return 3;
-		else if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]-1)
-			return 1;
-		else
-			printf("002，为什么！？\n");
-	}
-	else 
-		printf("003，为什么！？\n");
-	return FAIL;
-}
-*/
+
 int update_snake(int op){
 	switch(op){
 		case 73:
@@ -272,31 +217,6 @@ int update_snake(int op){
 	snake_.ss = (snake_.ss+1) % maxl;
 	snake_.tail[0] = sshx[snake_.ss];
 	snake_.tail[1] = sshy[snake_.ss];
-	/*
-	int dt = diretail();
-	printf("dt:  %d\n",dt);
-	switch(dt){
-		case 0:
-			disp[snake_.tail[0]][snake_.tail[1]]=0;
-			snake_.tail[1] -= 1;
-			snake_.ss = (snake_.ss+1) % maxl;
-			break;
-		case 1:
-			disp[snake_.tail[0]][snake_.tail[1]]=0;
-			snake_.tail[0] += 1;
-			snake_.ss = (snake_.ss+1) % maxl;	
-		case 2:
-			disp[snake_.tail[0]][snake_.tail[1]]=0;
-			snake_.tail[1] += 1;
-			snake_.ss = (snake_.ss+1) % maxl;
-		case 3:
-			disp[snake_.tail[0]][snake_.tail[1]]=0;
-			snake_.tail[0] -= 1;
-			snake_.ss = (snake_.ss+1) % maxl;
-		default:
-			return FAIL;
-	}
-	*/
 	return SUCC;
 }
 
