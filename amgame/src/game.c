@@ -34,9 +34,9 @@ int main() {
 	current = uptime();
 	if(current - last>=400){
 		//printf("op:     %d\n",op);
-		Log("op  :%d\n",op);
+		Log("op  :%d",op);
 		update_snake(op);
-		printf("head direcrion of the snake: %d\n",snake_.dire_head);
+		Log("head direcrion of the snake: %d",snake_.dire_head);
 		last = current;
 		splash();
 	}
