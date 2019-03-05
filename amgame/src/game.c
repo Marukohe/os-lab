@@ -113,17 +113,29 @@ void draw_rects(int x, int y, int w, int h, uint32_t color) {
   _io_write(_DEV_VIDEO, _DEVREG_VIDEO_FBCTL, &event, sizeof(event));
 }
 
+void draw_food(int x,int y){
+	for(int j=0;j<4;j++)
+		draw_rects(x * FSIZE, (y+j) * FSIZE, FSIZE, FSIZE, WITHE);
+	for(int i=1;i<=2;i++){
+		draw_rects((x+i) * FSIZE, y * FSIZE, FSIZE, FSIZE, WITHE);
+		draw_rects((x+i) * FSIZE, (y+1) * FSIZE, FSIZE, FSIZE, RED);
+		draw_rects((x+i) * FSIZE, (y+2) * FSIZE, FSIZE, FSIZE, RED);
+		draw_rects((x+i) * FSIZE, (y+3) * FSIZE, FSIZE, FSIZE, WITHE);
+	}
+	for(int j=0;j<4;j++)
+		draw_rects(x * FSIZE, (y+j) * FSIZE, FSIZE, FSIZE, WITHE);
+}
+
 void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
       //if ((x & 1) ^ (y & 1)) {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
-	  	//if(x==foody.x && y = foody.y){
-			
-		//}
+	  	if(x==foody.x && y == foody.y)
+			draw_food(x,y);
 	    if(disp[x][y]==1)
-	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, RED); //green
+	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
 	  		//draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue

@@ -4,6 +4,7 @@
 
 //#define SIDE 16
 #define SIDE 16
+#define FSIZE 4
 #define maxdisp 400
 //0 for x 1 for y
 
