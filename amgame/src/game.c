@@ -43,6 +43,7 @@ int main() {
 			break;
 		}
 		if(is_fail==SUCC){
+			splash();
 			Log("Amazing! You pass the game.");
 			break;
 		}
