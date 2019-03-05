@@ -132,10 +132,12 @@ void draw_food(int x,int y){
 void splash() {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
-		Log("where is the food x: %d y: %d fx: %d fy: %d",x,y,foody.x,foody.y);
-	  	if(x==foody.x && y == foody.y)
+		//Log("where is the food x: %d y: %d fx: %d fy: %d",x,y,foody.x,foody.y);
+	  	if(x==foody.x && y == foody.y){
+			Log("where is the food x: %d y: %d fx: %d fy: %d",x,y,foody.x,foody.y);
 			//draw_food(x*SIDE,y*SIDE);
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
+		}
 			
 	    if(disp[x][y]==1)
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
