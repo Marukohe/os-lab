@@ -38,7 +38,7 @@ int main() {
 		//Log("op  :%d",op);
 		is_fail=update_snake(op);
 		if(is_fail==FAIL){
-			Log("Failed!!!");
+			Log("Fail. Please try it again.");
 			break;
 		}
 		//Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
@@ -125,7 +125,7 @@ void draw_food(int x,int y){
 	for(int j=0;j<4;j++)
 		draw_rects(x+j*FSIZE, y, FSIZE, FSIZE, WITHE);
 	for(int i=1;i<=2;i++){
-		draw_rects(x+ FSIZE, y+i * FSIZE, FSIZE, FSIZE, WITHE);
+		draw_rects(x, y+i * FSIZE, FSIZE, FSIZE, WITHE);
 		draw_rects(x+1 * FSIZE, y+i * FSIZE, FSIZE, FSIZE, RED);
 		draw_rects(x+2 * FSIZE, y+i * FSIZE, FSIZE, FSIZE, RED);
 		draw_rects(x+3 * FSIZE, y+i * FSIZE, FSIZE, FSIZE, WITHE);
