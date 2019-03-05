@@ -155,7 +155,7 @@ void uph(){
 	sshx[snake_.se] = snake_.head[0];
 	sshy[snake_.se] = snake_.head[1];
 }
-
+/*
 int diretail(){
 	if(snake_.tail[0]==sshx[(snake_.ss+1)%maxl]){
 		if(snake_.tail[1]==sshy[(snake_.ss+1)%maxl]+1)
@@ -178,7 +178,7 @@ int diretail(){
 		printf("003，为什么！？\n");
 	return FAIL;
 }
-
+*/
 int update_snake(int op){
 	switch(op){
 		case 73:
