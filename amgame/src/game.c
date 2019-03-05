@@ -297,7 +297,7 @@ int update_snake(int op){
 	}
 	else
 		snake_.l += 1;
-	if(snake_.l==4)
+	if(snake_.l==3)
 		return SUCC;
 	else return 0;
 }
