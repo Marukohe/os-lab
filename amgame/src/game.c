@@ -25,6 +25,7 @@ int main() {
   splash();
   //char ch;
   int op=76;
+  int is_fail;
   unsigned long long current = 0;
   unsigned long long last = 0;
   while (1) {
@@ -34,9 +35,13 @@ int main() {
 	current = uptime();
 	if(current - last>=400){
 		//printf("op:     %d\n",op);
-		Log("op  :%d",op);
-		update_snake(op);
-		Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
+		//Log("op  :%d",op);
+		is_fail=update_snake(op);
+		if(is_fail==FAIL){
+			Log("Failed!!!");
+			break;
+		}
+		//Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
 		//Log("head direcrion of the snake: %d",snake_.dire_head);
 		last = current;
 		splash();
