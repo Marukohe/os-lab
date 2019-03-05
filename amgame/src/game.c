@@ -142,11 +142,11 @@ void splash() {
 			continue;
 		}
 			
-	    if(disp[x][y]==1)
+	    if(disp[x][y]==1 && (y+1)*SIDE-h>0 && (y+1)*SIDE-h<SIDE)
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
-		if((y+1)*SIDE-h>0)
+		if((y+1)*SIDE-h>0&&(y+1)*SIDE-h<SIDE)
 	  		draw_rects(x * SIDE, (y+1) * SIDE, SIDE, SIDE, BLACK); 
     }
   }
