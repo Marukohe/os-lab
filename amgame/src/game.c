@@ -53,6 +53,7 @@ int main() {
 		splash();
 	}
   }
+  splash();
   return 0;
 }
 
