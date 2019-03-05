@@ -72,8 +72,8 @@ void init_screen() {
 }
 
 int rand_red(){
-	int redx = rand();
-	int redy = rand();
+	int redx = rand()%(w/SIDE);
+	int redy = rand()%(h/SIDE);
 	while(disp[redx][redy]==1){
 		redx = rand();
 		redy = rand();
