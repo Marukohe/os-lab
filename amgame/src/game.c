@@ -26,7 +26,7 @@ int main() {
   splash();
   //char ch;
   int op=76;
-  int is_fail;
+  int is_fail=0;
   unsigned long long current = 0;
   unsigned long long last = 0;
   while (1) {
@@ -35,6 +35,8 @@ int main() {
 		op = tmp;
 	current = uptime();
 	if(current - last>=300){
+		if(is_fail==SUCC)
+			break;
 		is_fail=update_snake(op);
 		//Log("%d",snake_.l);
 		if(is_fail==FAIL){
