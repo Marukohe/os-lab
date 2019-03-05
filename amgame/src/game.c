@@ -118,15 +118,15 @@ void draw_rects(int x, int y, int w, int h, uint32_t color) {
 
 void draw_food(int x,int y){
 	for(int j=0;j<4;j++)
-		draw_rects(x, y+j*FSIZE, FSIZE, FSIZE, WITHE);
+		draw_rects(x+j*FSIZE, y, FSIZE, FSIZE, WITHE);
 	for(int i=1;i<=2;i++){
-		draw_rects(x+i * FSIZE, y * FSIZE, FSIZE, FSIZE, WITHE);
-		draw_rects(x+i * FSIZE, y+1 * FSIZE, FSIZE, FSIZE, RED);
-		draw_rects(x+i * FSIZE, y+2 * FSIZE, FSIZE, FSIZE, RED);
-		draw_rects(x+i * FSIZE, y+3 * FSIZE, FSIZE, FSIZE, WITHE);
+		draw_rects(x+ FSIZE, y+i * FSIZE, FSIZE, FSIZE, WITHE);
+		draw_rects(x+1 * FSIZE, y+i * FSIZE, FSIZE, FSIZE, RED);
+		draw_rects(x+2 * FSIZE, y+i * FSIZE, FSIZE, FSIZE, RED);
+		draw_rects(x+3 * FSIZE, y+i * FSIZE, FSIZE, FSIZE, WITHE);
 	}
 	for(int j=0;j<4;j++)
-		draw_rects(x, y+j * FSIZE, FSIZE, FSIZE, WITHE);
+		draw_rects(x+j*FSIZE, y+3*FSIZE, FSIZE, FSIZE, WITHE);
 }
 
 void splash() {
