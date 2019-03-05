@@ -44,10 +44,12 @@ int main() {
 		if(is_fail==SUCC){
 			//splash();
 			Log("Amazing! You pass the game.");
-			break;
+			//break;
 		}
 		last = current;
 		splash();
+		if(is_fail==SUCC)
+			break;
 	}
   }
   //splash();
@@ -294,7 +296,7 @@ int update_snake(int op){
 		Log("The length of sanke: %d",snake_.l);
 	}
 	if(snake_.l==3){
-		splash();
+	//	splash();
 		return SUCC;
 	}
 	else return 0;
