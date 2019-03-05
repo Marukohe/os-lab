@@ -137,6 +137,7 @@ void splash() {
 			Log("where is the food x: %d y: %d fx: %d fy: %d",x,y,foody.x,foody.y);
 			//draw_food(x*SIDE,y*SIDE);
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
+			continue;
 		}
 			
 	    if(disp[x][y]==1)
