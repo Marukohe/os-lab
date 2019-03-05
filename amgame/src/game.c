@@ -123,9 +123,9 @@ void splash() {
 			
 		//}
 	    if(disp[x][y]==1)
-	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //green
+	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
-	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); //blue
+	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
 	  		//draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue
     }
   }
