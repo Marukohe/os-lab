@@ -147,6 +147,9 @@ void splash() {
 	  	if(x==foody.x && y == foody.y){
 			draw_food(x*SIDE,y*SIDE);
 			continue;
+		}else if(x==snake_.head[0] && y==snake_.head[1]){
+	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, ORANGE); //green
+			continue;
 		}
 			
 	    if(disp[x][y]==1)
@@ -298,7 +301,7 @@ int update_snake(int op){
 	}
 	else
 		snake_.l += 1;
-	if(snake_.l==3)
+	if(snake_.l==30)
 		return SUCC;
 	else return 0;
 }
