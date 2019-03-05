@@ -7,6 +7,11 @@
 #define maxdisp 400
 //0 for x 1 for y
 
+enum color{
+	GREEN = 0x869900,
+	WITHE = 0xffffff
+};
+
 int disp[maxdisp][maxdisp]={};
 int sshx[100]={};
 int sshy[100]={};

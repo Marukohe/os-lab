@@ -77,6 +77,8 @@ int rand_red(){
 		redx = rand();
 		redy = rand();
 	}
+	foody.x = redx;
+	foody.y = redy;
 	return 1;
 }
 
@@ -96,6 +98,7 @@ void init_snake(){
 	sshx[snake_.se] = snake_.head[0];
 	sshy[snake_.se] = snake_.head[1];
 	snake_.l = 2;
+	rand_red();
 }
 
 void draw_rects(int x, int y, int w, int h, uint32_t color) {
@@ -116,6 +119,9 @@ void splash() {
       //if ((x & 1) ^ (y & 1)) {
       //  draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff); // white
       //}
+	  	//if(x==foody.x && y = foody.y){
+			
+		//}
 	    if(disp[x][y]==1)
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, 0x869900); //green
 	    else
