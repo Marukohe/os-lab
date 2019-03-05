@@ -36,6 +36,7 @@ int main() {
 		//printf("op:     %d\n",op);
 		Log("op  :%d",op);
 		update_snake(op);
+		Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
 		Log("head direcrion of the snake: %d",snake_.dire_head);
 		last = current;
 		splash();
@@ -68,7 +69,7 @@ void init_screen() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  printf("w: %d h: %d\n",w,h);
+  Log("w: %d h: %d\n",w,h);
 }
 
 int rand_red(){
