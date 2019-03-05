@@ -68,7 +68,7 @@ int main() {
     if(73<=tmp && tmp<=76)
 		op = tmp;
 	current = uptime();
-	if(current - last>=500){
+	if(current - last>=400){
 		printf("op:     %d\n",op);
 		update_snake(op);
 		printf("head direcrion of the snake: %d\n",snake_.dire_head);
