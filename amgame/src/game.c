@@ -74,7 +74,7 @@ void init_screen() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  //Log("w: %d h: %d\n",w,h);
+  Log("w: %d h: %d side: %d",w,h,SIDE);
 }
 
 int rand_red(){
