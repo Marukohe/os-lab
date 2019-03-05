@@ -100,6 +100,7 @@ void init_snake(){
 	sshy[snake_.se] = snake_.head[1];
 	snake_.l = 2;
 	rand_red();
+	Log("food position: x %d y %d",foody.x,foody.y);
 }
 
 void draw_rects(int x, int y, int w, int h, uint32_t color) {
