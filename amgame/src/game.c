@@ -263,6 +263,11 @@ int update_snake(int op){
 			}
 		default: break;
 	}
+	disp[snake_.tail[0]][snake_.tail[1]]=0;
+	snake_.ss = (snake_.ss+1) % maxl;
+	snake_.tail[0] = sshx[snake_.ss];
+	snake_.tail[1] = sshy[snake_.ss];
+	/*
 	int dt = diretail();
 	printf("dt:  %d\n",dt);
 	switch(dt){
@@ -286,6 +291,7 @@ int update_snake(int op){
 		default:
 			return FAIL;
 	}
+	*/
 	return SUCC;
 }
 
