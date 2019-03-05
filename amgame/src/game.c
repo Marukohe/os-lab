@@ -12,6 +12,7 @@ int read_keys();
 int rand_red();
 
 struct snake snake_;
+struct food foody;
 void init_snake();
 int update_snake(int op);
 
@@ -70,8 +71,13 @@ void init_screen() {
 }
 
 int rand_red(){
-	int red = rand();
-	return red;
+	int redx = rand();
+	int redy = rand();
+	while(disp[redx][redy]==1){
+		redx = rand();
+		redy = rand();
+	}
+	return 1;
 }
 
 void init_snake(){
