@@ -23,10 +23,6 @@ int sshy[100]={};
 struct snake{
 	int head[3];
 	int tail[3];
-	//int pivot[20][2]; turning point
-	//int pnum_start;
-	//int pnum_end;
-	//int pnum;
 	int l;
 	int ss;
 	int se;
