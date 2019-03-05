@@ -9,7 +9,8 @@
 
 enum color{
 	GREEN = 0x869900,
-	WITHE = 0xffffff
+	WITHE = 0xffffff,
+	RED = 0xc73e3a
 };
 
 int disp[maxdisp][maxdisp]={};

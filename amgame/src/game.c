@@ -123,7 +123,7 @@ void splash() {
 			
 		//}
 	    if(disp[x][y]==1)
-	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
+	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, RED); //green
 	    else
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
 	  		//draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue
