@@ -295,7 +295,7 @@ int update_snake(int op){
 		snake_.l += 1;
 		Log("The length of sanke: %d",snake_.l);
 	}
-	if(snake_.l==3){
+	if(snake_.l==30){
 	//	splash();
 		return SUCC;
 	}
