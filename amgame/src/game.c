@@ -21,7 +21,7 @@ int main() {
   _ioe_init();
   init_screen();
   init_snake();
-  printf("%d %d\n",snake_.head[0],snake_.head[1]);
+  //printf("%d %d\n",snake_.head[0],snake_.head[1]);
   splash();
   //char ch;
   int op=76;
@@ -74,7 +74,7 @@ void init_screen() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  Log("w: %d h: %d side: %d",w,h,SIDE);
+  //Log("w: %d h: %d side: %d",w,h,SIDE);
 }
 
 int rand_red(){
