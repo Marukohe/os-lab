@@ -71,6 +71,7 @@ int main() {
 	if(current - last>=500){
 		printf("op:     %d\n",op);
 		update_snake(op);
+		printf("head direcrion of the snake: %d\n",snake_.dire_head);
 		last = current;
 		splash();
 	}
