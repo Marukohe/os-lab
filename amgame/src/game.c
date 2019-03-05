@@ -142,7 +142,7 @@ void splash() {
 			continue;
 		}
 			
-	    if(disp[x][y]==1 && (y+1)*SIDE-h>0 && (y+1)*SIDE-h<SIDE)
+	    if(disp[x][y]==1)
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
