@@ -149,6 +149,7 @@ void uph(){
 }
 
 int update_snake(int op){
+	int flag = 0;
 	switch(op){
 		case 73:
 			switch(snake_.dire_head){
@@ -158,6 +159,10 @@ int update_snake(int op){
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]]=1;
 					snake_.dire_head = 0;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				case 2:                    //down
@@ -165,6 +170,10 @@ int update_snake(int op){
 					if(snake_.head[1]>h/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]]=1;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				default:
@@ -178,6 +187,10 @@ int update_snake(int op){
 					if(snake_.head[1]<0 || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]]=1;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				case 1: case 2: case 3:
@@ -186,6 +199,10 @@ int update_snake(int op){
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]]=1;
 					snake_.dire_head = 2;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				default:
@@ -200,6 +217,10 @@ int update_snake(int op){
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]] = 1;
 					snake_.dire_head = 3;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				case 1:
@@ -207,6 +228,10 @@ int update_snake(int op){
 					if(snake_.head[0]>w/SIDE || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]] = 1;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				default:
@@ -221,6 +246,10 @@ int update_snake(int op){
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]] = 1;
 					snake_.dire_head = 1;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				case 3:
@@ -228,6 +257,10 @@ int update_snake(int op){
 					if(snake_.head[0]<0 || disp[snake_.head[0]][snake_.head[1]]==1)
 						return FAIL;
 					disp[snake_.head[0]][snake_.head[1]] = 1;
+					if(foody.x == snake_.head[0] && foody.y == snake_.head[1]){
+						flag = 1;
+						rand_red();
+					}
 					uph();
 					break;
 				default:
@@ -236,10 +269,12 @@ int update_snake(int op){
 			break;
 		default: break;
 	}
-	disp[snake_.tail[0]][snake_.tail[1]]=0;
-	snake_.ss = (snake_.ss+1) % maxl;
-	snake_.tail[0] = sshx[snake_.ss];
-	snake_.tail[1] = sshy[snake_.ss];
+	if(!flag){
+		disp[snake_.tail[0]][snake_.tail[1]]=0;
+		snake_.ss = (snake_.ss+1) % maxl;
+		snake_.tail[0] = sshx[snake_.ss];
+		snake_.tail[1] = sshy[snake_.ss];
+	}
 	return SUCC;
 }
 
