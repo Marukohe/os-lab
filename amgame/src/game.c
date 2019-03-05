@@ -37,11 +37,16 @@ int main() {
 		//printf("op:     %d\n",op);
 		//Log("op  :%d",op);
 		is_fail=update_snake(op);
+		Log("%d",snake_.l);
 		if(is_fail==FAIL){
 			Log("Fail. Please try it again.");
 			break;
 		}
-		Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
+		if(is_fail==SUCC){
+			Log("Amazing! You pass the game.");
+			break;
+		}
+		//Log("head position of the snake: x %d y %d",snake_.head[0],snake_.head[1]);
 		//Log("head direcrion of the snake: %d",snake_.dire_head);
 		last = current;
 		splash();
@@ -289,6 +294,10 @@ int update_snake(int op){
 		snake_.tail[0] = sshx[snake_.ss];
 		snake_.tail[1] = sshy[snake_.ss];
 	}
-	return SUCC;
+	else
+		snake_.l += 1;
+	if(snake_.l==4)
+		return SUCC;
+	else return 0;
 }
 
