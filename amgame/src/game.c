@@ -151,6 +151,9 @@ void splash() {
     }
   	draw_rects(x * SIDE, h/SIDE * SIDE, SIDE, SIDE, BLACK); 
   }
+  for (int y = 0; y * SIDE <= h; y++) {
+ 	 draw_rects(w/SIDE*SIDE, h/SIDE * SIDE, SIDE, SIDE, BLACK); 
+  }
 }
 
 void uph(){
