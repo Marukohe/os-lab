@@ -74,6 +74,7 @@ void init_screen() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
+  w = 410;
   Log("w: %d h: %d side: %d",w,h,SIDE);
 }
 
