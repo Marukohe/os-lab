@@ -135,13 +135,10 @@ void draw_food(int x,int y){
 }
 
 void splash() {
-  for (int x = 0; x * SIDE <= w; x ++) {
-    for (int y = 0; y * SIDE <= h; y++) {
-		//Log("where is the food x: %d y: %d fx: %d fy: %d",x,y,foody.x,foody.y);
+  for (int x = 0; x * SIDE < w; x ++) {
+    for (int y = 0; y * SIDE < h; y++) {
 	  	if(x==foody.x && y == foody.y){
-			//Log("where is the food x: %d y: %d fx: %d fy: %d",x,y,foody.x,foody.y);
 			draw_food(x*SIDE,y*SIDE);
-	  		//draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 			continue;
 		}
 			
@@ -149,7 +146,8 @@ void splash() {
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
-	  		//draw_rect(x * SIDE, y * SIDE, SIDE, SIDE, 0x268bd2); //blue
+		//if((y+1)*SIDE-h>0)
+	  		//draw_rects(x * SIDE, (y+1) * SIDE, SIDE, SIDE, BLACK); 
     }
   }
 }
