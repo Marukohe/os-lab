@@ -50,7 +50,7 @@ int main() {
 		splash();
 	}
   }
-  splash();
+  //splash();
   return 0;
 }
 
@@ -293,8 +293,10 @@ int update_snake(int op){
 		snake_.l += 1;
 		Log("The length of sanke: %d",snake_.l);
 	}
-	if(snake_.l==20)
+	if(snake_.l==3){
+		splash();
 		return SUCC;
+	}
 	else return 0;
 }
 
