@@ -46,7 +46,7 @@ int main() {
   //printf("%d %d\n",snake_.head[0],snake_.head[1]);
   Log("The length of snake is : %d",snake_.l);
   //splash();
-  draw_string("Welcom to the snake game!",w/2-SIDE*6,h/2,GREEN);
+  draw_string("Welcome to the snake game!",w/2-SIDE*6,h/2,GREEN);
   unsigned long long current_ =0; 
   while(1){
 		current_ = uptime();
@@ -78,8 +78,8 @@ int main() {
 			//break;
 		}
 		last = current;
-		if(is_fail==SUCC || is_fail==FAIL)
-			memset(disp,0,sizeof(disp));
+		//if(is_fail==SUCC || is_fail==FAIL)
+		//	memset(disp,0,sizeof(disp));
 		splash();
 		if(is_fail == SUCC)
 			draw_string("Amazing! You pass the game.",w/2-SIDE*6,h/2,GREEN);
