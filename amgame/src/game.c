@@ -20,8 +20,8 @@ int update_snake(int op);
 static inline void draw_character(char ch, int x, int y, int color) {
   int i, j;
   char *p = font8x8_basic[(int)ch];
-  for (i = 0; i < 16; i ++)
-    for (j = 0; j < 16; j ++)
+  for (i = 0; i < 8; i ++)
+    for (j = 0; j < 8; j ++)
       if ((p[i] >> j) & 1)
         if (x + j < w && y + i < h)
           draw_rects(x+j,y+i,1,1,color);
