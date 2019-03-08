@@ -62,7 +62,7 @@ int main() {
 		is_fail=update_snake(op);
 		//Log("%d",snake_.l);
 		if(is_fail==FAIL){
-			draw_string("you loss the game",0,0,GREEN);
+			draw_string("you loss the game",SIDE,SIDE,GREEN);
 			Log("Fail. Please try it again.");
 			break;
 		}
