@@ -24,7 +24,7 @@ static inline void draw_character(char ch, int x, int y, int color) {
     for (j = 0; j < 8; j ++)
       if ((p[i] >> j) & 1)
         if (x + j < w && y + i < h)
-          draw_rects(x+j,y+i,4,4,color);
+          draw_rects(x+j,y+i,1,1,color);
 }
 
 static inline void draw_string(const char *str, int x, int y, int color) {
