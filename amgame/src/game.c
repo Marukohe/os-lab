@@ -47,6 +47,12 @@ int main() {
   Log("The length of snake is : %d",snake_.l);
   //splash();
   draw_string("you loss the game",SIDE,SIDE,GREEN);
+  unsigned long long current_ =0; 
+  while(1){
+		current_ = uptime();
+		if(current_  >= 1000)
+			break;
+  }
   int op=76;
   int is_fail=0;
   unsigned long long current = 0;
