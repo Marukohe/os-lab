@@ -45,8 +45,8 @@ int main() {
   init_snake();
   //printf("%d %d\n",snake_.head[0],snake_.head[1]);
   Log("The length of snake is : %d",snake_.l);
-  splash();
-  //char ch;
+  //splash();
+  draw_string("you loss the game",SIDE,SIDE,GREEN);
   int op=76;
   int is_fail=0;
   unsigned long long current = 0;
@@ -72,8 +72,8 @@ int main() {
 			//break;
 		}
 		last = current;
-		//splash();
-		draw_string("you lose the game",SIDE,SIDE,GREEN);
+		splash();
+		//draw_string("you lose the game",SIDE,SIDE,GREEN);
 	}
   }
   //splash();
