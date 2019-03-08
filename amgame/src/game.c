@@ -46,11 +46,11 @@ int main() {
   //printf("%d %d\n",snake_.head[0],snake_.head[1]);
   Log("The length of snake is : %d",snake_.l);
   //splash();
-  draw_string("you loss the game",SIDE,SIDE,GREEN);
+  draw_string("Welcom to the snake game!",w/2,h/2,GREEN);
   unsigned long long current_ =0; 
   while(1){
 		current_ = uptime();
-		if(current_  >= 1000)
+		if(current_  >= 5000)
 			break;
   }
   int op=76;
