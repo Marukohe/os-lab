@@ -84,7 +84,7 @@ int main() {
 		if(is_fail == SUCC)
 			draw_string("Amazing! You pass the game.",w/2-SIDE*6,h/2,GREEN);
 		else if(is_fail==FAIL)
-			draw_string("You lose the game.",w/2,h/2,GREEN);
+			draw_string("What a pity! You lose the game.",w/2-SIDE*6,h/2,GREEN);
 	}
   }
   //splash();
