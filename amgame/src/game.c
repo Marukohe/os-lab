@@ -63,10 +63,10 @@ int main() {
 		op = tmp;
 	current = uptime();
 	if(current - last>=300){
-		if(is_fail==SUCC)
+		if(is_fail==SUCC||is_fail == FAIL){
 			break;
+		}
 		is_fail=update_snake(op);
-		//Log("%d",snake_.l);
 		if(is_fail==FAIL){
 			//draw_string("you loss the game",SIDE,SIDE,GREEN);
 			Log("Fail. Please try it again.");
@@ -78,8 +78,13 @@ int main() {
 			//break;
 		}
 		last = current;
+		if(is_fail==SUCC || is_fail==FAIL)
+			memset(disp,0,sizeof(disp));
 		splash();
-		//draw_string("you lose the game",SIDE,SIDE,GREEN);
+		if(is_fail == SUCC)
+			draw_string("Amazing! You pass the game.",w/2-SIDE*6,h/2,GREEN);
+		else if(is_fail==FAIL)
+			draw_string("You lose the game.",w/2,h/2,GREEN);
 	}
   }
   //splash();
@@ -325,7 +330,7 @@ int update_snake(int op){
 		snake_.l += 1;
 		Log("The length of sanke: %d",snake_.l);
 	}
-	if(snake_.l==30){
+	if(snake_.l==3){
 	//	splash();
 		return SUCC;
 	}
