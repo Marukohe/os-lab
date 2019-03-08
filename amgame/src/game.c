@@ -30,10 +30,10 @@ static inline void draw_character(char ch, int x, int y, int color) {
 static inline void draw_string(const char *str, int x, int y, int color) {
   while (*str) {
     draw_character(*str ++, x, y, color);
-    if (x + 16 >= w) {
-      y += 16; x = 0;
+    if (x + 8 >= w) {
+      y += 8; x = 0;
     } else {
-      x += 16;
+      x += 8;
     }
   }
 }
@@ -73,7 +73,7 @@ int main() {
 		}
 		last = current;
 		//splash();
-		draw_string("you loss the game",SIDE,SIDE,GREEN);
+		draw_string("you lose the game",SIDE,SIDE,GREEN);
 	}
   }
   //splash();
