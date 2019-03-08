@@ -50,7 +50,7 @@ int main() {
   unsigned long long current_ =0; 
   while(1){
 		current_ = uptime();
-		if(current_  >= 3000)
+		if(current_  >= 2000)
 			break;
   }
   int op=76;
