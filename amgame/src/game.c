@@ -47,7 +47,7 @@ int main() {
   Log("The length of snake is : %d",snake_.l);
   //splash();
   draw_string("Welcome to the snake game!",w/2-SIDE*6,h/2,GREEN);
-  unsigned long long current_ =0; 
+  unsigned long long current_ =0;
   while(1){
 		current_ = uptime();
 		if(current_  >= 2000)
@@ -112,15 +112,15 @@ void init_screen() {
 }
 
 int rand_red(){
-	int redx = rand()%(w/SIDE);
-	int redy = rand()%(h/SIDE);
-	while(disp[redx][redy]==1){
-		redx = rand();
-		redy = rand();
-	}
-	foody.x = redx;
-	foody.y = redy;
-	return 1;
+    int redx = rand()%(w/SIDE);
+    int redy = rand()%(h/SIDE);
+    while(disp[redx][redy]==1){
+        redx = rand();
+        redy = rand();
+    }
+    foody.x = redx;
+    foody.y = redy;
+    return 1;
 }
 
 void init_snake(){
@@ -178,18 +178,18 @@ void splash() {
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, ORANGE); //green
 			continue;
 		}
-			
+
 	    if(disp[x][y]==1)
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, GREEN); //green
 	    else
 	  		draw_rects(x * SIDE, y * SIDE, SIDE, SIDE, WITHE); //blue
 		if((y+1)*SIDE-h>0&&(y+1)*SIDE-h<SIDE)
-	  		draw_rects(x * SIDE, (y+1) * SIDE, SIDE, SIDE, BLACK); 
+	  		draw_rects(x * SIDE, (y+1) * SIDE, SIDE, SIDE, BLACK);
     }
-  	draw_rects(x * SIDE, h/SIDE * SIDE, SIDE, SIDE, BLACK); 
+  	draw_rects(x * SIDE, h/SIDE * SIDE, SIDE, SIDE, BLACK);
   }
   for (int y = 0; y * SIDE <= h; y++) {
- 	 draw_rects(w/SIDE*SIDE, y * SIDE, SIDE, SIDE, BLACK); 
+ 	 draw_rects(w/SIDE*SIDE, y * SIDE, SIDE, SIDE, BLACK);
   }
 }
 
