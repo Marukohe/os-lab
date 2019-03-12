@@ -1,15 +1,46 @@
 #include <stdio.h>
+#include <ucontext.h>
+#include <stdint.h>
 #include "co.h"
 
 struct co {
-};
+    int prev, next;
+    ucontext_t ctx;
+    char names[200];
+    func_t co_fun;
+    void *arg;
+    enum COSTATE state;
+    uint8_t stack[DEFAULT_STACK_SIZE];
+}__attribute__((aligned (16)));
+
+struct co coroutines[MAX_CO];
+struct co *current;
+ucontext_t  main;
+int max_co = 0;
 
 void co_init() {
+    for(int i=1;i<MAX_CO;i++){
+        coroutines[i].state = FREE;
+    }
 }
 
 struct co* co_start(const char *name, func_t func, void *arg) {
-  func(arg); // Test #2 hangs
-  return NULL;
+    int id = max_co++;
+    coroutines[id].state = RUNNING;
+    coroutines[id].co_fun = func;
+    coroutines[id].arg = arg;
+    getcontext(&(coroutines[id].ctx));
+
+    coroutines[id].ctx.uc_stack.ss_sp = coroutines[id].stack;
+    coroutines[id].ctx.uc_stack.ss_size = DEFAULT_STACK_SIZE;
+    coroutines[id].ctx.uc_stack.ss_flags = 0;
+    coroutines[id].ctx.uc_link = &main;
+
+    makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
+    swapcontext(&main,&(coroutines[id].ctx));
+    current = &(coroutines[id]);
+    //func(arg); // Test #2 hangs
+    return current;
 }
 
 void co_yield() {

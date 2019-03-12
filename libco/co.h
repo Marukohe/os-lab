@@ -1,6 +1,9 @@
 #ifndef __CO_H__
 #define __CO_H__
 
+#define DEFAULT_STACK_SIZE 4096
+#define MAX_CO 100
+enum COSTATE{FREE,READY,RUNNING,SUSPEND};
 typedef void (*func_t)(void *arg);
 struct co;
 
