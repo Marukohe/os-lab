@@ -15,7 +15,7 @@ struct co {
 
 struct co coroutines[MAX_CO];
 struct co *current;
-ucontext_t  main;
+ucontext_t  umain;
 int max_co = 0;
 
 void co_init() {
@@ -34,10 +34,10 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].ctx.uc_stack.ss_sp = coroutines[id].stack;
     coroutines[id].ctx.uc_stack.ss_size = DEFAULT_STACK_SIZE;
     coroutines[id].ctx.uc_stack.ss_flags = 0;
-    coroutines[id].ctx.uc_link = &main;
+    coroutines[id].ctx.uc_link = &umain;
 
     makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
-    swapcontext(&main,&(coroutines[id].ctx));
+    swapcontext(&umain,&(coroutines[id].ctx));
     current = &(coroutines[id]);
     //func(arg); // Test #2 hangs
     return current;
