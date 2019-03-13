@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <ucontext.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include "co.h"
 
 struct co {
@@ -54,6 +55,11 @@ void co_yield() {
         coroutines[running_co].state = SUSPEND;
         running_co = -1;
         swapcontext(&(t->ctx),&umain);
+    }else{
+        int id = rand()%max_co;
+        /*struct co *t = &corourines[running];*/
+        running_co = id;
+        swapcontext(&umain,&(coroutines[id].ctx));
     }
 }
 
