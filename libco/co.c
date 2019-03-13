@@ -5,6 +5,7 @@
 
 struct co {
     int prev, next;
+    int id;
     ucontext_t ctx;
     char names[200];
     func_t co_fun;
@@ -17,16 +18,20 @@ struct co coroutines[MAX_CO];
 struct co *current;
 ucontext_t  umain;
 int max_co = 0;
+int running_co = 0;
 
 void co_init() {
     for(int i=1;i<MAX_CO;i++){
         coroutines[i].state = FREE;
     }
+    running_co = -1;
 }
 
 struct co* co_start(const char *name, func_t func, void *arg) {
     int id = max_co++;
-    coroutines[id].state = RUNNING;
+    running_co = id;
+    coroutines[id].id = id;
+    coroutines[id].state = READY;
     coroutines[id].co_fun = func;
     coroutines[id].arg = arg;
     getcontext(&(coroutines[id].ctx));
@@ -44,8 +49,24 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 }
 
 void co_yield() {
+    if(running_co != -1){
+        struct co *t = &coroutines[running_co];
+        coroutines[running_co].state = SUSPEND;
+        running_co = -1;
+        swapcontext(&(t->ctx),&umain);
+    }
 }
 
 void co_wait(struct co *thd) {
+    if(running_co != -1){
+        running_co = thd->id;
+        swapcontext(&umain,&(thd->ctx));
+    }else{
+        struct co *t = &coroutines[running_co];
+        running_co = thd->id;
+        t->state = SUSPEND;
+        thd->state = READY;
+        swapcontext(&(t->ctx),&(thd->ctx));
+    }
 }
 
