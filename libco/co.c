@@ -58,7 +58,7 @@ void co_yield() {
 }
 
 void co_wait(struct co *thd) {
-    if(running_co != -1){
+    if(running_co == -1){
         running_co = thd->id;
         swapcontext(&umain,&(thd->ctx));
     }else{
