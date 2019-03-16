@@ -137,7 +137,7 @@ void co_wait(struct co *thd) {
         running_co = thd->id;
         t->state = SUSPEND;
         thd->state = RUNNING;
-        printf("I'm here\n\n\n");
+        /*printf("I'm here\n\n\n");*/
         swapcontext(&(t->ctx),&(thd->ctx));
     }
 }
