@@ -34,7 +34,7 @@ void co_init() {
 }
 
 struct co* co_start(const char *name, func_t func, void *arg) {
-    printf("Y2\n");
+    //printf("Y2\n");
     int id = max_co++;
     running_co = id;
     coroutines[id].id = id;
@@ -50,12 +50,12 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 
     makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
     //printf("makecontext\n");
-    printf("Y2 is here\n");
-    printf("%d\n",id);
+    /*printf("Y2 is here\n");*/
+    /*printf("%d\n",id);*/
     swapcontext(&umain,&(coroutines[id].ctx));
-    printf("???????????????\n");
+    /*printf("???????????????\n");*/
     current = &(coroutines[id]);
-    printf("xxxxxxxxxxxx\n");
+    /*printf("xxxxxxxxxxxx\n");*/
     //func(arg); // Test #2 hangs
     return current;
 }
@@ -92,7 +92,7 @@ void co_yield() {
         struct co *t = &coroutines[running_co];
         t->state = READY;
         running_co = -1;
-        printf("assert at here\n\n\n");
+        /*printf("assert at here\n\n\n");*/
         swapcontext(&(t->ctx),&umain);
     } else{
         cnt_yield++;
