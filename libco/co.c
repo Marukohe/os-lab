@@ -59,6 +59,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     void myfunc(){
         func(arg);
         coroutines[id].state = FREE;
+        assert(0);
         coroutines[id].fin = 0;
         main_flag = 0;
     }
