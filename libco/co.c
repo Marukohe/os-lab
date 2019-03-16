@@ -79,9 +79,9 @@ void co_yield() {
         cnt_yield++;
         struct co *t = &coroutines[running_co];
         t->state = READY;
-        int id = rand()%max_co + 1;
+        int id = rand()%max_co;
         while(coroutines[id].state == SUSPEND){
-            id = rand()%max_co+1;
+            id = rand()%max_co;
         }
         running_co = id;
         coroutines[id].state = RUNNING;
@@ -96,9 +96,9 @@ void co_yield() {
         swapcontext(&(t->ctx),&umain);
     } else{
         cnt_yield++;
-        int id = rand()%max_co+1;
+        int id = rand()%max_co;
         while(coroutines[id].state==SUSPEND){
-            id = rand()%max_co+1;
+            id = rand()%max_co;
         }
         /*struct co *t = &corourines[running];*/
         running_co = id;
