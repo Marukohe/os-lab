@@ -49,6 +49,10 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     return current;
 }
 
+/*
+ * main to co running_co=-1
+ * co1 to co2 running_co!=-1
+ */
 void co_yield() {
     if(running_co != -1){
         struct co *t = &coroutines[running_co];
@@ -56,6 +60,7 @@ void co_yield() {
         running_co = -1;
         swapcontext(&(t->ctx),&umain);
     }else{
+
         int id = rand()%max_co;
         /*struct co *t = &corourines[running];*/
         running_co = id;
