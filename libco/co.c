@@ -60,7 +60,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
         func(arg);
         coroutines[id].state = FREE;
         /*assert(0);*/
-        printf("fuck: %d\n\n\n",id);
+        printf("fuck: %d max %d\n\n\n",id,max_co);
         coroutines[id].fin = 0;
         main_flag = 0;
     }
