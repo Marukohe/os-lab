@@ -2,6 +2,7 @@
 #include <ucontext.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "co.h"
 
 struct co {
@@ -65,6 +66,7 @@ void co_yield() {
         coroutines[id].state = RUNNING;
         swapcontext(&(t->ctx),&(coroutines[id].ctx));
     }else if(running_co!=-1 && max_co==1){
+        assert(0);
         struct co *t = &coroutines[running_co];
         t->state = READY;
         running_co = -1;
