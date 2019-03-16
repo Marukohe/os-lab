@@ -34,6 +34,7 @@ static void test_1() {
     struct co *thd2 = co_start("thread-2", work, "Y");
 
     co_wait(thd1);
+    printf("\nbetween 1 and 2\n");
     co_wait(thd2);
 
     printf("\n");
