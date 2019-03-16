@@ -50,6 +50,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 
     makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
     //printf("makecontext\n");
+    printf("Y2 is here\n");
     swapcontext(&umain,&(coroutines[id].ctx));
     printf("???????????????\n");
     current = &(coroutines[id]);
