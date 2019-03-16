@@ -54,7 +54,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 
     int id = max_co++;
     running_co = id;
-    func_t myfunc(){
+    void myfunc(){
         func(arg);
         coroutines[id].state = FREE;
         coroutines[id].fin = 1;
@@ -64,7 +64,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].fin = 1;
     coroutines[id].id = id;
     coroutines[id].state = RUNNING;
-    coroutines[id].co_fun = myfunc();
+    coroutines[id].co_fun = myfunc;
     coroutines[id].arg = arg;
     getcontext(&(coroutines[id].ctx));
 
