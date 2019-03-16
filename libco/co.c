@@ -92,27 +92,25 @@ struct co* co_start(const char *name, func_t func, void *arg) {
  * co1 to co2 running_co!=-1
  */
 void co_yield() {
-    /*
-    if(cnt_yield==0){
-        printf("here\n");
-        //return;
-        coroutines[running_co].state = READY;
-        int id = running_co;
-        running_co = -1;
-        cnt_yield++;
-        swapcontext(&(coroutines[id].ctx),&(umain->ctx));
-    }*/
     if(running_co != -1 && max_co!=1){  //不在main 有多个协程
         cnt_yield++;
         struct co *t = &coroutines[running_co];
         t->state = READY;
-        int id = rand()%max_co;
-        while(coroutines[id].state == SUSPEND||coroutines[id].state == FREE){
+        int id = rand()%(max_co+1);
+        while(id!=max_co&&(coroutines[id].state == SUSPEND||coroutines[id].state == FREE)){
             id = rand()%max_co;
         }
-        running_co = id;
-        coroutines[id].state = RUNNING;
-        swapcontext(&(t->ctx),&(coroutines[id].ctx));
+        if(id==max_co){
+            struct co *t = &coroutines[running_co];
+            t->state = READY;
+            running_co = -1;
+            swapcontext(&(t->ctx),&umain);
+        }
+        else{
+            running_co = id;
+            coroutines[id].state = RUNNING;
+            swapcontext(&(t->ctx),&(coroutines[id].ctx));
+        }
     }else if(running_co!=-1 && max_co==1){
         cnt_yield++;
         //assert(0);
@@ -136,7 +134,7 @@ void co_yield() {
 
 void co_wait(struct co *thd) {
     if(running_co == -1){
-        printf("\nco_wait\n");
+        /*printf("\nco_wait\n");*/
         thd->fin = 0;
         running_co = thd->id;
         thd->state = RUNNING;
