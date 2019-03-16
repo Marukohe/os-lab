@@ -62,7 +62,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
  */
 void co_yield() {
     if(cnt_yield==0){
-        //printf("here\n");
+        printf("here\n");
         //return;
         coroutines[running_co].state = READY;
         int id = running_co;
