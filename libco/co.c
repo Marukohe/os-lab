@@ -59,7 +59,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     void myfunc(){
         func(arg);
         coroutines[id].state = FREE;
-        coroutines[id].fin = 1;
+        coroutines[id].fin = 0;
         main_flag = 0;
     }
 
@@ -103,6 +103,7 @@ void co_yield() {
         while((id!=max_co||main_flag==1)&&(coroutines[id].state == SUSPEND||coroutines[id].state == FREE)){
             id = rand()%(max_co+1);
         }
+        printf("\nid:  %d\n",id);
         if(id==max_co){
             struct co *t = &coroutines[running_co];
             t->state = READY;
@@ -125,7 +126,7 @@ void co_yield() {
     } else{
         cnt_yield++;
         int id = rand()%max_co;
-        while(coroutines[id].state==SUSPEND){
+        while(coroutines[id].state==SUSPEND||coroutines[id].state ==FREE){
             id = rand()%max_co;
         }
         /*struct co *t = &corourines[running];*/
