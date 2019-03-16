@@ -147,6 +147,7 @@ void co_wait(struct co *thd) {
         swapcontext(&umain,&(thd->ctx));
         running_co = -1;
     }else{
+        assert(0);
         thd->fin = 0;
         struct co *t = &coroutines[running_co];
         running_co = thd->id;
