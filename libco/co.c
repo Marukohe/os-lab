@@ -17,8 +17,8 @@ struct co {
 }__attribute__((aligned (16)));
 
 struct co coroutines[MAX_CO];
-struct co *current;
-struct co *umain;
+struct co *current=NULL;
+struct co *umain=NULL;
 int max_co = 0;
 int running_co = 0;
 long long cnt_yield = 0;
@@ -27,6 +27,8 @@ void co_init() {
     for(int i=1;i<MAX_CO;i++){
         coroutines[i].state = FREE;
     }
+    current = (struct co*)malloc(sizeof(struct co));
+    umain = (struct co *)malloc(sizeof(struct co));
     umain->state = FREE;
     running_co = -1;
 }
