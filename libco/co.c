@@ -127,6 +127,7 @@ void co_yield() {
 
 void co_wait(struct co *thd) {
     if(running_co == -1){
+        printf("\nco_wait\n");
         thd->fin = 0;
         running_co = thd->id;
         thd->state = RUNNING;
