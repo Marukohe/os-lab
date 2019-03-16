@@ -30,14 +30,10 @@ void co_init() {
         coroutines[i].state = FREE;
         coroutines[i].fin = 0;
     }
-    //current = (struct co*)malloc(sizeof(struct co));
-    //umain = (struct co *)malloc(sizeof(struct co));
-    //umain->state = FREE;
     running_co = -1;
 }
 
 struct co* co_start(const char *name, func_t func, void *arg) {
-    //printf("Y2\n");
 
     int tmp = max_co;
     int cnt=-1;
@@ -52,7 +48,6 @@ struct co* co_start(const char *name, func_t func, void *arg) {
                 coroutines[cnt] = coroutines[i];
         }
     }
-    /*printf("%d\n",max_co);*/
 
     int id = max_co++;
     running_co = id;
@@ -149,7 +144,6 @@ void co_wait(struct co *thd) {
         swapcontext(&umain,&(thd->ctx));
         running_co = -1;
     }else{
-        assert(0);
         thd->fin = 0;
         struct co *t = &coroutines[running_co];
         running_co = thd->id;
