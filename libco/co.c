@@ -71,6 +71,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     /*printf("%d\n",id);*/
     swapcontext(&umain,&(coroutines[id].ctx));
     /*printf("???????????????\n");*/
+    running_co = -1;
     current = &(coroutines[id]);
     /*printf("xxxxxxxxxxxx\n");*/
     //func(arg); // Test #2 hangs
