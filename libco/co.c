@@ -105,7 +105,7 @@ void co_yield() {
         while((id!=max_co||main_flag==1)&&(coroutines[id].state == SUSPEND||coroutines[id].state == FREE)){
             id = rand()%(max_co+1);
         }
-        printf("\nmainflag: %d id:  %d state: %d\n",main_flag,id,coroutines[id].state);
+        /*printf("\nmainflag: %d id:  %d state: %d\n",main_flag,id,coroutines[id].state);*/
         if(id==max_co){
             struct co *t = &coroutines[running_co];
             t->state = READY;
