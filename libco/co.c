@@ -50,7 +50,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
                 coroutines[cnt] = coroutines[i];
         }
     }
-    /*printf("%d\n",max_co);*/
+    printf("%d\n",max_co);
     int id = max_co++;
     running_co = id;
     coroutines[id].fin = 1;
