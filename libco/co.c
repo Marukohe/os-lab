@@ -61,8 +61,10 @@ struct co* co_start(const char *name, func_t func, void *arg) {
  * co1 to co2 running_co!=-1
  */
 void co_yield() {
-    if(cnt_yield==0)
+    if(cnt_yield==0){
+        printf("here\n");
         return;
+    }
     if(running_co != -1 && max_co!=1){  //不在main 有多个协程
         cnt_yield++;
         struct co *t = &coroutines[running_co];
