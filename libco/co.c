@@ -56,8 +56,8 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 
     int id = max_co++;
     running_co = id;
-    void myfunc(){
-        func(arg);
+    void myfunc(void * args,int num){
+        func(args);
         coroutines[id].state = FREE;
         /*assert(0);*/
         printf("fuck: %d max %d\n\n\n",id,max_co);
@@ -69,7 +69,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].fin = 1;
     coroutines[id].id = id;
     coroutines[id].state = RUNNING;
-    coroutines[id].co_fun = myfunc;
+    coroutines[id].co_fun = func;
     coroutines[id].arg = arg;
     getcontext(&(coroutines[id].ctx));
 
@@ -78,7 +78,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].ctx.uc_stack.ss_flags = 0;
     coroutines[id].ctx.uc_link = &umain;
 
-    makecontext(&(coroutines[id].ctx),(void(*)(void))myfunc,1,arg);
+    makecontext(&(coroutines[id].ctx),(void(*)(void))myfunc,2,arg,id);
     //printf("makecontext\n");
     /*printf("Y2 is here\n");*/
     /*printf("%d\n",id);*/
