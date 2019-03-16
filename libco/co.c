@@ -6,7 +6,7 @@
 #include "co.h"
 
 struct co {
-    int prev, next;
+    int fin;  //0即将结束，1未结束
     int id;
     ucontext_t ctx;
     char names[200];
@@ -26,6 +26,7 @@ long long cnt_yield = 0;
 void co_init() {
     for(int i=1;i<MAX_CO;i++){
         coroutines[i].state = FREE;
+        coroutines[i].fin = 0;
     }
     //current = (struct co*)malloc(sizeof(struct co));
     //umain = (struct co *)malloc(sizeof(struct co));
@@ -35,6 +36,19 @@ void co_init() {
 
 struct co* co_start(const char *name, func_t func, void *arg) {
     //printf("Y2\n");
+    int tmp = max_co;
+    int cnt=-1;
+    for(int i=0;i<tmp;i++){
+        if(coroutines[i].fin == 0){
+            cnt = i;
+            coroutines[i].state = FREE;
+            coroutines[i]=coroutines[i+1];
+            max_co--;
+        }else{
+            if(cnt!=-1)
+                coroutines[cnt] = coroutines[i];
+        }
+    }
     int id = max_co++;
     running_co = id;
     coroutines[id].id = id;
@@ -109,11 +123,13 @@ void co_yield() {
 
 void co_wait(struct co *thd) {
     if(running_co == -1){
+        thd->fin = 0;
         running_co = thd->id;
         thd->state = RUNNING;
         /*umain->state = SUSPEND;*/
         swapcontext(&umain,&(thd->ctx));
     }else{
+        thd->fin = 0;
         struct co *t = &coroutines[running_co];
         running_co = thd->id;
         t->state = SUSPEND;
