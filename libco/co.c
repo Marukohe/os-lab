@@ -18,7 +18,7 @@ struct co {
 
 struct co coroutines[MAX_CO];
 struct co *current=NULL;
-struct co *umain=NULL;
+ucontext_t umain;
 int max_co = 0;
 int running_co = 0;
 long long cnt_yield = 0;
@@ -27,9 +27,9 @@ void co_init() {
     for(int i=1;i<MAX_CO;i++){
         coroutines[i].state = FREE;
     }
-    current = (struct co*)malloc(sizeof(struct co));
-    umain = (struct co *)malloc(sizeof(struct co));
-    umain->state = FREE;
+    //current = (struct co*)malloc(sizeof(struct co));
+    //umain = (struct co *)malloc(sizeof(struct co));
+    //umain->state = FREE;
     running_co = -1;
 }
 
@@ -45,11 +45,11 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].ctx.uc_stack.ss_sp = coroutines[id].stack;
     coroutines[id].ctx.uc_stack.ss_size = DEFAULT_STACK_SIZE;
     coroutines[id].ctx.uc_stack.ss_flags = 0;
-    coroutines[id].ctx.uc_link = &(umain->ctx);
+    coroutines[id].ctx.uc_link = &umain;
 
     makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
     //printf("makecontext\n");
-    swapcontext(&(umain->ctx),&(coroutines[id].ctx));
+    swapcontext(&umain,&(coroutines[id].ctx));
     printf("???????????????\n");
     current = &(coroutines[id]);
     printf("xxxxxxxxxxxx\n");
@@ -90,7 +90,7 @@ void co_yield() {
         t->state = READY;
         running_co = -1;
         //printf("assert at here\n\n\n");
-        swapcontext(&(t->ctx),&(umain->ctx));
+        swapcontext(&(t->ctx),&umain);
     } else{
         cnt_yield++;
         int id = rand()%max_co+1;
@@ -100,7 +100,7 @@ void co_yield() {
         /*struct co *t = &corourines[running];*/
         running_co = id;
         coroutines[id].state = RUNNING;
-        swapcontext(&(umain->ctx),&(coroutines[id].ctx));
+        swapcontext(&umain,&(coroutines[id].ctx));
     }
 }
 
@@ -108,8 +108,8 @@ void co_wait(struct co *thd) {
     if(running_co == -1){
         running_co = thd->id;
         thd->state = RUNNING;
-        umain->state = SUSPEND;
-        swapcontext(&(umain->ctx),&(thd->ctx));
+        /*umain->state = SUSPEND;*/
+        swapcontext(&umain,&(thd->ctx));
     }else{
         struct co *t = &coroutines[running_co];
         running_co = thd->id;
