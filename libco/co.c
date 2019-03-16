@@ -50,7 +50,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
     //printf("makecontext\n");
     swapcontext(&(umain->ctx),&(coroutines[id].ctx));
-    //printf("swapcontext\n");
+    printf("???????????????\n");
     current = &(coroutines[id]);
     //func(arg); // Test #2 hangs
     return current;
