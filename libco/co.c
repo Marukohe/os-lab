@@ -19,9 +19,11 @@ struct co {
 struct co coroutines[MAX_CO];
 struct co *current=NULL;
 ucontext_t umain;
+int main_flag = 0;
 int max_co = 0;
 int running_co = 0;
 long long cnt_yield = 0;
+
 
 void co_init() {
     for(int i=1;i<MAX_CO;i++){
@@ -58,6 +60,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
         func(arg);
         coroutines[id].state = FREE;
         coroutines[id].fin = 1;
+        main_flag = 0;
     }
 
 
@@ -97,8 +100,8 @@ void co_yield() {
         struct co *t = &coroutines[running_co];
         t->state = READY;
         int id = rand()%(max_co+1);
-        while(id!=max_co&&(coroutines[id].state == SUSPEND||coroutines[id].state == FREE)){
-            id = rand()%max_co;
+        while((id!=max_co||main_flag==1)&&(coroutines[id].state == SUSPEND||coroutines[id].state == FREE)){
+            id = rand()%(max_co+1);
         }
         if(id==max_co){
             struct co *t = &coroutines[running_co];
@@ -139,6 +142,7 @@ void co_wait(struct co *thd) {
         running_co = thd->id;
         thd->state = RUNNING;
         /*umain->state = SUSPEND;*/
+        main_flag = 1;
         swapcontext(&umain,&(thd->ctx));
         running_co = -1;
     }else{
