@@ -51,12 +51,20 @@ struct co* co_start(const char *name, func_t func, void *arg) {
         }
     }
     /*printf("%d\n",max_co);*/
+
     int id = max_co++;
     running_co = id;
+    func_t myfunc(){
+        func(arg);
+        coroutines[id].state = FREE;
+        coroutines[id].fin = 1;
+    }
+
+
     coroutines[id].fin = 1;
     coroutines[id].id = id;
     coroutines[id].state = RUNNING;
-    coroutines[id].co_fun = func;
+    coroutines[id].co_fun = myfunc();
     coroutines[id].arg = arg;
     getcontext(&(coroutines[id].ctx));
 
@@ -65,13 +73,13 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].ctx.uc_stack.ss_flags = 0;
     coroutines[id].ctx.uc_link = &umain;
 
-    makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
+    makecontext(&(coroutines[id].ctx),(void(*)(void))myfunc,1,arg);
     //printf("makecontext\n");
     /*printf("Y2 is here\n");*/
     /*printf("%d\n",id);*/
     swapcontext(&umain,&(coroutines[id].ctx));
     /*printf("???????????????\n");*/
-    printf("\n%d\n",id);
+    /*printf("\n%d\n",id);*/
     running_co = -1;
     current = &(coroutines[id]);
     /*printf("xxxxxxxxxxxx\n");*/
@@ -99,7 +107,7 @@ void co_yield() {
         struct co *t = &coroutines[running_co];
         t->state = READY;
         int id = rand()%max_co;
-        while(coroutines[id].state == SUSPEND){
+        while(coroutines[id].state == SUSPEND||coroutines[id].state == FREE){
             id = rand()%max_co;
         }
         running_co = id;
