@@ -133,6 +133,7 @@ void co_wait(struct co *thd) {
         thd->state = RUNNING;
         /*umain->state = SUSPEND;*/
         swapcontext(&umain,&(thd->ctx));
+        running_co = -1;
     }else{
         thd->fin = 0;
         struct co *t = &coroutines[running_co];
