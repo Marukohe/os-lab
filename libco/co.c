@@ -66,10 +66,11 @@ void co_yield() {
         coroutines[id].state = RUNNING;
         swapcontext(&(t->ctx),&(coroutines[id].ctx));
     }else if(running_co!=-1 && max_co==1){
-        assert(0);
+        //assert(0);
         struct co *t = &coroutines[running_co];
         t->state = READY;
         running_co = -1;
+        prinf("assert at here\n\n\n");
         swapcontext(&(t->ctx),&umain);
     } else{
         int id = rand()%max_co+1;
