@@ -45,9 +45,9 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].ctx.uc_link = &umain;
 
     makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
-    printf("makecontext\n");
+    //printf("makecontext\n");
     swapcontext(&umain,&(coroutines[id].ctx));
-    printf("swapcontext\n");
+    //printf("swapcontext\n");
     current = &(coroutines[id]);
     //func(arg); // Test #2 hangs
     return current;
@@ -77,7 +77,7 @@ void co_yield() {
         struct co *t = &coroutines[running_co];
         t->state = READY;
         running_co = -1;
-        printf("assert at here\n\n\n");
+        //printf("assert at here\n\n\n");
         swapcontext(&(t->ctx),&umain);
     } else{
         cnt_yield++;
