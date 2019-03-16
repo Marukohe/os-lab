@@ -18,7 +18,7 @@ struct co {
 
 struct co coroutines[MAX_CO];
 struct co *current;
-ucontext_t  umain;
+struct co *umain;
 int max_co = 0;
 int running_co = 0;
 long long cnt_yield = 0;
@@ -27,6 +27,7 @@ void co_init() {
     for(int i=1;i<MAX_CO;i++){
         coroutines[i].state = FREE;
     }
+    umain->state = FREE;
     running_co = -1;
 }
 
@@ -42,11 +43,11 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     coroutines[id].ctx.uc_stack.ss_sp = coroutines[id].stack;
     coroutines[id].ctx.uc_stack.ss_size = DEFAULT_STACK_SIZE;
     coroutines[id].ctx.uc_stack.ss_flags = 0;
-    coroutines[id].ctx.uc_link = &umain;
+    coroutines[id].ctx.uc_link = &(umain->ctx);
 
     makecontext(&(coroutines[id].ctx),(void(*)(void))func,1,arg);
     //printf("makecontext\n");
-    swapcontext(&umain,&(coroutines[id].ctx));
+    swapcontext(&(umain->ctx),&(coroutines[id].ctx));
     //printf("swapcontext\n");
     current = &(coroutines[id]);
     //func(arg); // Test #2 hangs
@@ -78,7 +79,7 @@ void co_yield() {
         t->state = READY;
         running_co = -1;
         //printf("assert at here\n\n\n");
-        swapcontext(&(t->ctx),&umain);
+        swapcontext(&(t->ctx),&(umain->ctx));
     } else{
         cnt_yield++;
         int id = rand()%max_co+1;
@@ -88,7 +89,7 @@ void co_yield() {
         /*struct co *t = &corourines[running];*/
         running_co = id;
         coroutines[id].state = RUNNING;
-        swapcontext(&umain,&(coroutines[id].ctx));
+        swapcontext(&(umain->ctx),&(coroutines[id].ctx));
     }
 }
 
@@ -96,7 +97,8 @@ void co_wait(struct co *thd) {
     if(running_co == -1){
         running_co = thd->id;
         thd->state = RUNNING;
-        swapcontext(&umain,&(thd->ctx));
+        umain->state = SUSPEND;
+        swapcontext(&(umain->ctx),&(thd->ctx));
     }else{
         struct co *t = &coroutines[running_co];
         running_co = thd->id;
