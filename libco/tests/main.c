@@ -33,6 +33,7 @@ static void test_1() {
     /*printf("is_here?\n\n");*/
     struct co *thd2 = co_start("thread-2", work, "Y");
 
+    printf("\nafter start 2\n");
     co_wait(thd1);
     printf("\nbetween 1 and 2\n");
     co_wait(thd2);
