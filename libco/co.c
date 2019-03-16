@@ -36,6 +36,7 @@ void co_init() {
 
 struct co* co_start(const char *name, func_t func, void *arg) {
     //printf("Y2\n");
+    /*
     int tmp = max_co;
     int cnt=-1;
     for(int i=0;i<tmp;i++){
@@ -48,7 +49,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
             if(cnt!=-1)
                 coroutines[cnt] = coroutines[i];
         }
-    }
+    }*/
     int id = max_co++;
     running_co = id;
     coroutines[id].id = id;
