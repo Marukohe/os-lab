@@ -62,8 +62,13 @@ struct co* co_start(const char *name, func_t func, void *arg) {
  */
 void co_yield() {
     if(cnt_yield==0){
-        printf("here\n");
-        return;
+        //printf("here\n");
+        //return;
+        coroutines[running_co].state = READY;
+        int id = running_co;
+        running_co = -1;
+        cnt_yield++;
+        swapcontext(&(coroutines[id].ctx),&(umain->ctx));
     }
     if(running_co != -1 && max_co!=1){  //不在main 有多个协程
         cnt_yield++;
