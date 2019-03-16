@@ -21,6 +21,7 @@ struct co *current;
 ucontext_t  umain;
 int max_co = 0;
 int running_co = 0;
+long long cnt_yield = 0;
 
 void co_init() {
     for(int i=1;i<MAX_CO;i++){
@@ -57,7 +58,10 @@ struct co* co_start(const char *name, func_t func, void *arg) {
  * co1 to co2 running_co!=-1
  */
 void co_yield() {
+    if(cnt_yield==0)
+        return;
     if(running_co != -1 && max_co!=1){  //不在main 有多个协程
+        cnt_yield++;
         struct co *t = &coroutines[running_co];
         t->state = READY;
         int id = rand()%max_co + 1;
@@ -68,6 +72,7 @@ void co_yield() {
         coroutines[id].state = RUNNING;
         swapcontext(&(t->ctx),&(coroutines[id].ctx));
     }else if(running_co!=-1 && max_co==1){
+        cnt_yield++;
         //assert(0);
         struct co *t = &coroutines[running_co];
         t->state = READY;
@@ -75,6 +80,7 @@ void co_yield() {
         printf("assert at here\n\n\n");
         swapcontext(&(t->ctx),&umain);
     } else{
+        cnt_yield++;
         int id = rand()%max_co+1;
         while(coroutines[id].state==SUSPEND){
             id = rand()%max_co+1;
