@@ -32,7 +32,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     int id = max_co++;
     running_co = id;
     coroutines[id].id = id;
-    coroutines[id].state = READY;
+    coroutines[id].state = RUNNING;
     coroutines[id].co_fun = func;
     coroutines[id].arg = arg;
     getcontext(&(coroutines[id].ctx));
@@ -54,16 +54,29 @@ struct co* co_start(const char *name, func_t func, void *arg) {
  * co1 to co2 running_co!=-1
  */
 void co_yield() {
-    if(running_co != -1){
+    if(running_co != -1 && max_co!=1){  //不在main 有多个协程
         struct co *t = &coroutines[running_co];
-        coroutines[running_co].state = SUSPEND;
+        t->state = READY;
+        int id = rand()%max_co + 1;
+        while(coroutines[id].state == SUSPEND){
+            id = rand()%max_co+1;
+        }
+        running_co = id;
+        coroutines[id].state = RUNNING;
+        swapcontext(&(t->ctx),&(coroutines[id].ctx));
+    }else if(running_co!=-1 && max_co==1){
+        struct co *t = &coroutines[running_co];
+        t->state = READY;
         running_co = -1;
         swapcontext(&(t->ctx),&umain);
-    }else{
-
-        int id = rand()%max_co;
+    } else{
+        int id = rand()%max_co+1;
+        while(coroutines[id].state==SUSPEND){
+            id = rand()%max_co+1;
+        }
         /*struct co *t = &corourines[running];*/
         running_co = id;
+        coroutines[id].state = RUNNING;
         swapcontext(&umain,&(coroutines[id].ctx));
     }
 }
@@ -71,12 +84,13 @@ void co_yield() {
 void co_wait(struct co *thd) {
     if(running_co == -1){
         running_co = thd->id;
+        thd->state = RUNNING;
         swapcontext(&umain,&(thd->ctx));
     }else{
         struct co *t = &coroutines[running_co];
         running_co = thd->id;
         t->state = SUSPEND;
-        thd->state = READY;
+        thd->state = RUNNING;
         swapcontext(&(t->ctx),&(thd->ctx));
     }
 }
