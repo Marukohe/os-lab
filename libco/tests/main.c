@@ -33,9 +33,9 @@ static void test_1() {
     /*printf("is_here?\n\n");*/
     struct co *thd2 = co_start("thread-2", work, "Y");
 
-    printf("\nafter start 2\n");
+    /*printf("\nafter start 2\n");*/
     co_wait(thd1);
-    printf("\nbetween 1 and 2\n");
+    /*printf("\nbetween 1 and 2\n");*/
     co_wait(thd2);
 
     printf("\n");
@@ -98,7 +98,7 @@ static void consumer(void *arg) {
 
 static void test_2() {
 
-    printf("In test2\n");
+    /*printf("In test2\n");*/
     Queue *queue = q_new();
 
     struct co *thd1 = co_start("producer-1", producer, queue);
