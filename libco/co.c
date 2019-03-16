@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <time.h>
 #include "co.h"
 
 struct co {
@@ -92,7 +93,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
  * co1 to co2 running_co!=-1
  */
 void co_yield() {
-    srand(20000);
+    srand((unsigned)time(0));
     if(running_co != -1 && max_co!=1){  //不在main 有多个协程
         cnt_yield++;
         struct co *t = &coroutines[running_co];
