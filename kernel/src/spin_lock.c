@@ -1,8 +1,8 @@
 #include <common.h>
 #include <klib.h>
 
-void spin_lock(spinlock &lk){
-    cli();
+void spin_lock(spinlock_t &lk){
+    /*cli();*/
     while(_atomic_xchg(&lk->locked, 1));
 }
 
