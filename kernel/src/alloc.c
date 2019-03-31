@@ -10,10 +10,15 @@ static void pmm_init() {
 }
 
 static void *kalloc(size_t size) {
+    //void *ret;
+    //lock(&malloc_lock);
+    //ret = my_alloc(size);
+    //unlock(&malloc_lock);
   return NULL;
 }
 
 static void kfree(void *ptr) {
+    //ret
 }
 
 MODULE_DEF(pmm) {
