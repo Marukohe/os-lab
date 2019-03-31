@@ -3,7 +3,7 @@
 
 void spin_lock(spinlock *lk){
     cli();
-    while(_atomic_xchg(&lk->locked, 1));
+    while(_atomic_xchg(lk->locked, 1));
 }
 
 void spin_unlock(spinlock *lk){
