@@ -17,7 +17,7 @@ typedef struct Kmem{
 static uintptr_t start;
 static uintptr_t pm_start, pm_end;
 
-kmem *smem[CPUNUM];
+kmem smem[CPUNUM];
 kmem *lmem;
 
 static void pmm_init() {
@@ -29,9 +29,9 @@ static void pmm_init() {
   start = pm_start;
   lk->locked = 0;
   for(int i=1;i<=CPUNUM;i++){
-        smem[i]->maxsize = 0;
-        smem[i]->start = 0;
-        smem[i]->size = 0;
+        smem[i].maxsize = 0;
+        smem[i].start = 0;
+        smem[i].size = 0;
   }
   lmem->maxsize = pm_end-pm_start;
   lmem->start = pm_start;
