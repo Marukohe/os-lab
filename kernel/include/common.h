@@ -6,5 +6,5 @@
 #include <spinlock.h>
 
 #define DEBUG
-#define CORRECTNESS_FIRST
+// #define CORRECTNESS_FIRST
 #endif
