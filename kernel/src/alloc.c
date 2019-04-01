@@ -47,7 +47,7 @@ static void *kalloc(size_t size) {
 #else
     spin_lock(lk);
     void *ret;
-    if(szie > SMALLSIZE){
+    if(size > SMALLSIZE){
         ret = my_bigalloc(size);
     }else{
         ret = my_smallalloc(size);
