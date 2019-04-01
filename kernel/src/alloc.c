@@ -32,7 +32,7 @@ static void pmm_init() {
   assert(lk->locked==0);
   for(int i=0;i<CPUNUM;i++)
       spincnt[i] = 0;
-  assert(0);
+  /*assert(0);*/
   for(int i=0;i<CPUNUM;i++){
         //smem[i]->maxsize = 0;
         smem[i]->start = 0;
@@ -41,6 +41,7 @@ static void pmm_init() {
         smem[i]->next = NULL;
         smem[i]->prev = NULL;
   }
+  assert(0);
   assert(lk->locked==0);
   //lmem->maxsize = pm_end-pm_start;
   lmem->start = pm_start;
