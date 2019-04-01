@@ -18,6 +18,7 @@ void test(){
     spin_lock(lk);
     Logb("TEST START");
     spin_unlock(lk);
+    assert(0);
     void *space[testnum];
     int i;
     for(i=0;i<testnum;i++){
