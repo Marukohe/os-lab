@@ -28,7 +28,7 @@ static void pmm_init() {
 
   start = pm_start;
   lk->locked = 0;
-  for(int i=1;i<=CPUNUM;i++){
+  for(int i=0;i<CPUNUM;i++){
         smem[i]->maxsize = 0;
         smem[i]->start = 1;
         smem[i]->size = 0;
