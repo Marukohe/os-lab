@@ -99,12 +99,12 @@ static void *my_smallalloc(size_t size){
         }
         newpage->prev = smem[cpu];
         smem[cpu]->next = newpage;
-        newpage->size = newpage->size-sszie;
+        newpage->size = newpage->size-ssize;
         void *addr = (void *)(newpage->start+newpage->size-ssize);
         kmem *myalloc =(kmem *)addr;
         myalloc->state = USING;
         myalloc->start = newpage->size+newpage->start-size;
-        malloc->size = size;
+        myalloc->size = size;
         if(newpage->next==NULL){
             myalloc->next = NULL;
         }else{
