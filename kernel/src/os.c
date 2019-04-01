@@ -15,7 +15,9 @@ static void hello() {
 #define test_ptr_nr 1024
 #define testnum 100
 void test(){
+    spin_lock(lk);
     Logb("TEST START");
+    spin_unlock(lk);
     void *space[testnum];
     int i;
     for(i=0;i<testnum;i++){
@@ -29,7 +31,9 @@ void test(){
     for(i=0;i<100;i++){
         pmm->free(space[i]);
     }
+    spin_lock(lk);
     Logb("TEST FINISH");
+    spin_unlock(lk);
 }
 
 static void os_run() {
