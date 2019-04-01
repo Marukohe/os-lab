@@ -15,7 +15,6 @@ static void hello() {
 #define test_ptr_nr 1024
 #define testnum 100
 void test(){
-    Assert(lk->locked==0,"cpu%d",_cpu());
     spin_lock(lk);
     assert(0);
     Logb("TEST START");
