@@ -12,8 +12,29 @@ static void hello() {
   _putc("12345678"[_cpu()]); _putc('\n');
 }
 
+#define test_ptr_nr 1024
+#define testnum 100
+void test(){
+    Log("TEST START");
+    void *space[testnum];
+    int i;
+    for(i=0;i<testnum;i++){
+        space[i] = pmm->alloc(rand()%((1<<6)-1));
+    }
+    for(i=0;i<10;i++){
+        int tmp = rand()%100;
+        pmm->free(space[tmp]);
+        space[tmp] = pmm->alloc((rand()&((1<<10)-1)));
+    }
+    for(i=0;i<100;i++){
+        pmm->free(space[i]);
+    }
+    Log("TEST FINISH")
+}
+
 static void os_run() {
-  hello();
+  //hello();
+  test();
   _intr_write(1);
   while (1) {
     _yield();

@@ -46,7 +46,7 @@ static void pmm_init() {
 }
 
 static void *my_bigalloc(size_t size){
-    /*spin_lock(lk);*/
+    spin_lock(lk);
     void *ret;
     int k = size/BLOCK;
     size_t ssize = (k+1)*BLOCK;
@@ -65,7 +65,7 @@ static void *my_bigalloc(size_t size){
     lmem->next = newalloc;
     newalloc->state = USING;
     ret = (void *)sstart;
-    /*spin_unlock(lk);*/
+    spin_unlock(lk);
     return ret;
 }
 
@@ -144,14 +144,14 @@ static void *kalloc(size_t size) {
     spin_unlock(lk);
     return ret;
 #else
-    spin_lock(lk);
+    /*spin_lock(lk);*/
     void *ret;
     if(size > SMALLSIZE){
         ret = my_bigalloc(size);
     }else{
         ret = my_smallalloc(size);
     }
-    spin_unlock(lk);
+    /*spin_unlock(lk);*/
     return ret;
 #endif
   /*return NULL;*/
@@ -161,7 +161,7 @@ static void kfree(void *ptr) {
 #ifdef CORRECTNESS_FIRST
     return;
 #else
-
+    return;
 #endif
     //ret
 }
