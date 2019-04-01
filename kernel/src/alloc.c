@@ -23,7 +23,7 @@ static void pmm_init() {
 static void *kalloc(size_t size) {
 #ifdef CORRECTNESS_FIRST
     spin_lock(lk);
-    void *ret = start;
+    void *ret = (void *)start;
     start += size;
     spin_unlock(lk);
     return ret;
