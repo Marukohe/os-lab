@@ -29,7 +29,7 @@ static void pmm_init() {
 
   start = pm_start;
   lk->locked = 0;
-  for(int i=1;i<=CPUNUM;i++)
+  for(int i=0;i<CPUNUM;i++)
       spincnt[i] = 0;
   for(int i=0;i<CPUNUM;i++){
         //smem[i]->maxsize = 0;
@@ -72,7 +72,7 @@ static void *my_bigalloc(size_t size){
 }
 
 static void *my_smallalloc(size_t size){
-    int cpu = _cpu()-1;
+    int cpu = _cpu();
     //小内存分配
     void *ret;
     size_t ssize = size + STSIZE;

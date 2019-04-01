@@ -7,7 +7,7 @@ void pushcli(){
 }
 
 void popcli(){
-    assert(spincnt[_cpu]!=0);
+    assert(spincnt[_cpu()]!=0);
     spincnt[_cpu()]--;
     if(spincnt[_cpu()]==0)
         sti();
