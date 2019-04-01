@@ -4,7 +4,7 @@
 void pushcli(){
     cli();
     spincnt[_cpu()]++;
-    printf("push %d %d\n",_cpu(), spincnt[_cpu()]);
+    /*printf("push %d %d\n",_cpu(), spincnt[_cpu()]);*/
 }
 
 void popcli(){
@@ -18,10 +18,11 @@ void popcli(){
 
 void spin_lock(spinlock *lk){
     //assert(lk->locked==0);
-    printf("spinlock %d\n",_cpu());
+    /*printf("spinlock %d\n",_cpu());*/
     /*cli();*/
     pushcli();
     while(_atomic_xchg(&lk->locked, 1));
+    printf("spinlock %d\n",_cpu());
 }
 
 void spin_unlock(spinlock *lk){
