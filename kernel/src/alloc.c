@@ -33,7 +33,7 @@ static void *my_bigalloc(size_t size){
     return NULL;
 }
 
-static void *mysmallalloc(size_t size){
+static void *my_smallalloc(size_t size){
     return NULL;
 }
 
