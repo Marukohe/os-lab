@@ -106,7 +106,7 @@ static void *my_smallalloc(size_t size){
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
         newpage->start = FREE;
-        if(smem[cpu].next==NULL){
+        if(smem[cpu]->next==NULL){
             newpage->next = NULL;
         }else{
             smem[cpu]->next->prev = newpage;
