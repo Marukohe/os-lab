@@ -1,7 +1,7 @@
 #include <common.h>
 #include <klib.h>
 #define SMALLSIZE 256
-#define CPUNUM 5
+#define CPUNUM 6
 #define BLOCK 4*1024
 #define STSIZE 20
 
