@@ -4,6 +4,7 @@
 void pushcli(){
     cli();
     spincnt[_cpu()]++;
+    printf("push %d %d\n",_cpu(), spincnt[_cpu()]);
 }
 
 void popcli(){
