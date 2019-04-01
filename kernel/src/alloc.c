@@ -34,12 +34,12 @@ static void pmm_init() {
         smem[i]->start = 0;
         smem[i]->size = 0;
         smem[i]->state = FREE;
-        smem[i].next = NULL;
-        smem[i].prev = NULL;
+        smem[i]->next = NULL;
+        smem[i]->prev = NULL;
   }
   //lmem->maxsize = pm_end-pm_start;
   lmem->start = pm_start;
-  lmem->size = lmem->maxsize;
+  lmem->size = pm_end-pm_start;
   lmem->state = FREE;
   lmem->next = NULL;
   lmem->prev = NULL;
