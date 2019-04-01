@@ -16,6 +16,7 @@ static void hello() {
 #define testnum 100
 void test(){
     spin_lock(lk);
+    assert(0);
     Logb("TEST START");
     spin_unlock(lk);
     assert(0);
