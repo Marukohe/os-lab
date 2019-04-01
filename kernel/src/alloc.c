@@ -28,8 +28,8 @@ static void pmm_init() {
 
   start = pm_start;
   lk->locked = 0;
-  for(int i=1;i<=CUPNUM;i++){
-        smem[i]->maxize = 0;
+  for(int i=1;i<=CPUNUM;i++){
+        smem[i]->maxsize = 0;
         smem[i]->start = 0;
         smem[i]->size = 0;
   }
@@ -40,7 +40,7 @@ static void pmm_init() {
 
 static void *my_bigalloc(size_t size){
     spin_lock(lk);
-    uintptr_t sstart =
+    //uintptr_t sstart =
     spin_unlock(lk);
     return NULL;
 }
