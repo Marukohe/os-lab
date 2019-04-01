@@ -17,7 +17,7 @@ void popcli(){
 }
 
 void spin_lock(spinlock *lk){
-    assert(0);
+    /*assert(0);*/
     printf("%d\n",_cpu());
     assert(lk->locked==0);
     printf("%d\n",_cpu());
