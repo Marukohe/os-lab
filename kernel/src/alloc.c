@@ -29,7 +29,8 @@ static void pmm_init() {
 
   start = pm_start;
   lk->locked = 0;
-  assert(lk->locked==0);
+  pk->locked = 0;
+  /*assert(lk->locked==0);*/
   for(int i=0;i<CPUNUM;i++)
       spincnt[i] = 0;
   /*assert(0);*/
@@ -42,14 +43,14 @@ static void pmm_init() {
         smem[i]->prev = NULL;
   }
   /*assert(0);*/
-  assert(lk->locked==0);
+  /*assert(lk->locked==0);*/
   //lmem->maxsize = pm_end-pm_start;
   lmem->start = pm_start;
   lmem->size = pm_end-pm_start;
   lmem->state = FREE;
   lmem->next = NULL;
   lmem->prev = NULL;
-  assert(0);
+  /*assert(0);*/
 }
 
 static void *my_bigalloc(size_t size){

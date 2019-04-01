@@ -15,11 +15,11 @@ static void hello() {
 #define test_ptr_nr 1024
 #define testnum 100
 void test(){
-    assert(0);
-    spin_lock(lk);
+    /*assert(0);*/
+    spin_lock(pk);
     assert(0);
     Logb("TEST START");
-    spin_unlock(lk);
+    spin_unlock(pk);
     assert(0);
     void *space[testnum];
     int i;
@@ -34,9 +34,9 @@ void test(){
     for(i=0;i<100;i++){
         pmm->free(space[i]);
     }
-    spin_lock(lk);
+    spin_lock(pk);
     Logb("TEST FINISH");
-    spin_unlock(lk);
+    spin_unlock(pk);
 }
 
 static void os_run() {

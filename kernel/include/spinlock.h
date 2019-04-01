@@ -5,6 +5,7 @@ typedef struct spinlock{
 }spinlock, *spinlock_t;
 
 spinlock *lk;
+spinlock *pk;  //for printf
 int spincnt[5];
 
 void spin_lock(spinlock *lk);
