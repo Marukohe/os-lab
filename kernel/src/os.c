@@ -15,7 +15,7 @@ static void hello() {
 #define test_ptr_nr 1024
 #define testnum 100
 void test(){
-    Log("TEST START");
+    Logb("TEST START");
     void *space[testnum];
     int i;
     for(i=0;i<testnum;i++){
@@ -29,7 +29,7 @@ void test(){
     for(i=0;i<100;i++){
         pmm->free(space[i]);
     }
-    Log("TEST FINISH")
+    Logb("TEST FINISH");
 }
 
 static void os_run() {
