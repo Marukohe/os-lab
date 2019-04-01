@@ -10,14 +10,22 @@ static void pmm_init() {
 }
 
 static void *kalloc(size_t size) {
+#ifdef CORRECTNESS_FIRST
     //void *ret;
     //lock(&malloc_lock);
     //ret = my_alloc(size);
     //unlock(&malloc_lock);
+#else
+#endif
   return NULL;
 }
 
 static void kfree(void *ptr) {
+#ifdef CORRECTNESS_FIRST
+
+#else
+
+#endif
     //ret
 }
 
