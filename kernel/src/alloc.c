@@ -3,7 +3,7 @@
 #define SMALLSIZE 256
 #define CPUNUM 4
 #define BLOCK 4*1024
-#define STSIZE 24
+#define STSIZE 20
 
 typedef struct Kmem{
     uintptr_t start;
@@ -46,7 +46,7 @@ static void pmm_init() {
 }
 
 static void *my_bigalloc(size_t size){
-    spin_lock(lk);
+    /*spin_lock(lk);*/
     void *ret;
     int k = size/BLOCK;
     size_t ssize = (k+1)*BLOCK;
@@ -65,30 +65,14 @@ static void *my_bigalloc(size_t size){
     lmem->next = newalloc;
     newalloc->state = USING;
     ret = (void *)sstart;
-    spin_unlock(lk);
+    /*spin_unlock(lk);*/
     return ret;
 }
 
 static void *my_smallalloc(size_t size){
     int cpu = _cpu()-1;
-    /*
-    if(smem[cpu].maxsize < size){
-        //需要重新申请4k
-        void *new = my_bigalloc(size);
-        kmem *newpage = (kmem *)(new-STSIZE);
-        newpage->start = FREE;
-        if(smem[cpu].next==NULL){
-            newpage->next = NULL;
-        }else{
-            smem[cpu]->next->prev = newpage;
-            newpage->next = smem[cpu]->next;
-        }
-        newpage->prev = smem[cpu];
-        smem[cpu]->next = newpage;
-        smem[cpu]->maxsize = newpage->size;
-    }*/
-        //小内存分配
-        //kmem *newmem;
+    //小内存分配
+    void *ret;
     size_t ssize = size + STSIZE;
     size_t minsize = BLOCK;
     kmem *tmp = NULL;
@@ -102,6 +86,7 @@ static void *my_smallalloc(size_t size){
         }
         head = head->next;
     }
+    //申请新的4k页
     if(tmp == NULL){
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
@@ -114,14 +99,28 @@ static void *my_smallalloc(size_t size){
         }
         newpage->prev = smem[cpu];
         smem[cpu]->next = newpage;
-        //smem[cpu]->maxsize = newpage->size;
-
+        newpage->size = newpage->size-sszie;
+        void *addr = (void *)(newpage->start+newpage->size-ssize);
+        kmem *myalloc =(kmem *)addr;
+        myalloc->state = USING;
+        myalloc->start = newpage->size+newpage->start-size;
+        malloc->size = size;
+        if(newpage->next==NULL){
+            myalloc->next = NULL;
+        }else{
+            newpage->next->prev = myalloc;
+            myalloc->next = newpage->next;
+        }
+        newpage->next = myalloc;
+        myalloc->prev = newpage;
+        ret = (void *)myalloc->start;
     }else{
+        //在处理器的内存中分配
         tmp->size = head->start-ssize;
         void *addr = (void *)(tmp->start+tmp->size-ssize);
         kmem *myalloc = (kmem *)addr;
         myalloc->state = USING;
-        myalloc->start = tmp->size+tmp->start-ssize;
+        myalloc->start = tmp->size+tmp->start-size;
         myalloc->size = size;
         if(tmp->next==NULL){
             myalloc->next = NULL;
@@ -131,9 +130,10 @@ static void *my_smallalloc(size_t size){
         }
         myalloc->prev = tmp;
         tmp->next = myalloc;
+        ret = (void *)myalloc->start;
     }
 
-    return NULL;
+    return ret;
 }
 
 static void *kalloc(size_t size) {
