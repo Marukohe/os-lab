@@ -41,6 +41,7 @@ static void pmm_init() {
         smem[i]->next = NULL;
         smem[i]->prev = NULL;
   }
+  assert(lk->locked==0);
   //lmem->maxsize = pm_end-pm_start;
   lmem->start = pm_start;
   lmem->size = pm_end-pm_start;
