@@ -3,12 +3,12 @@
 #define SMALLSIZE 256
 #define CPUNUM 4
 #define BLOCK 4*1024
-#define STSIZE 20
+#define STSIZE 24
 
 typedef struct Kmem{
     uintptr_t start;
-    uintptr_t size;
-    uintptr_t maxsize;
+    size_t size;
+    //size_t maxsize;
     enum BLOCKSTATE state;
     struct Kmem *next;
     struct Kmem *prev;
@@ -30,23 +30,109 @@ static void pmm_init() {
   start = pm_start;
   lk->locked = 0;
   for(int i=0;i<CPUNUM;i++){
-        smem[i]->maxsize = 0;
+        //smem[i]->maxsize = 0;
         smem[i]->start = 0;
         smem[i]->size = 0;
+        smem[i]->state = FREE;
+        smem[i].next = NULL;
+        smem[i].prev = NULL;
   }
-  lmem->maxsize = pm_end-pm_start;
+  //lmem->maxsize = pm_end-pm_start;
   lmem->start = pm_start;
   lmem->size = lmem->maxsize;
+  lmem->state = FREE;
+  lmem->next = NULL;
+  lmem->prev = NULL;
 }
 
 static void *my_bigalloc(size_t size){
     spin_lock(lk);
-    //uintptr_t sstart =
+    void *ret;
+    int k = size/BLOCK;
+    size_t ssize = (k+1)*BLOCK;
+    uintptr_t sstart = lmem->start+lmem->size-ssize;
+    kmem *newalloc = (kmem *)((void *)(sstart-STSIZE));
+    newalloc->start = sstart;
+    newalloc->size = ssize;
+    lmem->size = lmem->size - ssize - STSIZE;
+    if(lmem->next==NULL)
+        newalloc->next = NULL;
+    else{
+        lmem->next->prev = newalloc;
+        newalloc->next = lmem->next;
+    }
+    newalloc->prev = lmem;
+    lmem->next = newalloc;
+    newalloc->state = USING;
+    ret = (void *)sstart;
     spin_unlock(lk);
-    return NULL;
+    return ret;
 }
 
 static void *my_smallalloc(size_t size){
+    int cpu = _cpu()-1;
+    /*
+    if(smem[cpu].maxsize < size){
+        //需要重新申请4k
+        void *new = my_bigalloc(size);
+        kmem *newpage = (kmem *)(new-STSIZE);
+        newpage->start = FREE;
+        if(smem[cpu].next==NULL){
+            newpage->next = NULL;
+        }else{
+            smem[cpu]->next->prev = newpage;
+            newpage->next = smem[cpu]->next;
+        }
+        newpage->prev = smem[cpu];
+        smem[cpu]->next = newpage;
+        smem[cpu]->maxsize = newpage->size;
+    }*/
+        //小内存分配
+        //kmem *newmem;
+    size_t ssize = size + STSIZE;
+    size_t minsize = BLOCK;
+    kmem *tmp = NULL;
+    kmem *head = smem[cpu];
+    while(head!=NULL){
+        if(ssize<=head->size && head->state==FREE){
+            if(minsize > head->size){
+                tmp = head;
+                minsize = head->size;
+            }
+        }
+        head = head->next;
+    }
+    if(tmp == NULL){
+        void *new = my_bigalloc(size);
+        kmem *newpage = (kmem *)(new-STSIZE);
+        newpage->start = FREE;
+        if(smem[cpu].next==NULL){
+            newpage->next = NULL;
+        }else{
+            smem[cpu]->next->prev = newpage;
+            newpage->next = smem[cpu]->next;
+        }
+        newpage->prev = smem[cpu];
+        smem[cpu]->next = newpage;
+        //smem[cpu]->maxsize = newpage->size;
+
+    }else{
+        tmp->size = head->start-ssize;
+        void *addr = (void *)(tmp->start+tmp->size-ssize);
+        kmem *myalloc = (kmem *)addr;
+        myalloc->state = USING;
+        myalloc->start = tmp->size+tmp->start-ssize;
+        myalloc->size = size;
+        if(tmp->next==NULL){
+            myalloc->next = NULL;
+        }else{
+            tmp->next->prev = myalloc;
+            myalloc->next = tmp->next;
+        }
+        myalloc->prev = tmp;
+        tmp->next = myalloc;
+    }
+
     return NULL;
 }
 
