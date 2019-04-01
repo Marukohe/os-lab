@@ -16,7 +16,7 @@ void spin_lock(spinlock *lk){
     //assert(lk->locked==0);
     Logb("spinlock");
     /*cli();*/
-    push();
+    pushcli();
     while(_atomic_xchg(&lk->locked, 1));
 }
 
