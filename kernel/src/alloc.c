@@ -7,8 +7,8 @@
 
 typedef struct Kmem{
     uintptr_t start;
-    int size;
-    int maxsize;
+    uintptr_t size;
+    uintptr_t maxsize;
     enum BLOCKSTATE state;
     struct Kmem *next;
     struct Kmem *prev;
@@ -19,18 +19,19 @@ static uintptr_t pm_start, pm_end;
 
 kmem *smem[CPUNUM];
 kmem *lmem;
+kmem sizetest;
 
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
   Logp("pmm_init successfully, from pm_start 0x%x to pm_end 0x%x",pm_start,pm_end);
-  Logb("struct size %ld",sizeof(lmem));
+  Logb("struct size %ld",sizeof(sizetest));
 
   start = pm_start;
   lk->locked = 0;
   for(int i=0;i<CPUNUM;i++){
         smem[i]->maxsize = 0;
-        smem[i]->start = 1;
+        smem[i]->start = 0;
         smem[i]->size = 0;
   }
   lmem->maxsize = pm_end-pm_start;
