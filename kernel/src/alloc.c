@@ -29,6 +29,7 @@ static void pmm_init() {
 
   start = pm_start;
   lk->locked = 0;
+  assert(lk->locked==0);
   for(int i=0;i<CPUNUM;i++)
       spincnt[i] = 0;
   for(int i=0;i<CPUNUM;i++){
