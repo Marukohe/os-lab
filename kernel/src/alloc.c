@@ -22,10 +22,10 @@ static void pmm_init() {
 
 static void *kalloc(size_t size) {
 #ifdef CORRECTNESS_FIRST
-    spin_lock(&lk);
+    spin_lock(lk);
     void *ret = start;
     start += size;
-    spin_unlock(&lk);
+    spin_unlock(lk);
     return ret;
 #else
     return NULL;
