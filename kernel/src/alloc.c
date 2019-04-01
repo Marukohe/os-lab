@@ -49,7 +49,7 @@ static void pmm_init() {
   lmem->state = FREE;
   lmem->next = NULL;
   lmem->prev = NULL;
-  assert(lk->locked==0);
+  assert(0);
 }
 
 static void *my_bigalloc(size_t size){
