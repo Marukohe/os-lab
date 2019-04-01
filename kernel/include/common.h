@@ -5,6 +5,8 @@
 #include <x86.h>
 #include <spinlock.h>
 
+enum BLOCKSTATE{FREE,USING,READY};
+
 #define DEBUG
 // #define CORRECTNESS_FIRST
 #endif

@@ -1,14 +1,15 @@
 #include <common.h>
 #include <klib.h>
 #define SMALLSIZE 256
-#define CPUNUM 4
+#define CPUNUM 5
 #define BLOCK 4*1024
-#define STSIZE 40
+#define STSIZE 20
 
 typedef struct Kmem{
     uintptr_t start;
     uintptr_t size;
     uintptr_t maxsize;
+    enum BLOCKSTATE state;
     struct Kmem *next;
     struct Kmem *prev;
 }kmem;
@@ -16,8 +17,8 @@ typedef struct Kmem{
 static uintptr_t start;
 static uintptr_t pm_start, pm_end;
 
-kmem smem[CPUNUM];
-kmem lmem;
+kmem *smem[CPUNUM];
+kmem *lmem;
 
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
@@ -27,9 +28,20 @@ static void pmm_init() {
 
   start = pm_start;
   lk->locked = 0;
+  for(int i=1;i<=CUPNUM;i++){
+        smem[i]->maxize = 0;
+        smem[i]->start = 0;
+        smem[i]->size = 0;
+  }
+  lmem->maxsize = pm_end-pm_start;
+  lmem->start = pm_start;
+  lmem->size = lmem->maxsize;
 }
 
 static void *my_bigalloc(size_t size){
+    spin_lock(lk);
+    uintptr_t sstart =
+    spin_unlock(lk);
     return NULL;
 }
 
