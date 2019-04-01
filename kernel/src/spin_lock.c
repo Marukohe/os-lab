@@ -15,7 +15,7 @@ void popcli(){
 
 void spin_lock(spinlock *lk){
     //assert(lk->locked==0);
-    printf("spinlock");
+    printf("spinlock\n");
     /*cli();*/
     pushcli();
     while(_atomic_xchg(&lk->locked, 1));
