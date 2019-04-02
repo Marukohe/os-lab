@@ -33,12 +33,43 @@ static void pmm_init() {
 
   start = pm_start;
   assert(lmem==NULL);
+  for(int i=0;i<CPUNUM;i++)
+      assert(smem[i]==NULL);
 
   lmem = (kmem *)(pm_start);
   for(int i=0;i<CPUNUM;i++){
       smem[i] = (kmem *)(pm_start+(1+i)*STSIZE);
   }
-  assert(lmem==NULL);
+
+  for(int i=0;i<CPUNUM;i++){
+      smem[i]->start = 0;
+      smem[i]->size = 0;
+      smem[i]->state = FREE;
+      smem[i]->next = NULL;
+      smem[i]->prev = NULL;
+  }
+
+  lmem->start = pm_start + 5*STSIZE;
+  lmem->size = pm_end-lm->start;
+  lmem->state = FREE;
+  lmem->next = NULL;
+  lmem->prev = NULL;
+
+  lk.locked = 0;
+  pk.locked = 0;
+
+  assert(lmem!=NULL);
+  for(int i=0;i<CPUNUM;i++){
+      assert(smem[i]!=NULL);
+      assert(smem[i]->next==NULL);
+      assert(smem[i]->prev==NULL);
+      assert(smem[i]->start==0);
+      assert(smem[i]->size==0);
+  }
+  assert(lk.locked==0);
+  assert(pk.locked==0);
+  assert(lmem->next==NULL);
+  assert(lmem->prev==NULL);
 }
 /*
 static void *my_bigalloc(size_t size){
