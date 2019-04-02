@@ -196,7 +196,7 @@ static void kfree(void *ptr) {
 #else
     kmem *myfree = (kmem *)(ptr-STSIZE);
     assert(myfree->state==USING);
-    assert(myfree->size！=0);
+    assert(myfree->size!=0);
     assert(myfree->prev!=NULL);
     //myfree(ptr);
     return;
