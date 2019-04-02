@@ -77,10 +77,10 @@ static void *my_bigalloc(size_t size){
     newalloc->state = USING;
     ret = (void *)sstart;
 
-    assert(newpage->prev==lmem);
-    assert(newpage->size==ssize);
-    assert(newpage->prev->next==newpage);
-    assert(newpage->state==USING);
+    assert(newalloc->prev==lmem);
+    assert(newalloc->size==ssize);
+    assert(newalloc->prev->next==newpage);
+    assert(newalloc->state==USING);
     assert(lmem->next->prev==lmem);
     assert(lmem->prev==NULL);
     assert(lmem->state==FREE);
