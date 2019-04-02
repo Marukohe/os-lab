@@ -69,7 +69,7 @@ static void *my_bigalloc(size_t size){
     newalloc->size = ssize;
     assert(newalloc->size==ssize);
 #ifdef DEBUG
-    printf("70:  %x %d\n",newalloc->size,_cpu());
+    Logb("%x %d\n",newalloc->size,_cpu());
 #endif
     lmem->size = lmem->size - ssize - STSIZE;
     if(lmem->next==NULL)
@@ -79,11 +79,13 @@ static void *my_bigalloc(size_t size){
         newalloc->next = lmem->next;
     }
     newalloc->prev = lmem;
+    assert(newalloc->prev==lmem);
     lmem->next = newalloc;
+    assert(newalloc->prev==lmem);
     newalloc->state = USING;
     ret = (void *)sstart;
 #ifdef DEBUG
-    printf("%x %d\n",newalloc->size,_cpu());
+    Logb("%x %d\n",newalloc->size,_cpu());
 #endif
 
     assert(newalloc->prev==lmem);
