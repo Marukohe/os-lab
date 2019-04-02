@@ -70,6 +70,13 @@ int vsprintf(char *str, const char *format, va_list ap);
     printf("\33[1;34m[%s,%d,%s] " format "\33[0m\n", \
         __FILE__, __LINE__, __func__, ## __VA_ARGS__)
 
+#define Logy(format, ...) \
+    printf("\33[1;33m[%s,%d,%s] " format "\33[0m\n", \
+        __FILE__, __LINE__, __func__, ## __VA_ARGS__)
+
+#define Logg(format, ...) \
+    printf("\33[1;32m[%s,%d,%s] " format "\33[0m\n", \
+        __FILE__, __LINE__, __func__, ## __VA_ARGS__)
 
 // assert.h
 #ifdef NDEBUG
