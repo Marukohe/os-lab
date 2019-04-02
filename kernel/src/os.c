@@ -20,7 +20,7 @@ void test(){
     /*assert(0);*/
     Logb("TEST START");
     spin_unlock(pk);
-    assert(0);
+    /*assert(0);*/
     void *space[testnum];
     int i;
     for(i=0;i<testnum;i++){
