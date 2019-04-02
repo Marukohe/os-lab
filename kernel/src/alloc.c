@@ -160,7 +160,7 @@ static void *my_smallalloc(size_t size){
 #ifdef DEBUG
     spin_lock(&pk);
     Logw("smallalloc start size: %d cpu: %d",size,_cpu());
-    spin_lock(&pk);
+    spin_unlock(&pk);
 #endif
     void *ret = NULL;
     size_t ssize = size+STSIZE;
@@ -182,7 +182,7 @@ static void *my_smallalloc(size_t size){
     #ifdef DEBUG
         spin_lock(&pk);
         Logy("smallalloc start tmp==NULL size: %d cpu: %d",size,_cpu());
-        spin_lock(&pk);
+        spin_unlock(&pk);
     #endif
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
@@ -209,14 +209,14 @@ static void *my_smallalloc(size_t size){
     #ifdef DEBUG
         spin_lock(&pk);
         Logy("smallalloc finish tmp==NULL size: %d cpu: %d",size,_cpu());
-        spin_lock(&pk);
+        spin_unlock(&pk);
     #endif
 
     }else{
     #ifdef DEBUG
         spin_lock(&pk);
         Logy("smallalloc start tmp!=NULL size: %d cpu: %d",size,_cpu());
-        spin_lock(&pk);
+        spin_unlock(&pk);
     #endif
         uintptr_t addr= tmp->start+tmp->size-size;
         kmem *myalloc = (kmem *)(addr-STSIZE);
@@ -229,14 +229,14 @@ static void *my_smallalloc(size_t size){
     #ifdef DEBUG
         spin_lock(&pk);
         Logy("smallalloc start tmp!=NULL size: %d cpu: %d",size,_cpu());
-        spin_lock(&pk);
+        spin_unlock(&pk);
     #endif
     }
 
 #ifdef DEBUG
     spin_lock(&pk);
     Logw("smallalloc finish size: %d cpu: %d",size,_cpu());
-    spin_lock(&pk);
+    spin_unlock(&pk);
 #endif
     return ret;
 }
@@ -263,7 +263,7 @@ static void *kalloc(size_t size) {
 #ifdef DEBUG
     spin_lock(&pk);
     Logw("alloc space from %x",(uintptr_t)ret);
-    spin_lock(&pk);
+    spin_unlock(&pk);
 #endif
     spin_unlock(&lk);
     return ret;
