@@ -108,7 +108,7 @@ static void *my_bigalloc(size_t size){
     assert(lk.locked==1);
 #ifdef DEBUG
     spin_lock(&pk);
-    Logp("newalloc finish %d",newalloc->size,_cpu());
+    Logp("newalloc finish %d",_cpu());
     spin_unlock(&pk);
 #endif
     spin_unlock(&lk);
