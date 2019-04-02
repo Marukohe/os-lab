@@ -47,19 +47,19 @@ static void pmm_init() {
   }
   assert(lk->locked==0);
   assert(pk->locked==0);
+  printf("%d\n", lk->locked);
   lmem->start = pm_start;
   lmem->size = pm_end-pm_start;
   lmem->state = FREE;
   lmem->next = NULL;
   lmem->prev = NULL;
+  printf("%d\n", lk->locked);
   /*Logb("here");*/
   //lk->locked = 0;
   //pk->locked = 0;
   if(lk->locked!=0)
       _putc('d');
-  _putc('\n');
   printf("%d\n", lk->locked);
-  _putc('\n');
   assert(lk->locked==0);
   assert(pk->locked==0);
   Logb("here");
