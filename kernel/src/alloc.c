@@ -27,41 +27,26 @@ kmem sizetest;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
-  /*Logp("pmm_init successfully, from pm_start 0x%x to pm_end 0x%x",pm_start,pm_end);*/
-  /*Logb("struct size %ld",sizeof(sizetest));*/
+  Logp("pmm_init successfully, from pm_start 0x%x to pm_end 0x%x",pm_start,pm_end);
+  Logb("struct size %ld",sizeof(sizetest));
 
   start = pm_start;
   lk.locked = 0;
   pk.locked = 0;
-  /*assert(lk->locked==0);*/
   for(int i=0;i<CPUNUM;i++)
       spincnt[i] = 0;
-  /*assert(0);*/
   for(int i=0;i<CPUNUM;i++){
-        //smem[i]->maxsize = 0;
         smem[i]->start = 0;
         smem[i]->size = 0;
         smem[i]->state = FREE;
         smem[i]->next = NULL;
         smem[i]->prev = NULL;
   }
-  assert(lk.locked==0);
-  assert(pk.locked==0);
-  printf("%d\n", lk.locked);
   lmem->start = pm_start;
-  printf("%x\n", lk.locked);
   lmem->size = pm_end-pm_start;
   lmem->state = FREE;
-  printf("%d\n", lk.locked);
   lmem->next = NULL;
   lmem->prev = NULL;
-  printf("%d\n", lk.locked);
-  /*Logb("here");*/
-  //lk->locked = 0;
-  //pk->locked = 0;
-  printf("%d\n", lk.locked);
-  assert(lk.locked==0);
-  assert(pk.locked==0);
   Logb("here");
 }
 
@@ -158,10 +143,10 @@ static void *my_smallalloc(size_t size){
 
 static void *kalloc(size_t size) {
 #ifdef CORRECTNESS_FIRST
-    spin_lock(lk);
+    spin_lock(&lk);
     void *ret = (void *)start;
     start += size;
-    spin_unlock(lk);
+    spin_unlock(&lk);
     return ret;
 #else
     /*spin_lock(lk);*/
