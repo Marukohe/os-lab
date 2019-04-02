@@ -97,11 +97,6 @@ static void *my_bigalloc(size_t size){
     assert(newalloc->prev==lmem);
     newalloc->state = USING;
     ret = (void *)sstart;
-#ifdef DEBUG
-    spin_lock(&pk);
-    Logb("newalloc->size: %d %d",newalloc->size,_cpu());
-    spin_unlock(&pk);
-#endif
 
     assert(newalloc->prev==lmem);
     assert(newalloc->size==ssize);
@@ -111,6 +106,11 @@ static void *my_bigalloc(size_t size){
     assert(lmem->prev==NULL);
     assert(lmem->state==FREE);
     assert(lk.locked==1);
+#ifdef DEBUG
+    spin_lock(&pk);
+    Logp("newalloc finish %d",newalloc->size,_cpu());
+    spin_unlock(&pk);
+#endif
     spin_unlock(&lk);
     return ret;
 }
