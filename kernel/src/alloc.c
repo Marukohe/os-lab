@@ -40,8 +40,6 @@ static void pmm_init() {
 
   lk.locked = 0;
   pk.locked = 0;
-  /*for(int i=0;i<CPUNUM;i++)*/
-      /*spincnt[i] = 0;*/
   for(int i=0;i<CPUNUM;i++){
         smem[i]->start = 0;
         smem[i]->size = 0;
@@ -49,8 +47,8 @@ static void pmm_init() {
         smem[i]->next = NULL;
         smem[i]->prev = NULL;
   }
-  lmem->start = pm_start;
-  lmem->size = pm_end-pm_start;
+  lmem->start = pm_start+5*STSIZE;
+  lmem->size = pm_end-lmem->start;
   lmem->state = FREE;
   lmem->next = NULL;
   lmem->prev = NULL;
@@ -78,6 +76,15 @@ static void *my_bigalloc(size_t size){
     lmem->next = newalloc;
     newalloc->state = USING;
     ret = (void *)sstart;
+
+    assert(newpage->prev==lmem);
+    assert(newpage->size==ssize);
+    assert(newpage->prev->next==newpage);
+    assert(newpage->state==USING);
+    assert(lmem->next->prev==lmem);
+    assert(lmem->prev==NULL);
+    assert(lmem->state==FREE);
+
     spin_unlock(&lk);
     return ret;
 }
@@ -103,7 +110,14 @@ static void *my_smallalloc(size_t size){
     if(tmp == NULL){
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
-        newpage->start = FREE;
+
+        assert(newpage->state==USING);
+        assert(newpage->prev!=NULL);
+        assert(newpage->prev->next==newpage);
+        assert(newpage->size >= BLOCK);
+
+        newpage->state = FREE;
+
         if(smem[cpu]->next==NULL){
             newpage->next = NULL;
         }else{
@@ -169,11 +183,22 @@ static void *kalloc(size_t size) {
 #endif
   /*return NULL;*/
 }
-
+/*
+static void myfree(void *ptr){
+    kmem *myfree = (kmem *)(ptr-STSIZE);
+    assert(myfree->state==USING);
+    assert(myfree->size！=0);
+}
+*/
 static void kfree(void *ptr) {
 #ifdef CORRECTNESS_FIRST
     return;
 #else
+    kmem *myfree = (kmem *)(ptr-STSIZE);
+    assert(myfree->state==USING);
+    assert(myfree->size！=0);
+    assert(myfree->prev!=NULL);
+    myfree(ptr);
     return;
 #endif
     //ret
