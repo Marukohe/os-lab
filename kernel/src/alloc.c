@@ -58,7 +58,7 @@ static void pmm_init() {
   if(lk->locked!=0)
       _putc('d');
   _putc('\n');
-  _putc('0'+lk->locked);
+  printf("%d\n", lk->locked);
   _putc('\n');
   assert(lk->locked==0);
   assert(pk->locked==0);
