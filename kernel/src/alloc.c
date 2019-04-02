@@ -33,14 +33,14 @@ static void pmm_init() {
 
   start = pm_start;
 }
-
+/*
 static void *my_bigalloc(size_t size){
     return NULL;
-}
-
+}*/
+/*
 static void *my_smallalloc(size_t size){
     return NULL;
-}
+}*/
 
 static void *kalloc(size_t size) {
 #ifdef CORRECTNESS_FIRST
