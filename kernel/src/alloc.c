@@ -58,7 +58,7 @@ static void pmm_init() {
 }
 
 static void *my_bigalloc(size_t size){
-    spin_lock(&lk);
+    /*spin_lock(&lk);*/
     void *ret;
     int k = (int)size/BLOCK;
 #ifdef DEBUG
@@ -113,18 +113,18 @@ static void *my_bigalloc(size_t size){
     Logp("newalloc finish %d",_cpu());
     spin_unlock(&pk);
 #endif
-    spin_unlock(&lk);
+    /*spin_unlock(&lk);*/
     return ret;
 }
 
 static void *my_smallalloc(size_t size){
-    int cpu = _cpu();
+    /*int cpu = _cpu();*/
     //小内存分配
     void *ret;
     size_t ssize = size + STSIZE;
     size_t minsize = BLOCK;
     kmem *tmp = NULL;
-    kmem *head = smem[cpu];
+    kmem *head = smem[_cpu()];
     while(head!=NULL){
         if(ssize<=head->size && head->state==FREE){
             if(minsize > head->size){
@@ -136,6 +136,7 @@ static void *my_smallalloc(size_t size){
     }
     //申请新的4k页
     if(tmp == NULL){
+        spin_lock(&lk);
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
 
@@ -154,14 +155,14 @@ static void *my_smallalloc(size_t size){
 
         newpage->state = FREE;
 
-        if(smem[cpu]->next==NULL){
+        if(smem[_cpu()]->next==NULL){
             newpage->next = NULL;
         }else{
-            smem[cpu]->next->prev = newpage;
-            newpage->next = smem[cpu]->next;
+            smem[_cpu()]->next->prev = newpage;
+            newpage->next = smem[_cpu()]->next;
         }
-        newpage->prev = smem[cpu];
-        smem[cpu]->next = newpage;
+        newpage->prev = smem[_cpu()];
+        smem[_cpu()]->next = newpage;
         newpage->size = newpage->size-ssize;
         void *addr = (void *)(newpage->start+newpage->size);
     #ifdef DEBUG
@@ -193,6 +194,7 @@ static void *my_smallalloc(size_t size){
     #endif
 
         ret = (void *)myalloc->start;
+        spin_unlock(&lk);
     }else{
     #ifdef DEBUG
         spin_lock(&pk);
@@ -256,8 +258,10 @@ static void *kalloc(size_t size) {
     size = ALIGNED(size);
     void *ret;
     if(size > SMALLSIZE){
+        spin_lock(&lk);
         assert(0);
         ret = my_bigalloc(size);
+        spin_unlock(&lk);
     }else{
         ret = my_smallalloc(size);
     }
