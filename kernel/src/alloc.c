@@ -57,7 +57,7 @@ static void pmm_init() {
   //pk->locked = 0;
   _putc('0'+lk->locked);
   _putc('\n');
-  _putc('0'+lk->locked==0);
+  _putc('0'+(int)lk->locked==0);
   _putc('\n');
   assert(lk->locked==0);
   assert(pk->locked==0);
