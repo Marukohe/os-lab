@@ -99,7 +99,7 @@ static void *kalloc(size_t size) {
     }
 #ifdef DEBUG
     spin_lock(&pk);
-    /*Lo*/gw("alloc space from %x",(uintptr_t)ret);
+    //Logw("alloc space from %x",(uintptr_t)ret);
     spin_lock(&pk);
 #endif
     spin_unlock(&lk);
