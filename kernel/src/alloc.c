@@ -137,10 +137,16 @@ static void *my_smallalloc(size_t size){
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
 
+#ifdef DEBUG
+        spin_lock(&pk);
+        Logy("assert started");
+        spin_unlock(&pk);
+#endif
         assert(newpage->state==USING);
         assert(newpage->prev!=NULL);
         assert(newpage->prev->next==newpage);
         assert(newpage->size >= BLOCK);
+        assert(newpage->start>0);
 
         newpage->state = FREE;
 
@@ -153,7 +159,12 @@ static void *my_smallalloc(size_t size){
         newpage->prev = smem[cpu];
         smem[cpu]->next = newpage;
         newpage->size = newpage->size-ssize;
-        void *addr = (void *)(newpage->start+newpage->size-ssize);
+        void *addr = (void *)(newpage->start+newpage->size);
+    #ifdef DEBUG
+        spin_lock(&pk);
+        Logg("addr test %x %x %x",newpage->start,newpage->size,(int)addr);
+        spin_unlock(&pk);
+    #endif
         kmem *myalloc =(kmem *)addr;
         myalloc->state = USING;
         myalloc->start = newpage->size+newpage->start-size;
@@ -166,8 +177,18 @@ static void *my_smallalloc(size_t size){
         }
         newpage->next = myalloc;
         myalloc->prev = newpage;
+    #ifdef DEBUG
+        spin_lock(&pk);
+        Logg("myalloc->size %d %d",myalloc->size,_cpu());
+        spin_unlock(&pk);
+    #endif
         ret = (void *)myalloc->start;
     }else{
+    #ifdef DEBUG
+        spin_lock(&pk);
+        Logg("here %d %d",size,_cpu());
+        spin_unlock(&pk);
+    #endif
         //在处理器的内存中分配
         tmp->size = head->start-ssize;
         void *addr = (void *)(tmp->start+tmp->size-ssize);
