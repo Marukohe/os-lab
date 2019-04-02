@@ -186,7 +186,7 @@ static void *my_smallalloc(size_t size){
     }else{
     #ifdef DEBUG
         spin_lock(&pk);
-        Logg("here %d %d",size,_cpu());
+        Logg("tmp!=NULL  %d %d",size,_cpu());
         spin_unlock(&pk);
     #endif
         //在处理器的内存中分配
