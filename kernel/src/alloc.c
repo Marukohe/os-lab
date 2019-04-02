@@ -299,10 +299,12 @@ static void kfree(void *ptr) {
 #endif
     spin_lock(&lk);
     kmem *myfree = (kmem *)(ptr-STSIZE);
+    spin_lock(&pk);
     assert(myfree->state==USING);
     assert(myfree->size!=0);
     assert(myfree->prev!=NULL);
     assert(myfree->prev->next==myfree);
+    spin_unlock(&pk);
     kmem *p = myfree->prev;
     if(p->size!=0 && p->state==FREE){
         if(myfree->start==p->size+p->start+STSIZE){

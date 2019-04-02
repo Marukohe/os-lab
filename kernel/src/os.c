@@ -25,14 +25,14 @@ void test(){
     void *space[testnum];
     int i;
     for(i=0;i<testnum;i++){
-        space[i] = pmm->alloc(rand()%((1<<6)-1));
+        space[i] = pmm->alloc(rand()%((1<<20)-1));
     }
-    for(i=0;i<10;i++){
+    for(i=0;i<1000;i++){
         int tmp = rand()%100;
         pmm->free(space[tmp]);
         space[tmp] = pmm->alloc((rand()&((1<<30)-1)));
     }
-    for(i=0;i<100;i++){
+    for(i=0;i<testnum;i++){
         pmm->free(space[i]);
     }
     spin_lock(&pk);
