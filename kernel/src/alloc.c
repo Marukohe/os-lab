@@ -65,6 +65,7 @@ static void *my_bigalloc(size_t size){
     kmem *newalloc = (kmem *)((void *)(sstart-STSIZE));
     newalloc->start = sstart;
     newalloc->size = ssize;
+    assert(newalloc->size==ssize);
     lmem->size = lmem->size - ssize - STSIZE;
     if(lmem->next==NULL)
         newalloc->next = NULL;
