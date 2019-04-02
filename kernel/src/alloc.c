@@ -158,6 +158,7 @@ static void *my_smallalloc(size_t size){
         if(smem[_cpu()]->next==NULL){
             newpage->next = NULL;
         }else{
+            assert(0);
             smem[_cpu()]->next->prev = newpage;
             newpage->next = smem[_cpu()]->next;
         }
@@ -167,7 +168,7 @@ static void *my_smallalloc(size_t size){
         void *addr = (void *)(newpage->start+newpage->size);
     #ifdef DEBUG
         spin_lock(&pk);
-        /*Logg("addr test %x %d %x",newpage->start,newpage->size,(int)addr);*/
+        Logg("addr test !!!! %d %d %d",newpage->start,newpage->size,_cpu());
         spin_unlock(&pk);
     #endif
         kmem *myalloc =(kmem *)addr;
@@ -205,6 +206,7 @@ static void *my_smallalloc(size_t size){
         //在处理器的内存中分配
         spin_lock(&pk);
         assert(tmp->prev!=NULL);
+        Logg("addr test !!!! %d %d %d",newpage->start,newpage->size,_cpu());
         Logy("cpu %d",_cpu());
         assert(tmp->prev->next==tmp);
         spin_unlock(&pk);
