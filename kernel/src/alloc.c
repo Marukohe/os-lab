@@ -28,8 +28,8 @@ static void pmm_init() {
   /*Logb("struct size %ld",sizeof(sizetest));*/
 
   start = pm_start;
-  //lk->locked = 0;
-  //pk->locked = 0;
+  lk->locked = 0;
+  pk->locked = 0;
   /*assert(lk->locked==0);*/
   for(int i=0;i<CPUNUM;i++)
       spincnt[i] = 0;
@@ -50,8 +50,8 @@ static void pmm_init() {
   lmem->next = NULL;
   lmem->prev = NULL;
   /*Logb("here");*/
-  lk->locked = 0;
-  pk->locked = 0;
+  //lk->locked = 0;
+  //pk->locked = 0;
   assert(lk->locked==0);
   assert(pk->locked==0);
   Logb("here");
