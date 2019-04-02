@@ -133,7 +133,7 @@ static void *my_smallalloc(size_t size){
     while(head!=NULL){
 #ifdef DEBUG
     spin_lock(&pk);
-    assert(head->next->prev==head);
+    assert(head->next==NULL || head->next->prev==head);
     Logw("head->start %x, %d",head->start,_cpu());
     spin_unlock(&pk);
 #endif
