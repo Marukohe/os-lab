@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include <spinlock.h>
 
 void pushcli(){
     cli();
