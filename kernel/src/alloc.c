@@ -71,14 +71,15 @@ static void pmm_init() {
   assert(lmem->next==NULL);
   assert(lmem->prev==NULL);
 }
-/*
+
 static void *my_bigalloc(size_t size){
-    return NULL;
-}*/
-/*
+    void *ret;
+    return ret;
+}
+
 static void *my_smallalloc(size_t size){
     return NULL;
-}*/
+}
 
 static void *kalloc(size_t size) {
 #ifdef CORRECTNESS_FIRST
@@ -88,7 +89,21 @@ static void *kalloc(size_t size) {
     spin_unlock(&lk);
     return ret;
 #else
-    return NULL;
+    spin_lock(&lk);
+    size = ALIGNED(size);
+    void *ret;
+    if(size > SMALLSIZE){
+        ret = my_bigalloc(size);
+    }else{
+        ret = my_smallalloc(size);
+    }
+#ifdef DEBUG
+    spin_lock(&pk);
+    Logw("alloc space from %x",(uintptr_t)ret);
+    spin_lock(&pk);
+#endif
+    spin_unlock(&lk);
+    return ret;
 #endif
 }
 
