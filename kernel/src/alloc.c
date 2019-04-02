@@ -3,7 +3,7 @@
 #include <spinlock.h>
 #define SMALLSIZE 256
 #define CPUNUM 4
-#define BLOCK 4*1024
+#define BLOCK 4096
 #define STSIZE 24
 #define ALIGNED(size) (((size>>3)+1)<<3)
 
