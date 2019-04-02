@@ -30,7 +30,7 @@ void test(){
     for(i=0;i<10;i++){
         int tmp = rand()%100;
         pmm->free(space[tmp]);
-        space[tmp] = pmm->alloc((rand()&((1<<10)-1)));
+        space[tmp] = pmm->alloc((rand()&((1<<20)-1)));
     }
     for(i=0;i<100;i++){
         pmm->free(space[i]);
