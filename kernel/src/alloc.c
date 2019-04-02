@@ -24,8 +24,8 @@ kmem sizetest;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
-  Logp("pmm_init successfully, from pm_start 0x%x to pm_end 0x%x",pm_start,pm_end);
-  Logb("struct size %ld",sizeof(sizetest));
+  /*Logp("pmm_init successfully, from pm_start 0x%x to pm_end 0x%x",pm_start,pm_end);*/
+  /*Logb("struct size %ld",sizeof(sizetest));*/
 
   start = pm_start;
   lk->locked = 0;
@@ -43,7 +43,7 @@ static void pmm_init() {
         smem[i]->prev = NULL;
   }
   assert(lk->locked==0);
-  /*assert(pk->locked==0);*/
+  assert(pk->locked==0);
   lmem->start = pm_start;
   lmem->size = pm_end-pm_start;
   lmem->state = FREE;
