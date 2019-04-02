@@ -69,7 +69,9 @@ static void *my_bigalloc(size_t size){
     newalloc->size = ssize;
     assert(newalloc->size==ssize);
 #ifdef DEBUG
+    spin_lock(&pk);
     Logb("%x %d\n",newalloc->size,_cpu());
+    spin_unlock(&pk);
 #endif
     lmem->size = lmem->size - ssize - STSIZE;
     if(lmem->next==NULL)
@@ -85,7 +87,9 @@ static void *my_bigalloc(size_t size){
     newalloc->state = USING;
     ret = (void *)sstart;
 #ifdef DEBUG
+    spin_lock(&pk);
     Logb("%x %d\n",newalloc->size,_cpu());
+    spin_unlock(&pk);
 #endif
 
     assert(newalloc->prev==lmem);
@@ -182,6 +186,11 @@ static void *kalloc(size_t size) {
     spin_unlock(&lk);
     return ret;
 #else
+#ifdef DEBUG
+    spin_lock(&pk);
+    Logb("alloc size: %d",size);
+    spin_unlock(&pk);
+#endif
     /*spin_lock(lk);*/
     size = ALIGNED(size);
     void *ret;
