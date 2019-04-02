@@ -60,7 +60,7 @@ static void pmm_init() {
 static void *my_bigalloc(size_t size){
     spin_lock(&lk);
     void *ret;
-    int k = size/BLOCK;
+    int k = (int)size/BLOCK;
 #ifdef DEBUG
     spin_lock(&pk);
     Logb("k: %d",k);
