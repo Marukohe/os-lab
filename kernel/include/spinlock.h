@@ -2,10 +2,8 @@
 typedef struct spinlock{
     volatile intptr_t locked;
     char name[10];
-}spinlock, *spinlock_t;
+}spinlock;
 
-spinlock *lk;
-spinlock *pk;  //for printf
 int spincnt[5];
 
 void spin_lock(spinlock *lk);
