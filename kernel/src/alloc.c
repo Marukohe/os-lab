@@ -206,6 +206,7 @@ static void *kalloc(size_t size) {
     size = ALIGNED(size);
     void *ret;
     if(size > SMALLSIZE){
+        assert(0);
         ret = my_bigalloc(size);
     }else{
         ret = my_smallalloc(size);
