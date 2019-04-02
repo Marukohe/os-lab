@@ -50,8 +50,8 @@ static void pmm_init() {
   lmem->next = NULL;
   lmem->prev = NULL;
   /*Logb("here");*/
-  /*assert(lk->locked==0);*/
-  /*assert(pk->locked==0);*/
+  assert(lk->locked==0);
+  assert(pk->locked==0);
   /*Logb("here");*/
 }
 
