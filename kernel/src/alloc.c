@@ -38,7 +38,7 @@ static void pmm_init() {
   for(int i=0;i<CPUNUM;i++){
       smem[i] = (kmem *)(pm_start+(1+i)*STSIZE);
   }
-  /*assert(lmem)*/
+  assert(lmem==NULL);
 }
 /*
 static void *my_bigalloc(size_t size){
