@@ -167,7 +167,7 @@ static void *my_smallalloc(size_t size){
     #endif
         kmem *myalloc =(kmem *)addr;
         myalloc->state = USING;
-        myalloc->start = newpage->size+newpage->start-size;
+        myalloc->start = newpage->size+newpage->start+STSIZE;
         myalloc->size = size;
         if(newpage->next==NULL){
             myalloc->next = NULL;
@@ -197,11 +197,15 @@ static void *my_smallalloc(size_t size){
         spin_unlock(&pk);
     #endif
         //在处理器的内存中分配
-        tmp->size = head->start-ssize;
-        void *addr = (void *)(tmp->start+tmp->size-ssize);
+
+        assert(tmp->prev==NULL);
+        assert(tmp->prev->next!=tmp);
+
+        tmp->size = tmp->size-ssize;
+        void *addr = (void *)(tmp->start+tmp->size);
         kmem *myalloc = (kmem *)addr;
         myalloc->state = USING;
-        myalloc->start = tmp->size+tmp->start-size;
+        myalloc->start = tmp->size+tmp->start+STSIZE;
         myalloc->size = size;
         if(tmp->next==NULL){
             myalloc->next = NULL;
@@ -211,6 +215,11 @@ static void *my_smallalloc(size_t size){
         }
         myalloc->prev = tmp;
         tmp->next = myalloc;
+
+        assert(myalloc->size!=size);
+        assert(myalloc->prev->next!=myalloc);
+
+
         ret = (void *)myalloc->start;
     #ifdef DEBUG
         spin_lock(&pk);
