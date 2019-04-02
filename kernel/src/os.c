@@ -17,10 +17,10 @@ static void hello() {
 #define testnum 100
 void test(){
     /*assert(0);*/
-    spin_lock(&pk);
+    //spin_lock(&pk);
     /*assert(0);*/
-    Logb("TEST START");
-    spin_unlock(&pk);
+    //Logb("TEST START");
+    //spin_unlock(&pk);
     /*assert(0);*/
     void *space[testnum];
     int i;
