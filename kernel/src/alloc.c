@@ -42,8 +42,6 @@ static void pmm_init() {
         smem[i]->next = NULL;
         smem[i]->prev = NULL;
   }
-  assert(lk->locked==0);
-  assert(pk->locked==0);
   /*assert(lk->locked==0);*/
   /*assert(pk->locked==0);*/
   lmem->start = pm_start;
@@ -54,8 +52,8 @@ static void pmm_init() {
   /*Logb("here");*/
   //lk->locked = 0;
   //pk->locked = 0;
-  assert(lk->locked==0);
-  assert(pk->locked==0);
+  //assert(lk->locked==0);
+  //assert(pk->locked==0);
   Logb("here");
 }
 
