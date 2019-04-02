@@ -50,6 +50,7 @@ static void *kalloc(size_t size) {
     spin_unlock(&lk);
     return ret;
 #else
+    return NULL;
 #endif
 }
 
