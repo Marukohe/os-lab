@@ -207,6 +207,7 @@ static void *my_smallalloc(size_t size){
         spin_lock(&pk);
         assert(tmp->prev!=NULL);
         Logg("addr test !!!! %d %d %d",tmp->start,tmp->size,_cpu());
+        Logg("addr test ??? prev %d, tmp %d",tmp->prev->start,tmp->prev->next->start);
         Logy("cpu %d",_cpu());
         assert(tmp->prev->next==tmp);
         spin_unlock(&pk);
