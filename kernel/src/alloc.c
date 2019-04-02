@@ -144,12 +144,9 @@ static void *my_smallalloc(size_t size){
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
 
-#ifdef DEBUG
         spin_lock(&pk);
         Logy("assert started %d %d",size,_cpu());
-        spin_unlock(&pk);
-#endif
-        spin_lock(&pk);
+
         assert(newpage->state==USING);
         assert(newpage->prev!=NULL);
         assert(newpage->prev->next==newpage);
