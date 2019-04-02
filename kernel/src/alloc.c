@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include <spinlock.h>
 #define SMALLSIZE 256
 #define CPUNUM 4
 #define BLOCK 4*1024
@@ -42,8 +43,8 @@ static void pmm_init() {
         smem[i]->next = NULL;
         smem[i]->prev = NULL;
   }
-  assert(lk->locked==0);
-  assert(pk->locked==0);
+  /*assert(lk->locked==0);*/
+  /*assert(pk->locked==0);*/
   /*assert(lk->locked==0);*/
   /*assert(pk->locked==0);*/
   lmem->start = pm_start;
