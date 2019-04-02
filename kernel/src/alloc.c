@@ -31,6 +31,13 @@ static void pmm_init() {
   Logb("struct size %ld",sizeof(sizetest));
 
   start = pm_start;
+
+  lmem = (kmem *)((void *)pm_start);
+  smem[0] = (kmem *)(pm_start+STSIZE);
+  smem[1] = (kmem *)(pm_start+2*STSIZE);
+  smem[2] = (kmem *)(pm_start+3*STSIZE);
+  smem[3] = (kmem *)(pm_start+4*STSIZE);
+
   lk.locked = 0;
   pk.locked = 0;
   for(int i=0;i<CPUNUM;i++)
@@ -47,7 +54,8 @@ static void pmm_init() {
   lmem->state = FREE;
   lmem->next = NULL;
   lmem->prev = NULL;
-  Logb("here");
+  assert(lk.locked==0);
+  assert(pk.locked==0);
 }
 
 static void *my_bigalloc(size_t size){
