@@ -125,6 +125,11 @@ static void *my_smallalloc(size_t size){
     size_t minsize = BLOCK;
     kmem *tmp = NULL;
     kmem *head = smem[_cpu()];
+#ifdef DEBUG
+    spin_lock(&pk);
+    Logw("smem->start %x, %d",smem[_cpu()]->start,_cpu());
+    spin_unlock(&pk);
+#endif
     while(head!=NULL){
         if(ssize<=head->size && head->state==FREE){
             if(minsize > head->size){
