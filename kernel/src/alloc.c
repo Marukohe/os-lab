@@ -82,7 +82,7 @@ static void pmm_init() {
   assert(lmem->prev==NULL);
 }
 
-static void updatepoint(kmem *p1;kmem *p2){
+static void updatepoint(kmem *p1,kmem *p2){
     if(p1->next==NULL){
         p2->next = NULL;
     }else{
