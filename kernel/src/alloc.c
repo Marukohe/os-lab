@@ -99,7 +99,7 @@ static void *my_bigalloc(size_t size){
     ret = (void *)sstart;
 #ifdef DEBUG
     spin_lock(&pk);
-    Logb("%d %d",newalloc->size,_cpu());
+    Logb("newalloc->size: %d %d",newalloc->size,_cpu());
     spin_unlock(&pk);
 #endif
 
