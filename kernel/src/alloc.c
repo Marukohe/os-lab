@@ -66,19 +66,43 @@ static void *my_bigalloc(size_t size){
     newalloc->start = sstart;
     newalloc->size = ssize;
     assert(newalloc->size==ssize);
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     lmem->size = lmem->size - ssize - STSIZE;
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     if(lmem->next==NULL)
         newalloc->next = NULL;
     else{
         lmem->next->prev = newalloc;
         newalloc->next = lmem->next;
     }
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     newalloc->prev = lmem;
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     lmem->next = newalloc;
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     newalloc->state = USING;
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     ret = (void *)sstart;
 
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     assert(newalloc->prev==lmem);
+#ifdef DEBUG
+    Log("%x",newalloc->size);
+#endif
     assert(newalloc->size==ssize);
     assert(newalloc->prev->next==newalloc);
     assert(newalloc->state==USING);
