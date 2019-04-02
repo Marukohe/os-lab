@@ -32,6 +32,13 @@ static void pmm_init() {
   Logb("struct size %ld",sizeof(sizetest));
 
   start = pm_start;
+  assert(lmem==NULL);
+
+  lmem = (kmem *)(pm_start);
+  for(int i=0;i<CPUNUM;i++){
+      smem[i] = (kmem *)(pm_start+(1+i)*STSIZE);
+  }
+  /*assert(lmem)*/
 }
 /*
 static void *my_bigalloc(size_t size){
