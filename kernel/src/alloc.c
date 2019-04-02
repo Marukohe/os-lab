@@ -199,7 +199,7 @@ static void *kalloc(size_t size) {
 #else
 #ifdef DEBUG
     spin_lock(&pk);
-    Logb("alloc size: %d",size);
+    Logb("alloc size: %d cpu %d",size,_cpu());
     spin_unlock(&pk);
 #endif
     /*spin_lock(lk);*/
