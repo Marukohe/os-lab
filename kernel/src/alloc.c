@@ -78,7 +78,7 @@ static void pmm_init() {
   assert(lk.locked==0);
   assert(pk.locked==0);
   assert(lmem->next==bmem);
-  asserr(lmem->next->prev==lmem);
+  assert(lmem->next->prev==lmem);
   assert(lmem->prev==NULL);
 }
 
@@ -195,7 +195,7 @@ static void *my_smallalloc(size_t size){
         assert(newpage->start!=0);
         spin_unlock(&pk);
 
-        newpage->state==FREE;
+        newpage->state=FREE;
         updatepoint(smem[_cpu()],newpage);
 
         uintptr_t addr = newpage->start+newpage->size-size;
