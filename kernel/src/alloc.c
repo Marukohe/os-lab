@@ -31,8 +31,8 @@ static void pmm_init() {
   /*Logb("struct size %ld",sizeof(sizetest));*/
 
   start = pm_start;
-  lk->locked = 0;
-  pk->locked = 0;
+  lk.locked = 0;
+  pk.locked = 0;
   /*assert(lk->locked==0);*/
   for(int i=0;i<CPUNUM;i++)
       spincnt[i] = 0;
@@ -45,28 +45,28 @@ static void pmm_init() {
         smem[i]->next = NULL;
         smem[i]->prev = NULL;
   }
-  assert(lk->locked==0);
-  assert(pk->locked==0);
-  printf("%d\n", lk->locked);
+  assert(lk.locked==0);
+  assert(pk.locked==0);
+  printf("%d\n", lk.locked);
   lmem->start = pm_start;
-  printf("%x\n", lk->locked);
+  printf("%x\n", lk.locked);
   lmem->size = pm_end-pm_start;
   lmem->state = FREE;
-  printf("%d\n", lk->locked);
+  printf("%d\n", lk.locked);
   lmem->next = NULL;
   lmem->prev = NULL;
-  printf("%d\n", lk->locked);
+  printf("%d\n", lk.locked);
   /*Logb("here");*/
   //lk->locked = 0;
   //pk->locked = 0;
-  printf("%d\n", lk->locked);
-  assert(lk->locked==0);
-  assert(pk->locked==0);
+  printf("%d\n", lk.locked);
+  assert(lk.locked==0);
+  assert(pk.locked==0);
   Logb("here");
 }
 
 static void *my_bigalloc(size_t size){
-    spin_lock(lk);
+    spin_lock(&lk);
     void *ret;
     int k = size/BLOCK;
     size_t ssize = (k+1)*BLOCK;
@@ -85,7 +85,7 @@ static void *my_bigalloc(size_t size){
     lmem->next = newalloc;
     newalloc->state = USING;
     ret = (void *)sstart;
-    spin_unlock(lk);
+    spin_unlock(&lk);
     return ret;
 }
 
