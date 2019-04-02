@@ -196,6 +196,14 @@ static void *my_smallalloc(size_t size){
         spin_unlock(&pk);
 
         newpage->state=FREE;
+
+        if(newpage->next==NULL){
+            newpage->prev->next=NULL;
+        }else{
+            newpage->prev->next=newpage->next;
+            newpage->next->prev=newpage->prev;
+        }
+
         updatepoint(smem[_cpu()],newpage);
 
         uintptr_t addr = newpage->start+newpage->size-size;
@@ -269,16 +277,52 @@ static void *kalloc(size_t size) {
     return ret;
 #endif
 }
+/*
+static void bigkfree(kmem *p){
+    if(p->prev->state==FREE){
 
+    }
+}
 
+static void smallkfree(){
+
+}
+*/
 static void kfree(void *ptr) {
 #ifdef CORRECTNESS_FIRST
     return;
 #else
+#ifdef DEBUG
+    spin_lock(&pk);
+    Logg("free space from %x",(uintptr_t)ptr);
+    spin_unlock(&pk);
+#endif
+    spin_lock(&lk);
     kmem *myfree = (kmem *)(ptr-STSIZE);
     assert(myfree->state==USING);
     assert(myfree->size!=0);
     assert(myfree->prev!=NULL);
+    assert(myfree->prev->next==myfree);
+    kmem *p = myfree->prev;
+    if(p->size!=0 && p->state==FREE){
+        if(myfree->start==p->size+p->start+STSIZE){
+            p->size = p->size+myfree->size+STSIZE;
+            if(myfree->next==NULL){
+                p->next=NULL;
+            }else{
+                p->next = myfree->next;
+                myfree->next->prev = p;
+            }
+        }
+    }else{
+        myfree->state = FREE;
+    }
+    spin_unlock(&lk);
+#ifdef DEBUG
+    spin_lock(&pk);
+    Logg("free space finish from %x",(uintptr_t)ptr);
+    spin_unlock(&pk);
+#endif
     //myfree(ptr);
     return;
 #endif
