@@ -52,7 +52,7 @@ static void pmm_init() {
   /*Logb("here");*/
   assert(lk->locked==0);
   assert(pk->locked==0);
-  /*Logb("here");*/
+  Logb("here");
 }
 
 static void *my_bigalloc(size_t size){
