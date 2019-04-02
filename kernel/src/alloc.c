@@ -203,7 +203,7 @@ static void *my_smallalloc(size_t size){
         //在处理器的内存中分配
         spin_lock(&pk);
         assert(tmp->prev!=NULL);
-        assert(tmp->prev->next!=tmp);
+        assert(tmp->prev->next==tmp);
         spin_unlock(&pk);
 
         tmp->size = tmp->size-ssize;
