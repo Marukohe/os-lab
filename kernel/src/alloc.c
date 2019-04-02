@@ -182,11 +182,11 @@ static void *my_smallalloc(size_t size){
         Logg("tmp==NULL myalloc->size %d %d",myalloc->size,_cpu());
         spin_unlock(&pk);
     #endif
-#ifdef DEBUG
-    spin_lock(&pk);
-    Logp("newalloc finish %d %d",size,_cpu());
-    spin_unlock(&pk);
-#endif
+    #ifdef DEBUG
+        spin_lock(&pk);
+        Logp("newalloc finish %d %d",size,_cpu());
+        spin_unlock(&pk);
+    #endif
 
         ret = (void *)myalloc->start;
     }else{
@@ -211,6 +211,11 @@ static void *my_smallalloc(size_t size){
         myalloc->prev = tmp;
         tmp->next = myalloc;
         ret = (void *)myalloc->start;
+    #ifdef DEBUG
+        spin_lock(&pk);
+        Logg("tmp!=NULL finish  %d %d",size,_cpu());
+        spin_unlock(&pk);
+    #endif
     }
 
     return ret;
