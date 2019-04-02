@@ -4,7 +4,8 @@
 #define SMALLSIZE 256
 #define CPUNUM 4
 #define BLOCK 4*1024
-#define STSIZE 20
+#define STSIZE 24
+#define ALIGNED(size) (((size>>3)+1)<<3)
 
 typedef struct Kmem{
     uintptr_t start;
@@ -180,6 +181,7 @@ static void *kalloc(size_t size) {
     return ret;
 #else
     /*spin_lock(lk);*/
+    size = ALIGNED(size);
     void *ret;
     if(size > SMALLSIZE){
         ret = my_bigalloc(size);
