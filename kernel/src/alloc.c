@@ -43,7 +43,7 @@ static void pmm_init() {
         smem[i]->prev = NULL;
   }
   assert(lk->locked==0);
-  assert(pk->locked==0);
+  /*assert(pk->locked==0);*/
   lmem->start = pm_start;
   lmem->size = pm_end-pm_start;
   lmem->state = FREE;
