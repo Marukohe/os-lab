@@ -50,7 +50,7 @@ static void pmm_init() {
   }
 
   lmem->start = pm_start + 5*STSIZE;
-  lmem->size = pm_end-lm->start;
+  lmem->size = pm_end-lmem->start;
   lmem->state = FREE;
   lmem->next = NULL;
   lmem->prev = NULL;
