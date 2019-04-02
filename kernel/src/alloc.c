@@ -79,7 +79,7 @@ static void *my_bigalloc(size_t size){
 
     assert(newalloc->prev==lmem);
     assert(newalloc->size==ssize);
-    assert(newalloc->prev->next==newpage);
+    assert(newalloc->prev->next==newalloc);
     assert(newalloc->state==USING);
     assert(lmem->next->prev==lmem);
     assert(lmem->prev==NULL);
