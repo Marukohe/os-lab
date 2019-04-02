@@ -131,6 +131,11 @@ static void *my_smallalloc(size_t size){
     spin_unlock(&pk);
 #endif
     while(head!=NULL){
+#ifdef DEBUG
+    spin_lock(&pk);
+    Logw("head->start %x, %d",head->start,_cpu());
+    spin_unlock(&pk);
+#endif
         if(ssize<=head->size && head->state==FREE){
             if(minsize > head->size){
                 tmp = head;
