@@ -40,8 +40,8 @@ static void pmm_init() {
 
   lk.locked = 0;
   pk.locked = 0;
-  for(int i=0;i<CPUNUM;i++)
-      spincnt[i] = 0;
+  /*for(int i=0;i<CPUNUM;i++)*/
+      /*spincnt[i] = 0;*/
   for(int i=0;i<CPUNUM;i++){
         smem[i]->start = 0;
         smem[i]->size = 0;
