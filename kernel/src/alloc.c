@@ -162,7 +162,7 @@ static void *my_smallalloc(size_t size){
         void *addr = (void *)(newpage->start+newpage->size);
     #ifdef DEBUG
         spin_lock(&pk);
-        Logg("addr test %x %x %x",newpage->start,newpage->size,(int)addr);
+        Logg("addr test %x %d %x",newpage->start,newpage->size,(int)addr);
         spin_unlock(&pk);
     #endif
         kmem *myalloc =(kmem *)addr;
@@ -179,7 +179,7 @@ static void *my_smallalloc(size_t size){
         myalloc->prev = newpage;
     #ifdef DEBUG
         spin_lock(&pk);
-        Logg("myalloc->size %d %d",myalloc->size,_cpu());
+        Logg("tmp==NULL myalloc->size %d %d",myalloc->size,_cpu());
         spin_unlock(&pk);
     #endif
         ret = (void *)myalloc->start;
