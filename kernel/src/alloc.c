@@ -198,7 +198,7 @@ static void kfree(void *ptr) {
     assert(myfree->state==USING);
     assert(myfree->size！=0);
     assert(myfree->prev!=NULL);
-    myfree(ptr);
+    //myfree(ptr);
     return;
 #endif
     //ret
