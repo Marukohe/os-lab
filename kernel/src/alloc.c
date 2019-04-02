@@ -98,6 +98,7 @@ static void *my_bigalloc(size_t size){
     newalloc->state = USING;
     ret = (void *)sstart;
 
+    spin_lock(&pk);
     assert(newalloc->prev==lmem);
     assert(newalloc->size==ssize);
     assert(newalloc->prev->next==newalloc);
@@ -106,6 +107,7 @@ static void *my_bigalloc(size_t size){
     assert(lmem->prev==NULL);
     assert(lmem->state==FREE);
     assert(lk.locked==1);
+    spin_unlock(&pk);
 #ifdef DEBUG
     spin_lock(&pk);
     Logp("newalloc finish %d",_cpu());
@@ -142,11 +144,13 @@ static void *my_smallalloc(size_t size){
         Logy("assert started %d %d",size,_cpu());
         spin_unlock(&pk);
 #endif
+        spin_lock(&pk);
         assert(newpage->state==USING);
         assert(newpage->prev!=NULL);
         assert(newpage->prev->next==newpage);
         assert(newpage->size >= BLOCK);
         assert(newpage->start>0);
+        spin_unlock(&pk);
 
         newpage->state = FREE;
 
@@ -197,9 +201,10 @@ static void *my_smallalloc(size_t size){
         spin_unlock(&pk);
     #endif
         //在处理器的内存中分配
-
+        spin_lock(&pk);
         assert(tmp->prev==NULL);
         assert(tmp->prev->next!=tmp);
+        spin_unlock(&pk);
 
         tmp->size = tmp->size-ssize;
         void *addr = (void *)(tmp->start+tmp->size);
@@ -216,8 +221,10 @@ static void *my_smallalloc(size_t size){
         myalloc->prev = tmp;
         tmp->next = myalloc;
 
+        spin_lock(&pk);
         assert(myalloc->size!=size);
         assert(myalloc->prev->next!=myalloc);
+        spin_unlock(&pk);
 
 
         ret = (void *)myalloc->start;
