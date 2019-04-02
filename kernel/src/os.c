@@ -17,7 +17,7 @@ static void hello() {
 void test(){
     /*assert(0);*/
     spin_lock(pk);
-    assert(0);
+    /*assert(0);*/
     Logb("TEST START");
     spin_unlock(pk);
     assert(0);
