@@ -222,7 +222,7 @@ static void *my_smallalloc(size_t size){
         tmp->next = myalloc;
 
         spin_lock(&pk);
-        assert(myalloc->size!=size);
+        assert(myalloc->size==size);
         assert(myalloc->prev->next!=myalloc);
         spin_unlock(&pk);
 
