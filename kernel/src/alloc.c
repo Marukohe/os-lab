@@ -73,7 +73,7 @@ static void pmm_init() {
 }
 
 static void *my_bigalloc(size_t size){
-    void *ret;
+    void *ret=NULL;
     return ret;
 }
 
@@ -99,7 +99,7 @@ static void *kalloc(size_t size) {
     }
 #ifdef DEBUG
     spin_lock(&pk);
-    Logw("alloc space from %x",(uintptr_t)ret);
+    /*Lo*/gw("alloc space from %x",(uintptr_t)ret);
     spin_lock(&pk);
 #endif
     spin_unlock(&lk);
