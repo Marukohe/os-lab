@@ -63,14 +63,14 @@ static void *my_bigalloc(size_t size){
     int k = (int)size/BLOCK;
 #ifdef DEBUG
     spin_lock(&pk);
-    Logb("k: %d",k);
+    Logb("k: %d cpu %d",k,_cpu());
     spin_unlock(&pk);
 #endif
 
     size_t ssize = (k+1)*BLOCK;
 #ifdef DEBUG
     spin_lock(&pk);
-    Logb("%d",ssize);
+    Logb("ssize: %d cpu %d",ssize,_cpu());
     spin_unlock(&pk);
 #endif
     uintptr_t sstart = lmem->start+lmem->size-ssize;
@@ -81,7 +81,7 @@ static void *my_bigalloc(size_t size){
     assert(newalloc->size==ssize);
 #ifdef DEBUG
     spin_lock(&pk);
-    Logb("%d %d",newalloc->size,_cpu());
+    Logb("newalloc->size: %d %d",newalloc->size,_cpu());
     spin_unlock(&pk);
 #endif
     lmem->size = lmem->size - ssize - STSIZE;
