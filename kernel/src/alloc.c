@@ -140,7 +140,7 @@ static void *my_smallalloc(size_t size){
             if(minsize > head->size){
                 tmp = head;
                 spin_lock(&pk);
-                Logy("%d %d",size,_cpu());
+                Logw("%x %d",tmp->prev->start,_cpu());
                 assert(tmp->prev->next==tmp);
                 spin_unlock(&pk);
                 minsize = head->size;
