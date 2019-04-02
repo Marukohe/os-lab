@@ -55,7 +55,7 @@ static void pmm_init() {
   /*Logb("here");*/
   //lk->locked = 0;
   //pk->locked = 0;
-  if(lk->locked==0)
+  if(lk->locked!=0)
       _putc('d');
   _putc('\n');
   _putc('0'+lk->locked);
