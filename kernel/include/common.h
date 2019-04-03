@@ -7,6 +7,6 @@
 
 enum BLOCKSTATE{FREE,USING,READY};
 
-#define DEBUG
+//#define DEBUG
 // #define CORRECTNESS_FIRST
 #endif
