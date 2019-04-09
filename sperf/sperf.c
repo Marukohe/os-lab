@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
             exit(0);
         }
     }else{
-        wait(&chilpid);
+        wait(&childpid);
         printf("hello\n");
     }
   return 0;
