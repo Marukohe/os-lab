@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     childpid = fork();
     if(childpid == 0){
         char * execv_str[] = {"echo", "executed by execv", NULL};
-        if(execv("/usr/bin/echo", execv_str) < 0){
+        if(execv("/bin/echo", execv_str) < 0){
             exit(0);
         }
     }else{
