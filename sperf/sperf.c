@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
     /*printf("%s\n",argv[0]);*/
     /*Logy("hello");*/
     int childpid;
-    int i;
+    /*int i;*/
     childpid = fork();
     if(childpid == 0){
         char * execv_str[] = {"echo", "executed by execv", NULL};
