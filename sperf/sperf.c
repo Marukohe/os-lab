@@ -23,8 +23,10 @@ int main(int argc, char *argv[]) {
         close(pipefds[1]);
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[0]);
+        FILE *fp = NULL;
+        fp = fdopen(STDIN_FILENO, "r");
         /*read(STDIN_FILENO, r_buf, MAXBUF);*/
-        fgets(r_buf,MAXBUF,NULL);
+        fgets(r_buf,MAXBUF,fp);
         printf("%s\n",r_buf);
 
         /*wait(&childpid);*/
