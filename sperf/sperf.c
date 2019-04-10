@@ -1,11 +1,12 @@
 #include "sperf.h"
 #define MAXBUF 50000
 #define ITEM 500
+#define INF 100000000
 _trace_item _pitems[ITEM];
 int tot = 0;
 
-double cmp(const void *a, const void *b){
-    return ((_trace_item *)a)->t - ((_trace_item *)b)->t;
+int cmp(const void *a, const void *b){
+    return (int)((((_trace_item *)a)->t - ((_trace_item *)b)->t)*INF);
 }
 
 int main(int argc, char *argv[]) {
