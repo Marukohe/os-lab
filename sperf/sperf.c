@@ -4,6 +4,10 @@
 _trace_item _pitems[ITEM];
 int tot = 0;
 
+int cmp(const void *a, const void *b){
+    return ((_trace_item *)a)->t - ((_trace_item *)b)->t;
+}
+
 int main(int argc, char *argv[]) {
     int pipefds[2];
     char r_buf[MAXBUF];
@@ -48,6 +52,10 @@ int main(int argc, char *argv[]) {
             /*printf("%lf\n", tmp);*/
         }
 
+        qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
+        for(int i = 0; i < tot; i++){
+            printf("%s %lf\n",_pitems[i].name, _pitems[i].t);
+        }
         Logy("here");
         wait(&childpid);
         /*printf("hello\n");*/
