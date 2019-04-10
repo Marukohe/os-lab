@@ -6,7 +6,7 @@ _trace_item _pitems[ITEM];
 int tot = 0;
 
 int cmp(const void *a, const void *b){
-    return (int)((((_trace_item *)a)->t - ((_trace_item *)b)->t)*INF);
+    return (int)((((_trace_item *)b)->t - ((_trace_item *)a)->t)*INF);
 }
 
 int main(int argc, char *argv[]) {
