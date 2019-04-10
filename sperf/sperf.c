@@ -1,19 +1,22 @@
 #include "sperf.h"
 
 int main(int argc, char *argv[]) {
-
-    /*printf("%d\n",argc);*/
-    /*printf("%s\n",argv[0]);*/
-    /*Logy("hello");*/
+    int pipefds[2];
+    if(pipe(pipefds) == -1){
+        exit(0);
+    }
     int childpid;
-    /*int i;*/
     childpid = fork();
     if(childpid == 0){
+        dup2(pipefds[1], STDOUT_FILENO);
         char * execv_str[] = {"echo", "executed by execv", NULL};
         if(execv("/bin/echo", execv_str) < 0){
             exit(0);
         }
     }else{
+        Logy("here");
+        dup2(pipefds[0], STDIN_FILENO);
+        close(pipefds[1]);
         wait(&childpid);
         printf("hello\n");
     }
