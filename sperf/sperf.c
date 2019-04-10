@@ -31,7 +31,8 @@ int main(int argc, char *argv[]) {
         fp = fdopen(STDIN_FILENO, "r");
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             char buf[30];
-            sscanf(r_buf, "%[<[0-9]*\\.?[0-9]+>]", buf);
+            sscanf(r_buf, "%*[^<]/%[^>]", buf);
+            /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
             printf("%s\n", buf);
             double tmp  = 0.0;
             sscanf(buf, "%lf", &tmp);
