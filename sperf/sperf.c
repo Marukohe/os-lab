@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
             exit(0);
         }
     }else{
-        Logy("here");
+        /*Logy("here");*/
         close(pipefds[1]);
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[0]);
@@ -27,11 +27,11 @@ int main(int argc, char *argv[]) {
         fp = fdopen(STDIN_FILENO, "r");
         /*read(STDIN_FILENO, r_buf, MAXBUF);*/
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
-            printf("%s\n",r_buf);
+            printf("%s",r_buf);
         }
 
         /*wait(&childpid);*/
-        printf("hello\n");
+        /*printf("hello\n");*/
     }
   return 0;
 }
