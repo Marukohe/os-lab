@@ -31,16 +31,24 @@ int main(int argc, char *argv[]) {
         fp = fdopen(STDIN_FILENO, "r");
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             char buf[30];
+            char name[20];
+            memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
-            printf("%s",r_buf);
+            /*printf("%s",r_buf);*/
+            sscanf(r_buf, "%[^(]", _pitems[tot].name);
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
-            printf("%s\n", buf);
+            /*printf("%s\n", buf);*/
             double tmp  = 0.0;
             tmp = atof(buf);
-            printf("%lf\n", tmp);
+            if(tmp > 0){
+                _pitems[tot].t = tmp;
+                tot++;
+            }
+            /*printf("%lf\n", tmp);*/
         }
 
+        Logy("here");
         wait(&childpid);
         /*printf("hello\n");*/
     }
