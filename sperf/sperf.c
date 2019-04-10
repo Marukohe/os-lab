@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
         read(pipefds[0], r_buf, MAXBUF);
         printf("%s\n",r_buf);
 
-        /*wait(&childpid);*/
+        wait(&childpid);
         printf("hello\n");
     }
   return 0;
