@@ -1,5 +1,5 @@
 #include "sperf.h"
-#define MAXBUF 5000
+#define MAXBUF 50000
 int main(int argc, char *argv[]) {
     int pipefds[2];
     char r_buf[MAXBUF];
