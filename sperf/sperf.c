@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[0]);
         /*read(STDIN_FILENO, r_buf, MAXBUF);*/
-        gets(r_buf);
+        fgets(r_buf,MAXBUF,NULL);
         printf("%s\n",r_buf);
 
         /*wait(&childpid);*/
