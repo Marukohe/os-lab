@@ -2,6 +2,7 @@
 #define MAXBUF 50000
 #define ITEM 500
 _trace_item _pitems[ITEM];
+int tot = 0;
 
 int main(int argc, char *argv[]) {
     int pipefds[2];
@@ -29,8 +30,11 @@ int main(int argc, char *argv[]) {
         FILE *fp = NULL;
         fp = fdopen(STDIN_FILENO, "r");
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
-            /*printf("%s",r_buf);*/
-            /*printf("\n");*/
+            char buf[30];
+            sscanf(r_buf, "<[0-9]*\\.?[0-9]+>", buf);
+            double tmp  = 0.0;
+            sscanf(buf, "%lf", &tmp);
+            printf("%lf\n", tmp);
         }
 
         wait(&childpid);
