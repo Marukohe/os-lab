@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     int childpid;
     childpid = fork();
     if(childpid == 0){
-        dup2(pipefds[1], STDERR_FILENO);
+        dup2(pipefds[1], STDOUT_FILENO);
         close(pipefds[0]);
         char * execv_str[] = {"strace", "ls", NULL};
         if(execv("/usr/bin/strace", execv_str) < 0){
