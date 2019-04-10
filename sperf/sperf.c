@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     if(childpid == 0){
         close(STDOUT_FILENO);
         close(pipefds[0]);
-        dup2(pipefds[1], STDERR_FILENO);
+        dup2(pipefds[1], STDOUT_FILENO);
         char * execv_str[] = {"strace", "ls", NULL};
         if(execv("/usr/bin/strace", execv_str) < 0){
             exit(0);
