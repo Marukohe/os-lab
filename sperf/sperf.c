@@ -25,9 +25,9 @@ int main(int argc, char *argv[]) {
         close(pipefds[0]);
         FILE *fp = NULL;
         fp = fdopen(STDIN_FILENO, "r");
-        /*read(STDIN_FILENO, r_buf, MAXBUF);*/
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             printf("%s",r_buf);
+            printf("\n");
         }
 
         /*wait(&childpid);*/
