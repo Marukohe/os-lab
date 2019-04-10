@@ -5,3 +5,8 @@
 #include <unistd.h>
 
 #include "debug.h"
+
+typedef struct {
+    char name[10];
+    double t;
+}_trace_item;

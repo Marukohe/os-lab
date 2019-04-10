@@ -1,5 +1,8 @@
 #include "sperf.h"
 #define MAXBUF 50000
+#define ITEM 500
+_trace_item _pitems[ITEM];
+
 int main(int argc, char *argv[]) {
     int pipefds[2];
     char r_buf[MAXBUF];
@@ -26,11 +29,11 @@ int main(int argc, char *argv[]) {
         FILE *fp = NULL;
         fp = fdopen(STDIN_FILENO, "r");
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
-            printf("%s",r_buf);
-            printf("\n");
+            /*printf("%s",r_buf);*/
+            /*printf("\n");*/
         }
 
-        /*wait(&childpid);*/
+        wait(&childpid);
         /*printf("hello\n");*/
     }
   return 0;
