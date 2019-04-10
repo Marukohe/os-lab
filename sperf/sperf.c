@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
         for(int i = 0; i < tot; i++){
             printf("%s %lf\n",_pitems[i].name, _pitems[i].t);
         }
-        Logy("here");
+        /*Logy("here");*/
         wait(&childpid);
         /*printf("hello\n");*/
     }
