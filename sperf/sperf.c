@@ -4,6 +4,7 @@
 #define INF 100000000
 _trace_item _pitems[ITEM];
 int tot = 0;
+int flag = 0;
 
 int cmp(const void *a, const void *b){
     return (int)((((_trace_item *)b)->t - ((_trace_item *)a)->t)*INF);
@@ -40,15 +41,25 @@ int main(int argc, char *argv[]) {
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
             printf("%s",r_buf);
-            sscanf(r_buf, "%[^(]", _pitems[tot].name);
+            /*sscanf(r_buf, "%[^(]", _pitems[tot].name);*/
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
             printf("%s\n", buf);
             double tmp  = 0.0;
             tmp = atof(buf);
-            if(tmp > 0){
+            if(tmp > 0 && flag == 0){
+                sscanf(r_buf, "%[^(]", _pitems[tot].name);
                 _pitems[tot].t = tmp;
                 tot++;
+            }else if(tmp > 0 && flag ==1){
+                _pitems[tot].t = tmp;
+                tot++;
+                flag =0;
+            }else if(tmp == 0 && flag == 0){
+                sscanf(r_buf, "%[^(]", _pitems[tot].name);
+                flag = 1;
+            }else if(tmp == 0 && flag == 1){
+
             }
             printf("%lf\n", tmp);
         }
