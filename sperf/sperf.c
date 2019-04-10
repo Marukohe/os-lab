@@ -19,8 +19,9 @@ int main(int argc, char *argv[]) {
         Logy("here");
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[1]);
-        read(pipefds[0], r_buf, MAXBUF);
-        printf("%s",r_buf);
+        while(read(pipefds[0], r_buf, MAXBUF)!=-1){
+            printf("%s\n",r_buf);
+        }
         /*wait(&childpid);*/
         printf("hello\n");
     }
