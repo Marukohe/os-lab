@@ -39,18 +39,18 @@ int main(int argc, char *argv[]) {
             char name[20];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
-            /*printf("%s",r_buf);*/
+            printf("%s",r_buf);
             sscanf(r_buf, "%[^(]", _pitems[tot].name);
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
-            /*printf("%s\n", buf);*/
+            printf("%s\n", buf);
             double tmp  = 0.0;
             tmp = atof(buf);
             if(tmp > 0){
                 _pitems[tot].t = tmp;
                 tot++;
             }
-            /*printf("%lf\n", tmp);*/
+            printf("%lf\n", tmp);
         }
 
         qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
