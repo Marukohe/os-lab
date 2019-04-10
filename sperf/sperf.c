@@ -4,7 +4,7 @@
 _trace_item _pitems[ITEM];
 int tot = 0;
 
-int cmp(const void *a, const void *b){
+double cmp(const void *a, const void *b){
     return ((_trace_item *)a)->t - ((_trace_item *)b)->t;
 }
 
