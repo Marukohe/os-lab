@@ -18,12 +18,12 @@ int main(int argc, char *argv[]) {
         }
     }else{
         Logy("here");
-        dup2(pipefds[0], STDIN_FILENO);
+        dup2(pipefds[0], STDERR_FILENO);
         close(pipefds[1]);
         read(pipefds[0], r_buf, MAXBUF);
         printf("%s\n",r_buf);
 
-        wait(&childpid);
+        /*wait(&childpid);*/
         printf("hello\n");
     }
   return 0;
