@@ -1,7 +1,8 @@
 #include "sperf.h"
-
+#define MAXBUF 4096
 int main(int argc, char *argv[]) {
     int pipefds[2];
+    char r_buf[MAXBUF];
     if(pipe(pipefds) == -1){
         exit(0);
     }
@@ -18,8 +19,9 @@ int main(int argc, char *argv[]) {
         Logy("here");
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[1]);
-        execlp("less","less",NULL);
-        wait(&childpid);
+        read(pipefds[0], r_buf, MAXBUF);
+        Logb("%s",r_buf);
+        /*wait(&childpid);*/
         printf("hello\n");
     }
   return 0;
