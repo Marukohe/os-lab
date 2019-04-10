@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[1]);
         read(pipefds[0], r_buf, MAXBUF);
-        Logb("%s",r_buf);
+        printf("%s",r_buf);
         /*wait(&childpid);*/
         printf("hello\n");
     }
