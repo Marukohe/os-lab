@@ -10,16 +10,16 @@ int main(int argc, char *argv[]) {
     childpid = fork();
     if(childpid == 0){
         close(STDOUT_FILENO);
-        dup2(pipefds[1], STDERR_FILENO);
         close(pipefds[0]);
+        dup2(pipefds[1], STDERR_FILENO);
         char * execv_str[] = {"strace", "ls", NULL};
         if(execv("/usr/bin/strace", execv_str) < 0){
             exit(0);
         }
     }else{
         Logy("here");
-        /*dup2(pipefds[0], STDIN_FILENO);*/
         close(pipefds[1]);
+        dup2(pipefds[0], STDIN_FILENO);
         read(pipefds[0], r_buf, MAXBUF);
         printf("%s\n",r_buf);
 
