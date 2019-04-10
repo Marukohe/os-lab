@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
         Logy("here");
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[1]);
+        execlp("less","less",NULL);
         wait(&childpid);
         printf("hello\n");
     }
