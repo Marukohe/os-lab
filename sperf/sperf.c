@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
         close(STDOUT_FILENO);
         close(STDERR_FILENO);
         close(pipefds[0]);
-        dup2(pipefds[1], STDOUT_FILENO);
+        dup2(pipefds[1], STDERR_FILENO);
         char * execv_str[] = {"strace", "ls", NULL};
         if(execv("/usr/bin/strace", execv_str) < 0){
             exit(0);
