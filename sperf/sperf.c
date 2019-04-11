@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
             char name[100];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
-            /*printf("%s",r_buf);*/
+            printf("%s",r_buf);
             /*sscanf(r_buf, "%[^(]", _pitems[tot].name);*/
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
