@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
             printf("%lf\n", tmp);
         }
 
-        printf("\n");
+        printf("tot: %d\n", tot);
         qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
         for(int i = 0; i < tot; i++){
             printf("%s %lf\n",_pitems[i].name, _pitems[i].t);
