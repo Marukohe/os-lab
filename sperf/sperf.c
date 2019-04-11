@@ -12,6 +12,7 @@ int cmp(const void *a, const void *b){
 }
 
 int main(int argc, char *argv[]) {
+        printf("argc : %d\n", argc);
     int pipefds[2];
     char r_buf[MAXBUF];
     if(pipe(pipefds) == -1){
