@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
             tmp = atof(buf);
             printf("tmp: %lf  flag: %d\n\n", tmp, flag);
             if(tmp > 0 && flag == 0){                     //this line have a time with no name before
+                printf("hello\n");
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
