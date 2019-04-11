@@ -8,6 +8,6 @@
 #include "debug.h"
 
 typedef struct {
-    char name[10];
+    char name[100];
     double t;
 }_trace_item;
