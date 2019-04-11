@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     char * execv_str[] = {"strace", "-T", "-xx"};
     printf("argc : %d\n", argc);
     for(int i = 1; i < argc; i++){
-        strcpy(execv_str[i + 2], argv[i]);
+        execv_str[i + 2] = argv[i];
         printf("%s\n", execv_str[i + 2]);
     }
     if(argc > 1)
