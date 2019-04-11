@@ -6,6 +6,7 @@ _trace_item _pitems[ITEM];
 int tot = 0;
 int flag = 0;
 
+//qsort the struct
 int cmp(const void *a, const void *b){
     return (int)((((_trace_item *)b)->t - ((_trace_item *)a)->t)*INF);
 }
@@ -35,6 +36,7 @@ int main(int argc, char *argv[]) {
         close(pipefds[0]);
         FILE *fp = NULL;
         fp = fdopen(STDIN_FILENO, "r");
+        int tmpnum = -1;                      //record the position for some syscall;
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             char buf[30];
             char name[20];
@@ -47,16 +49,39 @@ int main(int argc, char *argv[]) {
             printf("%s\n", buf);
             double tmp  = 0.0;
             tmp = atof(buf);
-            if(tmp > 0 && flag == 0){
-                sscanf(r_buf, "%[^(]", _pitems[tot].name);
-                _pitems[tot].t = tmp;
+            if(tmp > 0 && flag == 0){                     //this line have a time with no name before
+                sscanf(r_buf, "%[^(]", name);
+                for(int i = 0; i < tot; i++){
+                    if(strcmp(_pitems[i].name, name) == 0){
+                        tmpnum = i;
+                        break;
+                    }
+                }
+                if(tmpnum != -1)
+                    _pitems[tmpnum].t = tmp;
+                else{
+                    strcpy(_pitems[tot].name, name);
+                    _pitems[tot].t = tmp;
+                    tot++;
+                    tmpnum = -1;
+                }
+            }else if(tmp > 0 && flag ==1){                  //this line have a time with a name before
+                _pitems[tmpnum].t = tmp;
                 tot++;
-            }else if(tmp > 0 && flag ==1){
-                _pitems[tot].t = tmp;
-                tot++;
-                flag =0;
-            }else if(tmp == 0 && flag == 0){
-                sscanf(r_buf, "%[^(]", _pitems[tot].name);
+                tmpnum = -1;
+                flag = 0;
+            }else if(tmp == 0 && flag == 0){                  //this line have no time but with a name
+                sscanf(r_buf, "%[^(]", name);
+                for(int i = 0; i < tot; i++){
+                    if(strcmp(_pitems[i].name, name) == 0){
+                        tmpnum = i;
+                        break;
+                    }
+                }
+                if(tmpnum == -1){
+                    strcpy(_pitems[tot].name, name);
+                    tmpnum = tot;
+                }
                 flag = 1;
             }else if(tmp == 0 && flag == 1){
 
