@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
         char * execv_str[] = {"strace", "-T", "-xx"};
         for(int i = 1; i < argc; i++){
             strcpy(execv_str[i + 2], argv[i]);
+            printf("%s\n", execv_str[i + 2]);
         }
         if(argc > 1)
             execv_str[2 + argc] = NULL;
