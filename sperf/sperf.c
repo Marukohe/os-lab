@@ -42,17 +42,18 @@ int main(int argc, char *argv[]) {
             char name[100];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
-            printf("%s",r_buf);
+            /*printf("%s",r_buf);*/
             /*sscanf(r_buf, "%[^(]", _pitems[tot].name);*/
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
-            printf("%s\n", buf);
+            /*printf("%s\n", buf);*/
             double tmp  = 0.0;
             tmp = atof(buf);
             if(tmp > 0 && flag == 0){                     //this line have a time with no name before
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
+                        printf("%s   %s\n", _pitems[i].name, name);
                         tmpnum = i;
                         break;
                     }
@@ -74,6 +75,7 @@ int main(int argc, char *argv[]) {
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
+                        printf("%s   %s\n", _pitems[i].name, name);
                         tmpnum = i;
                         break;
                     }
@@ -86,7 +88,7 @@ int main(int argc, char *argv[]) {
             }else if(tmp == 0 && flag == 1){
 
             }
-            printf("%lf\n", tmp);
+            /*printf("%lf\n", tmp);*/
         }
 
         printf("tot: %d\n", tot);
