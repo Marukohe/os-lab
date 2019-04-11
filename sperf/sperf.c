@@ -1,7 +1,7 @@
 #include "sperf.h"
 #define MAXBUF 5000000
 #define ITEM 5000
-#define INF 100000000
+#define INF 10000000000
 _trace_item _pitems[ITEM];
 int tot = 0;
 int flag = 0;
@@ -12,7 +12,7 @@ int cmp(const void *a, const void *b){
 }
 
 int main(int argc, char *argv[]) {
-    char * execv_str[] = {"strace", "-T", "-xx", "make", NULL};
+    char * execv_str[] = {"strace", "-T", "-xx"};
     /*printf("argc : %d\n", argc);*/
     for(int i = 1; i < argc; i++){
         execv_str[i + 2] = argv[i];
