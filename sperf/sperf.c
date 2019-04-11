@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
             cntall += _pitems[i].t;
         }
         for(int i = 0; i < tot; i++){
-            printf("%s: %.2lf%%\n",_pitems[i].name, (_pitems[i].t)/cntall);
+            printf("%s: %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
         }
         /*Logy("here");*/
         wait(&childpid);
