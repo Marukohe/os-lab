@@ -1,5 +1,5 @@
 #include "sperf.h"
-#define MAXBUF 50000
+#define MAXBUF 5000000
 #define ITEM 5000
 #define INF 100000000
 _trace_item _pitems[ITEM];
