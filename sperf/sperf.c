@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
         int tmpnum = -1;                      //record the position for some syscall;
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             char buf[30];
-            char name[20];
+            char name[100];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
             printf("%s",r_buf);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
                     }
                 }
                 if(tmpnum != -1)
-                    _pitems[tmpnum].t = tmp;
+                    _pitems[tmpnum].t += tmp;
                 else{
                     strcpy(_pitems[tot].name, name);
                     _pitems[tot].t = tmp;
@@ -66,8 +66,8 @@ int main(int argc, char *argv[]) {
                     tmpnum = -1;
                 }
             }else if(tmp > 0 && flag ==1){                  //this line have a time with a name before
-                _pitems[tmpnum].t = tmp;
-                tot++;
+                _pitems[tmpnum].t += tmp;
+                /*tot++;*/
                 tmpnum = -1;
                 flag = 0;
             }else if(tmp == 0 && flag == 0){                  //this line have no time but with a name
