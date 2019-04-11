@@ -42,17 +42,17 @@ int main(int argc, char *argv[]) {
             char name[100];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
-            printf("\n%s",r_buf);
+            /*printf("\n%s",r_buf);*/
             /*sscanf(r_buf, "%[^(]", _pitems[tot].name);*/
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
             /*printf("%s\n", buf);*/
             double tmp  = 0.0;
             tmp = atof(buf);
-            printf("tmp: %lf  flag: %d\n", tmp, flag);
+            /*printf("tmp: %lf  flag: %d\n", tmp, flag);*/
             if(tmp > 0 && flag == 0){                     //this line have a time with no name before
                 assert(tmpnum == -1);
-                printf("hello tmp: %d\n",tmpnum);
+                /*printf("hello tmp: %d\n",tmpnum);*/
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
@@ -61,13 +61,13 @@ int main(int argc, char *argv[]) {
                         break;
                     }
                 }
-                printf("itemname: %s name: %s tot: %d  tmpnum:  %d\n",_pitems[tmpnum].name, name, tot, tmpnum);
+                /*printf("itemname: %s name: %s tot: %d  tmpnum:  %d\n",_pitems[tmpnum].name, name, tot, tmpnum);*/
                 if(tmpnum != -1){
                     _pitems[tmpnum].t += tmp;
                 }
                 else{
                     strcpy(_pitems[tot].name, name);
-                    printf("%s %d\n",name, tot);
+                    /*printf("%s %d\n",name, tot);*/
                     _pitems[tot].t = tmp;
                     tot++;
                 }
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
-                        printf("%s   %s\n", _pitems[i].name, name);
+                        /*printf("%s   %s\n", _pitems[i].name, name);*/
                         tmpnum = i;
                         break;
                     }
@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
             /*printf("%lf\n", tmp);*/
         }
 
-        printf("tot: %d\n", tot);
+        /*printf("tot: %d\n", tot);*/
         qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
         for(int i = 0; i < tot; i++){
             printf("%s %lf\n",_pitems[i].name, _pitems[i].t);
