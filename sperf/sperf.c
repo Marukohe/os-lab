@@ -25,7 +25,13 @@ int main(int argc, char *argv[]) {
         close(pipefds[0]);
         dup2(pipefds[1], STDERR_FILENO);
         close(pipefds[1]);
-        char * execv_str[] = {"strace", "-T", "-xx","ls", NULL};
+        /*char * execv_str[] = {"strace", "-T", "-xx","ls", NULL};*/
+        char * execv_str[] = {"strace", "-T", "-xx"};
+        for(int i = 1; i < argc; i++){
+            strcpy(execv_str[i + 2], argv[i]);
+        }
+        if(argc > 1)
+            execv_str[2 + argc] = NULL;
         if(execv("/usr/bin/strace", execv_str) < 0){
             exit(0);
         }
