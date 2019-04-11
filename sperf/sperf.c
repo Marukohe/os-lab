@@ -70,8 +70,8 @@ int main(int argc, char *argv[]) {
                     printf("%s %d\n",name, tot);
                     _pitems[tot].t = tmp;
                     tot++;
-                    tmpnum = -1;
                 }
+                tmpnum = -1;
             }else if(tmp > 0 && flag ==1){                  //this line have a time with a name before
                 _pitems[tmpnum].t += tmp;
                 /*tot++;*/
