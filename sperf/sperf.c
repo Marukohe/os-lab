@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
-                        printf("%s   %s\n", _pitems[i].name, name);
+                        /*printf("%s   %s\n", _pitems[i].name, name);*/
                         tmpnum = i;
                         break;
                     }
