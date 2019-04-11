@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
             /*printf("%s\n", buf);*/
             double tmp  = 0.0;
             tmp = atof(buf);
+            printf("tmp: %lf  flag: %d\n\n", tmp, flag);
             if(tmp > 0 && flag == 0){                     //this line have a time with no name before
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
