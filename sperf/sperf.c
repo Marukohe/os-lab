@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
                         break;
                     }
                 }
-                printf("tot: %d  tmpnum:  %d\n",tot, tmpnum);
+                printf("itemname: %s name: %s tot: %d  tmpnum:  %d\n",_pitems[tmpnum].name, name, tot, tmpnum);
                 if(tmpnum != -1){
                     _pitems[tmpnum].t += tmp;
                 }
