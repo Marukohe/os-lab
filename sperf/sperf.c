@@ -1,7 +1,7 @@
 #include "sperf.h"
 #define MAXBUF 5000000
 #define ITEM 5000
-#define INF 10000000000
+#define INF 100000000000
 _trace_item _pitems[ITEM];
 int tot = 0;
 int flag = 0;
