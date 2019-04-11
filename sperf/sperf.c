@@ -62,6 +62,7 @@ int main(int argc, char *argv[]) {
                     _pitems[tmpnum].t += tmp;
                 else{
                     strcpy(_pitems[tot].name, name);
+                    printf("%s %d\n",name, tot);
                     _pitems[tot].t = tmp;
                     tot++;
                     tmpnum = -1;
