@@ -42,14 +42,14 @@ int main(int argc, char *argv[]) {
             char name[100];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
-            printf("%s",r_buf);
+            printf("\n%s",r_buf);
             /*sscanf(r_buf, "%[^(]", _pitems[tot].name);*/
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
             /*printf("%s\n", buf);*/
             double tmp  = 0.0;
             tmp = atof(buf);
-            printf("tmp: %lf  flag: %d\n\n", tmp, flag);
+            printf("tmp: %lf  flag: %d\n", tmp, flag);
             if(tmp > 0 && flag == 0){                     //this line have a time with no name before
                 printf("hello\n");
                 sscanf(r_buf, "%[^(]", name);
