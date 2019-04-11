@@ -12,7 +12,14 @@ int cmp(const void *a, const void *b){
 }
 
 int main(int argc, char *argv[]) {
-        printf("argc : %d\n", argc);
+    char * execv_str[] = {"strace", "-T", "-xx"};
+    /*printf("argc : %d\n", argc);*/
+    for(int i = 1; i < argc; i++){
+        strcpy(execv_str[i + 2], argv[i]);
+        /*printf("%s\n", execv_str[i + 2]);*/
+    }
+    if(argc > 1)
+        execv_str[2 + argc] = NULL;
     int pipefds[2];
     char r_buf[MAXBUF];
     if(pipe(pipefds) == -1){
@@ -27,14 +34,6 @@ int main(int argc, char *argv[]) {
         dup2(pipefds[1], STDERR_FILENO);
         close(pipefds[1]);
         /*char * execv_str[] = {"strace", "-T", "-xx","ls", NULL};*/
-        char * execv_str[] = {"strace", "-T", "-xx"};
-        printf("argc : %d\n", argc);
-        for(int i = 1; i < argc; i++){
-            strcpy(execv_str[i + 2], argv[i]);
-            printf("%s\n", execv_str[i + 2]);
-        }
-        if(argc > 1)
-            execv_str[2 + argc] = NULL;
         if(execv("/usr/bin/strace", execv_str) < 0){
             exit(0);
         }
