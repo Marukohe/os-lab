@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
             tmp = atof(buf);
             printf("tmp: %lf  flag: %d\n", tmp, flag);
             if(tmp > 0 && flag == 0){                     //this line have a time with no name before
+                assert(tmpnum == -1);
                 printf("hello tmp: %d\n",tmpnum);
                 sscanf(r_buf, "%[^(]", name);
                 for(int i = 0; i < tot; i++){
