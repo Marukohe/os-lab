@@ -24,16 +24,3 @@
     printf("\33[1;37m[%s,%d,%s] " format "\33[0m\n", \
         __FILE__, __LINE__, __func__, ## __VA_ARGS__)
 
-// assert.h
-//#ifdef NDEBUG
-//  #define assert(ignore) ((void)0)
-//#else
-//  #define assert(cond) \
-//    do { \
-//      if (!(cond)) { \
-//        printf("Assertion fail at %s:%d\n", __FILE__, __LINE__); \
-//        _halt(1); \
-//      } \
-//    } while (0)
-//#endif
-//
