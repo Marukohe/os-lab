@@ -1,6 +1,6 @@
 #include "sperf.h"
 #define MAXBUF 50000
-#define ITEM 500
+#define ITEM 5000
 #define INF 100000000
 _trace_item _pitems[ITEM];
 int tot = 0;
@@ -46,8 +46,8 @@ int main(int argc, char *argv[]) {
         fp = fdopen(STDIN_FILENO, "r");
         int tmpnum = -1;                      //record the position for some syscall;
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
-            char buf[30];
-            char name[100];
+            char buf[300];
+            char name[1000];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
             /*printf("\n%s",r_buf);*/
