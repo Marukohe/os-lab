@@ -97,10 +97,13 @@ int main(int argc, char *argv[]) {
             /*printf("%lf\n", tmp);*/
         }
 
-        /*printf("tot: %d\n", tot);*/
         qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
+        double cntall = 0.0;
         for(int i = 0; i < tot; i++){
-            printf("%s %lf\n",_pitems[i].name, _pitems[i].t);
+            cntall += _pitems[i].t;
+        }
+        for(int i = 0; i < tot; i++){
+            printf("%s: %.2lf%%\n",_pitems[i].name, (_pitems[i].t)/cntall);
         }
         /*Logy("here");*/
         wait(&childpid);
