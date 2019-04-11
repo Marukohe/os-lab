@@ -60,8 +60,10 @@ int main(int argc, char *argv[]) {
                         break;
                     }
                 }
-                if(tmpnum != -1)
+                printf("tmpnum:  %d\n",tmpnum);
+                if(tmpnum != -1){
                     _pitems[tmpnum].t += tmp;
+                }
                 else{
                     strcpy(_pitems[tot].name, name);
                     printf("%s %d\n",name, tot);
