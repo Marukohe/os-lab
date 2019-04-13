@@ -107,8 +107,10 @@ int main(int argc, char *argv[]) {
 
         qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
         double cntall = 0.0;
+        size_t maxlen = 0;
         for(int i = 0; i < tot; i++){
             cntall += _pitems[i].t;
+            maxlen = max(maxlen, strlen(_pitems[i].name));
         }
         for(int i = 0; i < tot; i++){
             printf("%s: %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
