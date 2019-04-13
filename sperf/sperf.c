@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
             maxlen = max(maxlen, strlen(_pitems[i].name));
         }
         for(int i = 0; i < tot; i++){
-            printf("%-20s: %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
+            printf("%-20s:    %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
         }
         /*Logy("here");*/
         wait(&childpid);
