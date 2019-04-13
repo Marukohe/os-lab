@@ -2,6 +2,7 @@
 #define MAXBUF 5000000
 #define ITEM 5000
 #define INF 100000000000
+#define max(a,b) (a > b ? a : b)
 _trace_item _pitems[ITEM];
 int tot = 0;
 int flag = 0;
