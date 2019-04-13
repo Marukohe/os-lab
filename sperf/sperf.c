@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
             if(tmp > 0 && flag == 0){                     //this line have a time with no name before
                 assert(tmpnum == -1);
                 /*printf("hello tmp: %d\n",tmpnum);*/
-                sscanf(r_buf, "%[^(]", name);
+                sscanf(r_buf, "%[A-z0-9_](", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
                         /*printf("%s   %s\n", _pitems[i].name, name);*/
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
                 tmpnum = -1;
                 flag = 0;
             }else if(tmp == 0 && flag == 0){                  //this line have no time but with a name
-                sscanf(r_buf, "%[^(]", name);
+                sscanf(r_buf, "%[A-z0-9_](", name);
                 for(int i = 0; i < tot; i++){
                     if(strcmp(_pitems[i].name, name) == 0){
                         /*printf("%s   %s\n", _pitems[i].name, name);*/
