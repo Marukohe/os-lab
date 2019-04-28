@@ -30,7 +30,11 @@ int main(int argc, char *argv[]) {
     int childpid;
     childpid = fork();
     if(childpid == 0){
-        close(STDOUT_FILENO);
+        int fdnull = open("/dev/null", O_RDWR);
+        if(dup2(fdnull, STDOUT_FILENO) == -1){
+            exit(0);
+        }
+        /*close(STDOUT_FILENO);*/
         close(STDERR_FILENO);
         close(pipefds[0]);
         dup2(pipefds[1], STDERR_FILENO);
