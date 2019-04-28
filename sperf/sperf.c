@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
             maxlen = max(maxlen, strlen(_pitems[i].name));
         }
 
-        if(flag == 1){
+        if(printfflag == 1){
             printf("\033c");
         }
 
