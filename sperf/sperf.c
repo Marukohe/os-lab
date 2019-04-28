@@ -46,6 +46,8 @@ int main(int argc, char *argv[]) {
     }else{
         int currenttime = 0;
         int lasttime = 0;
+        _trace_item _pitems[ITEM];
+        int tot = 0;
         while(1){
         currenttime = time(0);
         if(currenttime - lasttime > 1){
@@ -60,15 +62,12 @@ int main(int argc, char *argv[]) {
         FILE *fp = NULL;
         fp = fdopen(STDIN_FILENO, "r");
         int tmpnum = -1;                      //record the position for some syscall;
-
-        _trace_item _pitems[ITEM];
-        int tot = 0;
         int flag = 0;
 
         int cntline = 0;
         int printfflag = 0;
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
-            write(3,r_buf,strlen(r_buf));
+            /*write(3,r_buf,strlen(r_buf));*/
             cntline++;
             if(cntline > 200){
                 cntline = 0;
