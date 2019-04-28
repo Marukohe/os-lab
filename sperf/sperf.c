@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
         }
     }else{
         /*Logy("here");*/
-        wait(&childpid);
+        /*wait(&childpid);*/
         close(pipefds[1]);
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[0]);
