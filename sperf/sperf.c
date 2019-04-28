@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
         close(STDERR_FILENO);
         close(pipefds[0]);
         dup2(pipefds[1], STDERR_FILENO);
-        close(pipefds[1]);
+        /*close(pipefds[1]);*/
         /*char * execv_str[] = {"strace", "-T", "-xx","ls", NULL};*/
         if(execv("/usr/bin/strace", execv_str) < 0){
             exit(0);
