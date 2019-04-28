@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
         }
 
         if(printfflag == 1){
-            printf("\033c");
+            printf("\033[2J");
         }
 
         for(int i = 0; i < tot; i++){
