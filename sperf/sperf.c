@@ -13,14 +13,16 @@ int cmp(const void *a, const void *b){
 }
 
 int main(int argc, char *argv[]) {
-    char * execv_str[] = {"strace", "-T", "-xx"};
+    /*char * execv_str[] = {"strace", "-T", "-xx"};*/
+    char * execv_str[] = {"strace", "-T""};
+    int lineexecv = 1;
     /*printf("argc : %d\n", argc);*/
     for(int i = 1; i < argc; i++){
-        execv_str[i + 2] = argv[i];
+        execv_str[i + lineexecv] = argv[i];
         /*printf("%s\n", execv_str[i + 2]);*/
     }
     if(argc > 1)
-        execv_str[2 + argc] = NULL;
+        execv_str[lineexecv + argc] = NULL;
     int pipefds[2];
     if(pipe(pipefds) == -1){
         exit(0);
