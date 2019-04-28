@@ -59,7 +59,13 @@ int main(int argc, char *argv[]) {
         int tot = 0;
         int flag = 0;
 
+        int cntline = 0;
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
+            cntline++;
+            if(cntline > 200){
+                cntline = 0;
+                break;
+            }
             char buf[300];
             char name[1000];
             memset(name, 0, sizeof(name));
