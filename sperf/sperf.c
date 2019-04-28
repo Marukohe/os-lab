@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
 
         if(printfflag == 1){
             /*printf("\033c");*/
-            printflag = 1;
+            printfflag = 1;
         }
         printf("\033c");
 
