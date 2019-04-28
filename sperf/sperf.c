@@ -144,9 +144,9 @@ int main(int argc, char *argv[]) {
             maxlen = max(maxlen, strlen(_pitems[i].name));
         }
 
-        if(printfflag == 1){
+        /*if(printfflag == 1){*/
             printf("\033c");
-        }
+        /*}*/
 
         for(int i = 0; i < tot; i++){
             printf("%-25s   %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
