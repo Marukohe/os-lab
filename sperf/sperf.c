@@ -151,6 +151,7 @@ int main(int argc, char *argv[]) {
         for(int i = 0; i < tot; i++){
             printf("%-25s   %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
         }
+        printf("top %d\n\n",tot);
         /*Logy("here");*/
         /*printf("hello\n");*/
         }
