@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
             }else if(tmp == 0 && flag == 1){
 
             }
-            assert(tot < 4500);
+            assert(tot < 500);
             /*printf("%lf\n", tmp);*/
         }
 
