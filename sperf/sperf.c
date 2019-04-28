@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         int cntline = 0;
         int printfflag = 0;
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
-            write(3,r_buf,strlen(r_but));
+            write(3,r_buf,strlen(r_buf));
             cntline++;
             if(cntline > 200){
                 cntline = 0;
