@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
             /*sscanf(r_buf, "%[^(]", _pitems[tot].name);*/
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
-            /*printf("%s\n", buf);*/
+            printf("%s\n", buf);
             double tmp  = 0.0;
             tmp = atof(buf);
             /*printf("tmp: %lf  flag: %d\n", tmp, flag);*/
@@ -131,6 +131,7 @@ int main(int argc, char *argv[]) {
 
             }
             /*printf("%lf\n", tmp);*/
+            printf("%s\n",name);
         }
 
         qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
