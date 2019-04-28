@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
         }
     }else{
         /*Logy("here");*/
+        wait(&childpid);
         close(pipefds[1]);
         dup2(pipefds[0], STDIN_FILENO);
         close(pipefds[0]);
@@ -117,7 +118,6 @@ int main(int argc, char *argv[]) {
             printf("%-25s   %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
         }
         /*Logy("here");*/
-        wait(&childpid);
         /*printf("hello\n");*/
     }
   return 0;
