@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     }else{
         int currenttime = 0;
         int lasttime = 0;
-        while((currenttime = time(NULL)) - lasttime > 5000){
+        while(1){
         lasttime = currenttime;
         /*Logy("here");*/
         /*wait(&childpid);*/
