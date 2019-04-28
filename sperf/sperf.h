@@ -13,6 +13,6 @@
 #include "debug.h"
 
 typedef struct {
-    char name[100];
+    char name[500];
     double t;
 }_trace_item;

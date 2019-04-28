@@ -48,9 +48,9 @@ int main(int argc, char *argv[]) {
         int lasttime = 0;
         _trace_item _pitems[ITEM];
         int tot = 0;
-        while(1){
+      while(1){
         currenttime = time(0);
-        if(currenttime - lasttime > 1){
+      if(currenttime - lasttime > 1){
         lasttime = currenttime;
         char r_buf[MAXBUF];
         /*lasttime = currenttime;*/
@@ -130,7 +130,6 @@ int main(int argc, char *argv[]) {
             }else if(tmp == 0 && flag == 1){
 
             }
-            assert(tot < 500);
             /*printf("%lf\n", tmp);*/
         }
 
