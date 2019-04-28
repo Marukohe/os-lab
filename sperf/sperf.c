@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
     if(argc > 1)
         execv_str[2 + argc] = NULL;
     int pipefds[2];
-    char r_buf[MAXBUF];
     if(pipe(pipefds) == -1){
         exit(0);
     }
@@ -45,6 +44,7 @@ int main(int argc, char *argv[]) {
         currenttime = time(0);
         if(currenttime - lasttime > 1){
         lasttime = currenttime;
+        char r_buf[MAXBUF];
         /*lasttime = currenttime;*/
         /*Logy("here");*/
         /*wait(&childpid);*/
