@@ -60,10 +60,12 @@ int main(int argc, char *argv[]) {
         int flag = 0;
 
         int cntline = 0;
+        int printfflag = 0;
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             cntline++;
             if(cntline > 200){
                 cntline = 0;
+                printfflag = 1;
                 break;
             }
             char buf[300];
@@ -132,6 +134,11 @@ int main(int argc, char *argv[]) {
             cntall += _pitems[i].t;
             maxlen = max(maxlen, strlen(_pitems[i].name));
         }
+
+        if(flag == 1){
+            printf("\033c");
+        }
+
         for(int i = 0; i < tot; i++){
             printf("%-25s   %.2lf%%\n",_pitems[i].name, ((_pitems[i].t)/cntall)*100);
         }
