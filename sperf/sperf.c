@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
         int lasttime = 0;
         while(1){
         currenttime = time(0);
-        if(currenttime - lasttime > 5){
+        if(currenttime - lasttime > 1){
         lasttime = currenttime;
         /*lasttime = currenttime;*/
         /*Logy("here");*/
