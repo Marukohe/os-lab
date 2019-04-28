@@ -3,9 +3,9 @@
 #define ITEM 5000
 #define INF 100000000000
 #define max(a,b) (a > b ? a : b)
-_trace_item _pitems[ITEM];
-int tot = 0;
-int flag = 0;
+//_trace_item _pitems[ITEM];
+//int tot = 0;
+//int flag = 0;
 
 //qsort the struct
 int cmp(const void *a, const void *b){
@@ -47,6 +47,11 @@ int main(int argc, char *argv[]) {
         FILE *fp = NULL;
         fp = fdopen(STDIN_FILENO, "r");
         int tmpnum = -1;                      //record the position for some syscall;
+
+        _trace_item _pitems[ITEM];
+        int tot = 0;
+        int flag = 0;
+
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             char buf[300];
             char name[1000];
