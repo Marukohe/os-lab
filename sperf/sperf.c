@@ -69,6 +69,8 @@ int main(int argc, char *argv[]) {
         while(fgets(r_buf,MAXBUF,fp)!=NULL){
             /*write(3,r_buf,strlen(r_buf));*/
             cntline++;
+            if(cntline < 3)
+                continue;
             if(cntline > 200){
                 cntline = 0;
                 printfflag = 1;
@@ -78,11 +80,11 @@ int main(int argc, char *argv[]) {
             char name[1000];
             memset(name, 0, sizeof(name));
             memset(buf, 0, sizeof(buf));
-            printf("\n%s\n",r_buf);
+            /*printf("\n%s\n",r_buf);*/
             /*sscanf(r_buf, "%[^(]", _pitems[tot].name);*/
             sscanf(r_buf, "%*[^<]<%[^>]", buf);
             /*sscanf(r_buf, "%<[0-9]*\\.?[0-9]+>", buf);*/
-            printf("%s\n", buf);
+            /*printf("%s\n", buf);*/
             double tmp  = 0.0;
             tmp = atof(buf);
             /*printf("tmp: %lf  flag: %d\n", tmp, flag);*/
@@ -131,7 +133,7 @@ int main(int argc, char *argv[]) {
 
             }
             /*printf("%lf\n", tmp);*/
-            printf("%s\n",name);
+            /*printf("%s\n",name);*/
         }
 
         qsort(_pitems, tot, sizeof(_pitems[0]),cmp);
