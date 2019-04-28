@@ -39,6 +39,10 @@ int main(int argc, char *argv[]) {
             exit(0);
         }
     }else{
+        int currenttime = 0;
+        int lasttime = 0;
+        while((currenttime = time(NULL)) - lasttime > 5000){
+        lasttime = currenttime;
         /*Logy("here");*/
         /*wait(&childpid);*/
         close(pipefds[1]);
@@ -124,6 +128,7 @@ int main(int argc, char *argv[]) {
         }
         /*Logy("here");*/
         /*printf("hello\n");*/
+        }
     }
   return 0;
 }

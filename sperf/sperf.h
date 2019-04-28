@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <assert.h>
+#include <time.h>
 
 #include "debug.h"
 
