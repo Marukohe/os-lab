@@ -14,7 +14,7 @@ int cmp(const void *a, const void *b){
 
 int main(int argc, char *argv[]) {
     /*char * execv_str[] = {"strace", "-T", "-xx"};*/
-    char * execv_str[] = {"strace", "-T""};
+    char * execv_str[] = {"strace", "-T"};
     int lineexecv = 1;
     /*printf("argc : %d\n", argc);*/
     for(int i = 1; i < argc; i++){
