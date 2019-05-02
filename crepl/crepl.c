@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     printf("Welcome to the C-shell, Please enter quit() to quit!\n");
     printf(">> ");
     while(fgets(s, maxlen,stdin)){
-        if(strcmp(s, "quit()") == 0)
+        if(strncmp(s, "quit()", 6) == 0)
             break;
         printf(">> hello, world\n");
         printf(">> ");
