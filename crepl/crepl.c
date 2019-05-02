@@ -6,7 +6,7 @@
 char s[maxlen];
 
 int main(int argc, char *argv[]) {
-    printf(">>");
+    printf(">> ");
     printf("Welcome to the C-shell, Please enter quit() to quit!\n");
   return 0;
 }
