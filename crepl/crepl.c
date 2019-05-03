@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, "%s\n", dlerror());
                 exit(EXIT_FAILURE);
             }
-            int (*p)() = NULL;
+            /*int (*p)() = NULL;*/
             printf("%s\n%s\n", so_name, func_name);
             dlsym(so_name, func_name);
             /*p = dlsym("./tmpc/1.so", "add");*/
