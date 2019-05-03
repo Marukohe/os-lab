@@ -77,11 +77,11 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, "%s\n", dlerror());
                 exit(EXIT_FAILURE);
             }
-            /*int (*p)() = NULL;*/
-            printf("%s\n%s\n", so_name, func_name);
-            dlsym(so_name, func_name);
+            int (*p)() = NULL;
+            /*printf("%s\n%s\n", so_name, func_name);*/
+            p = dlsym(handle, func_name);
             /*p = dlsym("./tmpc/1.so", "add");*/
-            /*printf(">> %d\n", p());*/
+            printf(">> %d\n", p());
             printf(">> ");
         }
     }
