@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
             char func[10000];
             cntexpr++;
             sprintf(func, "int __expr_wrap_%d(){\n    return %s;}", cntexpr, s);
-            printf(">> %s\n", func);
+            /*printf(">> %s\n", func);*/
             char expr_path[maxlen];
             sprintf(expr_path, "./tmpc/_expr_%d.c", cntexpr);
             FILE *fp = fopen(expr_path, "wb");
@@ -65,9 +65,20 @@ int main(int argc, char *argv[]) {
             fclose(fp);
             char gcc_command[maxlen];
             char so_name[maxlen];
+            char func_name[maxlen];
             sprintf(so_name, "./tmpc/_expr_%d.so", cntexpr);
+            sprintf(so_name, "./tmpc/_expr_%d.c", cntexpr);
             sprintf(gcc_command, "gcc -fPIC -shared ./tmpc/_expr_%d.c -o %s", cntexpr, so_name);
-            printf("%s\n", gcc_command);
+            /*printf("%s\n", gcc_command);*/
+            system(gcc_command);
+            void *handle = dlopen(so_name, RTLD_LAZY);
+            if(!handle){
+                fprintf(stderr, "%s\n", dlerror());
+                exit(EXIT_FAILURE);
+            }
+            int (*p)() = NULL;
+            p = dlsym(so_name, func_name);
+            printf(">> %d\n", p());
             printf(">> ");
         }
     }
