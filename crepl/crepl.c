@@ -13,12 +13,11 @@ typedef int (*func_t)();
 
 int main(int argc, char *argv[]) {
 #ifdef __x86_64__
-    printf("64\n");
+    char *comm = "gcc -fPIC -shared ";
 #elif __i386__
-    printf("32\n");
+    char *comm = "gcc -m32 -fPIC -shared ";
 #endif
     char *path = "./tmpc";
-    char *comm = "gcc -fPIC -shared ";
     int cnt = 0;      //count the number of functions
     int cntexpr = 0;  //count the number of expressions
     /*assert(mkdir(path, 0777) == 0);*/
@@ -76,7 +75,7 @@ int main(int argc, char *argv[]) {
             char func_name[maxlen];
             sprintf(so_name, "./tmpc/_expr_%d.so", cntexpr);
             sprintf(func_name, "_expr_wrap_%d", cntexpr);
-            sprintf(gcc_command, "gcc -fPIC -shared -Wno-implicit-function-declaration ./tmpc/_expr_%d.c -o %s", cntexpr, so_name);
+            sprintf(gcc_command, "%s-Wno-implicit-function-declaration ./tmpc/_expr_%d.c -o %s", comm, cntexpr, so_name);
             /*printf("%s\n", gcc_command);*/
             system(gcc_command);
             void *handle = dlopen(so_name, RTLD_LAZY);
