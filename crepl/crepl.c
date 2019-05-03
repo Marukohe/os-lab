@@ -11,7 +11,9 @@ char s[maxlen];
 
 int main(int argc, char *argv[]) {
     char *path = "./tmpc";
-    assert(mkdir(path, 0777) == 0);
+    /*assert(mkdir(path, 0777) == 0);*/
+    int a = mkdir(path, 0777);
+    printf("%d\n", a);
     printf(">> ");
     printf("Welcome to the C-shell, Please enter quit() to quit!\n");
     printf(">> ");
