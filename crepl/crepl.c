@@ -12,6 +12,7 @@ char s[maxlen];
 
 int main(int argc, char *argv[]) {
     char *path = "./tmpc";
+    char *comm = "gcc -fPIC -shared ";
     int cnt = 0;
     /*assert(mkdir(path, 0777) == 0);*/
     int a = mkdir(path, 0777);
@@ -38,7 +39,15 @@ int main(int argc, char *argv[]) {
             FILE *fp = fopen(fpath, "wb");
             fwrite(s, sizeof(char), strlen(s), fp);
             fclose(fp);
-            system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");
+            char *gcc_command;
+            char so_name[10000];
+            sprintf(so_name, "./tmp/%d.so", cnt);
+            strcpy(gcc_command, comm);
+            strcat(gcc_command, fpath);
+            strcat(gcc_command, " -o ");
+            strcat(gcc_command, so_name);
+            /*system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");*/
+            system(gcc_command);
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
         }else{
