@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     printf(">> ");
     while(fgets(s, maxlen,stdin)){
         if(strncmp(s, "quit()", 6) == 0){
-            rmdir(path);
+            /*rmdir(path);*/
             break;
         }
         if(strncmp(s, "int", 3) == 0){
@@ -43,8 +43,11 @@ int main(int argc, char *argv[]) {
             strcpy(fpath, "./tmpc/");
             strcat(fpath, num);
             strcat(fpath, ".c");
-            printf("%s\n", fpath);
-            printf(">> ");
+            FILE *fp = fopen(fpath, "wb");
+            fwrite(s, sizeof(char), maxlen, fp);
+            fclose(fp);
+            /*printf("%s\n", fpath);*/
+            /*printf(">> ");*/
         }else{
             printf(">> hello, world\n");
             printf(">> ");
