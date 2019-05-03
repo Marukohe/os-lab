@@ -9,6 +9,7 @@
 #define maxlen 1000
 /*#define MODE 775*/
 char s[maxlen];
+typedef int (*func_t)();
 
 int main(int argc, char *argv[]) {
     char *path = "./tmpc";
@@ -50,14 +51,14 @@ int main(int argc, char *argv[]) {
             /*system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");*/
             system(gcc_command);
             /*printf("%s\n", so_name);*/
-            assert(dlopen(so_name ,RTLD_LAZY));
+            assert(dlopen(so_name ,RTLD_LAZY | RTLD_GLOBAL));
             /*printf("%s\n>> ", gcc_command);*/
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
         }else{
             char func[10000];
             cntexpr++;
-            sprintf(func, "extern \"C\" int add(int a, int b);\nint _expr_wrap_%d(){\n    return %s;}", cntexpr, s);
+            sprintf(func, "int _expr_wrap_%d(){\n    return %s;}", cntexpr, s);
             /*printf(">> %s\n", func);*/
             char expr_path[maxlen];
             sprintf(expr_path, "./tmpc/_expr_%d.c", cntexpr);
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
             char func_name[maxlen];
             sprintf(so_name, "./tmpc/_expr_%d.so", cntexpr);
             sprintf(func_name, "_expr_wrap_%d", cntexpr);
-            sprintf(gcc_command, "gcc -fPIC -shared ./tmpc/_expr_%d.c -o %s", cntexpr, so_name);
+            sprintf(gcc_command, "gcc -fPIC -shared -Wno-implicit-function-declaration ./tmpc/_expr_%d.c -o %s", cntexpr, so_name);
             /*printf("%s\n", gcc_command);*/
             system(gcc_command);
             void *handle = dlopen(so_name, RTLD_LAZY);
@@ -77,11 +78,10 @@ int main(int argc, char *argv[]) {
                 fprintf(stderr, "%s\n", dlerror());
                 exit(EXIT_FAILURE);
             }
-            int (*p)() = NULL;
             /*printf("%s\n%s\n", so_name, func_name);*/
-            p = dlsym(handle, func_name);
+            func_t rtfunc = (func_t)dlsym(handle, func_name);
             /*p = dlsym("./tmpc/1.so", "add");*/
-            printf(">> %d\n", p());
+            printf(">> %d\n", rtfunc());
             printf(">> ");
         }
     }
