@@ -8,7 +8,7 @@
 #define maxlen 1000
 /*#define MODE 775*/
 char s[maxlen];
-
+/*
 char * num_to_string(int cnt){
     char *fpath = "./tmpc/";
     char num[1000];
@@ -18,7 +18,7 @@ char * num_to_string(int cnt){
     printf("%s\n", fpath);
     return fpath;
 }
-
+*/
 int main(int argc, char *argv[]) {
     char *path = "./tmpc";
     int cnt = 0;
@@ -35,7 +35,12 @@ int main(int argc, char *argv[]) {
             printf(">> add function successfully!\n");
             printf(">> ");
             cnt++;
-            char *fpath = num_to_string(cnt);
+            char fpath[1000];
+            char num[1000];
+            sprintf(num, "%d", cnt);
+            strcpy(fpath, "./tmpc/");
+            strcpy(fpath, num);
+            strcpy(fpath, ".c");
             printf("%s\n", fpath);
         }else{
             printf(">> hello, world\n");
