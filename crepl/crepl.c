@@ -78,7 +78,8 @@ int main(int argc, char *argv[]) {
                 exit(EXIT_FAILURE);
             }
             int (*p)() = NULL;
-            p = dlsym(so_name, func_name);
+            /*p = dlsym(so_name, func_name);*/
+            p = dlsym("./tmpc/1.so", "add");
             printf(">> %d\n", p());
             printf(">> ");
         }
