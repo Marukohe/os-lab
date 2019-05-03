@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
             char fpath[1000];
             char num[1000];
             sprintf(num, "%d", cnt);
-            strcat(fpath, "./tmpc/");
+            strcpy(fpath, "./tmpc/");
             strcat(fpath, num);
             strcat(fpath, ".c");
             printf("%s\n", fpath);
