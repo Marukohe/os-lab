@@ -13,7 +13,7 @@ char * num_to_string(int cnt){
     char *fpath = "./tmpc/";
     char num[1000];
     sprintf(num, "%d", cnt);
-    strcmp(fpath, num);
+    strcpy(fpath, num);
     strcpy(fpath, ".c");
     printf("%s\n", fpath);
     return fpath;
