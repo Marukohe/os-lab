@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -10,7 +11,7 @@ char s[maxlen];
 
 int main(int argc, char *argv[]) {
     char *path = "./tmpc";
-    mkdir(path, 0775);
+    assert(mkdir(path, 0777) == 0);
     printf(">> ");
     printf("Welcome to the C-shell, Please enter quit() to quit!\n");
     printf(">> ");
