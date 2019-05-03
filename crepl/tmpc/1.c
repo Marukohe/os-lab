@@ -1,1 +1,1 @@
-int add(){return 1 + 2;}
+int add(int a, int b){return a + b;}
