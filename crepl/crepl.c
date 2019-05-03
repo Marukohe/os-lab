@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
             strcat(fpath, num);
             strcat(fpath, ".c");
             FILE *fp = fopen(fpath, "wb");
-            fwrite(s, sizeof(char), maxlen, fp);
+            fwrite(s, sizeof(char), strlen(s), fp);
             fclose(fp);
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
