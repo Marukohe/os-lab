@@ -49,10 +49,11 @@ int main(int argc, char *argv[]) {
             strcat(gcc_command, so_name);
             /*system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");*/
             system(gcc_command);
+            printf("%s\n", so_name);
             assert(!dlopen(so_name ,RTLD_LAZY));
             /*printf("%s\n>> ", gcc_command);*/
             /*printf("%s\n", fpath);*/
-            /*printf(">> ");*/
+            printf(">> ");
         }else{
             char func[10000];
             cntexpr++;
