@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #define maxlen 1000
 #define MODE 775
 char s[maxlen];
