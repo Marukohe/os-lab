@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
             strcat(gcc_command, so_name);
             /*system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");*/
             system(gcc_command);
+            dlopen(so_name ,RTLD_LAZY);
             /*printf("%s\n>> ", gcc_command);*/
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
@@ -57,6 +58,16 @@ int main(int argc, char *argv[]) {
             cntexpr++;
             sprintf(func, "int __expr_wrap_%d(){\n    return %s;}", cntexpr, s);
             printf(">> %s\n", func);
+            char expr_path[maxlen];
+            sprintf(expr_path, "./tmpc/_expr_%d.c", cntexpr);
+            FILE *fp = fopen(expr_path, "wb");
+            fwrite(func, sizeof(char), strlen(func), fp);
+            fclose(fp);
+            char gcc_command[maxlen];
+            char so_name[maxlen];
+            sprintf(so_name, "./tmpc/_expr_%d.so", cntexpr);
+            sprintf(gcc_command, "gcc -fPIC -shared ./tmpc/_expr_%d.c -o %s", cntexpr, so_name);
+            printf("%s\n", gcc_command);
             printf(">> ");
         }
     }
