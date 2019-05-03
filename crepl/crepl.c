@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
             fclose(fp);
             char gcc_command[1000];
             char so_name[10000];
-            sprintf(so_name, "./tmp/%d.so", cnt);
+            sprintf(so_name, "./tmpc/%d.so", cnt);
             strcpy(gcc_command, comm);
             strcat(gcc_command, fpath);
             strcat(gcc_command, " -o ");
