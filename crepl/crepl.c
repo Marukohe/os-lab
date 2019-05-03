@@ -12,6 +12,11 @@ char s[maxlen];
 typedef int (*func_t)();
 
 int main(int argc, char *argv[]) {
+#ifdef __x86_64__
+    printf("64\n");
+#elif __i386__
+    printf("32\n");
+#endif
     char *path = "./tmpc";
     char *comm = "gcc -fPIC -shared ";
     int cnt = 0;      //count the number of functions
