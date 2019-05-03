@@ -25,7 +25,8 @@ int main(int argc, char *argv[]) {
     printf(">> ");
     while(fgets(s, maxlen,stdin)){
         if(strncmp(s, "quit()", 6) == 0){
-            rmdir(path);
+            /*rmdir(path);*/
+            system("rm -rf tmpc/");
             break;
         }
         if(strncmp(s, "int", 3) == 0){
