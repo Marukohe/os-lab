@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
             /*system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");*/
             system(gcc_command);
             /*printf("%s\n", so_name);*/
-            assert(dlopen(so_name ,RTLD_LAZY));
+            assert(dlopen(so_name ,RTLD_LAZY|RTLD_GLOBAL));
             /*printf("%s\n>> ", gcc_command);*/
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
@@ -78,8 +78,8 @@ int main(int argc, char *argv[]) {
                 exit(EXIT_FAILURE);
             }
             int (*p)() = NULL;
-            /*p = dlsym(so_name, func_name);*/
-            p = dlsym("./tmpc/1.so", "add");
+            p = dlsym(so_name, func_name);
+            /*p = dlsym("./tmpc/1.so", "add");*/
             printf(">> %d\n", p());
             printf(">> ");
         }
