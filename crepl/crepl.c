@@ -10,7 +10,7 @@ char s[maxlen];
 
 int main(int argc, char *argv[]) {
     char *path = "./tmpc";
-    mkdir(path, S_IRWXU | S_IRWXG | S_IROTH);
+    mkdir(path, 0775);
     printf(">> ");
     printf("Welcome to the C-shell, Please enter quit() to quit!\n");
     printf(">> ");
