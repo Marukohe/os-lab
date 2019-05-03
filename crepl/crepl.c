@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
             printf(">> ");
             cnt++;
             char *fpath = num_to_string(cnt);
-            fpath++;
+            printf("%s\n", fpath);
         }else{
             printf(">> hello, world\n");
             printf(">> ");
