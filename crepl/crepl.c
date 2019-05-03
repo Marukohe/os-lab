@@ -13,7 +13,8 @@ char s[maxlen];
 int main(int argc, char *argv[]) {
     char *path = "./tmpc";
     char *comm = "gcc -fPIC -shared ";
-    int cnt = 0;
+    int cnt = 0;      //count the number of functions
+    int cntexpr = 0;  //count the number of expressions
     /*assert(mkdir(path, 0777) == 0);*/
     int a = mkdir(path, 0777);
     /*printf("%d\n", a);*/
@@ -48,11 +49,14 @@ int main(int argc, char *argv[]) {
             strcat(gcc_command, so_name);
             /*system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");*/
             system(gcc_command);
-            printf("%s\n>> ", gcc_command);
+            /*printf("%s\n>> ", gcc_command);*/
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
         }else{
-            printf(">> hello, world\n");
+            char func[10000];
+            cntexpr++;
+            sprintf(func, "int __expr_wrap_%d{\n    return %s;}", cntexpr, s);
+            printf(">> %s\n", func);
             printf(">> ");
         }
     }
