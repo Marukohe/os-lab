@@ -4,9 +4,12 @@
 #include <dirent.h>
 #include <unistd.h>
 #define maxlen 1000
+#define MODE 775
 char s[maxlen];
 
 int main(int argc, char *argv[]) {
+    char *path = "./tmpc";
+    mkdir(path, MODE);
     printf(">> ");
     printf("Welcome to the C-shell, Please enter quit() to quit!\n");
     printf(">> ");
