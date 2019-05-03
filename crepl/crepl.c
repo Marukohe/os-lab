@@ -29,8 +29,10 @@ int main(int argc, char *argv[]) {
     printf("Welcome to the C-shell, Please enter quit() to quit!\n");
     printf(">> ");
     while(fgets(s, maxlen,stdin)){
-        if(strncmp(s, "quit()", 6) == 0)
+        if(strncmp(s, "quit()", 6) == 0){
+            rmdir(path);
             break;
+        }
         if(strncmp(s, "int", 3) == 0){
             printf(">> add function successfully!\n");
             printf(">> ");
