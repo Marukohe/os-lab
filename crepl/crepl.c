@@ -13,8 +13,13 @@ int main(int argc, char *argv[]) {
     while(fgets(s, maxlen,stdin)){
         if(strncmp(s, "quit()", 6) == 0)
             break;
-        printf(">> hello, world\n");
-        printf(">> ");
+        if(strncmp(s, "int", 3) == 0){
+            printf(">> add function successfully!");
+            printf(">> ");
+        }else{
+            printf(">> hello, world\n");
+            printf(">> ");
+        }
     }
   return 0;
 }
