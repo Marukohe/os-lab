@@ -38,10 +38,11 @@ int main(int argc, char *argv[]) {
             char fpath[1000];
             char num[1000];
             sprintf(num, "%d", cnt);
-            strcpy(fpath, "./tmpc/");
-            strcpy(fpath, num);
-            strcpy(fpath, ".c");
+            strcat(fpath, "./tmpc/");
+            strcat(fpath, num);
+            strcat(fpath, ".c");
             printf("%s\n", fpath);
+            printf(">> ");
         }else{
             printf(">> hello, world\n");
             printf(">> ");
