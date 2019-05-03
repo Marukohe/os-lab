@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
         if(strncmp(s, "quit()", 6) == 0)
             break;
         if(strncmp(s, "int", 3) == 0){
-            printf(">> add function successfully!");
+            printf(">> add function successfully!\n");
             printf(">> ");
         }else{
             printf(">> hello, world\n");
