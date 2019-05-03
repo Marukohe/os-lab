@@ -50,14 +50,14 @@ int main(int argc, char *argv[]) {
             /*system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");*/
             system(gcc_command);
             /*printf("%s\n", so_name);*/
-            assert(dlopen(so_name ,RTLD_LAZY|RTLD_GLOBAL));
+            assert(dlopen(so_name ,RTLD_LAZY));
             /*printf("%s\n>> ", gcc_command);*/
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
         }else{
             char func[10000];
             cntexpr++;
-            sprintf(func, "extern int add(int a, int b);\nint __expr_wrap_%d(){\n    return %s;}", cntexpr, s);
+            sprintf(func, "extern int add(int a, int b);\nint _expr_wrap_%d(){\n    return %s;}", cntexpr, s);
             /*printf(">> %s\n", func);*/
             char expr_path[maxlen];
             sprintf(expr_path, "./tmpc/_expr_%d.c", cntexpr);
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
             char so_name[maxlen];
             char func_name[maxlen];
             sprintf(so_name, "./tmpc/_expr_%d.so", cntexpr);
-            sprintf(func_name, "./tmpc/_expr_%d.c", cntexpr);
+            sprintf(func_name, "_expr_wrap_%d", cntexpr);
             sprintf(gcc_command, "gcc -fPIC -shared ./tmpc/_expr_%d.c -o %s", cntexpr, so_name);
             /*printf("%s\n", gcc_command);*/
             system(gcc_command);
