@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
             char so_name[maxlen];
             char func_name[maxlen];
             sprintf(so_name, "./tmpc/_expr_%d.so", cntexpr);
-            sprintf(so_name, "./tmpc/_expr_%d.c", cntexpr);
+            sprintf(func_name, "./tmpc/_expr_%d.c", cntexpr);
             sprintf(gcc_command, "gcc -fPIC -shared ./tmpc/_expr_%d.c -o %s", cntexpr, so_name);
             /*printf("%s\n", gcc_command);*/
             system(gcc_command);
