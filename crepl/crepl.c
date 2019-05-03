@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <dlfcn.h>
 #define maxlen 1000
 /*#define MODE 775*/
 char s[maxlen];
@@ -37,6 +38,7 @@ int main(int argc, char *argv[]) {
             FILE *fp = fopen(fpath, "wb");
             fwrite(s, sizeof(char), strlen(s), fp);
             fclose(fp);
+            system("gcc -fPIC -shared ./tmpc/1.c -o ./tmpc/1.so");
             /*printf("%s\n", fpath);*/
             /*printf(">> ");*/
         }else{
