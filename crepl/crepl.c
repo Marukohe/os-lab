@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
         }else{
             char func[10000];
             cntexpr++;
-            sprintf(func, "int __expr_wrap_%d{\n    return %s;}", cntexpr, s);
+            sprintf(func, "int __expr_wrap_%d(){\n    return %s;}", cntexpr, s);
             printf(">> %s\n", func);
             printf(">> ");
         }
