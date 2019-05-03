@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
             FILE *fp = fopen(fpath, "wb");
             fwrite(s, sizeof(char), strlen(s), fp);
             fclose(fp);
-            char *gcc_command;
+            char gcc_command[1000];
             char so_name[10000];
             sprintf(so_name, "./tmp/%d.so", cnt);
             strcpy(gcc_command, comm);
