@@ -79,9 +79,9 @@ int main(int argc, char *argv[]) {
             }
             int (*p)() = NULL;
             printf("%s\n%s\n", so_name, func_name);
-            p = dlsym(so_name, func_name);
+            dlsym(so_name, func_name);
             /*p = dlsym("./tmpc/1.so", "add");*/
-            printf(">> %d\n", p());
+            /*printf(">> %d\n", p());*/
             printf(">> ");
         }
     }
