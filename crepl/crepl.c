@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
         }else{
             char func[10000];
             cntexpr++;
-            sprintf(func, "extern int add(int a, int b);\nint _expr_wrap_%d(){\n    return %s;}", cntexpr, s);
+            sprintf(func, "extern \"C\" int add(int a, int b);\nint _expr_wrap_%d(){\n    return %s;}", cntexpr, s);
             /*printf(">> %s\n", func);*/
             char expr_path[maxlen];
             sprintf(expr_path, "./tmpc/_expr_%d.c", cntexpr);
