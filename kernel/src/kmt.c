@@ -18,7 +18,7 @@ void kmt_teardown(task_t *task){
 MODULE_DEF(kmt) {
     .init = kmt_init,
     .create = kmt_create,
-    .teardown = kmt_theardown,
+    .teardown = kmt_teardown,
     .spin_init = spin_init,
     .spin_lock = spin_lock,
     .spin_unlock = spin_unlock,
