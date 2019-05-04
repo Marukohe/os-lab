@@ -29,7 +29,7 @@ kmem sizetest;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
-  /*Logp("pmm_init successfully, from pm_start 0x%x to pm_end 0x%x",pm_start,pm_end);*/
+  Logp("pmm_init successfully, from pm_start 0x%x to pm_end 0x%x",pm_start,pm_end);
   /*Logp("struct size %ld",sizeof(sizetest));*/
 
   start = pm_start;
