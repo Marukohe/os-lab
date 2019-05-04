@@ -18,8 +18,8 @@ typedef struct Kmem{
 
 static uintptr_t start;
 static uintptr_t pm_start, pm_end;
-spinlock lk;
-spinlock pk;
+struct spinlock lk;
+struct spinlock pk;
 
 kmem *smem[CPUNUM];
 kmem *lmem;

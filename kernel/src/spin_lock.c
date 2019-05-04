@@ -19,14 +19,14 @@ void popcli(){
     }
 }
 
-void spin_lock(spinlock *lk){
+void spin_lock(struct spinlock *lk){
     /*cli();*/
     pushcli();
     while(_atomic_xchg(&lk->locked, 1));
     /*printf("spinlock %d\n",_cpu());*/
 }
 
-void spin_unlock(spinlock *lk){
+void spin_unlock(struct spinlock *lk){
     _atomic_xchg(&lk->locked, 0);
     /*sti();*/
     popcli();
