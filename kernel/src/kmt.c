@@ -10,15 +10,15 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     return 1;
 }
 
-void kmt_theardown(task_t *task){
+void kmt_teardown(task_t *task){
     return;
 }
 
 
 MODULE_DEF(kmt) {
     .init = kmt_init,
-    .creat = kmt_creat,
-    .theardown = kmt_theardown,
+    .create = kmt_create,
+    .teardown = kmt_theardown,
     .spin_init = spin_init,
     .spin_lock = spin_lock,
     .spin_unlock = spin_unlock,

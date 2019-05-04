@@ -16,6 +16,8 @@ struct spinlock {
     char name[10];
 };
 
-struct semaphore {};
+struct semaphore {
+    char *name;
+};
 
 #endif
