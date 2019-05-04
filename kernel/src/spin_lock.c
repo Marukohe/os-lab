@@ -19,6 +19,10 @@ void popcli(){
     }
 }
 
+void spin_init(spinlock_t *lk, const char *name){
+    return;
+}
+
 void spin_lock(spinlock_t *lk){
     /*cli();*/
     pushcli();
