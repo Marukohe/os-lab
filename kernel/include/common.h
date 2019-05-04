@@ -5,6 +5,7 @@
 #include <nanos.h>
 #include <x86.h>
 #include <spinlock.h>
+#include <sem.h>
 
 enum BLOCKSTATE{FREE,USING,READY};
 
