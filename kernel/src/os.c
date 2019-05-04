@@ -44,8 +44,8 @@ void test(){
 }
 
 static void os_run() {
-  hello();
-  /*test();*/
+  /*hello();*/
+  test();
   _intr_write(1);
   while (1) {
       /*assert(0);*/
