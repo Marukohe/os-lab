@@ -11,7 +11,11 @@ enum BLOCKSTATE{FREE,USING,READY};
 //#define DEBUG
 // #define CORRECTNESS_FIRST
 struct task {};
-//struct spinlock {};
+struct spinlock {
+    volatile intprt_t locked;
+    char name[10];
+};
+
 struct semaphore {};
 
 #endif
