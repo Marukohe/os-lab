@@ -59,7 +59,7 @@ int strncmp(const char* s1, const char* s2, size_t n) {
 				return value;
 			}
 			else return 1;
-		} 
+		}
 	}
 	return value;
 }
@@ -78,8 +78,8 @@ void* memcpy(void* out, const void* in, size_t n){
 	for(s1=out,s2=in;0<n;++s1,++s2,--n)
 		*s1=*s2;
 	//*s1 = '\0';
-	return out;	
-} 
+	return out;
+}
 
 int memcmp(const void* s1, const void* s2, size_t n){
 	if(s1==NULL||s2==NULL||n<0)
@@ -104,6 +104,24 @@ int memcmp(const void* s1, const void* s2, size_t n){
 	else if(*dst<*src)
 		return -1;
 	return 0;
+}
+
+void *memmove(void *dest, const void *src, size_t n){
+    char *sc1;
+    const char *sc2;
+    sc1 = dest;
+    sc2 = src;
+    if(sc2 < sc1 && sc1 < sc2 + n){
+        for(sc1 += n, sc2 += n; 0 < n; n--){
+            *--sc1 = *--sc2;
+        }
+    }
+    else{
+        for(; 0 < n; n--){
+            *sc1++ = *sc2++;
+        }
+    }
+    return dest;
 }
 
 #endif
