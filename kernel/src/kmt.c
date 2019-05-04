@@ -2,6 +2,18 @@
 #include <klib.h>
 #include <spinlock.h>
 
+void kmt_init(){
+    return;
+}
+
+int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
+    return 1;
+}
+
+void kmt_theardown(task_t *task){
+    return;
+}
+
 
 MODULE_DEF(kmt) {
     .init = kmt_init,
