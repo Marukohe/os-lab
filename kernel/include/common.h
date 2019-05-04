@@ -12,7 +12,7 @@ enum BLOCKSTATE{FREE,USING,READY};
 // #define CORRECTNESS_FIRST
 struct task {};
 struct spinlock {
-    volatile intprt_t locked;
+    volatile intptr_t locked;
     char name[10];
 };
 
