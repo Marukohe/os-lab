@@ -8,14 +8,14 @@ static void os_init() {
   _vme_init(pmm->alloc, pmm->free);
   dev->init();
 }
-
+/*
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
     _putc(*ptr);
   }
   _putc("12345678"[_cpu()]); _putc('\n');
 }
-
+*/
 #define test_ptr_nr 1024
 #define testnum 100
 void test(){
