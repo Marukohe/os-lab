@@ -5,7 +5,7 @@
 #define CPUNUM 4
 #define BLOCK 4096
 #define STSIZE 24
-#define ALIGNED(size) (((size>>3)+1)<<3)
+#define ALIGNED(size) (((size>>4)+1)<<4)
 
 typedef struct Kmem{
     uintptr_t start;
