@@ -28,10 +28,12 @@ void spin_lock(spinlock_t *lk){
     pushcli();
     while(_atomic_xchg(&lk->locked, 1));
     /*printf("spinlock %d\n",_cpu());*/
+    __sync_synchronize();
 }
 
 void spin_unlock(spinlock_t *lk){
     _atomic_xchg(&lk->locked, 0);
+    __sync_synchronize();
     /*sti();*/
     popcli();
 }
