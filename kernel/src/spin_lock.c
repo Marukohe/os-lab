@@ -20,6 +20,8 @@ void popcli(){
 }
 
 void spin_init(spinlock_t *lk, const char *name){
+    lk->name = name;
+    lk->locked = 0;
     return;
 }
 

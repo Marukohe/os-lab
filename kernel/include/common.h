@@ -14,7 +14,7 @@ enum BLOCKSTATE{FREE,USING,READY};
 struct task {};
 struct spinlock {
     volatile intptr_t locked;
-    char name[10];
+    char *name;
 };
 
 struct semaphore {
