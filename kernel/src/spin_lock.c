@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include <devices.h>
 
 /*int spincnt[5]={};*/
 
