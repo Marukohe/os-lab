@@ -8,6 +8,7 @@
 #include <os.h>
 
 #define MAXCPU 4
+#define MAXHANDLER 10
 enum BLOCKSTATE{FREE,USING,READY};
 
 //#define DEBUG

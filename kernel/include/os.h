@@ -1,6 +1,6 @@
-#define MAXHANDLER 10
 
 struct handlers{
+    int seq;
     int event;
     handler_t handler;
-}schandlers[MAXHANDLER];
+};

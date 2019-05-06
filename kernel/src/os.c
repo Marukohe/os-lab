@@ -1,7 +1,9 @@
 #include <common.h>
 #include <klib.h>
 extern struct spinlock pk;
-int cntheadler = 0;
+int cnthandler = 0;
+struct handlers schandlers[MAXHANDLER];
+
 static void os_init() {
   pmm->init();
   /*kmt->init();*/
@@ -55,16 +57,47 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *context) {
     _Context *ret = NULL;
-    for(int i = 0; i < cntheadler; i++){
+    for(int i = 0; i < cnthandler; i++){
         if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
             _Context *next = schandlers[i].handler(ev, context);
             if(next) ret = next;
         }
     }
-  return ret;
+  /*return ret;*/
+    return context;
+}
+
+void os_irq_add(int seq, int event, handler_t handler){
+    schandlers[cnthandler].seq = seq;
+    schandlers[cnthandler].event = event;
+    schandlers[cnthandler].handler = handler;
+    cnthandler++;
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
+    int i = 0;
+    if(cnthandler == 0){
+        os_irq_add(seq, event, handler);
+        return;
+    }
+    for(; i < cnthandler; i++){
+        if(schandlers[i].seq > seq)
+            break;
+    }
+    if(i == cnthandler){
+        os_irq_add(seq, event, handler);
+    }else{
+        for(int k = cnthandler; k > i; k++){
+            schandlers[k] = schandlers[k - 1];
+        }
+        schandlers[i].seq = seq;
+        schandlers[i].event = event;
+        schandlers[i].handler = handler;
+        cnthandler++;
+    }
+    for(int k = 0; k < cnthandler - 1; k++){
+        assert(schandlers[k].seq < schandlers[k + 1].seq);
+    }
 }
 
 MODULE_DEF(os) {
