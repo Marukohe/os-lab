@@ -78,6 +78,7 @@ void os_irq_add(int seq, int event, handler_t handler){
 static void os_on_irq(int seq, int event, handler_t handler) {
     int i = 0;
     if(cnthandler == 0){
+        Logy("%d", cnthandler);
         os_irq_add(seq, event, handler);
         return;
     }
