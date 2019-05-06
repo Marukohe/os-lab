@@ -9,6 +9,8 @@
 
 #define MAXCPU 4
 #define MAXHANDLER 10
+#define INT_MAX 0x7ffffff
+#define INT_MIN (-INT_MAX - 1)
 enum BLOCKSTATE{FREE,USING,READY};
 
 //#define DEBUG
@@ -24,5 +26,9 @@ struct spinlock {
 struct semaphore {
     const char *name;
 };
+
+//=======================handler====================
+_Context *kmt_context_save(_Event ev, _Context *context);
+_Context *kmt_context_switch(_Event ev, _Context *context);
 
 #endif
