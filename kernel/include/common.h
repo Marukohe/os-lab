@@ -16,9 +16,10 @@ struct spinlock {
     volatile intptr_t locked;
     const char *name;
     int cpu;
-    int ncli[MAXCPU];
-    int intena[MAXCPU];
 };
+
+int ncli[MAXCPU] = {};
+int intena[MAXCPU] = {};
 
 struct semaphore {
     const char *name;
