@@ -69,6 +69,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 }
 
 void os_irq_add(int seq, int event, handler_t handler){
+    Logg("cnthandler, %d",cnthandler);
     schandlers[cnthandler]->seq = seq;
     schandlers[cnthandler]->event = event;
     schandlers[cnthandler]->handler = handler;
