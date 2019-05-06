@@ -1,6 +1,6 @@
 #include <common.h>
 #include <klib.h>
-#include <spinlock.h>
+
 
 void kmt_init(){
     return;
