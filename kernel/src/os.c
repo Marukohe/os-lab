@@ -90,6 +90,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
         Logy("i: %d seq: %d", i, seq);
         os_irq_add(seq, event, handler);
     }else{
+        assert(0);
         for(int k = cnthandler; k > i; k++){
             schandlers[k] = schandlers[k - 1];
         }
@@ -98,7 +99,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
         schandlers[i]->handler = handler;
         cnthandler++;
     }
-    for(int k = 0; k < cnthandler; k++){
+    for(int k = 0; k < cnthandler - 1; k++){
         Logy("MIN: %d MAX: %d", INT_MIN, INT_MAX);
         Logy("%d %d %d", k, schandlers[k]->seq, schandlers[k + 1]->seq);
         assert(schandlers[k]->seq <= schandlers[k + 1]->seq);
