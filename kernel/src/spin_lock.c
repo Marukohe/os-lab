@@ -47,7 +47,7 @@ void pushcli(){
     cli();
     if(ncli[_cpu()] == 0)
         intena[_cpu()] = eflags & FL_IF;
-    ncli[_cpi()]++;
+    ncli[_cpu()]++;
     /*printf("push %d %d\n",_cpu(), spincnt[_cpu()]);*/
 }
 
