@@ -1,6 +1,5 @@
 #include <common.h>
 #include <klib.h>
-#include <spinlock.h>
 extern struct spinlock pk;
 static void os_init() {
   pmm->init();
