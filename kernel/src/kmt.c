@@ -3,7 +3,8 @@
 
 
 void kmt_init(){
-    return;
+    os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save); // 总是最先调用
+    os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch); // 总是最后调用
 }
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
