@@ -97,7 +97,8 @@ static void os_on_irq(int seq, int event, handler_t handler) {
         cnthandler++;
     }
     for(int k = 0; k < cnthandler - 1; k++){
-        assert(schandlers[k]->seq < schandlers[k + 1]->seq);
+        Logy("%d", k);
+        assert(schandlers[k]->seq <= schandlers[k + 1]->seq);
     }
 }
 
