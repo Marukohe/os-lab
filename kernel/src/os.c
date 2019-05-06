@@ -82,7 +82,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
         return;
     }
     for(; i < cnthandler; i++){
-        if(schandlers[i].seq > seq)
+        if(schandlers[i]->seq > seq)
             break;
     }
     if(i == cnthandler){
