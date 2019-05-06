@@ -43,7 +43,7 @@ int holding(spinlock_t *lk){
 void pushcli(){
     uint32_t eflags;
 
-    eflags = get_elf();
+    eflags = get_efl();
     cli();
     if(ncli[_cpu()] == 0)
         intena[_cpu()] = eflags & FL_IF;
@@ -53,7 +53,7 @@ void pushcli(){
 
 void popcli(){
     /*assert(spincnt[_cpu()]!=0);*/
-    if(get_elf() & FL_IF)
+    if(get_efl() & FL_IF)
         panic("popcli - interrupialbe");
     if(--ncli[_cpu()] < 0)
         panic("popcli");
