@@ -18,8 +18,6 @@ struct spinlock {
     int cpu;
 };
 
-int ncli[MAXCPU] = {};
-int intena[MAXCPU] = {};
 
 struct semaphore {
     const char *name;

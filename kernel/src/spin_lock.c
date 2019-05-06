@@ -4,6 +4,9 @@
 
 /*int spincnt[5]={};*/
 
+int nlci[MAXCPU] = {};
+int intena[MAXCPU] = {};
+
 void spin_init(spinlock_t *lk, const char *name){
     lk->name = name;
     lk->locked = 0;
