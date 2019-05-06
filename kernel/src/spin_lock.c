@@ -1,6 +1,5 @@
 #include <common.h>
 #include <klib.h>
-#include <spinlock.h>
 
 int spincnt[5]={};
 

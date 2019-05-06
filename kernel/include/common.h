@@ -4,8 +4,7 @@
 #include <kernel.h>
 #include <nanos.h>
 #include <x86.h>
-#include <spinlock.h>
-#include <sem.h>
+#include <kmt.h>
 
 enum BLOCKSTATE{FREE,USING,READY};
 
