@@ -1,6 +1,5 @@
 #include <common.h>
 #include <klib.h>
-#include <spinlock.h>
 #define SMALLSIZE 256
 #define CPUNUM 4
 #define BLOCK 4096
