@@ -80,6 +80,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     if(cnthandler == 0){
         Logy("%d seq: %d", cnthandler, seq);
         os_irq_add(seq, event, handler);
+        Logy("0seq: %d", schandlers[0]->seq);
         return;
     }
     for(; i < cnthandler; i++){
