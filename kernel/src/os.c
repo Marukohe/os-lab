@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 extern struct spinlock pk;
+int cntheadler = 0;
 static void os_init() {
   pmm->init();
   /*kmt->init();*/
@@ -53,7 +54,14 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  return context;
+    _Context *ret = NULL;
+    for(int i = 0; i < cntheadler; i++){
+        if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
+            _Context *next = schandlers[i].handler(ev, context);
+            if(next) ret = next;
+        }
+    }
+  return ret;
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {

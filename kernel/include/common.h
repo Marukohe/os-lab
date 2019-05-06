@@ -5,8 +5,10 @@
 #include <nanos.h>
 #include <x86.h>
 #include <kmt.h>
+#include <os.h>
 
 #define MAXCPU 4
+#define MAXHEADLER 10
 enum BLOCKSTATE{FREE,USING,READY};
 
 //#define DEBUG
