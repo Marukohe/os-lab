@@ -10,7 +10,7 @@ int intena[MAXCPU] = {};
 void spin_init(spinlock_t *lk, const char *name){
     lk->name = name;
     lk->locked = 0;
-    lk->cpu = 0;
+    lk->cpu = -1;
     return;
 }
 
@@ -28,7 +28,7 @@ void spin_lock(spinlock_t *lk){
 void spin_unlock(spinlock_t *lk){
     if(!holding(lk))
         panic("release");
-    lk->cpu = 0;
+    lk->cpu = -1;
     /*_atomic_xchg(&lk->locked, 0);*/
     __sync_synchronize();
     _atomic_xchg(&lk->locked, 0);
