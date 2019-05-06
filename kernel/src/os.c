@@ -2,7 +2,7 @@
 #include <klib.h>
 extern struct spinlock pk;
 int cnthandler = 0;
-struct handlers *schandlers[MAXHANDLER];
+struct handlers *schandlers[10];
 
 static void os_init() {
   pmm->init();
