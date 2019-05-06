@@ -63,8 +63,9 @@ static _Context *os_trap(_Event ev, _Context *context) {
             if(next) ret = next;
         }
     }
-  /*return ret;*/
-    return context;
+    ret = context;
+  return ret;
+    /*return context;*/
 }
 
 void os_irq_add(int seq, int event, handler_t handler){
