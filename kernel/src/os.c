@@ -2,7 +2,7 @@
 #include <klib.h>
 extern struct spinlock pk;
 int cnthandler = 0;
-struct handlers *schandlers[10];
+struct handlers schandlers[MAXHANDLER];
 
 static void os_init() {
   pmm->init();
@@ -58,8 +58,8 @@ static void os_run() {
 static _Context *os_trap(_Event ev, _Context *context) {
     _Context *ret = NULL;
     for(int i = 0; i < cnthandler; i++){
-        if(schandlers[i]->event == _EVENT_NULL || schandlers[i]->event == ev.event){
-            _Context *next = schandlers[i]->handler(ev, context);
+        if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
+            _Context *next = schandlers[i].handler(ev, context);
             if(next) ret = next;
         }
     }
@@ -69,45 +69,45 @@ static _Context *os_trap(_Event ev, _Context *context) {
 }
 
 void os_irq_add(int seq, int event, handler_t handler){
-    Logg("cnthandler, %d",cnthandler);
-    schandlers[cnthandler]->seq = seq;
-    schandlers[cnthandler]->event = event;
-    schandlers[cnthandler]->handler = handler;
+    /*Logg("cnthandler, %d",cnthandler);*/
+    schandlers[cnthandler].seq = seq;
+    schandlers[cnthandler].event = event;
+    schandlers[cnthandler].handler = handler;
     cnthandler++;
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
     int i = 0;
     if(cnthandler == 0){
-        Logy("%d seq: %d", cnthandler, seq);
+        /*Logy("%d seq: %d", cnthandler, seq);*/
         os_irq_add(seq, event, handler);
-        Logy("0seq: %d", schandlers[0]->seq);
+        /*Logy("0seq: %d", schandlers[0]->seq);*/
         return;
     }
     for(; i < cnthandler; i++){
-        if(schandlers[i]->seq > seq)
+        if(schandlers[i].seq > seq)
             break;
     }
     if(i == cnthandler){
-        Logy("i: %d seq: %d %d", i, seq, cnthandler);
-        Logg("%d", schandlers[0]->seq);
+        /*Logy("i: %d seq: %d %d", i, seq, cnthandler);*/
+        /*Logg("%d", schandlers[0]->seq);*/
         os_irq_add(seq, event, handler);
-        Logy("%d", schandlers[i]->seq);
-        Logg("%d", schandlers[0]->seq);
+        /*Logy("%d", schandlers[i]->seq);*/
+        /*Logg("%d", schandlers[0]->seq);*/
     }else{
         assert(0);
         for(int k = cnthandler; k > i; k++){
             schandlers[k] = schandlers[k - 1];
         }
-        schandlers[i]->seq = seq;
-        schandlers[i]->event = event;
-        schandlers[i]->handler = handler;
+        schandlers[i].seq = seq;
+        schandlers[i].event = event;
+        schandlers[i].handler = handler;
         cnthandler++;
     }
     for(int k = 0; k < cnthandler - 1; k++){
-        Logy("MIN: %d MAX: %d, %d", INT_MIN, INT_MAX, cnthandler);
+        /*Logy("MIN: %d MAX: %d, %d", INT_MIN, INT_MAX, cnthandler);*/
         Logy("%d %d %d", k, schandlers[0]->seq, schandlers[1]->seq);
-        assert(schandlers[k]->seq <= schandlers[k + 1]->seq);
+        assert(schandlers[k].seq <= schandlers[k + 1].seq);
     }
 }
 
