@@ -106,7 +106,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
     }
     for(int k = 0; k < cnthandler - 1; k++){
         /*Logy("MIN: %d MAX: %d, %d", INT_MIN, INT_MAX, cnthandler);*/
-        Logy("%d %d %d", k, schandlers[0]->seq, schandlers[1]->seq);
+        Logy("%d %d %d", k, schandlers[0].seq, schandlers[1].seq);
         assert(schandlers[k].seq <= schandlers[k + 1].seq);
     }
 }
