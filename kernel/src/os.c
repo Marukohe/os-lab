@@ -87,6 +87,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
             break;
     }
     if(i == cnthandler){
+        Logy("i: %d", i);
         os_irq_add(seq, event, handler);
     }else{
         for(int k = cnthandler; k > i; k++){
