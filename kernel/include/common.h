@@ -6,6 +6,7 @@
 #include <x86.h>
 #include <kmt.h>
 
+#define MAXCPU 4
 enum BLOCKSTATE{FREE,USING,READY};
 
 //#define DEBUG
@@ -14,6 +15,9 @@ struct task {};
 struct spinlock {
     volatile intptr_t locked;
     const char *name;
+    int cpu;
+    int ncli[MAXCPU];
+    int intena[MAXCPU];
 };
 
 struct semaphore {
