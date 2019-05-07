@@ -19,6 +19,8 @@ struct task {
     const char *name;
     _Context context;
     char *stack;
+    void (*entry)(void *arg);
+    void *arg;
 };
 
 struct spinlock {

@@ -10,10 +10,13 @@ void kmt_init(){
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
     task->name =  name;
     task->stack = (char *)pmm->alloc(ST_SIZE);
+    task->entry = entry;
+    task->arg = arg;
     return 1;
 }
 
 void kmt_teardown(task_t *task){
+    pmm->free((void *)task->stack);
     return;
 }
 
