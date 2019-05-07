@@ -7,7 +7,7 @@ struct handlers schandlers[MAXHANDLER];
 static void os_init() {
   pmm->init();
   /*kmt->init();*/
-  _vme_init(pmm->alloc, pmm->free);
+  /*_vme_init(pmm->alloc, pmm->free);*/
   /*dev->init();*/
 }
 /*
