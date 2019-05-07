@@ -77,6 +77,9 @@ void os_irq_add(int seq, int event, handler_t handler){
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
+    kmt->spin_lock(&pk);
+    Logb("os_irq, seq: %d event: %d", seq, event);
+    kmt->spin_unlock(&pk);
     int i = 0;
     if(cnthandler == 0){
         /*Logy("%d seq: %d", cnthandler, seq);*/
