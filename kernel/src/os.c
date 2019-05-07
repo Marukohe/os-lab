@@ -93,7 +93,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
         /*Logg("%d", schandlers[0]->seq);*/
     }else{
         /*assert(0);*/
-        for(int k = cnthandler; k > i; k++){
+        for(int k = cnthandler; k > i; k--){
             schandlers[k] = schandlers[k - 1];
         }
         schandlers[i].seq = seq;
