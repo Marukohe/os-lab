@@ -51,7 +51,7 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)) , "produce", producer, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)) , "consume", consumer, NULL);
   kmt->sem_init(&emptysem, "emprty", 0);
-  kmt->sem_inti(&fillsem, "fill", 0);
+  kmt->sem_init(&fillsem, "fill", 0);
   kmt->spin_init(&yk, "yield lock");
 }
 /*
