@@ -8,7 +8,7 @@ static void os_init() {
   pmm->init();
   /*kmt->init();*/
   _vme_init(pmm->alloc, pmm->free);
-  dev->init();
+  /*dev->init();*/
 }
 /*
 static void hello() {
