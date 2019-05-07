@@ -23,7 +23,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     /*assert(0);*/
     Logg("current task: name-> %s id->%d state->%d", current->name, current->id, current->state);
     kmt->spin_unlock(&pk);
-    assert(!current || current->state == RUNNING);
+    assert(!current || current->state != FREET);
     int tmp = current->id;
     do{
         if(!current || current->id == tottask - 1){
