@@ -91,24 +91,24 @@ static void updatepoint(kmem *p1,kmem *p2){
         p1->next->prev = p2;
         p2->next = p1->next;
 
-        spin_lock(&pk);
+        kmt->spin_lock(&pk);
         assert(p2->next->prev==p2);
-        spin_unlock(&pk);
+        kmt->spin_unlock(&pk);
     }
 
     p1->next = p2;
     p2->prev = p1;
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(p1->next->prev==p1);
     assert(p2->prev->next==p2);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 }
 
 static void *my_bigalloc(size_t size){
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logb("bigalloc start size: %d cpu: %d",size,_cpu());
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
     void *ret = NULL;
     int k = size/BLOCK;
@@ -117,9 +117,9 @@ static void *my_bigalloc(size_t size){
 
     kmem *head = lmem;
 
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(ret==NULL);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 
     while(head!=NULL){
         if(head->size>=ssize+STSIZE && head->state==FREE){
@@ -136,33 +136,33 @@ static void *my_bigalloc(size_t size){
     newalloc->state = USING;
     head->size = head->size-ssize-STSIZE;
 
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(newalloc != NULL);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 
     updatepoint(head,newalloc);
     ret = (void *)sstart;
 
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(ret!=NULL);
     assert(newalloc->size==ssize);
     assert(newalloc->prev==head);
     assert(head->next==newalloc);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logb("bigalloc finish size: %d cpu: %d",size,_cpu());
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
     return ret;
 }
 
 static void *my_smallalloc(size_t size){
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logw("smallalloc start size: %d cpu: %d",size,_cpu());
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
     void *ret = NULL;
     size_t ssize = size+STSIZE;
@@ -182,20 +182,20 @@ static void *my_smallalloc(size_t size){
 
     if(tmp==NULL){
     #ifdef DEBUG
-        spin_lock(&pk);
+        kmt->spin_lock(&pk);
         Logy("smallalloc start tmp==NULL size: %d cpu: %d",size,_cpu());
-        spin_unlock(&pk);
+        kmt->spin_unlock(&pk);
     #endif
         void *new = my_bigalloc(size);
         kmem *newpage = (kmem *)(new-STSIZE);
 
-        spin_lock(&pk);
+        kmt->spin_lock(&pk);
         assert(newpage!=NULL);
         assert(newpage->state==USING);
         assert(newpage->prev->next==newpage);
         assert(newpage->size>=BLOCK);
         assert(newpage->start!=0);
-        spin_unlock(&pk);
+        kmt->spin_unlock(&pk);
 
         newpage->state=FREE;
 
@@ -217,18 +217,16 @@ static void *my_smallalloc(size_t size){
         updatepoint(newpage,myalloc);
         ret = (void *)myalloc->start;
     #ifdef DEBUG
-        spin_lock(&pk);
+        kmt->spin_lock(&pk);
         Logy("smallalloc finish tmp==NULL size: %d cpu: %d",size,_cpu());
-        spin_unlock(&pk);
+        kmt->spin_unlock(&pk);
     #endif
 
     }else{
     #ifdef DEBUG
-        spin_lock(&pk);
+        kmt->spin_lock(&pk);
         Logy("smallalloc start tmp!=NULL size: %d cpu: %d",size,_cpu());
-        spin_unlock(&pk);
-    #endif
-        uintptr_t addr= tmp->start+tmp->size-size;
+        kmt->spin_unlock(&pk);
         kmem *myalloc = (kmem *)(addr-STSIZE);
         myalloc->start = addr;
         myalloc->state = USING;
@@ -237,29 +235,29 @@ static void *my_smallalloc(size_t size){
         updatepoint(tmp,myalloc);
         ret = (void *)myalloc->start;
     #ifdef DEBUG
-        spin_lock(&pk);
+        kmt->spin_lock(&pk);
         Logy("smallalloc start tmp!=NULL size: %d cpu: %d",size,_cpu());
-        spin_unlock(&pk);
+        kmt->spin_unlock(&pk);
     #endif
     }
 
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logw("smallalloc finish size: %d cpu: %d",size,_cpu());
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
     return ret;
 }
 
 static void *kalloc(size_t size) {
 #ifdef CORRECTNESS_FIRST
-    spin_lock(&lk);
+    kmt->spin_lock(&lk);
     void *ret = (void *)start;
     start += size;
-    spin_unlock(&lk);
+    kmt->spin_unlock(&lk);
     return ret;
 #else
-    spin_lock(&lk);
+    kmt->spin_lock(&lk);
     size = ALIGNED(size);
     void *ret;
     if(size > SMALLSIZE){
@@ -267,15 +265,15 @@ static void *kalloc(size_t size) {
     }else{
         ret = my_smallalloc(size);
     }
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(ret!=NULL);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logw("alloc space from %x",(uintptr_t)ret);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
-    spin_unlock(&lk);
+    kmt->spin_unlock(&lk);
     return ret;
 #endif
 }
@@ -295,18 +293,18 @@ static void kfree(void *ptr) {
     return;
 #else
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logg("free space from %x",(uintptr_t)ptr);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
-    spin_lock(&lk);
+    kmt->spin_lock(&lk);
     kmem *myfree = (kmem *)(ptr-STSIZE);
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(myfree->state==USING);
     assert(myfree->size!=0);
     assert(myfree->prev!=NULL);
     assert(myfree->prev->next==myfree);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
     kmem *p = myfree->prev;
     if(p->size!=0 && p->state==FREE){
         if(myfree->start==p->size+p->start+STSIZE){
@@ -321,11 +319,11 @@ static void kfree(void *ptr) {
     }else{
         myfree->state = FREE;
     }
-    spin_unlock(&lk);
+    kmt->spin_unlock(&lk);
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logg("free space finish from %x",(uintptr_t)ptr);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
     //myfree(ptr);
     return;
