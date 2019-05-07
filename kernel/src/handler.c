@@ -1,10 +1,10 @@
 #include <common.h>
 #include <klib.h>
 
-#define TKNUM 20
+#define TKNUM 25
 extern spinlock_t pk;
 extern int tottask;
-extern task_t task[TKNUM];
+extern task_t *task[TKNUM];
 extern task_t *current_task[4];
 #define current (current_task[_cpu()])
 
@@ -25,12 +25,12 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     int tmp = current->id;
     do{
         if(!current || current->id == tottask - 1){
-            current = &task[0];
+            current = task[0];
         }else{
-            current = &task[++current->id];
+            current = task[++current->id];
         }
     }while(current->state != FREET);
-    task[tmp].state = FREET;
+    task[tmp]->state = FREET;
     current->state = RUNNING;
     kmt->spin_lock(&pk);
     /*assert(0);*/

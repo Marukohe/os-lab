@@ -1,12 +1,12 @@
 #include <common.h>
 #include <klib.h>
 #define ST_SIZE 4096
-#define TKNUM 20
+#define TKNUM 25
 
 extern spinlock_t pk;
 
 int tottask = 0;
-task_t task[TKNUM];
+task_t *task[TKNUM];
 task_t *current_task[4];
 #define current (current_task[_cpu()])
 
