@@ -43,6 +43,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     assert(current->fence1 == 0xcc && current->fence2 == 0xcc);
     kmt->spin_unlock(&pk);
 
+    assert(get_elf() & FL_IF);
     return &current->context;
 }
 
