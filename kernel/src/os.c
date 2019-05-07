@@ -93,6 +93,7 @@ static void os_run() {
   _intr_write(1);
   while (1) {
       /*assert(0);*/
+      assert(get_efl() & FL_IF);
     _yield();
   }
 }
