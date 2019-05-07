@@ -21,7 +21,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     task->stack = (char *)pmm->alloc(ST_SIZE);
     task->entry = entry;
     task->arg = arg;
-    task->state = WAITING;
+    task->state = FREET;
     tottask++;
     return 0;
 }

@@ -35,6 +35,10 @@ struct spinlock {
 
 struct semaphore {
     const char *name;
+    spinlock_t locked;
+    int count;
+    int id[20];     //task id
+    int cntid;      //total id
 };
 
 //=======================handler====================
