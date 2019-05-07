@@ -18,6 +18,7 @@ void sem_init(sem_t *sem, const char *name, int value){
 
 void sem_wait(sem_t *sem){
     kmt->spin_lock(&sem->locked);
+    int flag = 0;
     sem->count--;
     if(sem->count <= 0){
         current->state = WAITING;
@@ -27,9 +28,12 @@ void sem_wait(sem_t *sem){
         assert(sem->cntid < tottask);
         kmt->spin_unlock(&pk);
 
-        _yield();
+        /*_yield();*/
+        flag = 1;
     }
     kmt->spin_unlock(&sem->locked);
+    if(flag)
+        _yield();
     return;
 }
 
