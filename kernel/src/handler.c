@@ -25,6 +25,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     kmt->spin_unlock(&pk);
     assert(!current || current->state != FREET);
     int tmp = current->id;
+    cputask[tmp]->state = FREET;
     do{
         if(!current || current->id == tottask - 1){
             current = cputask[0];
@@ -33,7 +34,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         }
     }while(current->state != FREET);
 
-    cputask[tmp]->state = FREET;
+    /*cputask[tmp]->state = FREET;*/
     current->state = RUNNING;
 
     kmt->spin_lock(&pk);
