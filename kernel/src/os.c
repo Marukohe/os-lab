@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include <devices.h>
 extern struct spinlock pk;
 int cnthandler = 0;
 struct handlers schandlers[MAXHANDLER];
