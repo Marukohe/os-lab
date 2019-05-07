@@ -1,7 +1,8 @@
 #include <common.h>
-extern tottask;
+#define TKNUM 20
+extern int tottask;
 extern task_t task[TKNUM];
-extern current_task[4];
+extern task_t current_task[4];
 #define current (current_task[_cpu()]);
 
 _Context *kmt_context_save(_Event ev, _Context *context){
