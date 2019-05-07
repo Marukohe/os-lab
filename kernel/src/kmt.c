@@ -31,7 +31,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
 
     _Area sstack;
     sstack->start = (void *)task->stack;
-    sstack->end = (void *)(task->stack) + TK_SIZE;
+    sstack->end = (void *)(task->stack) + ST_SIZE;
     task->context = kcontext(sstack, entry, arg);
 
     tottask++;
