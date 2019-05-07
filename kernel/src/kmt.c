@@ -27,7 +27,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     task->state = FREET;
     tottask++;
     kmt->spin_lock(&pk);
-    Logy("kmt_creat name: %s with id: %d", name, tottask - 1);
+    Logy("kmt_create name: %s with id: %d", name, tottask - 1);
     kmt->spin_unlock(&pk);
     return 0;
 }
