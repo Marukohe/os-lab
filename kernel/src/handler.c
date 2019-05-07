@@ -1,4 +1,6 @@
 #include <common.h>
+#include <klib.h>
+
 #define TKNUM 20
 extern int tottask;
 extern task_t task[TKNUM];
@@ -20,7 +22,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
             current = &task[++current->id];
         }
     }while(current->state != FREET);
-    task[id].state = FREET;
+    task[tmp].state = FREET;
     current->state = RUNNING;
     return &current->context;
 }

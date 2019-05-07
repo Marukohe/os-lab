@@ -57,7 +57,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
             if(next) ret = next;
         }
     }
-    ret = context;
+    /*ret = context;*/
   return ret;
     /*return context;*/
 }

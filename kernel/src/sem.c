@@ -1,4 +1,5 @@
 #include <common.h>
+#include <klib.h>
 #define TKNUM 20
 extern spinlock_t pk;
 extern int tottask;
@@ -21,6 +22,10 @@ void sem_wait(sem_t *sem){
     if(sem->count <= 0){
         current->state = WAITING;
         sem->id[sem->cntid++] = current->id;
+
+        kmt->spin_lock(&pk);
+        assert(sem->cntid < tottask);
+        kmt->spin_unlock(&pk);
 
         assert();
         _yield();
