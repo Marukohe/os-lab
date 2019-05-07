@@ -64,6 +64,7 @@ static void hello() {
 */
 #define test_ptr_nr 1024
 #define testnum 100
+/*
 void test(){
     void *space[testnum];
     int i;
@@ -82,11 +83,11 @@ void test(){
     Logb("TEST FINISH");
     kmt->spin_unlock(&pk);
 }
-
+*/
 
 static void os_run() {
   /*hello();*/
-  test();
+  /*test();*/
   _intr_write(1);
   while (1) {
       /*assert(0);*/
