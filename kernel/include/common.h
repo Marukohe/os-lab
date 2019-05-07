@@ -9,13 +9,19 @@
 
 #define MAXCPU 4
 #define MAXHANDLER 10
+#define ST_SIZE 4096
 #define INT_MAX 0x7ffffff
 #define INT_MIN (-INT_MAX - 1)
 enum BLOCKSTATE{FREE,USING,READY};
 
 //#define DEBUG
 // #define CORRECTNESS_FIRST
-struct task {};
+struct task {
+    const char *name;
+    _Context context;
+    char stack[ST_SIZE];
+};
+
 struct spinlock {
     volatile intptr_t locked;
     const char *name;
