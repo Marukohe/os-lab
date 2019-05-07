@@ -3,6 +3,8 @@
 #define ST_SIZE 4096
 #define TKNUM 20
 
+extern spinlock_t pk;
+
 int tottask = 0;
 task_t task[TKNUM];
 task_t *current_task[4];
@@ -24,6 +26,9 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     task->arg = arg;
     task->state = FREET;
     tottask++;
+    kmt->spin_lock(&pk);
+    Logy("kmt_creat name: %s with id: %d", name, tottask);
+    kmt->spin_unlock(&pk);
     return 0;
 }
 
