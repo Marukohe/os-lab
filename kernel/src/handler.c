@@ -11,7 +11,7 @@ _Context *kmt_context_save(_Event ev, _Context *context){
 }
 
 _Context *kmt_context_switch(_Event ev, _Context *context){
-    if(!current || current->id = tottask){
+    if(!current || current->id == tottask - 1){
         current = &task[0];
     }else{
         current = &task[++current->id];
