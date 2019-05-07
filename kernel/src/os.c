@@ -92,7 +92,7 @@ static void os_run() {
   /*test();*/
   _intr_write(1);
   while (1) {
-      /*assert(0);*/
+      assert(0);
     _yield();
   }
 }
@@ -112,6 +112,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
     }
     /*ret = context;*/
     kmt->spin_unlock(&yk);
+    /*kmt->spin_lock(&pk);*/
     assert(get_efl() & FL_IF);
   return ret;
     /*return context;*/
