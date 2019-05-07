@@ -26,7 +26,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
 
 void kmt_teardown(task_t *task){
     pmm->free((void *)task->stack);
-    task->state = FREE;
+    task->state = FREET;
     return;
 }
 
