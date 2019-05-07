@@ -27,7 +27,6 @@ void sem_wait(sem_t *sem){
         assert(sem->cntid < tottask);
         kmt->spin_unlock(&pk);
 
-        assert();
         _yield();
     }
     kmt->spin_unlock(&sem->locked);
@@ -39,7 +38,7 @@ void sem_signal(sem_t *sem){
     sem->count++;
     /*TODO(); wakeup*/
     /*task[sem->id].state = FREET;*/
-    for(int i = 0; i < cntid; i++){
+    for(int i = 0; i < sem->cntid; i++){
         task[sem->id[i]].state = FREET;
         sem->id[i] = -1;
     }
