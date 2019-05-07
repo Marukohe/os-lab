@@ -12,15 +12,18 @@
 #define INT_MAX 0x7ffffff
 #define INT_MIN (-INT_MAX - 1)
 enum BLOCKSTATE{FREE,USING,READY};
+enum TSKSTATE{FREE = 0, WAITING, RUNNING};
 
 //#define DEBUG
 // #define CORRECTNESS_FIRST
 struct task {
+    int id;
     const char *name;
     _Context context;
     char *stack;
     void (*entry)(void *arg);
     void *arg;
+    enum TSKSTATE state;
 };
 
 struct spinlock {

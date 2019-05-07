@@ -1,6 +1,12 @@
 #include <common.h>
 #include <klib.h>
 #define ST_SIZE 4096
+#define TKNUM 20
+
+int tottask = 0;
+task_t task[TKNUM];
+task_t current_task[4];
+#define current (current_task[_cpu()])
 
 void kmt_init(){
     os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save); // 总是最先调用
@@ -8,15 +14,19 @@ void kmt_init(){
 }
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
+    task->id = tottask;
     task->name =  name;
     task->stack = (char *)pmm->alloc(ST_SIZE);
     task->entry = entry;
     task->arg = arg;
-    return 1;
+    task->state = WAITING;
+    tottask++;
+    return 0;
 }
 
 void kmt_teardown(task_t *task){
     pmm->free((void *)task->stack);
+    task->state = FREE;
     return;
 }
 
