@@ -20,7 +20,7 @@ _Context *kmt_context_save(_Event ev, _Context *context){
 _Context *kmt_context_switch(_Event ev, _Context *context){
     kmt->spin_lock(&pk);
     /*assert(0);*/
-    Logg("current task: name-> %s id->%d state->%d", current->name, current->id, current->state);
+    /*Logg("current task: name-> %s id->%d state->%d", current->name, current->id, current->state);*/
     kmt->spin_unlock(&pk);
     assert(!current || current->state == RUNNING);
     int tmp = current->id;
