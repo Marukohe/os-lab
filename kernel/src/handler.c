@@ -14,6 +14,7 @@ _Context *kmt_context_save(_Event ev, _Context *context){
     Logp("kmtsave");
     kmt->spin_unlock(&pk);
     if(current) current->context = *context;
+    if(!current) return context;
     return &current->context;
 }
 
