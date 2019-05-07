@@ -90,7 +90,7 @@ static void os_run() {
   /*test();*/
   _intr_write(1);
   while (1) {
-      /*assert(0);*/
+      assert(0);
     _yield();
   }
 }
