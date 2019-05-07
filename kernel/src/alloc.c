@@ -62,9 +62,12 @@ static void pmm_init() {
   lmem->start = FREE;
   lmem->next = bmem;
   lmem->prev = NULL;
-
+/*
   lk.locked = 0;
   pk.locked = 0;
+*/
+  kmt->spin_init(&lk, "alloc");
+  kmt->spin_init(&pk, "Log");
 
   assert(lmem!=NULL);
   for(int i=0;i<CPUNUM;i++){
