@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
+extern ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count);
 extern struct spinlock pk;
 int cnthandler = 0;
 struct handlers schandlers[MAXHANDLER];
