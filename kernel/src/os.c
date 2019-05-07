@@ -101,6 +101,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
     for(int i = 0; i < cnthandler; i++){
         if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
             kmt->spin_lock(&pk);
+            Logp("evid %d", ev.event);
             Logp("schandlers event id %d seq %d",schandlers[i].event, schandlers[i].seq);
             kmt->spin_unlock(&pk);
             _Context *next = schandlers[i].handler(ev, context);
