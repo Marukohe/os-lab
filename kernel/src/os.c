@@ -11,6 +11,7 @@ sem_t fillsem;
 sem_t emptysem;
 
 void producer(){
+    assert(0);
     kmt->sem_wait(&emptysem);
     kmt->spin_lock(&pk);
     printf("(");
@@ -19,6 +20,7 @@ void producer(){
 }
 
 void consumer(){
+    assert(0);
     kmt->sem_wait(&fillsem);
     kmt->spin_lock(&pk);
     printf(")");
