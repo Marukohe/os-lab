@@ -17,11 +17,19 @@ void sem_init(sem_t *sem, const char *name, int value){
 }
 
 void sem_wait(sem_t *sem){
+    kmt->spin_lock(&pk);
+    Logq("in sem_wait %d %s", current->id, current->name);
+    kmt->spin_unlock(&pk);
     kmt->spin_lock(&sem->locked);
     int flag = 0;
     sem->count--;
     if(sem->count <= 0){
         current->state = WAITING;
+
+        kmt->spin_lock(&pk);
+        Logq("in sem_wait %d %s", current->id, current->name);
+        kmt->spin_unlock(&pk);
+
         sem->id[sem->cntid++] = current->id;
 
         kmt->spin_lock(&pk);
