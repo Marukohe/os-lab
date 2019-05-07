@@ -7,6 +7,25 @@ int cnthandler = 0;
 struct handlers schandlers[MAXHANDLER];
 spinlock_t yk;
 
+sem_t fillsem;
+sem_t emptysem;
+
+void producer(){
+    kmt->sem_wait(&emptysem);
+    kmt->spin_lock(&pk);
+    printf("(");
+    kmt->spin_unlock(&pk);
+    kmt->sem_signal(&fillempty);
+}
+
+void consumer(){
+    kmt->sem_wait(&fillsem);
+    kmt->spin_lock(&pk);
+    printf(")");
+    kmt->spin_unlock(&pk);
+    kmt->sem_signal(&fillsem);
+}
+/*
 void echo_task(void *name) {
   device_t *tty = dev_lookup(name);
   while (1) {
@@ -17,16 +36,22 @@ void echo_task(void *name) {
     sprintf(text, "Echo: %s.\n", line); tty_write(tty, 0, text, sizeof(text));
   }
 }
-
+*/
 static void os_init() {
   pmm->init();
   kmt->init();
   /*_vme_init(pmm->alloc, pmm->free);*/
   dev->init();
+  /*
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
+  */
+  kmt->create(pmm->alloc(sizeof(task_t)) , "produce", producer, NULL);
+  kmt->create(pmm->alloc(sizeof(task_t)) , "consume", consumer, NULL);
+  kmt->sem_init(&emptysem, "emprty", 0);
+  kmt->sem_inti(&fillsem, "fill", 0);
   kmt->spin_init(&yk, "yield lock");
 }
 /*
