@@ -32,12 +32,14 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
             current = cputask[++current->id];
         }
     }while(current->state != FREET);
+
     cputask[tmp]->state = FREET;
     current->state = RUNNING;
 
     kmt->spin_lock(&pk);
     /*assert(0);*/
     Logw("current task: name-> %s id->%d state->%d", current->name, current->id, current->state);
+    assert(current->fence1 == 0xcc && current->fence2 == 0xcc);
     kmt->spin_unlock(&pk);
 
     return &current->context;

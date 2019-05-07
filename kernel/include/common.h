@@ -9,6 +9,7 @@
 
 #define MAXCPU 4
 #define MAXHANDLER 10
+#define STSIZE 4096
 #define INT_MAX 0x7ffffff
 #define INT_MIN (-INT_MAX - 1)
 enum BLOCKSTATE{FREE,USING,READY};
@@ -20,7 +21,9 @@ struct task {
     int id;
     const char *name;
     _Context context;
-    char *stack;
+    uint8_t fence1;
+    uint8_t stack[STSIZE];
+    uint8_t fence2;
     void (*entry)(void *arg);
     void *arg;
     enum TSKSTATE state;

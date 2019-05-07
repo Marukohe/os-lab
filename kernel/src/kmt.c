@@ -21,7 +21,9 @@ void kmt_init(){
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
     task->id = tottask;
     task->name = name;
-    task->stack = (char *)pmm->alloc(ST_SIZE);
+    /*task->stack = (char *)pmm->alloc(ST_SIZE);*/
+    task->fence1 = 0xcc;
+    task->fence2 = 0xcc;
     task->entry = entry;
     task->arg = arg;
     task->state = FREET;
@@ -34,7 +36,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
 }
 
 void kmt_teardown(task_t *task){
-    pmm->free((void *)task->stack);
+    /*pmm->free((void *)task->stack);*/
     return;
 }
 
