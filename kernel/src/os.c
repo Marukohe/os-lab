@@ -90,7 +90,7 @@ static void os_run() {
   /*test();*/
   _intr_write(1);
   while (1) {
-      assert(0);
+      /*assert(0);*/
     _yield();
   }
 }
@@ -100,6 +100,9 @@ static _Context *os_trap(_Event ev, _Context *context) {
     _Context *ret = NULL;
     for(int i = 0; i < cnthandler; i++){
         if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
+            kmt->spin_lock(&pk);
+            Logp("schandlers event id %d seq %d",schandlers[i].event, schandlers[i].seq);
+            kmt->spin_unlock(&pk);
             _Context *next = schandlers[i].handler(ev, context);
             if(next) ret = next;
         }
