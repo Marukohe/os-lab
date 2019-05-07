@@ -15,7 +15,7 @@ void producer(){
     kmt->spin_lock(&pk);
     printf("(");
     kmt->spin_unlock(&pk);
-    kmt->sem_signal(&fillempty);
+    kmt->sem_signal(&fillsem);
 }
 
 void consumer(){
@@ -23,7 +23,7 @@ void consumer(){
     kmt->spin_lock(&pk);
     printf(")");
     kmt->spin_unlock(&pk);
-    kmt->sem_signal(&fillsem);
+    kmt->sem_signal(&emptysem);
 }
 /*
 void echo_task(void *name) {
