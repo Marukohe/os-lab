@@ -8,7 +8,7 @@ void kmt_init(){
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
     task->name =  name;
-    task->stack = pmm->alloc(4096);
+    task->stack = (char *)pmm->alloc(4096);
     return 1;
 }
 
