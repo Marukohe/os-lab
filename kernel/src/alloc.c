@@ -237,29 +237,29 @@ static void *my_smallalloc(size_t size){
         updatepoint(tmp,myalloc);
         ret = (void *)myalloc->start;
     #ifdef DEBUG
-        spin_lock(&pk);
+        kmt->spin_lock(&pk);
         Logy("smallalloc start tmp!=NULL size: %d cpu: %d",size,_cpu());
-        spin_unlock(&pk);
+        kmt->spin_unlock(&pk);
     #endif
     }
 
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logw("smallalloc finish size: %d cpu: %d",size,_cpu());
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
     return ret;
 }
 
 static void *kalloc(size_t size) {
 #ifdef CORRECTNESS_FIRST
-    spin_lock(&lk);
+    kmt->spin_lock(&lk);
     void *ret = (void *)start;
     start += size;
-    spin_unlock(&lk);
+    kmt->spin_unlock(&lk);
     return ret;
 #else
-    spin_lock(&lk);
+    kmt->spin_lock(&lk);
     size = ALIGNED(size);
     void *ret;
     if(size > SMALLSIZE){
@@ -267,15 +267,15 @@ static void *kalloc(size_t size) {
     }else{
         ret = my_smallalloc(size);
     }
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(ret!=NULL);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logw("alloc space from %x",(uintptr_t)ret);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
-    spin_unlock(&lk);
+    kmt->spin_unlock(&lk);
     return ret;
 #endif
 }
@@ -295,18 +295,18 @@ static void kfree(void *ptr) {
     return;
 #else
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logg("free space from %x",(uintptr_t)ptr);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
-    spin_lock(&lk);
+    kmt->spin_lock(&lk);
     kmem *myfree = (kmem *)(ptr-STSIZE);
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     assert(myfree->state==USING);
     assert(myfree->size!=0);
     assert(myfree->prev!=NULL);
     assert(myfree->prev->next==myfree);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
     kmem *p = myfree->prev;
     if(p->size!=0 && p->state==FREE){
         if(myfree->start==p->size+p->start+STSIZE){
@@ -321,11 +321,11 @@ static void kfree(void *ptr) {
     }else{
         myfree->state = FREE;
     }
-    spin_unlock(&lk);
+    kmt->spin_unlock(&lk);
 #ifdef DEBUG
-    spin_lock(&pk);
+    kmt->spin_lock(&pk);
     Logg("free space finish from %x",(uintptr_t)ptr);
-    spin_unlock(&pk);
+    kmt->spin_unlock(&pk);
 #endif
     //myfree(ptr);
     return;
