@@ -2,20 +2,19 @@
 #define TKNUM 20
 extern int tottask;
 extern task_t task[TKNUM];
-extern task_t current_task[4];
+extern task_t *current_task[4];
 #define current (current_task[_cpu()])
 
 _Context *kmt_context_save(_Event ev, _Context *context){
-    current.context = *context;
-    return &current.context;
+    if(current) current->context = *context;
+    return &current->context;
 }
 
 _Context *kmt_context_switch(_Event ev, _Context *context){
-    if(current.id == tottask - 1){
-        current.id = 0;
-        current.context = task[0].context;;
+    if(!current || current->id = tottask){
+        current = &task[0];
     }else{
-        current.context = task[++current.id].context;
+        current = &task[++current->id];
     }
-    return &current.context;
+    return &current->context;
 }

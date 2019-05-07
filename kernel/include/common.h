@@ -12,7 +12,7 @@
 #define INT_MAX 0x7ffffff
 #define INT_MIN (-INT_MAX - 1)
 enum BLOCKSTATE{FREE,USING,READY};
-enum TSKSTATE{FREET = 0, WAITING, RUNNING};
+enum TSKSTATE{FREET = 0, WAITING, RUNNING}; //can schedule, wait sem, running
 
 //#define DEBUG
 // #define CORRECTNESS_FIRST

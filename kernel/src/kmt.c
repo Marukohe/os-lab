@@ -5,17 +5,19 @@
 
 int tottask = 0;
 task_t task[TKNUM];
-task_t current_task[4];
+task_t *current_task[4];
 #define current (current_task[_cpu()])
 
 void kmt_init(){
     os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save); // 总是最先调用
     os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch); // 总是最后调用
+    for(int i = 0; i < 4; i++)
+        current_task[i] = NULL;
 }
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
     task->id = tottask;
-    task->name =  name;
+    task->name = name;
     task->stack = (char *)pmm->alloc(ST_SIZE);
     task->entry = entry;
     task->arg = arg;
@@ -26,7 +28,6 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
 
 void kmt_teardown(task_t *task){
     pmm->free((void *)task->stack);
-    task->state = FREET;
     return;
 }
 
