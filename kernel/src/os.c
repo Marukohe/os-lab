@@ -94,7 +94,7 @@ static void os_run() {
   while (1) {
       /*assert(0);*/
       assert(get_efl() & FL_IF); //0 开中断
-      printf("yield\n");
+      /*printf("yield\n");*/
     _yield();
   }
 }
