@@ -9,7 +9,6 @@
 
 #define MAXCPU 4
 #define MAXHANDLER 10
-#define ST_SIZE 4096
 #define INT_MAX 0x7ffffff
 #define INT_MIN (-INT_MAX - 1)
 enum BLOCKSTATE{FREE,USING,READY};
@@ -19,7 +18,7 @@ enum BLOCKSTATE{FREE,USING,READY};
 struct task {
     const char *name;
     _Context context;
-    char stack[ST_SIZE];
+    char *stack;
 };
 
 struct spinlock {

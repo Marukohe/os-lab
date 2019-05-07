@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#define ST_SIZE 4096
 
 void kmt_init(){
     os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save); // 总是最先调用
@@ -8,7 +9,7 @@ void kmt_init(){
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
     task->name =  name;
-    task->stack = (char *)pmm->alloc(4096);
+    task->stack = (char *)pmm->alloc(ST_SIZE);
     return 1;
 }
 
