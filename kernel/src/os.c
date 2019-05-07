@@ -5,6 +5,7 @@ extern ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t co
 extern struct spinlock pk;
 int cnthandler = 0;
 struct handlers schandlers[MAXHANDLER];
+spinlock_t yk;
 
 void echo_task(void *name) {
   device_t *tty = dev_lookup(name);
@@ -26,6 +27,7 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
+  kmt->spin_init(&yk, "yield lock");
 }
 /*
 static void hello() {
@@ -68,6 +70,7 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
+    kmt->spin_lock(&yk);
     _Context *ret = NULL;
     for(int i = 0; i < cnthandler; i++){
         if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
@@ -76,6 +79,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
         }
     }
     /*ret = context;*/
+    kmt->spin_unlock(&yk);
   return ret;
     /*return context;*/
 }

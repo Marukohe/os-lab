@@ -10,7 +10,7 @@ extern task_t *current_task[4];
 
 _Context *kmt_context_save(_Event ev, _Context *context){
     kmt->spin_lock(&pk);
-    assert(0);
+    /*assert(0);*/
     kmt->spin_unlock(&pk);
     if(current) current->context = *context;
     return &current->context;
@@ -33,3 +33,4 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     current->state = RUNNING;
     return &current->context;
 }
+
