@@ -21,12 +21,6 @@ static void hello() {
 #define test_ptr_nr 1024
 #define testnum 100
 void test(){
-    /*assert(0);*/
-    //spin_lock(&pk);
-    /*assert(0);*/
-    //Logb("TEST START");
-    //spin_unlock(&pk);
-    /*assert(0);*/
     void *space[testnum];
     int i;
     for(i=0;i<testnum;i++){
