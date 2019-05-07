@@ -6,7 +6,7 @@
 extern spinlock_t pk;
 
 int tottask = 0;
-task_t *task[TKNUM];
+task_t *cputask[TKNUM];
 task_t *current_task[4];
 #define current (current_task[_cpu()])
 
@@ -25,6 +25,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     task->entry = entry;
     task->arg = arg;
     task->state = FREET;
+    cputask[tottask] = task;
     tottask++;
     kmt->spin_lock(&pk);
     Logy("kmt_create name: %s with id: %d", name, tottask - 1);

@@ -3,7 +3,7 @@
 #define TKNUM 25
 extern spinlock_t pk;
 extern int tottask;
-extern task_t *task[TKNUM];
+extern task_t *cputask[TKNUM];
 extern task_t *current_task[4];
 #define current (current_task[_cpu()])
 
@@ -39,7 +39,7 @@ void sem_signal(sem_t *sem){
     /*TODO(); wakeup*/
     /*task[sem->id].state = FREET;*/
     for(int i = 0; i < sem->cntid; i++){
-        task[sem->id[i]]->state = FREET;
+        cputask[sem->id[i]]->state = FREET;
         sem->id[i] = -1;
     }
     sem->cntid = 0;
