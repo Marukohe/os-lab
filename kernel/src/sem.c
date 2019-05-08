@@ -37,9 +37,9 @@ void sem_wait(sem_t *sem){
         kmt->spin_unlock(&pk);
 
         kmt->spin_unlock(&sem->locked);
-        kmt->spin_lock(&pk);
+        /*kmt->spin_lock(&pk);*/
         assert(get_efl() & FL_IF);
-        kmt->spin_unlock(&pk);
+        /*kmt->spin_unlock(&pk);*/
         _yield();
         kmt->spin_lock(&sem->locked);
         /*flag = 1;*/
