@@ -48,7 +48,7 @@ void idle(){
     }
 }
 
-/*
+
 void echo_task(void *name) {
   device_t *tty = dev_lookup(name);
   while (1) {
@@ -59,7 +59,7 @@ void echo_task(void *name) {
     sprintf(text, "Echo: %s.\n", line); tty_write(tty, 0, text, sizeof(text));
   }
 }
-*/
+
 static void os_init() {
   pmm->init();
   kmt->init();
