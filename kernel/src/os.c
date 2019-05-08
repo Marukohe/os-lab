@@ -41,7 +41,9 @@ void consumer(){
 }
 
 void idle(){
-    while(1);
+    while(1){
+        _putc("01234"[_cpu()]);
+    }
 }
 
 /*
