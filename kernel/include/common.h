@@ -1,6 +1,6 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
-#define KERNELDEBUG
+//#define KERNELDEBUG
 
 #include <kernel.h>
 #include <nanos.h>
