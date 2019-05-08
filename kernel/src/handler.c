@@ -32,6 +32,10 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         }else{
             current = cputask[++current->id];
         }
+        kmt->spin_lock(&pk);
+        /*assert(0);*/
+        Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
+        kmt->spin_unlock(&pk);
     }while(current->state != FREET);
 
     /*cputask[tmp]->state = FREET;*/
