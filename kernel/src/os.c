@@ -78,8 +78,8 @@ static void os_init() {
 #ifdef IDLE
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle1", idle, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle2", idle, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)) , "idle3", idle, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)) , "idle4", idle, NULL);
+  /*kmt->create(pmm->alloc(sizeof(task_t)) , "idle3", idle, NULL);*/
+  /*kmt->create(pmm->alloc(sizeof(task_t)) , "idle4", idle, NULL);*/
 #endif
 
   kmt->sem_init(&emptysem, "empty", 0);
