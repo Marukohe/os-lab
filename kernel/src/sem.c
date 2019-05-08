@@ -21,9 +21,9 @@ void sem_wait(sem_t *sem){
     Logq("in sem_wait %d %s", current->id, current->name);
     kmt->spin_unlock(&pk);
     kmt->spin_lock(&sem->locked);
-    int flag = 0;
+    /*int flag = 0;*/
     /*sem->count--;*/
-    if(sem->count <= 0){
+    while(sem->count <= 0){
         current->state = WAITING;
 
         kmt->spin_lock(&pk);
@@ -36,13 +36,18 @@ void sem_wait(sem_t *sem){
         assert(sem->cntid < tottask);
         kmt->spin_unlock(&pk);
 
-        /*_yield();*/
-        flag = 1;
+        kmt->spin_unlock(&sem->locked);
+        kmt->spin_lock(&pk);
+        assert(get_efl() & FL_IF);
+        kmt->spin_unlock(&pk);
+        _yield();
+        kmt->spin_lock(&sem->locked);
+        /*flag = 1;*/
     }
     sem->count--;
     kmt->spin_unlock(&sem->locked);
-    if(flag)
-        _yield();
+    /*if(flag)*/
+        /*_yield();*/
     return;
 }
 
