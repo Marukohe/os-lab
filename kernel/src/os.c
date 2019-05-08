@@ -16,24 +16,28 @@ sem_t emptysem;
 
 void producer(){
     kmt->spin_lock(&pk);
-    assert(0);
+    /*assert(0);*/
     Logw("in producer\n");
     kmt->spin_unlock(&pk);
     /*assert(0);*/
-    kmt->sem_wait(&emptysem);
-    kmt->spin_lock(&pk);
-    printf("(");
-    kmt->spin_unlock(&pk);
-    kmt->sem_signal(&fillsem);
+    while(1){
+        kmt->sem_wait(&emptysem);
+        kmt->spin_lock(&pk);
+        printf("(");
+        kmt->spin_unlock(&pk);
+        kmt->sem_signal(&fillsem);
+    }
 }
 
 void consumer(){
     /*assert(0);*/
-    kmt->sem_wait(&fillsem);
-    kmt->spin_lock(&pk);
-    printf(")");
-    kmt->spin_unlock(&pk);
-    kmt->sem_signal(&emptysem);
+    while(1){
+        kmt->sem_wait(&fillsem);
+        kmt->spin_lock(&pk);
+        printf(")");
+        kmt->spin_unlock(&pk);
+        kmt->sem_signal(&emptysem);
+    }
 }
 
 void idle(){
