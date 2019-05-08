@@ -21,7 +21,7 @@ _Context *kmt_context_save(_Event ev, _Context *context){
 _Context *kmt_context_switch(_Event ev, _Context *context){
     kmt->spin_lock(&pk);
     /*assert(0);*/
-    Logg("current task: name-> %s id->%d state->%d", current->name, current->id, current->state);
+    Logg("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
     kmt->spin_unlock(&pk);
     assert(!current || current->state != FREET);
     int tmp = current->id;
