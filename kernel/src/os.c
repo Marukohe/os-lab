@@ -1,6 +1,10 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
+
+#define CONSUMER
+#define IDLE
+
 extern ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count);
 extern struct spinlock pk;
 int cnthandler = 0;
@@ -31,6 +35,11 @@ void consumer(){
     kmt->spin_unlock(&pk);
     kmt->sem_signal(&emptysem);
 }
+
+void idle(){
+    while(1);
+}
+
 /*
 void echo_task(void *name) {
   device_t *tty = dev_lookup(name);
@@ -54,20 +63,32 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
   */
+#ifdef CONSUMER
   kmt->create(pmm->alloc(sizeof(task_t)) , "produce", producer, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)) , "consume", consumer, NULL);
-  kmt->sem_init(&emptysem, "emprty", 0);
+#endif
+
+#ifdef IDLE
+  kmt->create(pmm->alloc(sizeof(task_t)) , "idle1", idle, NULL);
+  kmt->create(pmm->alloc(sizeof(task_t)) , "idle2", idle, NULL);
+  kmt->create(pmm->alloc(sizeof(task_t)) , "idle3", idle, NULL);
+  kmt->create(pmm->alloc(sizeof(task_t)) , "idle4", idle, NULL);
+#endif
+
+  kmt->sem_init(&emptysem, "empty", 0);
   kmt->sem_init(&fillsem, "fill", 0);
   kmt->spin_init(&yk, "yield lock");
 }
-/*
+
 static void hello() {
+    kmt->spin_lock(&pk);
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
     _putc(*ptr);
   }
   _putc("12345678"[_cpu()]); _putc('\n');
+  kmt->spin_unlock(&pk);
 }
-*/
+
 #define test_ptr_nr 1024
 #define testnum 100
 /*
@@ -92,7 +113,7 @@ void test(){
 */
 
 static void os_run() {
-  /*hello();*/
+  hello();
   /*test();*/
   _intr_write(1);
   while (1) {
