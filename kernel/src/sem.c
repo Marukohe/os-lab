@@ -22,7 +22,7 @@ void sem_wait(sem_t *sem){
     kmt->spin_unlock(&pk);
     kmt->spin_lock(&sem->locked);
     int flag = 0;
-    sem->count--;
+    /*sem->count--;*/
     if(sem->count <= 0){
         current->state = WAITING;
 
@@ -39,6 +39,7 @@ void sem_wait(sem_t *sem){
         /*_yield();*/
         flag = 1;
     }
+    sem->count--;
     kmt->spin_unlock(&sem->locked);
     if(flag)
         _yield();
