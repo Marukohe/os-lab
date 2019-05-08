@@ -64,7 +64,7 @@ static void os_init() {
   pmm->init();
   kmt->init();
   /*_vme_init(pmm->alloc, pmm->free);*/
-  /*dev->init();*/
+  dev->init();
 
 #ifdef TTY
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
