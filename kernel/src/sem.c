@@ -29,8 +29,13 @@ void sem_wait(sem_t *sem){
         kmt->spin_lock(&pk);
         Logq("in sem_wait %d %s", current->id, current->name);
         kmt->spin_unlock(&pk);
-
-        sem->id[sem->cntid++] = current->id;
+        int flag = 0;
+        for(int i = 0; i < sem->cntid; i++){
+            if(sem->id[i] == current->id)
+                flag = 1;
+        }
+        if(!flag)
+            sem->id[sem->cntid++] = current->id;
 
         kmt->spin_lock(&pk);
         assert(sem->cntid < tottask);
