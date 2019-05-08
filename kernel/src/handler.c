@@ -30,7 +30,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         if(!current || current->id == tottask - 1){
             current = cputask[0];
         }else{
-            current = cputask[++current->id];
+            current = cputask[current->id + 1];
         }
         kmt->spin_lock(&pk);
         /*assert(0);*/
