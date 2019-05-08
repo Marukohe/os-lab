@@ -59,7 +59,7 @@ void sem_wait(sem_t *sem){
 
 void sem_signal(sem_t *sem){
     kmt->spin_lock(&pk);
-    Logy("in sem_sinal, the name of sem: %s, the value: %d", sem->name, sem->count);
+    Logy("in sem_signal, the name of sem: %s, the value: %d", sem->name, sem->count);
     kmt->spin_unlock(&pk);
     kmt->spin_lock(&sem->locked);
     sem->count++;

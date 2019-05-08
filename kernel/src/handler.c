@@ -22,11 +22,13 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     kmt->spin_lock(&pk);
     /*assert(0);*/
     Logg("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
-    assert(!current || current->state != FREET);
+    /*assert(!current || current->state != FREET);*/
+    assert(!current);
     kmt->spin_unlock(&pk);
     /*assert(!current || current->state != FREET);*/
     int tmp = current->id;
-    cputask[tmp]->state = FREET;
+    if(cputask[tmp]->state != WAITING)
+        cputask[tmp]->state = FREET;
     do{
         if(!current || current->id == tottask - 1){
             current = cputask[0];
