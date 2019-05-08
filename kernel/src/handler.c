@@ -23,7 +23,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     /*assert(0);*/
     Logg("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
     /*assert(!current || current->state != FREET);*/
-    assert(!current);
+    /*assert(!current);*/
     kmt->spin_unlock(&pk);
     /*assert(!current || current->state != FREET);*/
     int tmp = current->id;

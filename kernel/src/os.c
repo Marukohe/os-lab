@@ -127,7 +127,7 @@ static void os_run() {
       /*assert(0);*/
       assert(get_efl() & FL_IF); //0 开中断
       /*printf("yield\n");*/
-    /*_yield();*/
+    _yield();
   }
 }
 
@@ -138,8 +138,9 @@ static _Context *os_trap(_Event ev, _Context *context) {
     for(int i = 0; i < cnthandler; i++){
         if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
             kmt->spin_lock(&pk);
-            Logp("evid %d", ev.event);
-            Logp("schandlers event id %d seq %d",schandlers[i].event, schandlers[i].seq);
+            /*Logp("evid %d", ev.event);*/
+            Logp("in os_trap");
+            /*Logp("schandlers event id %d seq %d",schandlers[i].event, schandlers[i].seq);*/
             kmt->spin_unlock(&pk);
             _Context *next = schandlers[i].handler(ev, context);
             if(next) ret = next;
