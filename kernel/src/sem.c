@@ -59,7 +59,7 @@ void sem_wait(sem_t *sem){
 
 void sem_signal(sem_t *sem){
     kmt->spin_lock(&pk);
-    Logq("in sem_sinal, the name of sem: %s, the value: %d", sem->name, sem->count);
+    Logy("in sem_sinal, the name of sem: %s, the value: %d", sem->name, sem->count);
     kmt->spin_unlock(&pk);
     kmt->spin_lock(&sem->locked);
     sem->count++;
@@ -68,7 +68,7 @@ void sem_signal(sem_t *sem){
     for(int i = 0; i < sem->cntid; i++){
         cputask[sem->id[i]]->state = FREET;
         kmt->spin_lock(&pk);
-        Logq("sem_signal, %s, %d", cputask[sem->id[i]]->name, cputask[sem->id[i]]->state);
+        Logy("sem_signal, %s, %d", cputask[sem->id[i]]->name, cputask[sem->id[i]]->state);
         kmt->spin_unlock(&pk);
         sem->id[i] = -1;
     }
