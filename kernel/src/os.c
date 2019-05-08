@@ -2,8 +2,9 @@
 #include <klib.h>
 #include <devices.h>
 
-#define CONSUMER
+/*#define CONSUMER*/
 #define IDLE
+#define TTY
 
 extern ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count);
 extern struct spinlock pk;
@@ -64,12 +65,14 @@ static void os_init() {
   kmt->init();
   /*_vme_init(pmm->alloc, pmm->free);*/
   /*dev->init();*/
-  /*
+
+#ifdef TTY
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
-  */
+#endif
+
 #ifdef CONSUMER
   kmt->create(pmm->alloc(sizeof(task_t)) , "produce", producer, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)) , "consume", consumer, NULL);
