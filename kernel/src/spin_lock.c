@@ -26,8 +26,10 @@ void spin_lock(spinlock_t *lk){
 }
 
 void spin_unlock(spinlock_t *lk){
-    if(!holding(lk))
+    if(!holding(lk)){
+        printf("panic in lk %s, %d\n", lk->name, _cpu());
         panic("release");
+    }
     lk->cpu = -1;
     /*_atomic_xchg(&lk->locked, 0);*/
     __sync_synchronize();
