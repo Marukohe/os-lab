@@ -16,7 +16,7 @@ sem_t emptysem;
 
 void producer(){
     kmt->spin_lock(&pk);
-    /*assert(0);*/
+    assert(0);
     Logw("in producer\n");
     kmt->spin_unlock(&pk);
     /*assert(0);*/
