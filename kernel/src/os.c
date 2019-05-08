@@ -99,7 +99,7 @@ static void os_run() {
       /*assert(0);*/
       assert(get_efl() & FL_IF); //0 开中断
       /*printf("yield\n");*/
-    _yield();
+    /*_yield();*/
   }
 }
 
