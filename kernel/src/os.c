@@ -82,7 +82,7 @@ static void os_init() {
   /*kmt->create(pmm->alloc(sizeof(task_t)) , "idle4", idle, NULL);*/
 #endif
 
-  kmt->sem_init(&emptysem, "empty", 100);
+  kmt->sem_init(&emptysem, "empty", 10);
   kmt->sem_init(&fillsem, "fill", 0);
   kmt->spin_init(&yk, "yield lock");
 }
