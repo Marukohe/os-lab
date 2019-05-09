@@ -186,11 +186,11 @@ int tty_init(device_t *dev) {
 
 ssize_t tty_read(device_t *dev, off_t offset, void *buf, size_t count) {
   tty_t *tty = dev->ptr;
-  assert(0);
+  /*assert(0);*/
   kmt->sem_wait(&tty->cooked);
   kmt->sem_wait(&tty->lock);
   size_t nread = 0;
-  assert(0);
+  /*assert(0);*/
 
   struct tty_queue *q = &tty->queue;
   while (1) {
