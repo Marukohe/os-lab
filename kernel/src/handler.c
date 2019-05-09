@@ -56,8 +56,10 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     assert(current != NULL);
     int tmp = 0;
     for(int i = 0 ; i < 4; i++){
-        if(current->id == current_task[i]->id && current->state == current_task[i]->state)
+        if(current->id == current_task[i]->id && current->state == current_task[i]->state){
+            Logq("current_task name %s, taskid %d", current_task[i]->name, current_task[i]->id);
             tmp++;
+        }
     }
     assert(tmp == 1);
     kmt->spin_unlock(&pk);
