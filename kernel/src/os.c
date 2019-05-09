@@ -6,6 +6,11 @@
 #define IDLE
 /*#define TTY*/
 
+#define TKNUM 25
+extern task_t *cputask[TKNUM];
+extern task_t *current_task[4];
+#define current (current_task[_cpu()])
+
 extern ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count);
 extern struct spinlock pk;
 int cnthandler = 0;
