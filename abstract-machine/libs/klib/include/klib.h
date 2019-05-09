@@ -63,6 +63,7 @@ int snprintf(char* s, size_t n, const char* format, ...);
 int vsprintf(char *str, const char *format, va_list ap);
 
 // Log
+#ifndef KERNELDEBUG
 #define Logp(format, ...) \
     printf("\33[1;35m[%s,%d,%s] " format "\33[0m\n", \
         __FILE__, __LINE__, __func__, ## __VA_ARGS__)
@@ -86,6 +87,14 @@ int vsprintf(char *str, const char *format, va_list ap);
 #define Logw(format, ...) \
     printf("\33[1;37m[%s,%d,%s] " format "\33[0m\n", \
         __FILE__, __LINE__, __func__, ## __VA_ARGS__)
+#else
+#define Logp(format, ...)
+#define Logb(format, ...)
+#define Logy(format, ...)
+#define Logg(format, ...)
+#define Logq(format, ...)
+#define Logw(format, ...)
+#endif
 
 // assert.h
 #ifdef NDEBUG
