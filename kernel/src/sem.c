@@ -17,10 +17,10 @@ void sem_init(sem_t *sem, const char *name, int value){
 }
 
 void sem_wait(sem_t *sem){
-    kmt->spin_lock(&pk);
-    Logq("in sem_wait, the name of sem: %s, the value: %d", sem->name, sem->count);
-    Logq("in sem_wait %d %s", current->id, current->name);
-    kmt->spin_unlock(&pk);
+    /*kmt->spin_lock(&pk);*/
+    /*Logq("in sem_wait, the name of sem: %s, the value: %d", sem->name, sem->count);*/
+    /*Logq("in sem_wait %d %s", current->id, current->name);*/
+    /*kmt->spin_unlock(&pk);*/
     kmt->spin_lock(&sem->locked);
     /*int flag = 0;*/
     /*sem->count--;*/
@@ -58,9 +58,9 @@ void sem_wait(sem_t *sem){
 }
 
 void sem_signal(sem_t *sem){
-    kmt->spin_lock(&pk);
-    Logy("in sem_signal, the name of sem: %s, the value: %d", sem->name, sem->count);
-    kmt->spin_unlock(&pk);
+    /*kmt->spin_lock(&pk);*/
+    /*Logy("in sem_signal, the name of sem: %s, the value: %d", sem->name, sem->count);*/
+    /*kmt->spin_unlock(&pk);*/
     kmt->spin_lock(&sem->locked);
     sem->count++;
     /*TODO(); wakeup*/

@@ -21,10 +21,10 @@ sem_t fillsem;
 sem_t emptysem;
 
 void producer(){
-    kmt->spin_lock(&pk);
+    /*kmt->spin_lock(&pk);*/
     /*assert(0);*/
-    Logw("in producer\n");
-    kmt->spin_unlock(&pk);
+    /*Logw("in producer\n");*/
+    /*kmt->spin_unlock(&pk);*/
     /*assert(0);*/
     while(1){
         kmt->sem_wait(&emptysem);
@@ -142,10 +142,10 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
-    kmt->spin_lock(&pk);
-    Logg("current task name: %s, id: %d", current->name, current->id);
+    /*kmt->spin_lock(&pk);*/
+    /*Logg("current task name: %s, id: %d", current->name, current->id);*/
     /*assert(yk.locked == 0);*/
-    kmt->spin_unlock(&pk);
+    /*kmt->spin_unlock(&pk);*/
     /*assert(get_efl() & FL_IF);*/
     kmt->spin_lock(&yk);
     _Context *ret = NULL;
@@ -164,12 +164,12 @@ static _Context *os_trap(_Event ev, _Context *context) {
     kmt->spin_unlock(&yk);
     /*kmt->spin_lock(&pk);*/
     /*assert(get_efl() & FL_IF);*/
-    kmt->spin_lock(&pk);
+    /*kmt->spin_lock(&pk);*/
     /*assert(lk.locked == 0);*/
     /*assert(yk.locked == 0);*/
     /*assert(fillsem.locked.locked == 0);*/
     /*assert(emptysem.locked.locked == 0);*/
-    kmt->spin_unlock(&pk);
+    /*kmt->spin_unlock(&pk);*/
     assert(ret != NULL);
   return ret;
     /*return context;*/
