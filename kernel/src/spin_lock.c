@@ -16,7 +16,7 @@ void spin_init(spinlock_t *lk, const char *name){
 
 void spin_lock(spinlock_t *lk){
     /*cli();*/
-    Logg("lk name %s, lk: %d", lk->name, lk->locked);
+    /*Logg("lk name %s, lk: %d", lk->name, lk->locked);*/
     pushcli();
     if(holding(lk)){
         printf("panic in lk %s, %d\n", lk->name, _cpu());
