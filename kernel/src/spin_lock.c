@@ -3,7 +3,8 @@
 #include <devices.h>
 
 /*int spincnt[5]={};*/
-int tmpcpu = -1;
+/*int tmpcpu = -1;*/
+/*int tmpcpu1 = -1;*/
 int ncli[MAXCPU] = {};
 int intena[MAXCPU] = {};
 
@@ -25,7 +26,8 @@ void spin_lock(spinlock_t *lk){
     while(_atomic_xchg(&lk->locked, 1));
     /*printf("spinlock %d\n",_cpu());*/
     __sync_synchronize();
-    tmpcpu = _cpu();
+    /*tmpcpu = _cpu();*/
+    /*tmpcpu1 = _cpu();*/
     lk->cpu = _cpu();
 }
 
