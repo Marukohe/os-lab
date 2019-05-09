@@ -169,7 +169,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
     /*assert(yk.locked == 0);*/
     /*assert(fillsem.locked.locked == 0);*/
     /*assert(emptysem.locked.locked == 0);*/
-    kmt->spin_lock(&pk);
+    kmt->spin_unlock(&pk);
     assert(ret != NULL);
   return ret;
     /*return context;*/
