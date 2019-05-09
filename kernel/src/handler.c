@@ -40,7 +40,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         }
         kmt->spin_lock(&pk);
         /*assert(0);*/
-        printf("current task: name-> %s id->%d state->%d CPU[%d]\n", current->name, current->id, current->state, _cpu());
+        printf("context switch current task: name-> %s id->%d state->%d CPU[%d]\n", current->name, current->id, current->state, _cpu());
         Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
         kmt->spin_unlock(&pk);
     }while(current->state != FREET);
@@ -54,6 +54,12 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     Logb("task0 %d, task1 %d, task2 %d, task3 %d", cputask[0]->state, cputask[1]->state, cputask[2]->state, cputask[3]->state);
     assert(current->fence1 == 0xcc && current->fence2 == 0xcc);
     assert(current != NULL);
+    int tmp = 0;
+    for(int i = 0 ; i < 4; i++){
+        if(current->id == current_task[id] && current->state == cpu_task[i]->state)
+            tmp++;
+    }
+    assert(tmp == 1);
     kmt->spin_unlock(&pk);
 
     /*assert(get_efl() & FL_IF);*/
