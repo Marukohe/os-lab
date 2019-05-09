@@ -2,9 +2,9 @@
 #include <klib.h>
 #include <devices.h>
 
-/*#define CONSUMER*/
+#define CONSUMER
 #define IDLE
-#define TTY
+/*#define TTY*/
 
 extern ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count);
 extern struct spinlock pk;
