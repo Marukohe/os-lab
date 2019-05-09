@@ -44,7 +44,7 @@ void consumer(){
 void idle(){
     while(1){
         _putc("01234"[_cpu()]);
-        assert(get_efl() & FI_IF);
+        assert(get_efl() & FL_IF);
         _yield();
     }
 }
