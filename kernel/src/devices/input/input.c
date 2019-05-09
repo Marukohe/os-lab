@@ -86,12 +86,13 @@ static _Context *input_notify(_Event ev, _Context *context) {
 
 void input_task(void *args) {
   device_t *in = dev_lookup("input");
-  assert(0);
+  /*assert(0);*/
 
   while (1) {
     int code;
     while ((code = read_key()) != 0) {
       input_keydown(in, code);
+      assert(0);
     }
     kmt->sem_wait(&sem_kbdirq);
   }
