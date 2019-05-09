@@ -166,9 +166,9 @@ static _Context *os_trap(_Event ev, _Context *context) {
     /*assert(get_efl() & FL_IF);*/
     kmt->spin_lock(&pk);
     /*assert(lk.locked == 0);*/
-    assert(yk.locked == 0);
-    assert(fillsem.locked.locked == 0);
-    assert(emptysem.locked.locked == 0);
+    /*assert(yk.locked == 0);*/
+    /*assert(fillsem.locked.locked == 0);*/
+    /*assert(emptysem.locked.locked == 0);*/
     kmt->spin_lock(&pk);
     assert(ret != NULL);
   return ret;
