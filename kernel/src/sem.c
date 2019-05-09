@@ -1,6 +1,8 @@
 #include <common.h>
 #include <klib.h>
 #define TKNUM 25
+
+/*#define SEMDEBUG*/
 extern spinlock_t pk;
 extern int tottask;
 extern task_t *cputask[TKNUM];
@@ -26,10 +28,11 @@ void sem_wait(sem_t *sem){
     /*sem->count--;*/
     while(sem->count <= 0){
         current->state = WAITING;
-
+#ifdef SEMDEBUG
         kmt->spin_lock(&pk);
         Logq("in sem_wait %d %s", current->id, current->name);
         kmt->spin_unlock(&pk);
+#endif
         int flag = 0;
         for(int i = 0; i < sem->cntid; i++){
             if(sem->id[i] == current->id)
@@ -38,9 +41,11 @@ void sem_wait(sem_t *sem){
         if(!flag)
             sem->id[sem->cntid++] = current->id;
 
+#ifdef SEMDEBUG
         kmt->spin_lock(&pk);
         assert(sem->cntid < tottask);
         kmt->spin_unlock(&pk);
+#endif
 
         kmt->spin_unlock(&sem->locked);
         /*kmt->spin_lock(&pk);*/
@@ -67,9 +72,11 @@ void sem_signal(sem_t *sem){
     /*task[sem->id].state = FREET;*/
     for(int i = 0; i < sem->cntid; i++){
         cputask[sem->id[i]]->state = FREET;
+#ifdef SEMDEBUG
         kmt->spin_lock(&pk);
         Logy("sem_signal, %s, %d", cputask[sem->id[i]]->name, cputask[sem->id[i]]->state);
         kmt->spin_unlock(&pk);
+#endif
         sem->id[i] = -1;
     }
     sem->cntid = 0;
