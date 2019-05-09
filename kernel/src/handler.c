@@ -53,6 +53,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     Logw("current task: name-> %s id->%d state->%d cpu: %d", current->name, current->id, current->state, _cpu());
     Logb("task0 %d, task1 %d, task2 %d, task3 %d", cputask[0]->state, cputask[1]->state, cputask[2]->state, cputask[3]->state);
     assert(current->fence1 == 0xcc && current->fence2 == 0xcc);
+    assert(current != NULL);
     kmt->spin_unlock(&pk);
 
     /*assert(get_efl() & FL_IF);*/
