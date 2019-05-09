@@ -137,6 +137,9 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
+    kmt->spin_lock(&pk);
+    assert(yk.locked == 0);
+    kmt->spin_unlock(&pk);
     /*assert(get_efl() & FL_IF);*/
     kmt->spin_lock(&yk);
     _Context *ret = NULL;
