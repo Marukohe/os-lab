@@ -57,7 +57,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     int tmp = 0;
     for(int i = 0 ; i < 4; i++){
         if(current->id == current_task[i]->id && current->state == current_task[i]->state){
-            printf("current_task name %s, taskid %d", current_task[i]->name, current_task[i]->id);
+            printf("current_task name %s, taskid %d\n", current_task[i]->name, current_task[i]->id);
             tmp++;
         }
     }
