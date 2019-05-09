@@ -20,7 +20,7 @@ void spin_lock(spinlock_t *lk){
     /*Logg("lk name %s, lk: %d", lk->name, lk->locked);*/
     pushcli();
     if(holding(lk)){
-        printf("panic in lk %s, %d\n", lk->name, _cpu());
+        printf("panic in lk locked %d, cpu %d, name, %s, %d\n", lk->locked, lk->cpu, lk->name, _cpu());
         panic("acquire");
     }
     while(_atomic_xchg(&lk->locked, 1));
@@ -33,7 +33,7 @@ void spin_lock(spinlock_t *lk){
 
 void spin_unlock(spinlock_t *lk){
     if(!holding(lk)){
-        printf("panic in lk %s, %d\n", lk->name, _cpu());
+        printf("panic in lk locked %d, cpu %d name %s, %d\n", lk->locked, lk->cpu, lk->name, _cpu());
         panic("release");
     }
     lk->cpu = -1;

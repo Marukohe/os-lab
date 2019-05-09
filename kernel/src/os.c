@@ -164,6 +164,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
         }
     }
     /*ret = context;*/
+    assert(!(get_efl() & FL_IF));
     kmt->spin_unlock(&yk);
     /*kmt->spin_lock(&pk);*/
     /*assert(get_efl() & FL_IF);*/
