@@ -26,12 +26,12 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     /*assert(!current);*/
     kmt->spin_unlock(&pk);
     /*assert(!current || current->state != FREET);*/
-    if(!current && current->state != WAITING){
-        current->state = FREET;
-    }
-    /*int tmp = current->id;*/
-    /*if(cputask[tmp]->state != WAITING)*/
-        /*cputask[tmp]->state = FREET;*/
+    /*if(!current && current->state != WAITING){*/
+        /*current->state = FREET;*/
+    /*}*/
+    int tmp = current->id;
+    if(cputask[tmp]->state != WAITING)
+        cputask[tmp]->state = FREET;
     do{
         if(!current || current->id == tottask - 1){
             current = cputask[0];
