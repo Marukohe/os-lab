@@ -148,7 +148,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
     /*assert(yk.locked == 0);*/
     /*kmt->spin_unlock(&pk);*/
     /*assert(get_efl() & FL_IF);*/
-    kmt->spin_lock(&yk);
+    /*kmt->spin_lock(&yk);*/
     _Context *ret = NULL;
     for(int i = 0; i < cnthandler; i++){
         if(schandlers[i].event == _EVENT_NULL || schandlers[i].event == ev.event){
@@ -165,7 +165,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
     }
     /*ret = context;*/
     assert(!(get_efl() & FL_IF));
-    kmt->spin_unlock(&yk);
+    /*kmt->spin_unlock(&yk);*/
     /*kmt->spin_lock(&pk);*/
     /*assert(get_efl() & FL_IF);*/
     /*kmt->spin_lock(&pk);*/
