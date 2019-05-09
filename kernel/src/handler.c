@@ -18,6 +18,15 @@ _Context *kmt_context_save(_Event ev, _Context *context){
     return &current->context;
 }
 
+int flag_switch(){
+    int res = 0;
+    for(int i = 0; i < 4; i++){
+        if(i!=_cpu() && current_task[i]->id == current->id)
+            res = 1;
+    }
+    return res;
+}
+
 _Context *kmt_context_switch(_Event ev, _Context *context){
     kmt->spin_lock(&pk);
     /*assert(0);*/
@@ -43,7 +52,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         printf("context switch current task: name-> %s id->%d state->%d CPU[%d]\n", current->name, current->id, current->state, _cpu());
         Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
         kmt->spin_unlock(&pk);
-    }while(current->state != FREET);
+    }while(current->state != FREET || flag_switch());
 
     /*cputask[tmp]->state = FREET;*/
     current->state = RUNNING;
