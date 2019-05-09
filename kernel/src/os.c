@@ -24,7 +24,7 @@ void producer(){
     while(1){
         kmt->sem_wait(&emptysem);
         kmt->spin_lock(&pk);
-        printf("(");
+        printf("(\n");
         kmt->spin_unlock(&pk);
         kmt->sem_signal(&fillsem);
     }
@@ -35,7 +35,7 @@ void consumer(){
     while(1){
         kmt->sem_wait(&fillsem);
         kmt->spin_lock(&pk);
-        printf(")");
+        printf(")\n");
         kmt->spin_unlock(&pk);
         kmt->sem_signal(&emptysem);
     }
