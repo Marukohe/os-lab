@@ -27,12 +27,13 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     task->entry = entry;
     task->arg = arg;
     task->state = FREET;
-    cputask[tottask] = task;
 
     _Area sstack;
     sstack.start = (void *)task->stack;
     sstack.end = (void *)(task->stack) + ST_SIZE;
     task->context = *_kcontext(sstack, entry, arg);
+
+    cputask[tottask] = task;
 
     tottask++;
     kmt->spin_lock(&pk);
