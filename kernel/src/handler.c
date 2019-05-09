@@ -56,7 +56,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     assert(current != NULL);
     int tmp = 0;
     for(int i = 0 ; i < 4; i++){
-        if(current->id == current_task[id] && current->state == current_task[i]->state)
+        if(current->id == current_task[i]->id && current->state == current_task[i]->state)
             tmp++;
     }
     assert(tmp == 1);
