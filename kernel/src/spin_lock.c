@@ -17,8 +17,10 @@ void spin_init(spinlock_t *lk, const char *name){
 void spin_lock(spinlock_t *lk){
     /*cli();*/
     pushcli();
-    if(holding(lk))
+    if(holding(lk)){
+        printf("panic in lk %s, %d\n", lk->name, _cpu());
         panic("acquire");
+    }
     while(_atomic_xchg(&lk->locked, 1));
     /*printf("spinlock %d\n",_cpu());*/
     __sync_synchronize();
