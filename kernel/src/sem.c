@@ -33,17 +33,17 @@ void sem_wait(sem_t *sem){
         Logq("in sem_wait %d %s", current->id, current->name);
         kmt->spin_unlock(&pk);
 #endif
-        /*int flag = 0;*/
-        /*for(int i = 0; i < sem->cntid; i++){*/
-            /*if(sem->id[i] == current->id)*/
-                /*flag = 1;*/
-        /*}*/
-        /*if(!flag){*/
+        int flag = 0;
+        for(int i = 0; i < sem->cntid; i++){
+            if(sem->id[i] == current->id)
+                flag = 1;
+        }
+        if(!flag){
             for(int i = sem->cntid; i > 0; i--)
                 sem->id[i] = sem->id[i - 1];
             sem->id[0] = current->id;
             sem->cntid ++;
-        /*}*/
+        }
 
 #ifdef SEMDEBUG
         kmt->spin_lock(&pk);
