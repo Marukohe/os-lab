@@ -225,13 +225,14 @@ devops_t tty_ops = {
 };
 
 void tty_task(void *arg) {
-    assert(0);
+    /*assert(0);*/
   device_t *in = dev_lookup("input");
   device_t *ttydev = dev_lookup("tty1");
   device_t *fb = dev_lookup("fb");
 
   tty_render(ttydev->ptr);
   while (1) {
+      assert(0);
     struct input_event ev;
     int nread = in->ops->read(in, 0, &ev, sizeof(ev));
     printf("%d\n",nread);
