@@ -234,6 +234,7 @@ void tty_task(void *arg) {
   while (1) {
       /*assert(0);*/
     struct input_event ev;
+    assert(0);
     int nread = in->ops->read(in, 0, &ev, sizeof(ev));
     printf("hello %d\n",nread);
     assert(0);
