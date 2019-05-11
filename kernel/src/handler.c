@@ -25,7 +25,8 @@ int flag_switch(){
         if(i!=_cpu() && current_task[i]->id == current->id)
             res = 1;
     }
-    return 1;
+    res = 1;
+    return res;
 }
 
 _Context *kmt_context_switch(_Event ev, _Context *context){
