@@ -63,20 +63,21 @@ void sem_wait(sem_t *sem){
 }
 
 void sem_signal(sem_t *sem){
-    /*kmt->spin_lock(&pk);*/
-    /*Logy("in sem_signal, the name of sem: %s, the value: %d", sem->name, sem->count);*/
-    /*kmt->spin_unlock(&pk);*/
+    kmt->spin_lock(&pk);
+    Logy("in sem_signal, the name of sem: %s, the value: %d", sem->name, sem->count);
+    kmt->spin_unlock(&pk);
     kmt->spin_lock(&sem->locked);
     sem->count++;
     /*TODO(); wakeup*/
     /*task[sem->id].state = FREET;*/
     for(int i = 0; i < sem->cntid; i++){
         cputask[sem->id[i]]->state = FREET;
-#ifdef SEMDEBUG
+/*#ifdef SEMDEBUG*/
         kmt->spin_lock(&pk);
+        printf("sem_signal, %s, %d", cputask[sem->id[i]]->name, cputask[sem->id[i]]->state);
         Logy("sem_signal, %s, %d", cputask[sem->id[i]]->name, cputask[sem->id[i]]->state);
         kmt->spin_unlock(&pk);
-#endif
+/*#endif*/
         sem->id[i] = -1;
     }
     sem->cntid = 0;
