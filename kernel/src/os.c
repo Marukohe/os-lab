@@ -2,8 +2,8 @@
 #include <klib.h>
 #include <devices.h>
 
-/*#define OSDEBUG*/
-#define CONSUMER
+#define OSDEBUG
+/*#define CONSUMER*/
 #define IDLE
 #define TTY
 
@@ -157,7 +157,8 @@ static _Context *os_trap(_Event ev, _Context *context) {
 #ifdef OSDEBUG
             kmt->spin_lock(&pk);
             /*Logp("evid %d", ev.event);*/
-            Logp("in os_trap");
+            /*Logp("in os_trap");*/
+            printf("ev.event %d\n", ev.event);
             /*Logp("schandlers event id %d seq %d",schandlers[i].event, schandlers[i].seq);*/
             kmt->spin_unlock(&pk);
 #endif
