@@ -72,12 +72,12 @@ void sem_signal(sem_t *sem){
     /*task[sem->id].state = FREET;*/
     for(int i = 0; i < sem->cntid; i++){
         cputask[sem->id[i]]->state = FREET;
-/*#ifdef SEMDEBUG*/
+#ifdef SEMDEBUG
         kmt->spin_lock(&pk);
         printf("sem_signal, %s, %d", cputask[sem->id[i]]->name, cputask[sem->id[i]]->state);
         Logy("sem_signal, %s, %d", cputask[sem->id[i]]->name, cputask[sem->id[i]]->state);
         kmt->spin_unlock(&pk);
-/*#endif*/
+#endif
         sem->id[i] = -1;
     }
     sem->cntid = 0;

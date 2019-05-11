@@ -48,13 +48,13 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         }else{
             current = cputask[current->id + 1];
         }
-#ifdef HANDDEBUG
+/*#ifdef HANDDEBUG*/
         kmt->spin_lock(&pk);
         /*assert(0);*/
         printf("context switch current task: name-> %s id->%d state->%d CPU[%d]\n", current->name, current->id, current->state, _cpu());
         Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
         kmt->spin_unlock(&pk);
-#endif
+/*#endif*/
     }while(current->state != FREET || flag_switch());
 
     /*cputask[tmp]->state = FREET;*/
