@@ -38,12 +38,12 @@ void sem_wait(sem_t *sem){
             if(sem->id[i] == current->id)
                 flag = 1;
         }
-        if(!flag){
+        /*if(!flag){*/
             for(int i = sem->cntid; i > 0; i--)
                 sem->id[i] = sem->id[i - 1];
             sem->id[0] = current->id;
             sem->cntid ++;
-        }
+        /*}*/
 
 #ifdef SEMDEBUG
         kmt->spin_lock(&pk);
