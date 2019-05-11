@@ -25,7 +25,7 @@ int flag_switch(){
         if(i!=_cpu() && current_task[i]->id == current->id)
             res = 1;
     }
-    res = 1;
+    /*res = 1;*/
     return res;
 }
 
@@ -56,7 +56,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
         kmt->spin_unlock(&pk);
 #endif
-    }while(current->state != FREET || flag_switch());
+    }while(current->state != FREET && current->id % _ncpu == _cpu());
 
     /*cputask[tmp]->state = FREET;*/
     current->state = RUNNING;
