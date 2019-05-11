@@ -112,10 +112,11 @@ static int input_init(device_t *dev) {
 }
 
 static ssize_t input_read(device_t *dev, off_t offset, void *buf, size_t count) {
-    assert(0);
+    /*assert(0);*/
   struct input_event ev = pop_event(dev->ptr);
   if (count >= sizeof(ev)) {
     memcpy(buf, &ev, sizeof(ev));
+    assert(0);
     return sizeof(ev);
   } else {
     return 0;
