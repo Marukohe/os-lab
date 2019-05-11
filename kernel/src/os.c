@@ -158,7 +158,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
             kmt->spin_lock(&pk);
             /*Logp("evid %d", ev.event);*/
             /*Logp("in os_trap");*/
-            if(ev.event != 2)
+            if(ev.event != 2 && ev.event != 5)
                 printf("ev.event %d\n", ev.event);
             /*Logp("schandlers event id %d seq %d",schandlers[i].event, schandlers[i].seq);*/
             kmt->spin_unlock(&pk);
