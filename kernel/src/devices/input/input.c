@@ -119,6 +119,7 @@ static ssize_t input_read(device_t *dev, off_t offset, void *buf, size_t count) 
     assert(0);
     return sizeof(ev);
   } else {
+      assert(0);
     return 0;
   }
 }
