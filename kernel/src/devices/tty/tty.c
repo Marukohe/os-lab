@@ -232,10 +232,11 @@ void tty_task(void *arg) {
 
   tty_render(ttydev->ptr);
   while (1) {
-      assert(0);
+      /*assert(0);*/
     struct input_event ev;
     int nread = in->ops->read(in, 0, &ev, sizeof(ev));
-    printf("%d\n",nread);
+    printf("hello %d\n",nread);
+    assert(0);
     if (nread > 0) {
       if (ev.alt) {
         device_t *next = ttydev;
