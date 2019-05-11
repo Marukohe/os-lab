@@ -233,6 +233,7 @@ void tty_task(void *arg) {
   while (1) {
     struct input_event ev;
     int nread = in->ops->read(in, 0, &ev, sizeof(ev));
+    printf("%d\n",nread);
     if (nread > 0) {
       if (ev.alt) {
         device_t *next = ttydev;
