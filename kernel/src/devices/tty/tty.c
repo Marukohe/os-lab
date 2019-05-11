@@ -225,6 +225,7 @@ devops_t tty_ops = {
 };
 
 void tty_task(void *arg) {
+    assert(0);
   device_t *in = dev_lookup("input");
   device_t *ttydev = dev_lookup("tty1");
   device_t *fb = dev_lookup("fb");
