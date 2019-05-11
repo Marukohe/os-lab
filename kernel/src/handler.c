@@ -67,14 +67,14 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
     /*Logb("task0 %d, task1 %d, task2 %d, task3 %d", cputask[0]->state, cputask[1]->state, cputask[2]->state, cputask[3]->state);*/
     assert(current->fence1 == 0xcc && current->fence2 == 0xcc);
     assert(current != NULL);
-    int tmp = 0;
-    for(int i = 0 ; i < 4; i++){
-        if(current->id == current_task[i]->id && current->state == current_task[i]->state){
+    /*int tmp = 0;*/
+    /*for(int i = 0 ; i < 4; i++){*/
+        /*if(current->id == current_task[i]->id && current->state == current_task[i]->state){*/
             /*printf("current_task name %s, taskid %d\n", current_task[i]->name, current_task[i]->id);*/
-            tmp++;
-        }
-    }
-    assert(tmp == 1);
+            /*tmp++;*/
+        /*}*/
+    /*}*/
+    /*assert(tmp == 1);*/
     /*kmt->spin_unlock(&pk);*/
 
     /*assert(get_efl() & FL_IF);*/
