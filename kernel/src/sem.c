@@ -45,12 +45,16 @@ void sem_wait(sem_t *sem){
         if(!flag){
             kmt->spin_lock(&pk);
             if(strncmp(sem->name, "events in queue", 15)==0)
-                printf("sem in wait %d\n\n", current->id);
+                printf("sem in wait %d\n", current->id);
             kmt->spin_unlock(&pk);
             for(int i = sem->cntid; i > 0; i--)
                 sem->id[i] = sem->id[i - 1];
             sem->id[0] = current->id;
-            sem->cntid ++;
+            sem->cntid++;
+            kmt->spin_lock(&pk);
+            if(strncmp(sem->name, "events in queue", 15)==0)
+                printf("sem in wait %d\n\n", sem->cntid);
+            kmt->spin_unlock(&pk);
         }
 
 #ifdef SEMDEBUG
