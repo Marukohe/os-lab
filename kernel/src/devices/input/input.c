@@ -69,7 +69,7 @@ void input_keydown(device_t *dev, int code) {
         }
     }
   } else {
-      assert(0);
+      /*assert(0);*/
     // keyup
     switch (code) {
       case _KEY_LCTRL:  in->ctrl_down[0]  = 0; break;
@@ -103,6 +103,12 @@ static int input_init(device_t *dev) {
   input_t *in = dev->ptr;
   in->events = pmm->alloc(sizeof(in->events[0]) * NEVENTS);
   in->front = in->rear = 0;
+  in->ctrl_down[0] = 0;
+  in->ctrl_down[0] = 0;
+  in->alt_down[0] = 0;
+  in->alt_down[1] = 0;
+  in->shift_down[0] = 0;
+  in->shift_down[0] = 0;
   kmt->spin_init(&in->lock, "/dev/input lock");
   kmt->sem_init(&in->event_sem, "events in queue", 0);
   kmt->sem_init(&sem_kbdirq, "keyboard-interrupt", 0);
