@@ -22,7 +22,6 @@ static void push_event(input_t *in, struct input_event ev) {
 
 static struct input_event pop_event(input_t *in) {
   kmt->sem_wait(&in->event_sem);
-  /*assert(0);*/
   kmt->spin_lock(&in->lock);
   if (in->rear == in->front) { panic("input queue empty"); }
   int idx = in->front;
@@ -39,13 +38,13 @@ void input_keydown(device_t *dev, int code) {
   if (code & 0x8000) {
     // keydown
     switch (key) {
-      case _KEY_CAPSLOCK: in->capslock     ^= 1; break;
-      case _KEY_LCTRL:    in->ctrl_down[0]  = 1; break;
-      case _KEY_RCTRL:    in->ctrl_down[1]  = 1; break;
-      case _KEY_LALT:     in->alt_down[0]   = 1; break;
-      case _KEY_RALT:     in->alt_down[1]   = 1; break;
-      case _KEY_LSHIFT:   in->shift_down[0] = 1; break;
-      case _KEY_RSHIFT:   in->shift_down[1] = 1; break;
+      case _KEY_CAPSLOCK: in->capslock     ^= 1; break; 
+      case _KEY_LCTRL:    in->ctrl_down[0]  = 1; break; 
+      case _KEY_RCTRL:    in->ctrl_down[1]  = 1; break; 
+      case _KEY_LALT:     in->alt_down[0]   = 1; break; 
+      case _KEY_RALT:     in->alt_down[1]   = 1; break; 
+      case _KEY_LSHIFT:   in->shift_down[0] = 1; break; 
+      case _KEY_RSHIFT:   in->shift_down[1] = 1; break; 
       default:
         ch = keymap[key];
         if (ch) {
@@ -70,12 +69,12 @@ void input_keydown(device_t *dev, int code) {
   } else {
     // keyup
     switch (code) {
-      case _KEY_LCTRL:  in->ctrl_down[0]  = 0; break;
-      case _KEY_RCTRL:  in->ctrl_down[1]  = 0; break;
-      case _KEY_LALT:   in->alt_down[0]   = 0; break;
-      case _KEY_RALT:   in->alt_down[1]   = 0; break;
-      case _KEY_LSHIFT: in->shift_down[0] = 0; break;
-      case _KEY_RSHIFT: in->shift_down[1] = 0; break;
+      case _KEY_LCTRL:  in->ctrl_down[0]  = 0; break; 
+      case _KEY_RCTRL:  in->ctrl_down[1]  = 0; break; 
+      case _KEY_LALT:   in->alt_down[0]   = 0; break; 
+      case _KEY_RALT:   in->alt_down[1]   = 0; break; 
+      case _KEY_LSHIFT: in->shift_down[0] = 0; break; 
+      case _KEY_RSHIFT: in->shift_down[1] = 0; break; 
     }
   }
 }
@@ -87,14 +86,11 @@ static _Context *input_notify(_Event ev, _Context *context) {
 
 void input_task(void *args) {
   device_t *in = dev_lookup("input");
-  /*assert(0);*/
 
   while (1) {
     int code;
     while ((code = read_key()) != 0) {
       input_keydown(in, code);
-      /*assert(0);*/
-      /*printf("input %d\n",code);*/
     }
     kmt->sem_wait(&sem_kbdirq);
   }
@@ -113,14 +109,11 @@ static int input_init(device_t *dev) {
 }
 
 static ssize_t input_read(device_t *dev, off_t offset, void *buf, size_t count) {
-    /*assert(0);*/
   struct input_event ev = pop_event(dev->ptr);
   if (count >= sizeof(ev)) {
     memcpy(buf, &ev, sizeof(ev));
-    /*assert(0);*/
     return sizeof(ev);
   } else {
-      /*assert(0);*/
     return 0;
   }
 }

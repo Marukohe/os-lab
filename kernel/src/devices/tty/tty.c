@@ -186,11 +186,9 @@ int tty_init(device_t *dev) {
 
 ssize_t tty_read(device_t *dev, off_t offset, void *buf, size_t count) {
   tty_t *tty = dev->ptr;
-  /*assert(0);*/
   kmt->sem_wait(&tty->cooked);
   kmt->sem_wait(&tty->lock);
   size_t nread = 0;
-  /*assert(0);*/
 
   struct tty_queue *q = &tty->queue;
   while (1) {
@@ -212,9 +210,7 @@ ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count) {
   kmt->sem_wait(&tty->lock);
   for (size_t i = 0; i < count; i++) {
     tty_putc(tty, ((const char *)buf)[i]);
-    _putc(((const char *)buf)[i]);
   }
-    _putc('\n');
   kmt->sem_signal(&tty->lock);
   tty_render(tty);
   return count;
@@ -227,19 +223,14 @@ devops_t tty_ops = {
 };
 
 void tty_task(void *arg) {
-    /*assert(0);*/
   device_t *in = dev_lookup("input");
   device_t *ttydev = dev_lookup("tty1");
   device_t *fb = dev_lookup("fb");
 
   tty_render(ttydev->ptr);
   while (1) {
-      /*assert(0);*/
     struct input_event ev;
-    /*assert(0);*/
     int nread = in->ops->read(in, 0, &ev, sizeof(ev));
-    /*printf("hello %d\n",nread);*/
-    /*assert(0);*/
     if (nread > 0) {
       if (ev.alt) {
         device_t *next = ttydev;
