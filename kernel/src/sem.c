@@ -85,6 +85,10 @@ void sem_signal(sem_t *sem){
         /*sem->id[i] = -1;*/
     /*}*/
     /*sem->cntid = 0;*/
+    kmt->spin_lock(&pk);
+    if(strncmp(sem->name, "events in queue", 15)==0)
+        printf("sem->count %d", sem->count);
+    kmt->spin_unlock(&pk);
     kmt->spin_unlock(&sem->locked);
     return;
 }
