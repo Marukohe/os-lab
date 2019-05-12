@@ -46,16 +46,16 @@ void sem_wait(sem_t *sem){
         if(!flag){
             kmt->spin_lock(&pk);
             if(strncmp(sem->name, "events in queue", 15)==0)
-                printf("sem in wait id %d, cntid %d\n", current->id, sem->cntid);
+                printf("sem in wait id %d %s\n", current->id, current->name);
             kmt->spin_unlock(&pk);
             for(int i = sem->cntid; i > 0; i--)
                 sem->id[i] = sem->id[i - 1];
             sem->id[0] = current->id;
             sem->cntid++;
-            kmt->spin_lock(&pk);
-            if(strncmp(sem->name, "events in queue", 15)==0)
-                printf("sem in wait cntid %d\n\n", sem->cntid);
-            kmt->spin_unlock(&pk);
+            /*kmt->spin_lock(&pk);*/
+            /*if(strncmp(sem->name, "events in queue", 15)==0)*/
+                /*printf("sem in wait cntid %d\n\n", sem->cntid);*/
+            /*kmt->spin_unlock(&pk);*/
         }
 
 #ifdef SEMDEBUG
@@ -86,10 +86,10 @@ void sem_signal(sem_t *sem){
     kmt->spin_lock(&sem->locked);
     sem->count++;
 
-    kmt->spin_lock(&pk);
-    if(strncmp(sem->name, "events in queue", 15)==0)
-        printf("sem->signal cntid: %d\n", sem->cntid);
-    kmt->spin_unlock(&pk);
+    /*kmt->spin_lock(&pk);*/
+    /*if(strncmp(sem->name, "events in queue", 15)==0)*/
+        /*printf("sem->signal cntid: %d\n", sem->cntid);*/
+    /*kmt->spin_unlock(&pk);*/
 
     /*TODO(); wakeup*/
     /*task[sem->id].state = FREET;*/
@@ -110,10 +110,10 @@ void sem_signal(sem_t *sem){
         /*sem->id[i] = -1;*/
     /*}*/
     /*sem->cntid = 0;*/
-    kmt->spin_lock(&pk);
-    if(strncmp(sem->name, "events in queue", 15)==0)
-        printf("sem->count %d\n", sem->count);
-    kmt->spin_unlock(&pk);
+    /*kmt->spin_lock(&pk);*/
+    /*if(strncmp(sem->name, "events in queue", 15)==0)*/
+        /*printf("sem->count %d\n", sem->count);*/
+    /*kmt->spin_unlock(&pk);*/
     kmt->spin_unlock(&sem->locked);
     return;
 }
