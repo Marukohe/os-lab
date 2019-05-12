@@ -69,6 +69,7 @@ void input_keydown(device_t *dev, int code) {
         }
     }
   } else {
+      assert(0);
     // keyup
     switch (code) {
       case _KEY_LCTRL:  in->ctrl_down[0]  = 0; break;
