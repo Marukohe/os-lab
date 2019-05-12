@@ -4,7 +4,7 @@
 
 #define OSDEBUG
 /*#define CONSUMER*/
-#define IDLE
+/*#define IDLE*/
 #define TTY
 
 #define TKNUM 25
