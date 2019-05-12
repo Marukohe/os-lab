@@ -236,7 +236,7 @@ void tty_task(void *arg) {
     struct input_event ev;
     /*assert(0);*/
     int nread = in->ops->read(in, 0, &ev, sizeof(ev));
-    /*printf("hello %d\n",nread);*/
+    printf("hello %d\n",nread);
     /*assert(0);*/
     if (nread > 0) {
       if (ev.alt) {
