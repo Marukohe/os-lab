@@ -38,19 +38,21 @@ void input_keydown(device_t *dev, int code) {
   if (code & 0x8000) {
     // keydown
     switch (key) {
-      case _KEY_CAPSLOCK: in->capslock     ^= 1; break; 
-      case _KEY_LCTRL:    in->ctrl_down[0]  = 1; break; 
-      case _KEY_RCTRL:    in->ctrl_down[1]  = 1; break; 
-      case _KEY_LALT:     in->alt_down[0]   = 1; break; 
-      case _KEY_RALT:     in->alt_down[1]   = 1; break; 
-      case _KEY_LSHIFT:   in->shift_down[0] = 1; break; 
-      case _KEY_RSHIFT:   in->shift_down[1] = 1; break; 
+      case _KEY_CAPSLOCK: in->capslock     ^= 1; break;
+      case _KEY_LCTRL:    in->ctrl_down[0]  = 1; break;
+      case _KEY_RCTRL:    in->ctrl_down[1]  = 1; break;
+      case _KEY_LALT:     in->alt_down[0]   = 1; break;
+      case _KEY_RALT:     in->alt_down[1]   = 1; break;
+      case _KEY_LSHIFT:   in->shift_down[0] = 1; break;
+      case _KEY_RSHIFT:   in->shift_down[1] = 1; break;
       default:
         ch = keymap[key];
         if (ch) {
           int shift = in->shift_down[0] || in->shift_down[1];
           int ctrl = in->ctrl_down[0] || in->ctrl_down[1];
           int alt = in->alt_down[0] || in->alt_down[1];
+
+          printf("ctrl %d alt %d\n", ctrl, alt);
 
           if (ctrl || alt) {
             push_event(in, event(ctrl, alt, ch));
@@ -69,12 +71,12 @@ void input_keydown(device_t *dev, int code) {
   } else {
     // keyup
     switch (code) {
-      case _KEY_LCTRL:  in->ctrl_down[0]  = 0; break; 
-      case _KEY_RCTRL:  in->ctrl_down[1]  = 0; break; 
-      case _KEY_LALT:   in->alt_down[0]   = 0; break; 
-      case _KEY_RALT:   in->alt_down[1]   = 0; break; 
-      case _KEY_LSHIFT: in->shift_down[0] = 0; break; 
-      case _KEY_RSHIFT: in->shift_down[1] = 0; break; 
+      case _KEY_LCTRL:  in->ctrl_down[0]  = 0; break;
+      case _KEY_RCTRL:  in->ctrl_down[1]  = 0; break;
+      case _KEY_LALT:   in->alt_down[0]   = 0; break;
+      case _KEY_RALT:   in->alt_down[1]   = 0; break;
+      case _KEY_LSHIFT: in->shift_down[0] = 0; break;
+      case _KEY_RSHIFT: in->shift_down[1] = 0; break;
     }
   }
 }
