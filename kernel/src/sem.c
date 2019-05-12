@@ -83,7 +83,7 @@ void sem_signal(sem_t *sem){
 
         kmt->spin_lock(&pk);
         if(strncmp(sem->name, "events in queue", 15)==0)
-            printf("sem->signal %d, %n", sem->id[tmp], cputask[sem->id[tmp]]->name);
+            printf("sem->signal %d, %s\n", sem->id[tmp], cputask[sem->id[tmp]]->name);
         kmt->spin_unlock(&pk);
 
         cputask[sem->id[tmp]]->state = FREET;
