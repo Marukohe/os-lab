@@ -210,7 +210,9 @@ ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count) {
   kmt->sem_wait(&tty->lock);
   for (size_t i = 0; i < count; i++) {
     tty_putc(tty, ((const char *)buf)[i]);
+    _putc(tty, ((const char *)buf)[i]);
   }
+  _putc('\n');
   kmt->sem_signal(&tty->lock);
   tty_render(tty);
   return count;
