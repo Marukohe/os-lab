@@ -258,6 +258,8 @@ void tty_task(void *arg) {
       }
       if (!ev.ctrl && !ev.alt) {
         char ch = ev.data;
+        _putc(ch);
+        _putc('\n');
         tty_t *tty = ttydev->ptr;
         if (tty_cook(tty, ch) == 0) {
           ttydev->ops->write(ttydev, 0, &ch, 1);
