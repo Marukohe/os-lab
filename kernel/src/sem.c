@@ -80,13 +80,15 @@ void sem_signal(sem_t *sem){
     /*task[sem->id].state = FREET;*/
     if(sem->cntid > 0){
         int tmp = sem->cntid - 1;
+
+        kmt->spin_lock(&pk);
+        if(strncmp(sem->name, "events in queue", 15)==0)
+            printf("sem->signal %d, %n", sem->id[tmp], cputask[sem->id[tmp]]->name);
+        kmt->spin_unlock(&pk);
+
         cputask[sem->id[tmp]]->state = FREET;
         sem->id[tmp] = -1;
         sem->cntid--;
-        kmt->spin_lock(&pk);
-        if(strncmp(sem->name, "events in queue", 15)==0)
-            printf("sem->count %d\n", sem->id[tmp]);
-        kmt->spin_unlock(&pk);
     }
     /*for(int i = 0; i < sem->cntid; i++){*/
         /*cputask[sem->id[i]]->state = FREET;*/
