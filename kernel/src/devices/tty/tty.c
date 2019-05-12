@@ -210,9 +210,9 @@ ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count) {
   kmt->sem_wait(&tty->lock);
   for (size_t i = 0; i < count; i++) {
     tty_putc(tty, ((const char *)buf)[i]);
-    _putc(((const char *)buf)[i]);
+    /*_putc(((const char *)buf)[i]);*/
   }
-  _putc('\n');
+  /*_putc('\n');*/
   kmt->sem_signal(&tty->lock);
   tty_render(tty);
   return count;
@@ -258,8 +258,8 @@ void tty_task(void *arg) {
       }
       if (!ev.ctrl && !ev.alt) {
         char ch = ev.data;
-        _putc(ch);
-        _putc('\n');
+        /*_putc(ch);*/
+        /*_putc('\n');*/
         tty_t *tty = ttydev->ptr;
         if (tty_cook(tty, ch) == 0) {
           ttydev->ops->write(ttydev, 0, &ch, 1);

@@ -52,7 +52,7 @@ void input_keydown(device_t *dev, int code) {
           int ctrl = in->ctrl_down[0] || in->ctrl_down[1];
           int alt = in->alt_down[0] || in->alt_down[1];
 
-          printf("ctrl %d alt %d shift %d\n", ctrl, alt, shift);
+          /*printf("ctrl %d alt %d shift %d\n", ctrl, alt, shift);*/
 
           if (ctrl || alt) {
             push_event(in, event(ctrl, alt, ch));
