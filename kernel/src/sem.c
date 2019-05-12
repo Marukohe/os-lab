@@ -12,6 +12,7 @@ extern task_t *current_task[4];
 void sem_init(sem_t *sem, const char *name, int value){
     sem->name = name;
     sem->count = value;
+    sem->cntid = 0;
     for(int i = 0; i < TKNUM; i++)
         sem->id[i] = -1;
     kmt->spin_init(&sem->locked, name);
