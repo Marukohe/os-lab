@@ -56,15 +56,20 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
         kmt->spin_unlock(&pk);
 #endif
+        /*kmt->spin_lock(&pk);*/
+        /*if(strncmp(current->name, "tty-task", 8) == 0){*/
+            /*printf("context switch current task: name-> %s id->%d state->%d CPU[%d]\n", current->name, current->id, current->state, _cpu());*/
+        /*}*/
+        /*kmt->spin_unlock(&pk);*/
+
+    }while(current->state != FREET || flag_switch());
+
+    /*cputask[tmp]->state = FREET;*/
         kmt->spin_lock(&pk);
         if(strncmp(current->name, "tty-task", 8) == 0){
             printf("context switch current task: name-> %s id->%d state->%d CPU[%d]\n", current->name, current->id, current->state, _cpu());
         }
         kmt->spin_unlock(&pk);
-
-    }while(current->state != FREET || flag_switch());
-
-    /*cputask[tmp]->state = FREET;*/
     current->state = RUNNING;
 
     /*kmt->spin_lock(&pk);*/
