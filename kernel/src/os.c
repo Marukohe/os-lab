@@ -2,10 +2,10 @@
 #include <klib.h>
 #include <devices.h>
 
-#define OSDEBUG
+/*#define OSDEBUG*/
 /*#define CONSUMER*/
 #define IDLE
-#define TTY
+/*#define TTY*/
 
 #define TKNUM 25
 extern task_t *cputask[TKNUM];
@@ -138,7 +138,7 @@ static void os_run() {
   _intr_write(1);
   while (1) {
       /*assert(0);*/
-      assert(get_efl() & FL_IF); //0 开中断
+      /*assert(get_efl() & FL_IF); //0 开中断*/
       /*printf("yield\n");*/
     _yield();
   }
