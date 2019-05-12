@@ -109,6 +109,7 @@ static int input_init(device_t *dev) {
   in->alt_down[1] = 0;
   in->shift_down[0] = 0;
   in->shift_down[1] = 0;
+  in->capslock = 0;
   kmt->spin_init(&in->lock, "/dev/input lock");
   kmt->sem_init(&in->event_sem, "events in queue", 0);
   kmt->sem_init(&sem_kbdirq, "keyboard-interrupt", 0);
