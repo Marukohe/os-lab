@@ -26,6 +26,10 @@ void sem_wait(sem_t *sem){
     kmt->spin_lock(&sem->locked);
     /*int flag = 0;*/
     /*sem->count--;*/
+    kmt->spin_lock(&pk);
+    if(strncmp(sem->name, "events in queue", 15)==0)
+        printf("sem->count in wait %d\n", sem->count);
+    kmt->spin_unlock(&pk);
     while(sem->count <= 0){
         current->state = WAITING;
 #ifdef SEMDEBUG
