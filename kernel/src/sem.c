@@ -43,6 +43,7 @@ void sem_wait(sem_t *sem){
             if(sem->id[i] == current->id)
                 flag = 1;
         }
+        flag = 0;
         if(!flag){
             kmt->spin_lock(&pk);
             if(strncmp(sem->name, "events in queue", 15)==0)
