@@ -62,7 +62,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
         /*}*/
         /*kmt->spin_unlock(&pk);*/
 
-    }while(current->state != FREET || flag_switch());
+    }while(current->state != FREET || current->id % _ncpc() != _cpu());
 
     /*cputask[tmp]->state = FREET;*/
     kmt->spin_lock(&pk);
