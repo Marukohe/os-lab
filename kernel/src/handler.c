@@ -37,7 +37,7 @@ _Context *kmt_context_switch(_Event ev, _Context *context){
 #ifdef HANDDEBUG
         kmt->spin_lock(&pk);
         printf("context switch current task: name-> %s id->%d state->%d CPU[%d]\n", current->name, current->id, current->state, _cpu());
-        Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());
+        /*Logq("current task: name-> %s id->%d state->%d CPU[%d]", current->name, current->id, current->state, _cpu());*/
         kmt->spin_unlock(&pk);
 #endif
         /*kmt->spin_lock(&pk);*/

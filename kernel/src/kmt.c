@@ -36,9 +36,9 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     cputask[tottask] = task;
 
     tottask++;
-    kmt->spin_lock(&pk);
-    Logy("kmt_create name: %s with id: %d", name, tottask - 1);
-    kmt->spin_unlock(&pk);
+    /*kmt->spin_lock(&pk);*/
+    /*Logy("kmt_create name: %s with id: %d", name, tottask - 1);*/
+    /*kmt->spin_unlock(&pk);*/
     return 0;
 }
 

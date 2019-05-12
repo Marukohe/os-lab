@@ -5,7 +5,7 @@
 /*#define OSDEBUG*/
 /*#define CONSUMER*/
 #define IDLE
-#define TTY
+/*#define TTY*/
 
 #define TKNUM 25
 extern task_t *cputask[TKNUM];
