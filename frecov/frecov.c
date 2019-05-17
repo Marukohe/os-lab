@@ -21,7 +21,7 @@ unsigned long get_file_size(const char *path){
 
 int main(int argc, char *argv[]) {
     /*void *startaddr;*/
-    printf("arvg[1], %s", argv[1]);
+    printf("arvg[1], %s\n", argv[0]);
     int fd = open(argv[1], O_RDONLY);
     if(fd == -1)
         handle_error("open");
