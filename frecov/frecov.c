@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
     int fd = open("./fs.img", O_RDONLY);
     if(fd == -1)
         handle_error("open");
-    char *path = "./";
-    strcat(path, argv[1]);
+    char *path = "./fs.img";
+    /*strcat(path, argv[1]);*/
     printf("path %s\n", path);
     /*unsigned long fsize = get_file_size(path);*/
     /*printf("%ld\n", fsize);*/
