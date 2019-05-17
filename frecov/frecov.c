@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
         handle_error("open");
     char *path = "./";
     strcat(path, argv[1]);
-    size_t fsize = get_file_size(path);
+    unsigned long fsize = get_file_size(path);
     printf("%ld\n", fsize);
   return 0;
 }
