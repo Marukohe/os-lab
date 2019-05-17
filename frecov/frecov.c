@@ -20,7 +20,7 @@ unsigned long get_file_size(const char *path){
 }
 
 int main(int argc, char *argv[]) {
-    void *startaddr;
+    /*void *startaddr;*/
     int fd = open(argv[1], O_RDONLY);
     if(fd == -1)
         handle_error("open");
