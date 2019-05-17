@@ -25,10 +25,8 @@ int main(int argc, char *argv[]) {
     int fd = open(argv[1], O_RDONLY);
     if(fd == -1)
         handle_error("open");
-    char *path = "./";
-    strcat(path, argv[1]);
     /*printf("path %s\n", path);*/
-    /*unsigned long fsize = get_file_size(path);*/
-    /*printf("%ld\n", fsize);*/
+    unsigned long fsize = get_file_size(argv[1]);
+    printf("%ld\n", fsize);
   return 0;
 }
