@@ -21,6 +21,8 @@ unsigned long get_file_size(const char *path){
 }
 
 int main(int argc, char *argv[]) {
+    if(argc == 1)
+        argv[1] = "fs.img";
     uint8_t *startaddr;
     printf("arvg[1] %s\n", argv[1]);
     int fd = open(argv[1], O_RDWR|O_CREAT, 0666);
