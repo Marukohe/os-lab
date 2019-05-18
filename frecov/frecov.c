@@ -23,7 +23,7 @@ unsigned long get_file_size(const char *path){
 int main(int argc, char *argv[]) {
     unsigned int *startaddr;
     printf("arvg[1] %s\n", argv[1]);
-    int fd = open(argv[1], O_RDWR|O_CREAT);
+    int fd = open(argv[1], O_RDWR|O_CREAT, 0666);
     if(fd == -1)
         handle_error("open");
     unsigned long fsize = get_file_size(argv[1]);
