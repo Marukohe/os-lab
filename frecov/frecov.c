@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
         handle_error("open");
     unsigned long fsize = get_file_size(argv[1]);
     startaddr = mmap(NULL, fsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
-    printf("%x\n", *(startaddr + 1));
+    for(int i = 0; i < 10; i++)
+        printf("%x\n", *(startaddr + i));
   return 0;
 }
