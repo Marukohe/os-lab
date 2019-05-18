@@ -28,6 +28,6 @@ int main(int argc, char *argv[]) {
         handle_error("open");
     unsigned long fsize = get_file_size(argv[1]);
     startaddr = mmap(NULL, fsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
-    printf("%x\n", *startaddr);
+    printf("%x\n", *startaddr + 1);
   return 0;
 }
