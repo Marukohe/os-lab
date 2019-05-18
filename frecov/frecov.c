@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdint.h>
 
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
@@ -20,13 +21,13 @@ unsigned long get_file_size(const char *path){
 }
 
 int main(int argc, char *argv[]) {
-    /*void *startaddr;*/
+    unsigned int *startaddr;
     printf("arvg[1] %s\n", argv[1]);
-    int fd = open(argv[1], O_RDONLY);
+    int fd = open(argv[1], O_RDWR|O_CREAT);
     if(fd == -1)
         handle_error("open");
-    /*printf("path %s\n", path);*/
     unsigned long fsize = get_file_size(argv[1]);
-    printf("%ld\n", fsize);
+    startaddr = mmap(NULL, fsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+    printf("%x\n", *startaddr);
   return 0;
 }
