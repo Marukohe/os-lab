@@ -6,7 +6,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdint.h>
-
+#include <assert.h>
+#define namesize 1000
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
@@ -101,12 +102,36 @@ int main(int argc, char *argv[]) {
     SizeofCluster = (uint32_t)fatstruct->SectorsPerCluster * (uint32_t)fatstruct->BytesPerSector;
     uint32_t startsearchcluster = SizeofCluster * 3;
 
+    char filename[namesize];
+
     uint32_t searchoffset = startsearchcluster;
     while(searchoffset < fsize){
         ldic = (longdic *)(startaddr + searchoffset);
         if(ldic->flag == 0xF){
-            printf("Find one longdic\n");
-            searchoffset += 0x20;
+            int filenameoffset = 0;
+            // printf("Find one longdic\n");
+            uint32_t tmpcntlongdic = ldic->attribute & 0xF;
+            for(int i = tmpcntlongdic ; i > 0; i--){
+                uint32_t tmp = searchoffset + i * 0x20;
+                longdic * tmpdic = (longdic *)(tmp);
+                if(i == tmpcntlongdic)
+                    assert((tmpdic->attribute & 0xF) == 0);
+
+                for(int k = 0; k < 10; k++){
+                    if(tmpdic->unicode1[k] != 0xFF)
+                        filename[filenameoffset++] = tmpdic->unicode1[k];
+                }
+                for(int k = 0; k < 12; k++){
+                    if(tmpdic->unicode2[k] != 0xFF)
+                        filename[filenameoffset++] = tmpdic->unicode2[k];
+                }
+                for(int k = 0; k <4; k++){
+                    if(tmpdic->unicode3[k] != 0xFF)
+                        filename[filenameoffset++] = tmpdic->unicode3[k];
+                }
+            }
+            printf("%s\n", filename);
+            searchoffset += 0x20 * (tmpcntlongdic + 1);
         }else{
             searchoffset += 0x10;
         }
