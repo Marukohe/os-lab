@@ -110,6 +110,7 @@ int main(int argc, char *argv[]) {
         if(ldic->flag == 0xF){
             printf("%lx", (unsigned long)startsearchcluster);
         }
+        startsearchcluster += 0x20;
     }
 
     munmap(startaddr, fsize);
