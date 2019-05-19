@@ -168,7 +168,8 @@ int main(int argc, char *argv[]) {
             }
             if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
                 printf("%s\n", filename);
-                uintptr_t bmpsize = ((uintptr_t)sdic->highCluster << 16) + (uintptr_t)sdic->lowCluster;
+                printf("%x %x\n", sdic->highCluster, sdic->lowCluster)
+                uintptr_t bmpsize = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster;
                 printf("%lx\n", (unsigned long)bmpsize);
             }
         }
