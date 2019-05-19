@@ -11,10 +11,10 @@
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
 struct FATstruct{
-    uint32_t BytesPerSector : 4;
-    uint32_t SectorsPerCluster : 2;
-    uint32_t ReservedSector : 4;
-    uint32_t NumberofFAT : 2;
+    uint16_t BytesPerSector;
+    uint8_t SectorsPerCluster;
+    uint16_t ReservedSector;
+    uint8_t NumberofFAT;
 };
 
 struct FATstruct *fatstruct;
