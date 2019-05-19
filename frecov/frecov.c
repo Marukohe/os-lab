@@ -225,6 +225,7 @@ int main(int argc, char *argv[]) {
                 }else{
                     dup2(pipefds1[1], STDOUT_FILENO);
                     close(pipefds1[0]);
+                    open(STDOUT_FILENO);
                     fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdout);
                     // write(pipefds1[1], tmpfile, bmp->bfSize);
                     // wait(&childpid);
