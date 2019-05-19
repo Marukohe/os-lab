@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
                 uintptr_t tmp = searchoffset + i * 0x20 + mmapstart;
                 // printf("tmp: %lx\n", (unsigned long)tmp);
                 longdic * tmpdic = (longdic *)(tmp);
-                if(i == tmpcntlongdic){
+                if(i == tmpcntlongdic && (tmpdic->attribute & 0xF) != 0){
                     flag = 1;
                     break;
                 }
