@@ -186,7 +186,7 @@ int main(int argc, char *argv[]) {
                 printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
                 uint8_t * tmpfile = (uint8_t *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
                 for(int i = 0; i < 10; i++){
-                    printf("%d", tmpfile[i]);
+                    printf("%x", tmpfile[i]);
                 }
                 printf("\n");
                 // char bmpfile[bmp->bfSize];
