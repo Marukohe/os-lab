@@ -195,47 +195,56 @@ int main(int argc, char *argv[]) {
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
                 fclose(fp);
                 #endif
-                int pipefds[2];
-                int pipefds1[2];
-                if(pipe(pipefds) == -1){
-                    handle_error("pipe");
-                }
-                if(pipe(pipefds1) == -1){
-                    handle_error("pipe1");
-                }
-                int childpid = fork();
-                if(childpid == 0){
-                    char * execv_str[] = {"sha1sum", NULL};
-                    close(STDIN_FILENO);
-                    dup2(pipefds1[0], STDIN_FILENO);
-                    close(pipefds1[1]);
-                    
-                    close(STDOUT_FILENO);
-                    // char r_buf[10000];
-                    // FILE *fpout = fdopen(STDIN_FILENO, "r");
-                    // while(fgets(r_buf, 1000, fpout) != NULL){
-                    //     printf("%s\n", r_buf);
-                    // }
-                    dup2(pipefds[1], STDOUT_FILENO);
-                    close(pipefds[0]);
 
-                    if(execv("/usr/bin/sha1sum", execv_str) < 0){
-                        handle_error("execve");
-                    }
-                }else{
-                    dup2(pipefds1[1], STDOUT_FILENO);
-                    close(pipefds1[0]);
-                    // open(STDOUT_FILENO);
-                    fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdout);
-                    // write(pipefds1[1], tmpfile, bmp->bfSize);
-                    // wait(&childpid);
-                    dup2(pipefds[0], STDIN_FILENO);
-                    close(pipefds[1]);
+                char *cmd = "sha1sum ";
+                FILE *fp = fopen(filename, "w+");
+                fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
+                strcat(cmd, filename);
+                system(cmd);
+                unlink(filename);
+                fclose(fp);
+
+                // int pipefds[2];
+                // int pipefds1[2];
+                // if(pipe(pipefds) == -1){
+                //     handle_error("pipe");
+                // }
+                // if(pipe(pipefds1) == -1){
+                //     handle_error("pipe1");
+                // }
+                // int childpid = fork();
+                // if(childpid == 0){
+                //     char * execv_str[] = {"sha1sum", NULL};
+                //     close(STDIN_FILENO);
+                //     dup2(pipefds1[0], STDIN_FILENO);
+                //     close(pipefds1[1]);
                     
-                    char buf[1000];
-                    fread(buf, sizeof(char), 100, stdin);
-                    printf("%s\n", buf);
-                }
+                //     close(STDOUT_FILENO);
+                //     // char r_buf[10000];
+                //     // FILE *fpout = fdopen(STDIN_FILENO, "r");
+                //     // while(fgets(r_buf, 1000, fpout) != NULL){
+                //     //     printf("%s\n", r_buf);
+                //     // }
+                //     dup2(pipefds[1], STDOUT_FILENO);
+                //     close(pipefds[0]);
+
+                //     if(execv("/usr/bin/sha1sum", execv_str) < 0){
+                //         handle_error("execve");
+                //     }
+                // }else{
+                //     dup2(pipefds1[1], STDOUT_FILENO);
+                //     close(pipefds1[0]);
+                //     // open(STDOUT_FILENO);
+                //     fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdout);
+                //     // write(pipefds1[1], tmpfile, bmp->bfSize);
+                //     // wait(&childpid);
+                //     dup2(pipefds[0], STDIN_FILENO);
+                //     close(pipefds[1]);
+                    
+                //     char buf[1000];
+                //     fread(buf, sizeof(char), 100, stdin);
+                //     printf("%s\n", buf);
+                // }
             }
         }
         startsearchcluster += 0x10;
