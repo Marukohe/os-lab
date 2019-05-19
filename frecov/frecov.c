@@ -40,10 +40,10 @@ int main(int argc, char *argv[]) {
     unsigned long fsize = get_file_size(argv[1]);
     startaddr = mmap(NULL, fsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
     fatstruct = (struct FATstruct *)(startaddr + 0xB);
-    printf("%x\n", fatstruct->BytesPerSector);
-    printf("%x\n", fatstruct->SectorsPerCluster);
-    printf("%x\n", fatstruct->ReservedSector);
-    printf("%x\n", fatstruct->NumberofFAT);
+    printf("0x%x\n", fatstruct->BytesPerSector);
+    printf("0x%x\n", fatstruct->SectorsPerCluster);
+    printf("0x%x\n", fatstruct->ReservedSector);
+    printf("0x%x\n", fatstruct->NumberofFAT);
     munmap(startaddr, fsize);
     close(fd);
   return 0;
