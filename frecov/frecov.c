@@ -110,11 +110,11 @@ int main(int argc, char *argv[]) {
     while(startsearchcluster < fsize){
         char filename[namesize];
         int fileoffset = 0;
-        char extendn[4];
+        char extendname[4];
         sdic = (shortdic *)(startsearchcluster + searchaddr);
         for(int i = 0; i < 3; i++)
-            extend[i] = sdic->extendname[i];
-        if(strncmp(extendn, "BMP", 3) == 0){
+            extendname[i] = sdic->extendname[i];
+        if(strncmp(extendname, "BMP", 3) == 0){
             for(int i = 0; i < 8; i++){
                 filename[fileoffset++] = sdic->filename[i];
             }
