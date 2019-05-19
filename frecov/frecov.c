@@ -224,9 +224,10 @@ int main(int argc, char *argv[]) {
                     // write(pipefds1[1], tmpfile, bmp->bfSize);
                     // wait(&childpid);
                     dup2(pipefds[0], STDIN_FILENO);
-                    // FILE *fpout = NULL;
-                    // fpout = fdopen(STDIN_FILENO, "r");
-                    // char buf[1000];
+                    close(pipefds[1]);
+                    
+                    char buf[1000] = {"hello"};
+                    printf("%s\n", buf);
                     // scanf("%s", buf);
                     // fgets(buf, 1000, fpout);
                     // printf("%s\n", buf);
