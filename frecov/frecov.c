@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
             int filenameoffset = 0;
             // printf("Find one longdic\n");
             uint32_t tmpcntlongdic = ldic->attribute & 0xF;
-            for(int i = tmpcntlongdic ; i > 0; i--){
+            for(int i = tmpcntlongdic ; i >= 0; i--){
                 uintptr_t tmp = searchoffset + i * 0x20;
                 longdic * tmpdic = (longdic *)(tmp);
                 if(i == tmpcntlongdic)
