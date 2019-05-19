@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdint.h>
@@ -204,8 +205,8 @@ int main(int argc, char *argv[]) {
                     fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
                     char * execv_str[] = {"sha1sum", "NULL"};
                     dup2(pipefds[1], STDOUT_FILENO);
-                    if(execve("/usr/bin/sha1sum") < 0){
-                        handle_error("execve", execv_str);
+                    if(execve("/usr/bin/sha1sum", execv_str) < 0){
+                        handle_error("execve");
                     }
                 }else{
                     wait(&childpid);
