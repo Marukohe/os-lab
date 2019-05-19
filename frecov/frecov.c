@@ -183,8 +183,12 @@ int main(int argc, char *argv[]) {
                 // printf("%lx\n", (unsigned long)(bmpstart * SizeofCluster + RootCluster));
                 BITMAPFILEHEADER * bmp = (BITMAPFILEHEADER *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
 
-                printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
-
+                // printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
+                char * tmpfile = (char *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
+                for(int i = 0; i < 10; i++){
+                    printf("%c", tmpfile[i]);
+                }
+                printf("\n");
                 // char bmpfile[bmp->bfSize];
                 // snprintf(bmpfile, bmp->bfSize, "%s", (char *)(bmpstart * SizeofCluster + RootCluster + searchaddr));
                 // printf("%s\n", bmpfile);
