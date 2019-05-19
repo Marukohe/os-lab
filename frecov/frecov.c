@@ -64,13 +64,13 @@ shortdic * sdic;
 
 typedef struct Longdic{
     uint8_t attribute;
-    uint16_t unicode1[5];
+    uint16_t unicode1[10];
     uint8_t flag;
     uint8_t dummy;
     uint8_t dummy1;
-    uint16_t unicode2[6];
+    uint16_t unicode2[12];
     uint16_t filestartcluster;
-    uint16_t unicode3[2];
+    uint16_t unicode3[4];
 }__attribute__((packed)) longdic;
 
 longdic * ldic;
@@ -105,10 +105,20 @@ int main(int argc, char *argv[]) {
 
     uintptr_t searchaddr = (uintptr_t)startaddr;
 
+    
     while(startsearchcluster < fsize){
+        char filename[namesize];
         ldic = (longdic *)(startsearchcluster + searchaddr);
         if(ldic->flag == 0xF){
-            printf("%lx\n", (unsigned long)startsearchcluster);
+            // printf("%lx\n", (unsigned long)startsearchcluster);
+            int tmpcntlongdic = ldic->attribute & 0xF;    //统计长文件名个数
+            for(int i = tmpcntlongdic; i >= 0; i--){
+                uinptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
+                longdic * tmpdic = (longdic *)(tmpaddr);
+                printf("%x\n", tmpdic->flag);
+            }
+            startsearchcluster += 0x20 * tmpcntlongdic;
+            continue;
         }
         startsearchcluster += 0x20;
     }
