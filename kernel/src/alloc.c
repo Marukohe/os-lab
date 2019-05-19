@@ -267,6 +267,7 @@ static void *kalloc(size_t size) {
     }else{
         ret = my_smallalloc(size);
     }
+    memset(ret, 0, size);
     kmt->spin_lock(&pk);
     assert(ret!=NULL);
     kmt->spin_unlock(&pk);
