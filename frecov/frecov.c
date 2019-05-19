@@ -122,15 +122,15 @@ int main(int argc, char *argv[]) {
                     break;
                 }
 
-                for(int k = 0; k < 10; k++){
+                for(int k = 0; k < 5; k++){
                     if(tmpdic->unicode1[k] != 0xFFFF)
                         filename[filenameoffset++] = tmpdic->unicode1[k];
                 }
-                for(int k = 0; k < 12; k++){
+                for(int k = 0; k < 6; k++){
                     if(tmpdic->unicode2[k] != 0xFFFF)
                         filename[filenameoffset++] = tmpdic->unicode2[k];
                 }
-                for(int k = 0; k <4; k++){
+                for(int k = 0; k < 2; k++){
                     if(tmpdic->unicode3[k] != 0xFFFF)
                         filename[filenameoffset++] = tmpdic->unicode3[k];
                 }
