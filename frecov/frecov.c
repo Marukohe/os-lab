@@ -42,6 +42,38 @@ typedef struct tagBITMAPFILEHEADER
     //文件头的偏移量表示，以字节为单位
 }__attribute__((packed)) BITMAPFILEHEADER;
 
+
+typedef strcut Shortdic{
+    uint64_t filename;
+    uint8_t extendname[3];
+    uint8_t attribute;
+    uint8_t dummy;
+    uint8_t dummy1;
+    uint16_t filecreattime;
+    uint16_t filecreatdate;
+    uint16_t fileaccessdate;
+    uint16_t highCluster;
+    uint16_t latestmodifytime;
+    uint16_t latestmodiftdate;
+    uint16_t lowCluster;
+    uint32_t SizeofFile;
+}__attribute__((packed)) shortdic;
+
+shortdic * sdic;
+
+typedef struct Longdic{
+    uint8_t attribute;
+    uint8_t unicode1[10];
+    uint8_t flag;
+    uint8_t dummy;
+    uint8_t dummy1;
+    uint8_t unicode2[12];
+    uint16_t filestartcluster;
+    uint8_t unicode3[4];
+}__attribute__((packed)) longdic;
+
+longdic * ldic;
+
 unsigned long get_file_size(const char *path){
     unsigned long filesize = -1;
     struct stat statbuff;
@@ -67,22 +99,19 @@ int main(int argc, char *argv[]) {
     fatstruct = (FATstruct *)(startaddr + 0xB);
 
     SizeofCluster = (uint32_t)fatstruct->SectorsPerCluster * (uint32_t)fatstruct->BytesPerSector;
+    uint32_t startsearchcluster = SizeofCluster * 3;
 
-    printf("0x%x\n", SizeofCluster * 2);
+    uint32_t searchoffset = startsearchcluster;
+    while(searchoffset < fsize){
+        ldic = (longdic *)(startaddr + searchoffset);
+        if(ldic->flag == 0xF){
+            printf("Find one longdic\n");
+        }else{
+            searchoffset += 0x10;
+        }
+    }
 
-    // printf("0x%x\n", fatstruct->BytesPerSector);
-    // printf("0x%x\n", fatstruct->SectorsPerCluster);
-    // printf("0x%x\n", fatstruct->ReservedSector);
-    // printf("0x%x\n", fatstruct->NumberofFAT);
-    // printf("0x%x\n", fatstruct->RootEntries);
-    // printf("0x%x\n", fatstruct->SmallSector);
-    // printf("0x%x\n", fatstruct->MediaDes);
-    // printf("0x%x\n", fatstruct->SectorsPerFat16);
-    // printf("0x%x\n", fatstruct->SectorsPerTrack);
-    // printf("0x%x\n", fatstruct->NumberofHead);
-    // printf("0x%x\n", fatstruct->HiddenSector);
-    // printf("0x%x\n", fatstruct->LargeSector);
-    // printf("0x%x\n", fatstruct->SectorsPerTrack);
+    // printf("0x%x\n", SizeofCluster * 2);
     munmap(startaddr, fsize);
     close(fd);
   return 0;
