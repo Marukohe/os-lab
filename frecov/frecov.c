@@ -13,7 +13,7 @@
 struct FATstruct{
     uint16_t BytesPerSector;
     uint8_t SectorsPerCluster;
-    uint16_t ReservedSector;
+    uint8_t ReservedSector;
     uint8_t NumberofFAT;
 };
 
