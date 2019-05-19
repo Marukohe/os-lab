@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
         ldic = (longdic *)(startaddr + searchoffset);
         if(ldic->flag == 0xF){
             printf("Find one longdic\n");
+            searchoffset += 0x20;
         }else{
             searchoffset += 0x10;
         }
