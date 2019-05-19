@@ -109,6 +109,7 @@ int main(int argc, char *argv[]) {
         ldic = (longdic *)((uintptr_t)startaddr + searchoffset);
         int flag = 0;
         if(ldic->flag == 0xF){
+            memset(filename, 0, sizeof(filename));
             int filenameoffset = 0;
             // printf("Find one longdic\n");
             uint32_t tmpcntlongdic = ldic->attribute & 0xF;
