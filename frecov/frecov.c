@@ -64,13 +64,13 @@ shortdic * sdic;
 
 typedef struct Longdic{
     uint8_t attribute;
-    uint8_t unicode1[10];
+    uint16_t unicode1[5];
     uint8_t flag;
     uint8_t dummy;
     uint8_t dummy1;
-    uint8_t unicode2[12];
+    uint16_t unicode2[6];
     uint16_t filestartcluster;
-    uint8_t unicode3[4];
+    uint16_t unicode3[2];
 }__attribute__((packed)) longdic;
 
 longdic * ldic;
@@ -123,15 +123,15 @@ int main(int argc, char *argv[]) {
                 }
 
                 for(int k = 0; k < 10; k++){
-                    if(tmpdic->unicode1[k] != 0xFF)
+                    if(tmpdic->unicode1[k] != 0xFFFF)
                         filename[filenameoffset++] = tmpdic->unicode1[k];
                 }
                 for(int k = 0; k < 12; k++){
-                    if(tmpdic->unicode2[k] != 0xFF)
+                    if(tmpdic->unicode2[k] != 0xFFFF)
                         filename[filenameoffset++] = tmpdic->unicode2[k];
                 }
                 for(int k = 0; k <4; k++){
-                    if(tmpdic->unicode3[k] != 0xFF)
+                    if(tmpdic->unicode3[k] != 0xFFFF)
                         filename[filenameoffset++] = tmpdic->unicode3[k];
                 }
             }
