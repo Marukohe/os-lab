@@ -183,19 +183,19 @@ int main(int argc, char *argv[]) {
                 // printf("%lx\n", (unsigned long)(bmpstart * SizeofCluster + RootCluster));
                 BITMAPFILEHEADER * bmp = (BITMAPFILEHEADER *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
 
-                printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
+                // printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
                 uint8_t * tmpfile = (uint8_t *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
-                for(int i = 0; i < 10; i++){
-                    printf("%x", tmpfile[i]);
-                }
-                printf("\n");
-                // char bmpfile[bmp->bfSize];
-                // snprintf(bmpfile, bmp->bfSize, "%s", (char *)(bmpstart * SizeofCluster + RootCluster + searchaddr));
+                // for(int i = 0; i < 10; i++){
+                //     printf("%x", tmpfile[i]);
+                // }
+                // printf("\n");
+                uint8_t bmpfile[bmp->bfSize];
+                snprintf(bmpfile, bmp->bfSize, "%x", tmpfile);
                 // printf("%s\n", bmpfile);
                 // printf("\n");
-                // FILE *fp = fopen(filename, "w+");
-                // fprintf(fp, "%s", bmpfile);
-                // fclose(fp);
+                FILE *fp = fopen(filename, "w+");
+                fprintf(fp, "%x", bmpfile);
+                fclose(fp);
             }
         }
         startsearchcluster += 0x10;
