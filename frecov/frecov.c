@@ -13,9 +13,9 @@
 struct FATstruct{
     uint16_t BytesPerSector;
     uint8_t SectorsPerCluster;
-    uint8_t ReservedSector;
+    uint16_t ReservedSector;
     uint8_t NumberofFAT;
-};
+}__attribute__((packed));
 
 struct FATstruct *fatstruct;
 
