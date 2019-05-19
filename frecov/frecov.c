@@ -166,7 +166,7 @@ int main(int argc, char *argv[]) {
                 if(ldic->unicode3[2 * i] != 0xFF)
                     filename[fileoffset++] = ldic->unicode3[2 * i];
             }
-            if(flag && ldic->flag == 0xF)
+            if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5)
                 printf("%s\n", filename);
         }
         startsearchcluster += 0x10;
