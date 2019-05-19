@@ -100,9 +100,18 @@ int main(int argc, char *argv[]) {
     fatstruct = (FATstruct *)(startaddr + 0xB);
 
     SizeofCluster = (uint32_t)fatstruct->SectorsPerCluster * (uint32_t)fatstruct->BytesPerSector;
-    // uint32_t startsearchcluster = SizeofCluster * 3;
+    uint32_t startsearchcluster = SizeofCluster * 3;
+    // printf("0x%x\n", SizeofCluster * 2);
 
-    printf("0x%x\n", SizeofCluster * 2);
+    uintptr_t searchaddr = startaddr;
+
+    while(startsearchcluster < fsize){
+        ldic = (longdic *)(startsearchcluster + searchaddr);
+        if(ldic->flag == 0xF){
+            printf("%lx", (unsigned long)startsearchcluster);
+        }
+    }
+
     munmap(startaddr, fsize);
     close(fd);
   return 0;
