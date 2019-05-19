@@ -10,6 +10,7 @@
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
+//Fat32文件系统结构索引
 typedef struct tagFATstruct{
     uint16_t BytesPerSector;
     uint8_t SectorsPerCluster;
@@ -51,6 +52,8 @@ unsigned long get_file_size(const char *path){
     return filesize;
 }
 
+uint32_t SizeofCluster = 0;
+
 int main(int argc, char *argv[]) {
     if(argc == 1)
         argv[1] = "fs.img";
@@ -62,20 +65,24 @@ int main(int argc, char *argv[]) {
     unsigned long fsize = get_file_size(argv[1]);
     startaddr = mmap(NULL, fsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
     fatstruct = (FATstruct *)(startaddr + 0xB);
-    
-    printf("0x%x\n", fatstruct->BytesPerSector);
-    printf("0x%x\n", fatstruct->SectorsPerCluster);
-    printf("0x%x\n", fatstruct->ReservedSector);
-    printf("0x%x\n", fatstruct->NumberofFAT);
-    printf("0x%x\n", fatstruct->RootEntries);
-    printf("0x%x\n", fatstruct->SmallSector);
-    printf("0x%x\n", fatstruct->MediaDes);
-    printf("0x%x\n", fatstruct->SectorsPerFat16);
-    printf("0x%x\n", fatstruct->SectorsPerTrack);
-    printf("0x%x\n", fatstruct->NumberofHead);
-    printf("0x%x\n", fatstruct->HiddenSector);
-    printf("0x%x\n", fatstruct->LargeSector);
-    printf("0x%x\n", fatstruct->SectorsPerTrack);
+
+    SizeofCluster = (uint32_t)fatstruct->SectorsPerCluster * (uint32_t)fatstruct->BytesPerSector;
+
+    printf("0x%x\n", SizeofCluster * 2);
+
+    // printf("0x%x\n", fatstruct->BytesPerSector);
+    // printf("0x%x\n", fatstruct->SectorsPerCluster);
+    // printf("0x%x\n", fatstruct->ReservedSector);
+    // printf("0x%x\n", fatstruct->NumberofFAT);
+    // printf("0x%x\n", fatstruct->RootEntries);
+    // printf("0x%x\n", fatstruct->SmallSector);
+    // printf("0x%x\n", fatstruct->MediaDes);
+    // printf("0x%x\n", fatstruct->SectorsPerFat16);
+    // printf("0x%x\n", fatstruct->SectorsPerTrack);
+    // printf("0x%x\n", fatstruct->NumberofHead);
+    // printf("0x%x\n", fatstruct->HiddenSector);
+    // printf("0x%x\n", fatstruct->LargeSector);
+    // printf("0x%x\n", fatstruct->SectorsPerTrack);
     munmap(startaddr, fsize);
     close(fd);
   return 0;
