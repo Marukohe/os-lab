@@ -185,12 +185,12 @@ int main(int argc, char *argv[]) {
 
                 printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
                 uint8_t * tmpfile = (uint8_t *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
-                // printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);
+                printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);
                 // printf("%x\n", *(uint8_t*)(tmpfile));
-                // for(int i = 0; i < 10; i++){
-                //     printf("%x ", tmpfile[i]);
-                // }
-                // printf("\n");
+                for(int i = 0; i < 10; i++){
+                    printf("%x ", tmpfile[i]);
+                }
+                printf("\n");
                 // char bmpfile[bmp->bfSize];
                 // snprintf(bmpfile, bmp->bfSize, "%hhn", tmpfile);
                 // printf("%s\n", bmpfile);
