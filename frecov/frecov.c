@@ -129,9 +129,9 @@ int main(int argc, char *argv[]) {
             ldic = (longdic *)(tmpaddr);
             // if(ldic->flag != 0xF)
             //     continue;
-            
+
             while((ldic->attribute & 0x40) != 1){
-                if((ldic->attribute & 0xF) != cnt - 1){
+                if((ldic->attribute & 0xF) != cnt){
                     flag = 0;
                     break;
                 }
