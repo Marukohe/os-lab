@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
 
     uintptr_t searchaddr = (uintptr_t)startaddr;
 
-    startsearchcluster = 0x82260;
+    startsearchcluster = RootCluster;
     while(startsearchcluster < fsize){
         shortdic * sdic;
         char filename[namesize];    //文件名
@@ -185,12 +185,12 @@ int main(int argc, char *argv[]) {
 
                 printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
                 void * tmpfile = (void *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
-                printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);
-                printf("%x\n", *(uint8_t*)(tmpfile));
-                // for(int i = 0; i < 10; i++){
-                //     printf("%x", tmpfile[i]);
-                // }
-                // printf("\n");
+                // printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);
+                // printf("%x\n", *(uint8_t*)(tmpfile));
+                for(int i = 0; i < 10; i++){
+                    printf("%x", tmpfile[i]);
+                }
+                printf("\n");
                 // char bmpfile[bmp->bfSize];
                 // snprintf(bmpfile, bmp->bfSize, "%hhn", tmpfile);
                 // printf("%s\n", bmpfile);
