@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
             // printf("Find one longdic\n");
             uint32_t tmpcntlongdic = ldic->attribute & 0xF;
             for(int i = tmpcntlongdic ; i > 0; i--){
-                void * tmp = (uitnptr_t)searchoffset + i * 0x20;
+                void * tmp = (uintptr_t)searchoffset + i * 0x20;
                 longdic * tmpdic = (longdic *)(tmp);
                 if(i == tmpcntlongdic)
                     assert((tmpdic->attribute & 0xF) == 0);
