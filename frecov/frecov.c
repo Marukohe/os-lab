@@ -102,48 +102,7 @@ int main(int argc, char *argv[]) {
     SizeofCluster = (uint32_t)fatstruct->SectorsPerCluster * (uint32_t)fatstruct->BytesPerSector;
     uint32_t startsearchcluster = SizeofCluster * 3;
 
-    char filename[namesize];
-    uintptr_t mmapstart = (uintptr_t)(startaddr);
-    uint32_t searchoffset = startsearchcluster;
-    while(searchoffset < fsize){
-        ldic = (longdic *)((uintptr_t)startaddr + searchoffset);
-        int flag = 0;
-        if(ldic->flag == 0xF){
-            memset(filename, 0, sizeof(filename));
-            int filenameoffset = 0;
-            // printf("Find one longdic\n");
-            uint32_t tmpcntlongdic = ldic->attribute & 0xF;
-            for(int i = tmpcntlongdic ; i >= 0; i--){
-                uintptr_t tmp = searchoffset + i * 0x20 + mmapstart;
-                // printf("tmp: %lx\n", (unsigned long)tmp);
-                longdic * tmpdic = (longdic *)(tmp);
-                if(i == tmpcntlongdic && (tmpdic->attribute & 0xF) != 0){
-                    flag = 1;
-                    break;
-                }
-
-                for(int k = 0; k < 5; k++){
-                    if(tmpdic->unicode1[k] != 0xFFFF)
-                        filename[filenameoffset++] = tmpdic->unicode1[k] & 0xFF;
-                }
-                for(int k = 0; k < 6; k++){
-                    if(tmpdic->unicode2[k] != 0xFFFF)
-                        filename[filenameoffset++] = tmpdic->unicode2[k] & 0xFF;
-                }
-                for(int k = 0; k < 2; k++){
-                    if(tmpdic->unicode3[k] != 0xFFFF)
-                        filename[filenameoffset++] = tmpdic->unicode3[k] & 0xFF;
-                }
-            }
-            if(!flag)
-                printf("%s\n", filename);
-            searchoffset += 0x20 * (tmpcntlongdic + 1);
-        }else{
-            searchoffset += 0x10;
-        }
-    }
-
-    // printf("0x%x\n", SizeofCluster * 2);
+    printf("0x%x\n", SizeofCluster * 2);
     munmap(startaddr, fsize);
     close(fd);
   return 0;
