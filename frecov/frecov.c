@@ -13,7 +13,7 @@
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
-#define OUTPUTFILE
+// #define OUTPUTFILE
 
 //Fat32文件系统结构索引
 typedef struct tagFATstruct{
