@@ -205,7 +205,7 @@ int main(int argc, char *argv[]) {
                 }
                 int childpid = fork();
                 if(childpid == 0){
-                    // char * execv_str[] = {"sha1sum", NULL};
+                    char * execv_str[] = {"sha1sum", NULL};
                     dup2(pipefds1[0], STDIN_FILENO);
                     close(pipefds1[1]);
                     // char r_buf[10000];
