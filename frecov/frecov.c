@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <assert.h>
 #define namesize 1000
+#define bmpsize 10000000
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
@@ -176,9 +177,16 @@ int main(int argc, char *argv[]) {
             }
             if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
                 printf("%s\n", filename);
+                
                 // printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
-                uintptr_t bmpsize = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
-                printf("%lx\n", (unsigned long)(bmpsize * SizeofCluster + RootCluster));
+                uintptr_t bmpstart = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
+                printf("%lx\n", (unsigned long)(bmpstart * SizeofCluster + RootCluster));
+                BITMAPFILEHEADER * bmp = (BITMAPFILEHEADER *)(bmpstart * SizeofCluster + RootCluster);
+                char bmpfile[bmp->bfSize];
+                snprintf(bmpfile, bmp->bfSize, "%s", (char *)(bmpstart * SizeofCluster + RootCluster));
+                FILE *fp = fopen(filename, "w+");
+                fprintf(fp, "%s", bmpfile);
+                fclose(fp);
             }
         }
         startsearchcluster += 0x10;
