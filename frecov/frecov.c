@@ -166,8 +166,11 @@ int main(int argc, char *argv[]) {
                 if(ldic->unicode3[2 * i] != 0xFF)
                     filename[fileoffset++] = ldic->unicode3[2 * i];
             }
-            if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5)
+            if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
                 printf("%s\n", filename);
+                uintptr_t bmpsize = ((uintptr_t)sdic->highCluster << 16) + (uintptr_t)sdic->lowCluster;
+                printf("%lx\n", bmpsize);
+            }
         }
         startsearchcluster += 0x10;
     }
