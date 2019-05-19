@@ -184,7 +184,7 @@ int main(int argc, char *argv[]) {
                 BITMAPFILEHEADER * bmp = (BITMAPFILEHEADER *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
 
                 printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
-                void * tmpfile = (void *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
+                uint8_t * tmpfile = (uint8_t *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
                 // printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);
                 // printf("%x\n", *(uint8_t*)(tmpfile));
                 for(int i = 0; i < 10; i++){
