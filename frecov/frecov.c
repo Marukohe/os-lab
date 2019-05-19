@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 
     uintptr_t searchaddr = (uintptr_t)startaddr;
 
-    startaddr = 0x82260;
+    startsearchcluster = 0x82260;
     while(startsearchcluster < fsize){
         char filename[namesize];    //文件名
         memset(filename, 0, sizeof(filename));
