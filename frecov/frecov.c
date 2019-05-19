@@ -196,18 +196,23 @@ int main(int argc, char *argv[]) {
                 fclose(fp);
                 #endif
                 int pipefds[2];
+                int pipefds1[2];
                 if(pipe(pipefds) == -1){
                     handle_error("pipe");
                 }
-
+                if(pipe(pipefds1) == -1){
+                    handle_error("pipe1");
+                }
                 int childpid = fork();
                 if(childpid == 0){
                     char * execv_str[] = {"sha1sum", NULL};
+                    dup2(pipefds1[0], STDIN_FILENO);
                     dup2(pipefds[1], STDOUT_FILENO);
                     if(execv("/usr/bin/sha1sum", execv_str) < 0){
                         handle_error("execve");
                     }
                 }else{
+                    dup2(pipefds1[1], STDIN_FILENO);
                     fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
                     wait(&childpid);
                     dup2(pipefds[0], STDIN_FILENO);
