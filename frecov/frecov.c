@@ -213,7 +213,8 @@ int main(int argc, char *argv[]) {
                     // while(fgets(r_buf, 1000, fpout) != NULL){
                     //     printf("%s\n", r_buf);
                     // }
-                    dup2(pipefds[1], STDOUT_FILENO);
+                    // dup2(pipefds[1], STDOUT_FILENO);
+
                     if(execv("/usr/bin/sha1sum", execv_str) < 0){
                         handle_error("execve");
                     }
@@ -229,8 +230,8 @@ int main(int argc, char *argv[]) {
                     char buf[1000] = {"hello"};
                     printf("%s\n", buf);
                     // scanf("%s", buf);
-                    fgets(buf, 10, stdin);
-                    printf("%s\n", buf);
+                    // fgets(buf, 10, stdin);
+                    // printf("%s\n", buf);
                 }
             }
         }
