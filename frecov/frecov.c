@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
     RootCluster += (uintptr_t)fatstruct->ReservedSector * (uintptr_t)fatstruct->BytesPerSector;
     RootCluster += (uintptr_t)fatstruct->SectorsPerFat * (uintptr_t)fatstruct->BytesPerSector;
     RootCluster += (uintptr_t)fatstruct->SectorsPerFat * (uintptr_t)fatstruct->BytesPerSector;
-    printf("%lx\n", (unsigned long)RootCluster);
+    // printf("%lx\n", (unsigned long)RootCluster);
 
 
     uint32_t startsearchcluster = SizeofCluster * 3;
