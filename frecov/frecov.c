@@ -185,6 +185,7 @@ int main(int argc, char *argv[]) {
 
                 printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
                 void * tmpfile = (void *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
+                printf("%x\n", (uint8_t)(*tmpfile));
                 // for(int i = 0; i < 10; i++){
                 //     printf("%x", tmpfile[i]);
                 // }
@@ -193,9 +194,9 @@ int main(int argc, char *argv[]) {
                 // snprintf(bmpfile, bmp->bfSize, "%hhn", tmpfile);
                 // printf("%s\n", bmpfile);
                 // printf("\n");
-                FILE *fp = fopen(filename, "w+");
-                fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
-                fclose(fp);
+                // FILE *fp = fopen(filename, "w+");
+                // fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
+                // fclose(fp);
             }
         }
         startsearchcluster += 0x10;
