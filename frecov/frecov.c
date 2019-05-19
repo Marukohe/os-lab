@@ -43,7 +43,7 @@ typedef struct tagBITMAPFILEHEADER
 }__attribute__((packed)) BITMAPFILEHEADER;
 
 
-typedef strcut Shortdic{
+typedef struct Shortdic{
     uint64_t filename;
     uint8_t extendname[3];
     uint8_t attribute;
