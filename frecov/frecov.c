@@ -209,7 +209,7 @@ int main(int argc, char *argv[]) {
                     dup2(pipefds1[0], STDIN_FILENO);
                     close(pipefds1[1]);
                     char r_buf[10000];
-                    FILE *fpout = fpopen(STDIN_FILENO, "r");
+                    FILE *fpout = fdopen(STDIN_FILENO, "r");
                     while(fgets(r_buf, 1000, fpout) != NULL){
                         printf("%s\n", r_buf);
                     }
