@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
             for(int i = tmpcntlongdic; i >= 0; i--){
                 uintptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
                 longdic * tmpdic = (longdic *)(tmpaddr);
-                if(i == tmpcntlongdic && (tmpdic->attribute & 0xFF) != 0){
+                if(i == tmpcntlongdic && (tmpdic->attribute & 0xF) != 0){
                     flag = 0;
                     break;
                 }
