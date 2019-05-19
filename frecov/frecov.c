@@ -208,6 +208,8 @@ int main(int argc, char *argv[]) {
                     char * execv_str[] = {"sha1sum", NULL};
                     dup2(pipefds1[0], STDIN_FILENO);
                     close(pipefds1[1]);
+                    close(STDIN_FILENO);
+                    close(STDOUT_FILENO);
                     // char r_buf[10000];
                     // FILE *fpout = fdopen(STDIN_FILENO, "r");
                     // while(fgets(r_buf, 1000, fpout) != NULL){
@@ -227,9 +229,9 @@ int main(int argc, char *argv[]) {
                     dup2(pipefds[0], STDIN_FILENO);
                     close(pipefds[1]);
                     
-                    char buf[1000];
-                    fread(buf, sizeof(char), 100, stdin);
-                    printf("%s\n", buf);
+                    int buf[1000];
+                    fread(buf, sizeof(int), 100, stdin);
+                    // printf("%s\n", buf);
                 }
             }
         }
