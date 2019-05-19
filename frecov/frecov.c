@@ -136,15 +136,15 @@ int main(int argc, char *argv[]) {
                 }
                 for(int i = 0; i < 5; i++){
                     if(ldic->unicode1[2 * i] != 0xFF)
-                        filename[offset++] = ldic->unicode1[2 * i]
+                        filename[fileoffset++] = ldic->unicode1[2 * i];
                 }
                 for(int i = 0; i < 6; i++){
                     if(ldic->unicode2[2 * i] != 0xFF)
-                        filename[offset++] = ldic->unicode2[2 * i]
+                        filename[fileoffset++] = ldic->unicode2[2 * i];
                 }
                 for(int i = 0; i < 2; i++){
                     if(ldic->unicode3[2 * i] != 0xFF)
-                        filename[offset++] = ldic->unicode3[2 * i]
+                        filename[fileoffset++] = ldic->unicode3[2 * i];
                 }
                 cnt ++;
                 tmpaddr = startsearchcluster + searchaddr - 0x20 * (cnt);
@@ -152,15 +152,15 @@ int main(int argc, char *argv[]) {
             }
             for(int i = 0; i < 5; i++){
                 if(ldic->unicode1[2 * i] != 0xFF)
-                    filename[offset++] = ldic->unicode1[2 * i]
+                    filename[fileoffset++] = ldic->unicode1[2 * i];
             }
             for(int i = 0; i < 6; i++){
                 if(ldic->unicode2[2 * i] != 0xFF)
-                    filename[offset++] = ldic->unicode2[2 * i]
+                    filename[fileoffset++] = ldic->unicode2[2 * i];
             }
             for(int i = 0; i < 2; i++){
                 if(ldic->unicode3[2 * i] != 0xFF)
-                    filename[offset++] = ldic->unicode3[2 * i]
+                    filename[fileoffset++] = ldic->unicode3[2 * i];
             }
             if(flag)
                 printf("%s\n", filename);
