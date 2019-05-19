@@ -202,13 +202,13 @@ int main(int argc, char *argv[]) {
 
                 int childpid = fork();
                 if(childpid == 0){
-                    fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
                     char * execv_str[] = {"sha1sum", "NULL"};
                     dup2(pipefds[1], STDOUT_FILENO);
                     if(execv("/usr/bin/sha1sum", execv_str) < 0){
                         handle_error("execve");
                     }
                 }else{
+                    fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
                     wait(&childpid);
                     dup2(pipefds[0], STDIN_FILENO);
                     FILE *fpout = NULL;
