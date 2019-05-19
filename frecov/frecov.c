@@ -187,9 +187,11 @@ int main(int argc, char *argv[]) {
 
                 char bmpfile[bmp->bfSize];
                 snprintf(bmpfile, bmp->bfSize, "%s", (char *)(bmpstart * SizeofCluster + RootCluster + searchaddr));
-                FILE *fp = fopen(filename, "w+");
-                fprintf(fp, "%s", bmpfile);
-                fclose(fp);
+                printf("%s\n", bmpfile);
+                printf("\n");
+                // FILE *fp = fopen(filename, "w+");
+                // fprintf(fp, "%s", bmpfile);
+                // fclose(fp);
             }
         }
         startsearchcluster += 0x10;
