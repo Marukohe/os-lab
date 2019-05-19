@@ -206,10 +206,10 @@ int main(int argc, char *argv[]) {
                 int childpid = fork();
                 if(childpid == 0){
                     char * execv_str[] = {"sha1sum", NULL};
-                    
+                    close(STDIN_FILENO);
                     dup2(pipefds1[0], STDIN_FILENO);
                     close(pipefds1[1]);
-                    close(STDIN_FILENO);
+                    
                     close(STDOUT_FILENO);
                     // char r_buf[10000];
                     // FILE *fpout = fdopen(STDIN_FILENO, "r");
@@ -217,6 +217,7 @@ int main(int argc, char *argv[]) {
                     //     printf("%s\n", r_buf);
                     // }
                     dup2(pipefds[1], STDOUT_FILENO);
+                    close(pipefds[0]);
 
                     if(execv("/usr/bin/sha1sum", execv_str) < 0){
                         handle_error("execve");
