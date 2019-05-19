@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
             uint32_t tmpcntlongdic = ldic->attribute & 0xF;
             for(int i = tmpcntlongdic ; i >= 0; i--){
                 uintptr_t tmp = searchoffset + i * 0x20;
-                printf("tmp: %x\n", tmp);
+                printf("tmp: %lx\n", (unsigned long)tmp);
                 longdic * tmpdic = (longdic *)(tmp);
                 if(i == tmpcntlongdic)
                     assert((tmpdic->attribute & 0xF) == 0);
