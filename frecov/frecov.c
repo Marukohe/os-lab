@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
     printf("0x%x\n", fatstruct->SectorsPerCluster);
     printf("0x%x\n", fatstruct->ReservedSector);
     printf("0x%x\n", *(startaddr + 0xE));
+    printf("0x%x\n", *(startaddr + 0xF));
     printf("0x%x\n", fatstruct->NumberofFAT);
     munmap(startaddr, fsize);
     close(fd);
