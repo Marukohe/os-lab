@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
             //     continue;
 
             while((ldic->attribute & 0x40) == 0){
-                if((ldic->attribute & 0xF) != cnt){
+                if((ldic->attribute & 0x1F) != cnt){
                     flag = 0;
                     break;
                 }
@@ -180,13 +180,13 @@ int main(int argc, char *argv[]) {
                 
                 // printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
                 uintptr_t bmpstart = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
-                printf("%lx\n", (unsigned long)(bmpstart * SizeofCluster + RootCluster));
-                BITMAPFILEHEADER * bmp = (BITMAPFILEHEADER *)(bmpstart * SizeofCluster + RootCluster);
-                
-                printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
+                // printf("%lx\n", (unsigned long)(bmpstart * SizeofCluster + RootCluster));
+                BITMAPFILEHEADER * bmp = (BITMAPFILEHEADER *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
+
+                // printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
 
                 char bmpfile[bmp->bfSize];
-                snprintf(bmpfile, bmp->bfSize, "%s", (char *)(bmpstart * SizeofCluster + RootCluster));
+                snprintf(bmpfile, bmp->bfSize, "%s", (char *)(bmpstart * SizeofCluster + RootCluster + searchaddr));
                 FILE *fp = fopen(filename, "w+");
                 fprintf(fp, "%s", bmpfile);
                 fclose(fp);
