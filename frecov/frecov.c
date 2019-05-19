@@ -123,6 +123,7 @@ int main(int argc, char *argv[]) {
             }
             printf("%s\n", filename);
         }
+        startsearchcluster += 0x20;
     }
 
     munmap(startaddr, fsize);
