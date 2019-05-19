@@ -108,20 +108,62 @@ int main(int argc, char *argv[]) {
 
     
     while(startsearchcluster < fsize){
-        char filename[namesize];
-        int fileoffset = 0;
-        char extendname[4];
+        char filename[namesize];    //文件名
+        memset(filename, 0, sizeof(filename));
+        int fileoffset = 0;        
+        char extendname[4];         //扩展名
+        uint8_t flag = 0            //文件是否连续
         sdic = (shortdic *)(startsearchcluster + searchaddr);
         for(int i = 0; i < 3; i++)
             extendname[i] = sdic->extendname[i];
         if(strncmp(extendname, "BMP", 3) == 0){
-            for(int i = 0; i < 8; i++){
-                filename[fileoffset++] = sdic->filename[i];
+            // for(int i = 0; i < 8; i++){
+            //     filename[fileoffset++] = sdic->filename[i];
+            // }
+            // for(int i = 0; i < 3; i++){
+            //     filename[fileoffset++] = sdic->extendname[i];
+            // }
+            // printf("%s\n", filename);
+            int cnt = 1;
+            uintptr_t tmpaddr = startsearchcluster + searchaddr - 0x20 * (cnt);
+            ldic = (longdic *)(tmpaddr);
+            while((ldic->attribute & 0x40) != 1){
+                if((ldic->attribute & 0xF) != cnt - 1){
+                    flag = 0;
+                }
+                if(flag == 0){
+                    break;
+                }
+                for(int i = 0; i < 5; i++){
+                    if(ldic->unicode1[2 * i] != 0xFF)
+                        filename[offset++] = ldic->unicode1[2 * i]
+                }
+                for(int i = 0; i < 6; i++){
+                    if(ldic->unicode2[2 * i] != 0xFF)
+                        filename[offset++] = ldic->unicode2[2 * i]
+                }
+                for(int i = 0; i < 2; i++){
+                    if(ldic->unicode3[2 * i] != 0xFF)
+                        filename[offset++] = ldic->unicode3[2 * i]
+                }
+                cnt ++;
+                tmpaddr = startsearchcluster + searchaddr - 0x20 * (cnt);
+                ldic = (longdic *)(tmpaddr);
             }
-            for(int i = 0; i < 3; i++){
-                filename[fileoffset++] = sdic->extendname[i];
+            for(int i = 0; i < 5; i++){
+                if(ldic->unicode1[2 * i] != 0xFF)
+                    filename[offset++] = ldic->unicode1[2 * i]
             }
-            printf("%s\n", filename);
+            for(int i = 0; i < 6; i++){
+                if(ldic->unicode2[2 * i] != 0xFF)
+                    filename[offset++] = ldic->unicode2[2 * i]
+            }
+            for(int i = 0; i < 2; i++){
+                if(ldic->unicode3[2 * i] != 0xFF)
+                    filename[offset++] = ldic->unicode3[2 * i]
+            }
+            if(flag)
+                printf("%s\n", filename);
         }
         startsearchcluster += 0x20;
     }
