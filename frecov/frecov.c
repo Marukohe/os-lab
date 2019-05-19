@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
         memset(filename, 0, sizeof(filename));
         int fileoffset = 0;        
         char extendname[4];         //扩展名
-        uint8_t flag = 0            //文件是否连续
+        uint8_t flag = 0;            //文件是否连续
         sdic = (shortdic *)(startsearchcluster + searchaddr);
         for(int i = 0; i < 3; i++)
             extendname[i] = sdic->extendname[i];
