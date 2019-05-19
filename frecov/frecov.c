@@ -13,7 +13,7 @@
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
-// #define OUTPUTFILE
+#define OUTPUTFILE
 
 //Fat32文件系统结构索引
 typedef struct tagFATstruct{
@@ -179,7 +179,7 @@ int main(int argc, char *argv[]) {
                     filename[fileoffset++] = ldic->unicode3[2 * i];
             }
             if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
-                // printf("%s\n", filename);
+                printf("%s\n", filename);
                 
                 // printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
                 uintptr_t bmpstart = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
@@ -195,41 +195,41 @@ int main(int argc, char *argv[]) {
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
                 fclose(fp);
                 #endif
-                int pipefds[2];
-                int pipefds1[2];
-                if(pipe(pipefds) == -1){
-                    handle_error("pipe");
-                }
-                if(pipe(pipefds1) == -1){
-                    handle_error("pipe1");
-                }
-                int childpid = fork();
-                if(childpid == 0){
-                    // char * execv_str[] = {"sha1sum", NULL};
-                    dup2(pipefds1[0], STDIN_FILENO);
-                    close(pipefds1[1]);
-                    char r_buf[10000];
-                    FILE *fpout = fdopen(STDIN_FILENO, "r");
-                    while(fgets(r_buf, 1000, fpout) != NULL){
-                        printf("%s\n", r_buf);
-                    }
-                    // dup2(pipefds[1], STDOUT_FILENO);
-                    // if(execv("/usr/bin/sha1sum", execv_str) < 0){
-                    //     handle_error("execve");
-                    // }
-                }else{
-                    dup2(pipefds1[1], STDIN_FILENO);
-                    close(pipefds1[0]);
-                    fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
-                    // write(pipefds1[1], tmpfile, bmp->bfSize);
-                    // wait(&childpid);
-                    // dup2(pipefds[0], STDIN_FILENO);
-                    // FILE *fpout = NULL;
-                    // fpout = fdopen(STDIN_FILENO, "r");
-                    // char buf[1000];
-                    // fgets(buf, 1000, fpout);
-                    // printf("%s\n", buf);
-                }
+                // int pipefds[2];
+                // int pipefds1[2];
+                // if(pipe(pipefds) == -1){
+                //     handle_error("pipe");
+                // }
+                // if(pipe(pipefds1) == -1){
+                //     handle_error("pipe1");
+                // }
+                // int childpid = fork();
+                // if(childpid == 0){
+                //     // char * execv_str[] = {"sha1sum", NULL};
+                //     dup2(pipefds1[0], STDIN_FILENO);
+                //     close(pipefds1[1]);
+                //     char r_buf[10000];
+                //     FILE *fpout = fdopen(STDIN_FILENO, "r");
+                //     while(fgets(r_buf, 1000, fpout) != NULL){
+                //         printf("%s\n", r_buf);
+                //     }
+                //     // dup2(pipefds[1], STDOUT_FILENO);
+                //     // if(execv("/usr/bin/sha1sum", execv_str) < 0){
+                //     //     handle_error("execve");
+                //     // }
+                // }else{
+                //     dup2(pipefds1[1], STDIN_FILENO);
+                //     close(pipefds1[0]);
+                //     fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
+                //     // write(pipefds1[1], tmpfile, bmp->bfSize);
+                //     // wait(&childpid);
+                //     // dup2(pipefds[0], STDIN_FILENO);
+                //     // FILE *fpout = NULL;
+                //     // fpout = fdopen(STDIN_FILENO, "r");
+                //     // char buf[1000];
+                //     // fgets(buf, 1000, fpout);
+                //     // printf("%s\n", buf);
+                // }
             }
         }
         startsearchcluster += 0x10;
