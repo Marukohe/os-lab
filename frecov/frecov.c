@@ -107,16 +107,19 @@ int main(int argc, char *argv[]) {
     uint32_t searchoffset = startsearchcluster;
     while(searchoffset < fsize){
         ldic = (longdic *)((uintptr_t)startaddr + searchoffset);
+        int flag = 0;
         if(ldic->flag == 0xF){
             int filenameoffset = 0;
             // printf("Find one longdic\n");
             uint32_t tmpcntlongdic = ldic->attribute & 0xF;
             for(int i = tmpcntlongdic ; i >= 0; i--){
                 uintptr_t tmp = searchoffset + i * 0x20 + mmapstart;
-                printf("tmp: %lx\n", (unsigned long)tmp);
+                // printf("tmp: %lx\n", (unsigned long)tmp);
                 longdic * tmpdic = (longdic *)(tmp);
-                if(i == tmpcntlongdic)
+                if(i == tmpcntlongdic){
+                    flag = 1;
                     break;
+                }
 
                 for(int k = 0; k < 10; k++){
                     if(tmpdic->unicode1[k] != 0xFF)
@@ -131,7 +134,8 @@ int main(int argc, char *argv[]) {
                         filename[filenameoffset++] = tmpdic->unicode3[k];
                 }
             }
-            printf("%s\n", filename);
+            if(!flag)
+                printf("%s\n", filename);
             searchoffset += 0x20 * (tmpcntlongdic + 1);
         }else{
             searchoffset += 0x10;
