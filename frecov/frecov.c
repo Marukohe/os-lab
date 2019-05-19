@@ -107,13 +107,13 @@ int main(int argc, char *argv[]) {
 
     
     while(startsearchcluster < fsize){
-        char filename[namesize];
+        // char filename[namesize];
         ldic = (longdic *)(startsearchcluster + searchaddr);
         if(ldic->flag == 0xF){
             // printf("%lx\n", (unsigned long)startsearchcluster);
             int tmpcntlongdic = ldic->attribute & 0xF;    //统计长文件名个数
             for(int i = tmpcntlongdic; i >= 0; i--){
-                uinptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
+                uintptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
                 longdic * tmpdic = (longdic *)(tmpaddr);
                 printf("%x\n", tmpdic->flag);
             }
