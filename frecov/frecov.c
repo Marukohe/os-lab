@@ -226,8 +226,8 @@ int main(int argc, char *argv[]) {
                     dup2(pipefds[0], STDIN_FILENO);
                     // FILE *fpout = NULL;
                     // fpout = fdopen(STDIN_FILENO, "r");
-                    char buf[1000];
-                    scanf("%s", buf);
+                    // char buf[1000];
+                    // scanf("%s", buf);
                     // fgets(buf, 1000, fpout);
                     // printf("%s\n", buf);
                 }
