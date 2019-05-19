@@ -213,10 +213,10 @@ int main(int argc, char *argv[]) {
                         handle_error("execve");
                     }
                 }else{
-                    // dup2(pipefds1[1], STDIN_FILENO);
+                    dup2(pipefds1[1], STDIN_FILENO);
                     close(pipefds1[0]);
-                    // fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
-                    write(pipefds1[1], tmpfile, bmp->bfSize);
+                    fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
+                    // write(pipefds1[1], tmpfile, bmp->bfSize);
                     // wait(&childpid);
                     dup2(pipefds[0], STDIN_FILENO);
                     FILE *fpout = NULL;
