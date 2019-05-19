@@ -224,14 +224,11 @@ int main(int argc, char *argv[]) {
                     fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdout);
                     // write(pipefds1[1], tmpfile, bmp->bfSize);
                     // wait(&childpid);
-                    // dup2(pipefds[0], STDIN_FILENO);
+                    dup2(pipefds[0], STDIN_FILENO);
                     close(pipefds[1]);
                     
                     char buf[1000];
-                    // printf("%s\n", buf);
-                    FILE *fpout = fdopen(pipefds[0], "r");
-                    // scanf("%s", buf);
-                    fgets(buf, 10, fpout);
+                    fread(buf, sizeof(char), 100, stdin);
                     printf("%s\n", buf);
                 }
             }
