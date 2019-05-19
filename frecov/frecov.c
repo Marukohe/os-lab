@@ -127,8 +127,8 @@ int main(int argc, char *argv[]) {
             int cnt = 1;
             uintptr_t tmpaddr = startsearchcluster + searchaddr - 0x20 * (cnt);
             ldic = (longdic *)(tmpaddr);
-            if(ldic->flag != 0xF)
-                continue;
+            // if(ldic->flag != 0xF)
+            //     continue;
             while((ldic->attribute & 0x40) != 1){
                 if((ldic->attribute & 0xF) != cnt - 1){
                     flag = 0;
