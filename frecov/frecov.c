@@ -170,7 +170,7 @@ int main(int argc, char *argv[]) {
                 printf("%s\n", filename);
                 printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
                 uintptr_t bmpsize = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster;
-                printf("%lx\n", (unsigned long)bmpsize);
+                printf("%lx\n", (unsigned long)bmpsize * SizeofCluster);
             }
         }
         startsearchcluster += 0x10;
