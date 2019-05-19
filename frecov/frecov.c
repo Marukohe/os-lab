@@ -179,7 +179,7 @@ int main(int argc, char *argv[]) {
                     filename[fileoffset++] = ldic->unicode3[2 * i];
             }
             if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
-                printf("%s\n", filename);
+                // printf("%s\n", filename);
                 
                 // printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
                 uintptr_t bmpstart = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
