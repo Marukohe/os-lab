@@ -45,7 +45,8 @@ typedef struct tagBITMAPFILEHEADER
 
 
 typedef struct Shortdic{
-    uint64_t filename;
+    // uint64_t filename;
+    uint8_t filename[8];
     uint8_t extendname[3];
     uint8_t attribute;
     uint8_t dummy;
@@ -107,30 +108,20 @@ int main(int argc, char *argv[]) {
 
     
     while(startsearchcluster < fsize){
-        // char filename[namesize];
-        ldic = (longdic *)(startsearchcluster + searchaddr);
-        int flag = 1;
-        if(ldic->flag == 0xF){
-            // printf("%lx\n", (unsigned long)startsearchcluster);
-            printf("ldic->attribute, %x\n", ldic->attribute);
-            int tmpcntlongdic = ldic->attribute & 0xF;    //统计长文件名个数
-            for(int i = tmpcntlongdic; i >= 0; i--){
-                uintptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
-                longdic * tmpdic = (longdic *)(tmpaddr);
-                // printf("tmp->attrubute, %x\n", tmpdic->attribute);
-                if(i == tmpcntlongdic && (tmpdic->attribute & 0xF) != 0){
-                    flag = 0;
-                    break;
-                }
-                // printf("%x\n", tmpdic->flag);
+        char filename[namesize];
+        int fileoffset = 0;
+        char extendn[4];
+        sdic = (shortdic *)(startsearchcluster + searchaddr);
+        for(int i = 0; i < 3; i++)
+            extend[i] = sdic->extendname[i];
+        if(strncmp(extendn, "BMP", 3) == 0){
+            for(int i = 0; i < 8; i++){
+                filename[fileoffset++] = sdic->filename[i];
             }
-            if(flag == 0)
-                startsearchcluster += 0x20;
-            else
-                startsearchcluster += 0x20 * (tmpcntlongdic + 1);
-            // continue;
-        }else{
-            startsearchcluster += 0x20;
+            for(int i = 0; i < 3; i++){
+                filename[fileoffset++] = sdic->extendname[i];
+            }
+            printf("%s\n", filename);
         }
     }
 
