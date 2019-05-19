@@ -61,20 +61,20 @@ typedef struct Shortdic{
     uint32_t SizeofFile;
 }__attribute__((packed)) shortdic;
 
-shortdic * sdic;
+
 
 typedef struct Longdic{
     uint8_t attribute;
-    uint16_t unicode1[10];
+    uint8_t unicode1[10];
     uint8_t flag;
     uint8_t dummy;
     uint8_t dummy1;
-    uint16_t unicode2[12];
+    uint8_t unicode2[12];
     uint16_t filestartcluster;
-    uint16_t unicode3[4];
+    uint8_t unicode3[4];
 }__attribute__((packed)) longdic;
 
-longdic * ldic;
+
 
 unsigned long get_file_size(const char *path){
     unsigned long filesize = -1;
@@ -92,6 +92,7 @@ int main(int argc, char *argv[]) {
     if(argc == 1)
         argv[1] = "fs.img";
     uint8_t *startaddr;
+    
     printf("arvg[1] %s\n", argv[1]);
     int fd = open(argv[1], O_RDWR|O_CREAT, 0666);
     if(fd == -1)
@@ -108,6 +109,7 @@ int main(int argc, char *argv[]) {
 
     startsearchcluster = 0x82260;
     while(startsearchcluster < fsize){
+        shortdic * sdic;
         char filename[namesize];    //文件名
         memset(filename, 0, sizeof(filename));
         int fileoffset = 0;        
@@ -126,7 +128,7 @@ int main(int argc, char *argv[]) {
             // printf("%s\n", filename);
             int cnt = 1;
             uintptr_t tmpaddr = startsearchcluster + searchaddr - 0x20 * (cnt);
-            ldic = (longdic *)(tmpaddr);
+            longdic *ldic = (longdic *)(tmpaddr);
             // if(ldic->flag != 0xF)
             //     continue;
 
