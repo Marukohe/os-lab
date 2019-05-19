@@ -116,11 +116,12 @@ int main(int argc, char *argv[]) {
             for(int i = tmpcntlongdic; i >= 0; i--){
                 uintptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
                 longdic * tmpdic = (longdic *)(tmpaddr);
+                printf("tmp->attrubute, %x\n", tmpdic->attribute);
                 if(i == tmpcntlongdic && (tmpdic->attribute & 0xF) != 0){
                     flag = 0;
                     break;
                 }
-                printf("%x\n", tmpdic->flag);
+                // printf("%x\n", tmpdic->flag);
             }
             if(flag == 0)
                 startsearchcluster += 0x20;
