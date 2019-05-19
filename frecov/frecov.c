@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
                     // char * execv_str[] = {"sha1sum", NULL};
                     dup2(pipefds1[0], STDIN_FILENO);
                     close(pipefds1[1]);
-                    dup2(pipefds[1], STDOUT_FILENO);
+                    // dup2(pipefds[1], STDOUT_FILENO);
                     // if(execv("/usr/bin/sha1sum", execv_str) < 0){
                     //     handle_error("execve");
                     // }
