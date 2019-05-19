@@ -210,7 +210,7 @@ int main(int argc, char *argv[]) {
                     close(pipefds1[1]);
                     char r_buf[10000];
                     FILE *fpout = fpopen(STDIN_FILENO, "r");
-                    while(fgets(r_buf, 1000, ) != NULL){
+                    while(fgets(r_buf, 1000, fpout) != NULL){
                         printf("%s\n", r_buf);
                     }
                     // dup2(pipefds[1], STDOUT_FILENO);
