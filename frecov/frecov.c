@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
     while(startsearchcluster < fsize){
         ldic = (longdic *)(startsearchcluster + searchaddr);
         if(ldic->flag == 0xF){
-            printf("%lx", (unsigned long)startsearchcluster);
+            printf("%lx\n", (unsigned long)startsearchcluster);
         }
         startsearchcluster += 0x20;
     }
