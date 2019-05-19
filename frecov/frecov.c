@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
                 printf("tmp: %lx\n", (unsigned long)tmp);
                 longdic * tmpdic = (longdic *)(tmp);
                 if(i == tmpcntlongdic)
-                    assert((tmpdic->attribute & 0xF) == 0);
+                    break;
 
                 for(int k = 0; k < 10; k++){
                     if(tmpdic->unicode1[k] != 0xFF)
