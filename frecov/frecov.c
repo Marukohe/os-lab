@@ -109,18 +109,27 @@ int main(int argc, char *argv[]) {
     while(startsearchcluster < fsize){
         // char filename[namesize];
         ldic = (longdic *)(startsearchcluster + searchaddr);
+        int flag = 1;
         if(ldic->flag == 0xF){
             // printf("%lx\n", (unsigned long)startsearchcluster);
             int tmpcntlongdic = ldic->attribute & 0xF;    //统计长文件名个数
             for(int i = tmpcntlongdic; i >= 0; i--){
                 uintptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
                 longdic * tmpdic = (longdic *)(tmpaddr);
+                if(i == tmpcntlongdic && (tmpdic->attribute & 0xFF) != 0){
+                    flag = 0;
+                    break;
+                }
                 printf("%x\n", tmpdic->flag);
             }
-            startsearchcluster += 0x20 * (tmpcntlongdic + 1);
-            continue;
+            if(flag == 0)
+                startsearchcluster += 0x20;
+            else
+                startsearchcluster += 0x20 * (tmpcntlongdic + 1);
+            // continue;
+        }else{
+            startsearchcluster += 0x20;
         }
-        startsearchcluster += 0x20;
     }
 
     munmap(startaddr, fsize);
