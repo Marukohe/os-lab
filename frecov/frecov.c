@@ -189,12 +189,12 @@ int main(int argc, char *argv[]) {
                 //     printf("%x", tmpfile[i]);
                 // }
                 // printf("\n");
-                uint8_t bmpfile[bmp->bfSize];
+                char bmpfile[bmp->bfSize];
                 snprintf(bmpfile, bmp->bfSize, "%hhn", tmpfile);
                 // printf("%s\n", bmpfile);
                 // printf("\n");
                 FILE *fp = fopen(filename, "w+");
-                fprintf(fp, "%hhn", bmpfile);
+                fprintf(fp, "%s", bmpfile);
                 fclose(fp);
             }
         }
