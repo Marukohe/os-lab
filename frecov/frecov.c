@@ -232,8 +232,8 @@ int main(int argc, char *argv[]) {
                     dup2(pipefds[0], STDIN_FILENO);
                     close(pipefds[1]);
                     
-                    int buf[1000];
-                    fread(buf, sizeof(int), 100, stdin);
+                    char buf[1000];
+                    fread(buf, sizeof(char), 100, stdin);
                     printf("%s\n", buf);
                 }
             }
