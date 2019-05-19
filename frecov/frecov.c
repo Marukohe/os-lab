@@ -182,6 +182,7 @@ int main(int argc, char *argv[]) {
                 uintptr_t bmpstart = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
                 printf("%lx\n", (unsigned long)(bmpstart * SizeofCluster + RootCluster));
                 BITMAPFILEHEADER * bmp = (BITMAPFILEHEADER *)(bmpstart * SizeofCluster + RootCluster);
+                printf("bmpsize %lx\n", bmp->bfSize);
                 char bmpfile[bmp->bfSize];
                 snprintf(bmpfile, bmp->bfSize, "%s", (char *)(bmpstart * SizeofCluster + RootCluster));
                 FILE *fp = fopen(filename, "w+");
