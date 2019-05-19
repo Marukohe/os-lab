@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     RootCluster += (uintptr_t)fatstruct->ReservedSector * (uintptr_t)fatstruct->BytesPerSector;
     RootCluster += (uintptr_t)fatstruct->SectorsPerFat * (uintptr_t)fatstruct->BytesPerSector;
     RootCluster += (uintptr_t)fatstruct->SectorsPerFat * (uintptr_t)fatstruct->BytesPerSector;
-    printf("%lx", (unsigned long)RootCluster);
+    printf("%lx\n", (unsigned long)RootCluster);
 
 
     uint32_t startsearchcluster = SizeofCluster * 3;
@@ -176,9 +176,9 @@ int main(int argc, char *argv[]) {
             }
             if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
                 printf("%s\n", filename);
-                printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
-                uintptr_t bmpsize = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster;
-                printf("%lx\n", (unsigned long)bmpsize * SizeofCluster);
+                // printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
+                uintptr_t bmpsize = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
+                printf("%lx\n", (unsigned long)(bmpsize * SizeofCluster + RootCluster));
             }
         }
         startsearchcluster += 0x10;
