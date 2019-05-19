@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
     uint32_t startsearchcluster = SizeofCluster * 3;
     // printf("0x%x\n", SizeofCluster * 2);
 
-    uintptr_t searchaddr = startaddr;
+    uintptr_t searchaddr = (uintptr_t)startaddr;
 
     while(startsearchcluster < fsize){
         ldic = (longdic *)(startsearchcluster + searchaddr);
