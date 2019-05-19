@@ -229,8 +229,8 @@ int main(int argc, char *argv[]) {
                     char buf[1000] = {"hello"};
                     printf("%s\n", buf);
                     // scanf("%s", buf);
-                    // fgets(buf, 1000, fpout);
-                    // printf("%s\n", buf);
+                    fgets(buf, 10, stdin);
+                    printf("%s\n", buf);
                 }
             }
         }
