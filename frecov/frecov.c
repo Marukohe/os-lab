@@ -129,13 +129,13 @@ int main(int argc, char *argv[]) {
             ldic = (longdic *)(tmpaddr);
             // if(ldic->flag != 0xF)
             //     continue;
+            
             while((ldic->attribute & 0x40) != 1){
                 if((ldic->attribute & 0xF) != cnt - 1){
                     flag = 0;
-                }
-                if(flag == 0){
                     break;
                 }
+                
                 for(int i = 0; i < 5; i++){
                     if(ldic->unicode1[2 * i] != 0xFF)
                         filename[fileoffset++] = ldic->unicode1[2 * i];
