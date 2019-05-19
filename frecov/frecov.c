@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
                 longdic * tmpdic = (longdic *)(tmpaddr);
                 printf("%x\n", tmpdic->flag);
             }
-            startsearchcluster += 0x20 * tmpcntlongdic;
+            startsearchcluster += 0x20 * (tmpcntlongdic + 1);
             continue;
         }
         startsearchcluster += 0x20;
