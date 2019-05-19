@@ -196,7 +196,7 @@ int main(int argc, char *argv[]) {
                 fclose(fp);
                 #endif
 
-                char *cmd = "sha1sum ";
+                char cmd[1000] = "sha1sum ";
                 FILE *fp = fopen(filename, "w+");
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
                 strcat(cmd, filename);
