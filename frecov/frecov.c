@@ -112,11 +112,12 @@ int main(int argc, char *argv[]) {
         int flag = 1;
         if(ldic->flag == 0xF){
             // printf("%lx\n", (unsigned long)startsearchcluster);
+            printf("ldic->attribute, %x\n", ldic->attribute);
             int tmpcntlongdic = ldic->attribute & 0xF;    //统计长文件名个数
             for(int i = tmpcntlongdic; i >= 0; i--){
                 uintptr_t tmpaddr = i * 0x20 + startsearchcluster + searchaddr;
                 longdic * tmpdic = (longdic *)(tmpaddr);
-                printf("tmp->attrubute, %x\n", tmpdic->attribute);
+                // printf("tmp->attrubute, %x\n", tmpdic->attribute);
                 if(i == tmpcntlongdic && (tmpdic->attribute & 0xF) != 0){
                     flag = 0;
                     break;
