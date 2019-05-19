@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
         handle_error("open");
     unsigned long fsize = get_file_size(argv[1]);
     startaddr = mmap(NULL, fsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
-    fatstruct = (struct FATstruct *)(startaddr + 0xB);
+    fatstruct = (struct FATstruct *)(startaddr + 0xC);
     printf("0x%x\n", fatstruct->BytesPerSector);
     printf("0x%x\n", fatstruct->SectorsPerCluster);
     printf("0x%x\n", fatstruct->ReservedSector);
