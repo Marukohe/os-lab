@@ -210,7 +210,7 @@ int main(int argc, char *argv[]) {
                     dup2(pipefds1[0], STDIN_FILENO);
                     close(pipefds1[1]);
                     
-                    // close(STDOUT_FILENO);
+                    close(STDOUT_FILENO);
                     // char r_buf[10000];
                     // FILE *fpout = fdopen(STDIN_FILENO, "r");
                     // while(fgets(r_buf, 1000, fpout) != NULL){
@@ -229,8 +229,8 @@ int main(int argc, char *argv[]) {
                     fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdout);
                     // write(pipefds1[1], tmpfile, bmp->bfSize);
                     // wait(&childpid);
-                    dup2(pipefds[0], STDIN_FILENO);
-                    close(pipefds[1]);
+                    // dup2(pipefds[0], STDIN_FILENO);
+                    // close(pipefds[1]);
                     
                     // int buf[1000];
                     // fread(buf, sizeof(int), 100, stdin);
