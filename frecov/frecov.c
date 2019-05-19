@@ -12,6 +12,8 @@
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while(0)
 
+#define OUTPUTFILE
+
 //Fat32文件系统结构索引
 typedef struct tagFATstruct{
     uint16_t BytesPerSector;
@@ -187,17 +189,33 @@ int main(int argc, char *argv[]) {
                 void * tmpfile = (void *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
                 // printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);
                 // printf("%x\n", *(uint8_t*)(tmpfile));
-                // for(int i = 0; i < 10; i++){
-                //     printf("%x ", tmpfile[i]);
-                // }
-                // printf("\n");
-                // char bmpfile[bmp->bfSize];
-                // snprintf(bmpfile, bmp->bfSize, "%hhn", tmpfile);
-                // printf("%s\n", bmpfile);
-                // printf("\n");
+                #ifdef OUTPUTFILE
                 FILE *fp = fopen(filename, "w+");
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
                 fclose(fp);
+                #endif
+                int pipefds[2];
+                if(pipe(pipefds) == -1){
+                    handle_error("pipe");
+                }
+
+                int childpid = fork();
+                if(childpid == 0){
+                    fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, stdin);
+                    char * execv_str[] = {"sha1sum", "NULL"};
+                    dup2(pipefds[1], STDOUT_FILENO);
+                    if(execve("/usr/bin/sha1sum") < 0){
+                        handle_error("execve", execv_str);
+                    }
+                }else{
+                    wait(&childpid);
+                    dup2(pipefds[0], STDIN_FILENO);
+                    FILE *fpout = NULL;
+                    fpout = fdopen(STDIN_FILENO, "r");
+                    char buf[1000];
+                    fgets(buf, 1000, fpout);
+                    printf("%s\n", buf);
+                }
             }
         }
         startsearchcluster += 0x10;
