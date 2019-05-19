@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
             // if(ldic->flag != 0xF)
             //     continue;
 
-            while((ldic->attribute & 0x40) != 1){
+            while((ldic->attribute & 0x40) == 0){
                 if((ldic->attribute & 0xF) != cnt){
                     flag = 0;
                     break;
