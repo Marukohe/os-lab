@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
     fatstruct = (FATstruct *)(startaddr + 0xB);
 
     SizeofCluster = (uint32_t)fatstruct->SectorsPerCluster * (uint32_t)fatstruct->BytesPerSector;
-    uintptr_t_t RootCluster = 0;
+    uintptr_t RootCluster = 0;
     RootCluster += (uintptr_t)fatstruct->ReservedSector * (uintptr_t)fatstruct->BytesPerSector;
     RootCluster += (uintptr_t)fatstruct->SectorsPerFat * (uintptr_t)fatstruct->BytesPerSector;
     RootCluster += (uintptr_t)fatstruct->SectorsPerFat * (uintptr_t)fatstruct->BytesPerSector;
