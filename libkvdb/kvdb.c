@@ -58,7 +58,22 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char *kvdb_get(kvdb_t *db, const char *key){
     char *ret = (char *)malloc(sizeof(char *));
-    sprintf(ret, "hello");
+    /*sprintf(ret, "hello");*/
+    FILE *fp = NULL;
+    fp = fdopen(db->fd, "r");
+    if(fp == NULL){
+        panic("fdopen failed");
+        return NULL;
+    }
+    int flag = 0;
+    while(fgets(ret, MAXLEN, fp) != NULL){
+        if(strcmp(ret, key) == 0){
+            flag = 1;
+        }
+        if(flag = 1){
+            return ret;
+        }
+    }
     /*free(ret);*/
-    return ret;
+    return NULL;
 }
