@@ -67,6 +67,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     }
     int flag = 0;
     while(fgets(ret, MAXLEN, fp) != NULL){
+        printf("%s\n", ret);
         if(strcmp(ret, key) == 0){
             flag = 1;
         }
