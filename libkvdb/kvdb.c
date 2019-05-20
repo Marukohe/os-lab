@@ -70,7 +70,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         if(strcmp(ret, key) == 0){
             flag = 1;
         }
-        if(flag = 1){
+        if(flag == 1){
             return ret;
         }
     }
