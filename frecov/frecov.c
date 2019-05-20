@@ -179,7 +179,7 @@ int main(int argc, char *argv[]) {
                     filename[fileoffset++] = ldic->unicode3[2 * i];
             }
             if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
-                 printf("%s\n", filename);
+                 /*printf("%s\n", filename);*/
 
                 // printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
                 uintptr_t bmpstart = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
@@ -188,7 +188,7 @@ int main(int argc, char *argv[]) {
 
                 // printf("bmpsize %lx\n", (unsigned long)(bmp->bfSize));
                 void * tmpfile = (void *)(bmpstart * SizeofCluster + RootCluster + searchaddr);
-                printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);
+                /*printf("%lx\n", (unsigned long)bmpstart * SizeofCluster + RootCluster);*/
                 // printf("%x\n", *(uint8_t*)(tmpfile));
                 #ifdef OUTPUTFILE
                 FILE *fp = fopen(filename, "w+");
@@ -201,7 +201,7 @@ int main(int argc, char *argv[]) {
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
                 strcat(cmd, filename);
                 system(cmd);
-                /*unlink(filename);*/
+                unlink(filename);
                 fclose(fp);
 
                 // int pipefds[2];
