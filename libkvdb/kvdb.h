@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <assert.h>
 #include <unistd.h>
+#include <stdio.h>
 
 void panic(char *msg){
     printf("%s\n", msg);
