@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
     if(argc == 1)
         argv[1] = "fs.img";
     uint8_t *startaddr;
-    
+
     // printf("arvg[1] %s\n", argv[1]);
     int fd = open(argv[1], O_RDWR|O_CREAT, 0666);
     if(fd == -1)
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
         shortdic * sdic;
         char filename[namesize];    //文件名
         memset(filename, 0, sizeof(filename));
-        int fileoffset = 0;        
+        int fileoffset = 0;
         char extendname[4];         //扩展名
         uint8_t flag = 1;            //文件是否连续
         sdic = (shortdic *)(startsearchcluster + searchaddr);
@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
                     flag = 0;
                     break;
                 }
-                
+
                 for(int i = 0; i < 5; i++){
                     if(ldic->unicode1[2 * i] != 0xFF)
                         filename[fileoffset++] = ldic->unicode1[2 * i];
@@ -180,7 +180,7 @@ int main(int argc, char *argv[]) {
             }
             if(flag && ldic->flag == 0xF && ldic->attribute != 0xE5){
                 // printf("%s\n", filename);
-                
+
                 // printf("%x %x\n", sdic->highCluster, sdic->lowCluster);
                 uintptr_t bmpstart = (((uintptr_t)sdic->highCluster) << 16) + (uintptr_t)sdic->lowCluster - fatstruct->RootClusterNumber;
                 // printf("%lx\n", (unsigned long)(bmpstart * SizeofCluster + RootCluster));
@@ -201,7 +201,7 @@ int main(int argc, char *argv[]) {
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
                 strcat(cmd, filename);
                 system(cmd);
-                unlink(filename);
+                /*unlink(filename);*/
                 fclose(fp);
 
                 // int pipefds[2];
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
                 //     close(STDIN_FILENO);
                 //     dup2(pipefds1[0], STDIN_FILENO);
                 //     close(pipefds1[1]);
-                    
+
                 //     close(STDOUT_FILENO);
                 //     // char r_buf[10000];
                 //     // FILE *fpout = fdopen(STDIN_FILENO, "r");
@@ -240,7 +240,7 @@ int main(int argc, char *argv[]) {
                 //     // wait(&childpid);
                 //     dup2(pipefds[0], STDIN_FILENO);
                 //     close(pipefds[1]);
-                    
+
                 //     char buf[1000];
                 //     fread(buf, sizeof(char), 100, stdin);
                 //     printf("%s\n", buf);
