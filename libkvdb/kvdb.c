@@ -1,5 +1,9 @@
 #include "kvdb.h"
 
+//====================================================
+//如果文件不存在，则创建，如果文件存在，则在已有数据库的基础上进行操作。
+//====================================================
+
 int kvdb_open(kvdb_t * db, const char *filename){
     int ret = open(filename, O_CREAT | O_RDWR);
     printf("%d\n", ret);
