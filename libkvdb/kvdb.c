@@ -59,6 +59,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 char *kvdb_get(kvdb_t *db, const char *key){
     char *ret = (char *)malloc(sizeof(char *));
     /*ret = "hello";*/
-    free(ret);
+    sprintf(ret, "hello");
+    /*free(ret);*/
     return ret;
 }
