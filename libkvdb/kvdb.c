@@ -61,6 +61,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     /*sprintf(ret, "hello");*/
     FILE *fp = NULL;
     fp = fdopen(db->fd, "r");
+    printf("db->fd %d\n", db->fd);
     if(fp == NULL){
         panic("fdopen failed");
         return NULL;
