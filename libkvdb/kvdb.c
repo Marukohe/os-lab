@@ -40,14 +40,14 @@ int kvdb_close(kvdb_t *db){
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
     char *writechar = (char *)malloc(sizeof(char*));
     sprintf(writechar, "%s %s", key, value);
-    printf("%s\n", writechar);
-    printf("%ld\n", (unsigned long)strlen(writechar));
+    /*printf("%s\n", writechar);*/
+    /*printf("%ld\n", (unsigned long)strlen(writechar));*/
     int ret = write(db->fd, writechar, strlen(writechar));
     if(ret < 0){
         panic("write file failed");
         return -1;
     }
-
+    free(writechar);
     return 0;
 }
 
