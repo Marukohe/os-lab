@@ -1,7 +1,8 @@
 #include "kvdb.h"
 
 int kvdb_open(kvdb_t * db, const char *filename){
-    int ret = open(filename, O_CREAT | O_RDWR, 0666);
+    int ret = open(filename, O_CREAT | O_RDWR);
+    printf("%d\n", ret);
     db->fd = ret;
     if(ret < 0)
         panic("open file failed");
