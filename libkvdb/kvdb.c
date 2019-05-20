@@ -44,6 +44,11 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
 
+    ret = write(db->fd, value, sizeof(value));
+    if(ret < 0){
+        panic("write file failed");
+        return -1;
+    }
     return 0;
 }
 
