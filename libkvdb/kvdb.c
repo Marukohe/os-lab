@@ -38,7 +38,7 @@ int kvdb_close(kvdb_t *db){
 //====================================================
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
-    char * writechar;
+    char *writechar = (char *)malloc(sizeof(char*));
     sprintf(writechar, "%s %s", key, value);
     int ret = write(db->fd, writechar, sizeof(writechar));
     if(ret < 0){
