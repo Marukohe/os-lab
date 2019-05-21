@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXLEN 10000
+#define MAXLEN 128
 
 void panic(char *msg){
     printf("%s\n", msg);

@@ -27,7 +27,7 @@ ssize_t read_line(int fd, void *ret, ssize_t maxlen){
 
 int kvdb_open(kvdb_t * db, const char *filename){
     int ret = open(filename, O_CREAT | O_RDWR, 0666);
-    printf("%d\n", ret);
+    /*printf("%d\n", ret);*/
     db->fd = ret;
     if(ret < 0){
         panic("open file failed");
@@ -58,66 +58,51 @@ int kvdb_close(kvdb_t *db){
 //在kvdb_put执行之前db[key]已经有一个对应的字符串，它将被value覆盖。
 //====================================================
 
-int kvdb_put(kvdb_t *db, const char *key, const char *value){
-    char *writechar = (char *)malloc(sizeof(char*));
-    char *buf = (char *)malloc(sizeof(char *));
-    /*sprintf(writechar, "%s\n", value);*/
-    /*printf("%s\n", writechar);*/
-    /*printf("%ld\n", (unsigned long)strlen(writechar));*/
-    lseek(db->fd, 0, SEEK_SET);
-    int rc = 0;
-    int tmp = 0;
-    int ret;
-    int flag = 0;           //是否存在key
-    /*int writeflag = 0;      //是否能存下value*/
-    while((rc = read_line(db->fd, buf, MAXLEN)) != 0){
-        /*printf("%d\n", rc);*/
-        if(flag == 1){
-            /*if(strncmp(value, buf, rc - 1) == 0)*/
-                /*return 0;*/
-            /*printf("%d\n", rc);*/
-            if(strlen(value) <= rc - 1){
-                sprintf(writechar, "%s\n", value);
-                lseek(db->fd, 0 - rc, SEEK_CUR);
-                ret = write(db->fd, writechar, strlen(writechar));
-                if(ret < 0){
-                    panic("write file failed");
-                    return -1;
-                }
-                char c = 0;
-                for(int i = strlen(writechar) + 1; i <= rc - 1; i++){
-                    write(db->fd, &c, 1);
-                }
-                if(strlen(value) < rc - 1){
-                    c = '\n';
-                    ret = write(db->fd, &c, 1);
-                }
-                return 0;
-            }else{
-                lseek(db->fd, 0 - (rc + tmp), SEEK_CUR);
-                for(int i = 1; i < tmp; i++)
-                    sprintf(writechar, " ");
-                sprintf(writechar, "\n");
-                for(int i = 1; i < rc; i++)
-                    sprintf(writechar, " ");
-                sprintf(writechar, "\n");
-            }
-        }
-        if(strncmp(buf, key, rc - 1) == 0){
-            flag = 1;
-        }
-        tmp = rc;
-    }
-
-    sprintf(writechar, "%s\n%s\n", key, value);
-    lseek(db->fd, 0, SEEK_END);
-    ret = write(db->fd, writechar, strlen(writechar));
+int writebuf(int fd, const char *buf){
+    int ret = write(fd, buf, MAXLEN);
     if(ret < 0){
-        panic("write file failed");
+        panic("write buf failed");
         return -1;
     }
-    free(writechar);
-    /*free(buf);*/
+    char c = 0;
+    for(int i = 0; i < MAXLEN - strlen(buf) - 1; i++){
+        ret = write(fd, &c, 1);
+        if(ret < 0){
+            panic("write buf failed");
+            return -1;
+        }
+    }
+    ret = write(fd, "\n", 1);
+    if(ret < 0){
+        panic("write buf failed");
+        return -1;
+    }
+    return 0;
+}
+
+int kvdb_put(kvdb_t *db, const char *key, const char *value){
+    if(strlen(key) >= MAXLEN || strlen(value) >= MAXLEN){
+        printf("Sorry, My DataSet dosen't support such big string\n");
+        return -1;
+    }
+    char *buf = (char *)malloc(sizeof(char *));
+    lseek(db->fd, 0, SEEK_SET);
+    int rc = 0;
+    int ret = 0;
+    char c = 0;
+    while(read(db->fd, buf, MAXLEN) > 0){
+        if(strcmp(buf, key) == 0){
+            /*flag = 1;*/
+            ret = writebuf(db->fd, value);
+            return ret;
+        }
+    }
+    lseek(db->fd, 0, SEEK_END);
+    ret = writebuf(db->fd, key);
+    if(ret < 0)
+        return ret;
+    ret = writebuf(db->fd, value);
+    free(buf);
     sync();
     return 0;
 }
@@ -129,26 +114,19 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char *kvdb_get(kvdb_t *db, const char *key){
     char *ret = (char *)malloc(sizeof(char *));
-    /*sprintf(ret, "hello");*/
-    /*FILE *fp = NULL;*/
-    /*fp = fdopen(db->fd, "r");*/
-    /*if(fp == NULL){*/
-        /*panic("fdopen failed");*/
-        /*return NULL;*/
-    /*}*/
     int flag = 0;
     lseek(db->fd, 0, SEEK_SET);
 
     int rc = 0;
-    while((rc = read_line(db->fd, ret, MAXLEN))!=0){
+    while((rc = read(db->fd, ret, MAXLEN))!=0){
         if(flag == 1){
             return ret;
         }
+        printf("%d\n", rc);
         printf("%s\n", ret);
         if(strncmp(ret, key, rc - 1) == 0){
             flag = 1;
         }
     }
-    /*free(ret);*/
     return NULL;
 }
