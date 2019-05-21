@@ -113,8 +113,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 //===================================================
 
 char *kvdb_get(kvdb_t *db, const char *key){
-    /*char *retget = (char *)malloc(sizeof(char *));*/
-    char *retget;
+    char *retget = (char *)malloc(sizeof(char *));
     int flag = 0;
     lseek(db->fd, 0, SEEK_SET);
 
