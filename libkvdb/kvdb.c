@@ -67,6 +67,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
     int tmp = 0;
+    int ret;
     int flag = 0;           //是否存在key
     /*int writeflag = 0;      //是否能存下value*/
     while((rc = read_line(db->fd, buf, MAXLEN)) != 0){
@@ -74,13 +75,18 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
             if(strlen(value) <= rc - 1){
                 sprintf(writechar, "%s\n", value);
                 lseek(db->fd, 0 - rc, SEEK_CUR);
-                write(db->fd, writechar, strlen(writechar));
+                ret = write(db->fd, writechar, strlen(writechar));
+                if(ret < 0){
+                    panic("write file failed");
+                    return -1;
+                }
                 char c = 0;
                 for(int i = strlen(writechar) + 1; i <= rc - 1; i++){
                     write(db->fd, &c, 1);
                 }
                 c = '\n';
-                write(db->fd, &c, 1);
+                ret = write(db->fd, &c, 1);
+                return 0;
             }else{
                 lseek(db->fd, 0 - (rc + tmp), SEEK_CUR);
                 for(int i = 1; i < tmp; i++)
@@ -99,7 +105,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
     sprintf(writechar, "%s\n%s\n", key, value);
     lseek(db->fd, 0, SEEK_END);
-    int ret = write(db->fd, writechar, strlen(writechar));
+    ret = write(db->fd, writechar, strlen(writechar));
     if(ret < 0){
         panic("write file failed");
         return -1;
