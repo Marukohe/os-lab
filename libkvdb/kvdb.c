@@ -65,13 +65,17 @@ int writebuf(int fd, const char *buf, int len){
         return -1;
     }
     char c = 0;
+    ret = write(fd, &c, 1);
+    /*
     for(int i = 0; i < len - strlen(buf); i++){
         ret = write(fd, &c, 1);
         if(ret < 0){
             panic("write buf failed");
             return -1;
         }
-    }
+    }*/
+    int offset = len - strlen(buf) - 1;
+    lseek(fd, offset, SEEK_CUR);
     /*ret = write(fd, "\n", 1);*/
     if(ret < 0){
         panic("write buf failed");
