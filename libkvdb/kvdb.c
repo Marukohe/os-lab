@@ -64,7 +64,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     sprintf(writechar, "%s\n%s\n", key, value);
     /*printf("%s\n", writechar);*/
     /*printf("%ld\n", (unsigned long)strlen(writechar));*/
-    lseek(db->fd, 0, SEEK_END);
+    lseek(db->fd, 0, SEEK_SET);
     int ret = write(db->fd, writechar, strlen(writechar));
     if(ret < 0){
         panic("write file failed");
@@ -94,7 +94,6 @@ char *kvdb_get(kvdb_t *db, const char *key){
 
     int rc = 0;
     while((rc = read_line(db->fd, ret, MAXLEN))!=0){
-        /*assert(0);*/
         if(flag == 1){
             return ret;
         }
