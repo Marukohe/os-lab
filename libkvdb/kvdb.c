@@ -94,6 +94,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         if(strcmp(buf, key) == 0){
             /*flag = 1;*/
             ret = writebuf(db->fd, value, MAXVALUELEN);
+            free(buf);
+            sync();
             return ret;
         }
         lseek(db->fd, MAXVALUELEN, SEEK_CUR);
@@ -103,7 +105,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(ret < 0)
         return ret;
     ret = writebuf(db->fd, value, MAXVALUELEN);
-    /*free(buf);*/
+    free(buf);
     sync();
     return 0;
 }
@@ -115,11 +117,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char *kvdb_get(kvdb_t *db, const char *key){
     char *retget = (char *)malloc(sizeof(char *));
-    /*int flag = 0;*/
+    int flag = 0;
     lseek(db->fd, 0, SEEK_SET);
-    /*
     int rc = 0;
-    while((rc = read(db->fd, retget, MAXKEYLEN)) > 0){
+    while((rc = read(db->fd, retget, 1)) > 0){
         if(flag == 1){
             return retget;
         }
@@ -131,7 +132,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         if(flag != 1){
             lseek(db->fd, MAXVALUELEN, SEEK_CUR);
         }
-    }*/
+    }
     free(retget);
     return NULL;
 }
