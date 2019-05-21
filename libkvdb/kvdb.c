@@ -59,7 +59,7 @@ int kvdb_close(kvdb_t *db){
 //====================================================
 
 int writebuf(int fd, const char *buf){
-    int ret = write(fd, buf, MAXLEN);
+    int ret = write(fd, buf, strlen(buf));
     if(ret < 0){
         panic("write buf failed");
         return -1;
