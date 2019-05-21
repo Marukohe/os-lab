@@ -85,7 +85,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         printf("Sorry, My DataSet dosen't support such big string\n");
         return -1;
     }
-    char *buf = (char *)malloc(sizeof(char *));
+    char *buf = (char *)malloc(sizeof(char*));
     lseek(db->fd, 0, SEEK_SET);
     /*int rc = 0;*/
     int ret = 0;
@@ -102,7 +102,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(ret < 0)
         return ret;
     ret = writebuf(db->fd, value);
-    free(buf);
+    /*free(buf);*/
     sync();
     return 0;
 }
