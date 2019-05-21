@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TESTNUM 1000
+#define TESTNUM 100
 int main(){
     kvdb_t db;
     /*char *key = "operating-systems";*/
