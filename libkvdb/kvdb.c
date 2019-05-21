@@ -1,6 +1,5 @@
 #include "kvdb.h"
 
-
 ssize_t read_line(int fd, void *ret, ssize_t maxlen){
     ssize_t n, rc;
     char c, *ptr;
@@ -61,10 +60,45 @@ int kvdb_close(kvdb_t *db){
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
     char *writechar = (char *)malloc(sizeof(char*));
-    sprintf(writechar, "%s\n%s\n", key, value);
+    char *buf = (char *)malloc(sizeof(char *));
+    sprintf(writechar, "%s\n", value);
     /*printf("%s\n", writechar);*/
     /*printf("%ld\n", (unsigned long)strlen(writechar));*/
     lseek(db->fd, 0, SEEK_SET);
+    int rc = 0;
+    int tmp = 0;
+    int flag = 1;           //是否存在key
+    int writeflag = 0;      //是否能存下value
+    while((rc = read_line(db->fd, buf, MAXLEN)) != 0){
+        if(flag == 1){
+            if(strlen(value) <= rc - 1){
+                sprintf(writechar, "%s\n", value);
+                lseek(db->fd, 0 - rc, SEEK_CUR);
+                write(db->fd, writechar, strlen(writechar));
+                char c = 0;
+                for(int i = strlen(writechar) + 1; i <= rc - 1; i++){
+                    write(db->fd, &c, 1);
+                }
+                c = '\n';
+                write(db->fd, &c, 1);
+            }else{
+                lseek(db->fd, 0 - (rc + tmp), SEEK_CUR);
+                for(int i = 1; i < tmp; i++)
+                    sprintf(writechar, " ");
+                sprintf(writechar, "\n");
+                for(int i = 1; i < rc; i++)
+                    sprintf(writechar, " ");
+                sprintf(writechar, "\n");
+            }
+        }
+        if(strncmp(buf, key, rc - 1) == 0){
+            flag = 1;
+        }
+        tmp = rc;
+    }
+
+    sprintf(writechar, "%s\n%s\n", key, value);
+    lseek(db->fd, 0, SEEK_END);
     int ret = write(db->fd, writechar, strlen(writechar));
     if(ret < 0){
         panic("write file failed");
@@ -83,12 +117,12 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 char *kvdb_get(kvdb_t *db, const char *key){
     char *ret = (char *)malloc(sizeof(char *));
     /*sprintf(ret, "hello");*/
-    FILE *fp = NULL;
-    fp = fdopen(db->fd, "r");
-    if(fp == NULL){
-        panic("fdopen failed");
-        return NULL;
-    }
+    /*FILE *fp = NULL;*/
+    /*fp = fdopen(db->fd, "r");*/
+    /*if(fp == NULL){*/
+        /*panic("fdopen failed");*/
+        /*return NULL;*/
+    /*}*/
     int flag = 0;
     lseek(db->fd, 0, SEEK_SET);
 
