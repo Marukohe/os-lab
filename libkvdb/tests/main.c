@@ -15,7 +15,9 @@ int main(){
     /*kvdb_put(&db, key, "three-easy-pieces-imok");*/
     value = kvdb_get(&db, key);
     kvdb_close(&db);
-    /*printf("[%s]: [%s]\n", key, value);*/
-    /*free(value);*/
+    if(value != NULL){
+        printf("[%s]: [%s]\n", key, value);
+        free(value);
+    }
     return 0;
 }
