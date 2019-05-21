@@ -15,9 +15,9 @@ int main(){
     kvdb_put(&db, key, "three-easy");
     value = kvdb_get(&db, key);
     kvdb_close(&db);
-    if(value != NULL){
+    /*if(value != NULL){*/
         printf("[%s]: [%s]\n", key, value);
         free(value);
-    }
+    /*}*/
     return 0;
 }
