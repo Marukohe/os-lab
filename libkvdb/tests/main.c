@@ -51,7 +51,8 @@ void* thread_test(void * data){
     char *key = (char *)malloc(sizeof(char)*FILESIZE);
     char *buf = (char *)malloc(sizeof(char)*FILESIZE);
     char *value;
-    uintptr_t no = *(uintptr_t *)data;
+    /*uintptr_t no = *(uintptr_t *)data;*/
+    uintptr_t no = 10;
     for(int i = 0; i < no; i++){
         sprintf(key, "operating-%d-system", i);
         sprintf(buf, "operating-%d-system", i);
