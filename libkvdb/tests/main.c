@@ -16,7 +16,7 @@ int main(){
     value = kvdb_get(&db, key);
     kvdb_close(&db);
     /*if(value != NULL){*/
-        printf("[%s]: [%s]\n", key, value);
+        printf("[%s]: [%s]\n", "hello", value);
         free(value);
     /*}*/
     return 0;
