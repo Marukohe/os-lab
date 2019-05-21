@@ -113,20 +113,21 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 //===================================================
 
 char *kvdb_get(kvdb_t *db, const char *key){
-    char *ret = (char *)malloc(sizeof(char *));
+    char *retget = (char *)malloc(sizeof(char *));
     int flag = 0;
     lseek(db->fd, 0, SEEK_SET);
 
     int rc = 0;
-    while((rc = read(db->fd, ret, MAXLEN))!=0){
+    while((rc = read(db->fd, retget, MAXLEN))!=0){
         if(flag == 1){
-            return ret;
+            return retget;
         }
         printf("%d\n", rc);
-        printf("%s\n", ret);
-        if(strncmp(ret, key, rc - 1) == 0){
+        printf("%s\n", retget);
+        if(strncmp(retget, key, rc - 1) == 0){
             flag = 1;
         }
     }
+    free(retget);
     return NULL;
 }
