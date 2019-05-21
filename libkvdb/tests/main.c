@@ -12,7 +12,7 @@ int main(){
     kvdb_put(&db, key, "three-easy-pieces");
     /*kvdb_put(&db, key, "three-easy");*/
     kvdb_put(&db, "helloworld", "three-easy-hello");
-    /*kvdb_put(&db, key, "three-easy-pieces-imok");*/
+    kvdb_put(&db, key, "three-easy-pieces-imok");
     value = kvdb_get(&db, key);
     kvdb_close(&db);
     if(value != NULL){
