@@ -11,9 +11,9 @@ int main(){
     kvdb_open(&db, "a.db"); // BUG: should check for errors
     kvdb_put(&db, key, "three-easy-pieces");
     /*kvdb_put(&db, key, "three-easy");*/
-    kvdb_put(&db, "helloworld", "three-easy-hello");
-    kvdb_put(&db, key, "three-easy");
-    value = kvdb_get(&db, "hello");
+    /*kvdb_put(&db, "helloworld", "three-easy-hello");*/
+    /*kvdb_put(&db, key, "three-easy");*/
+    /*value = kvdb_get(&db, "hello");*/
     kvdb_close(&db);
     /*if(value != NULL){*/
         printf("[%s]: [%s]\n", "hello", value);

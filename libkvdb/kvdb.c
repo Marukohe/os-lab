@@ -81,30 +81,21 @@ int writebuf(int fd, const char *buf, int len){
 }
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
-    if(strlen(key) >= MAXKEYLEN || strlen(value) >= MAXVALUELEN){
+    if(strlen(key) > MAXKEYLEN || strlen(value) > MAXVALUELEN){
         printf("Sorry, My DataSet dosen't support such big string\n");
         return -1;
     }
     char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
     lseek(db->fd, 0, SEEK_SET);
-    /*int rc = 0;*/
-    int ret = 0;
-    /*char c = 0;*/
-    while(read(db->fd, buf, MAXKEYLEN) > 0){
-        if(strcmp(buf, key) == 0){
-            /*flag = 1;*/
-            ret = writebuf(db->fd, value, MAXVALUELEN);
-            free(buf);
-            sync();
-            return ret;
-        }
-        lseek(db->fd, MAXVALUELEN, SEEK_CUR);
+    int rc = 0;
+    int keylen = 0;
+    int valuelen = 0;
+    while((rc = read_line(db->fd, buf, MAXKEYLEN)) != 0){
+        keylen = atoi(buf);
+        read_line(db->fd, buf, MAXKEYLEN);
+        valuelen = atoi(buf);
+        printf("%d %d\n", keylen, valuelen);
     }
-    lseek(db->fd, 0, SEEK_END);
-    ret = writebuf(db->fd, key, MAXKEYLEN);
-    if(ret < 0)
-        return ret;
-    ret = writebuf(db->fd, value, MAXVALUELEN);
     free(buf);
     sync();
     return 0;
