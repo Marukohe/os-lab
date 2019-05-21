@@ -104,7 +104,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         }
         lseek(db->fd, MAXVALUELEN, SEEK_CUR);
     }
-    lseek(db->fd, 0, SEEK_END);
+    /*lseek(db->fd, 0, SEEK_END);*/
     ret = writebuf(db->fd, key, MAXKEYLEN);
     if(ret < 0)
         return ret;
