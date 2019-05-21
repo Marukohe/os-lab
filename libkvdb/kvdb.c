@@ -79,11 +79,6 @@ int writebuf(int fd, const char *buf, int len){
     }
     return 0;
 }
-//a 旧的value长度, b 新的value长度
-/*int writeint(int fd, int a, int b){*/
-    /*char *foo1 = (char *)malloc(sizeof(char) * MAXKEYLEN);*/
-    /*char *foo2 = (char *)malloc(sizeof(char) * MAXKEYLEN);*/
-/*}*/
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(strlen(key) > MAXKEYLEN || strlen(value) > MAXVALUELEN){
@@ -92,29 +87,24 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
     lseek(db->fd, 0, SEEK_SET);
-    int rc = 0;
-    int keylen = 0;
-    int valuelen = 0;
-    /*int writeflag = 0;*/
-    while((rc = read_line(db->fd, buf, MAXKEYLEN)) != 0){
-        keylen = atoi(buf);
-        read_line(db->fd, buf, MAXKEYLEN);
-        valuelen = atoi(buf);
-
-        printf("%d %d\n", keylen, valuelen);
-        if((keylen - 1) != strlen(key)){
-            lseek(db->fd, keylen + valuelen, SEEK_CUR);
-        }else{
-            rc = read_line(db->fd, buf, MAXKEYLEN); //读出key比较
-            if(strncmp(buf, key,  keylen- 1) == 0){
-                if(valuelen - 1 < strlen(value)){
-                    /*writeflag = 1;*/
-                }else{
-                    /*writeflag = 0;*/
-                }
-            }
+    /*int rc = 0;*/
+    int ret = 0;
+    /*char c = 0;*/
+    while(read(db->fd, buf, MAXKEYLEN) > 0){
+        if(strcmp(buf, key) == 0){
+            /*flag = 1;*/
+            ret = writebuf(db->fd, value, MAXVALUELEN);
+            free(buf);
+            sync();
+            return ret;
         }
+        lseek(db->fd, MAXVALUELEN, SEEK_CUR);
     }
+    lseek(db->fd, 0, SEEK_END);
+    ret = writebuf(db->fd, key, MAXKEYLEN);
+    if(ret < 0)
+        return ret;
+    ret = writebuf(db->fd, value, MAXVALUELEN);
     free(buf);
     sync();
     return 0;
