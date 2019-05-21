@@ -125,6 +125,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
             return retget;
         }
         /*printf("%d\n", rc);*/
+        printf("hello\n");
         if(flag == 1){
             flag = 1;
         }else{
