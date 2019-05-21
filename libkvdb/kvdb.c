@@ -1,5 +1,27 @@
 #include "kvdb.h"
 
+
+ssize_t read_line(int fd, void *ret, ssize_t maxlen){
+    ssize_t n, rc;
+    char c, *ptr;
+    ptr = ret;
+    for(n = 1; n < maxlen; n++){
+        if((rc = read(fd, &c, 1)) == 1){
+            *ptr++ = c;
+            if(c == '\n')
+                break;
+        }else if(rc == 0){
+            *ptr = 0;
+            return n - 1;
+        }else{
+            panic("readline failed");
+            return n - 1;
+        }
+    }
+    *ptr = 0;
+    return n;
+}
+
 //====================================================
 //如果文件不存在，则创建，如果文件存在，则在已有数据库的基础上进行操作。
 //====================================================
@@ -39,7 +61,7 @@ int kvdb_close(kvdb_t *db){
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
     char *writechar = (char *)malloc(sizeof(char*));
-    sprintf(writechar, "%s\n%s", key, value);
+    sprintf(writechar, "%s\n%s\n", key, value);
     /*printf("%s\n", writechar);*/
     /*printf("%ld\n", (unsigned long)strlen(writechar));*/
     lseek(db->fd, 0, SEEK_END);
@@ -63,16 +85,15 @@ char *kvdb_get(kvdb_t *db, const char *key){
     /*sprintf(ret, "hello");*/
     FILE *fp = NULL;
     fp = fdopen(db->fd, "r");
-    printf("db->fd %d\n", db->fd);
     if(fp == NULL){
         panic("fdopen failed");
         return NULL;
     }
     int flag = 0;
-    printf("%d\n", MAXLEN);
     lseek(db->fd, 0, SEEK_SET);
-    read(db->fd, ret, 1);
-    while(read(db->fd, ret, 1)!=0){
+
+    int rc = 0;
+    while((rc = read_line(db->fd, ret, MAXLEN))!=0){
         /*assert(0);*/
         printf("%s\n", ret);
         if(strcmp(ret, key) == 0){
