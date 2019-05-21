@@ -65,14 +65,14 @@ int writebuf(int fd, const char *buf, int len){
         return -1;
     }
     char c = 0;
-    for(int i = 0; i < len - strlen(buf) - 1; i++){
+    for(int i = 0; i < len - strlen(buf); i++){
         ret = write(fd, &c, 1);
         if(ret < 0){
             panic("write buf failed");
             return -1;
         }
     }
-    ret = write(fd, "\n", 1);
+    /*ret = write(fd, "\n", 1);*/
     if(ret < 0){
         panic("write buf failed");
         return -1;
