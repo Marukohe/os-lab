@@ -117,7 +117,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     char *retget = (char *)malloc(sizeof(char *));
     int flag = 0;
     lseek(db->fd, 0, SEEK_SET);
-
+    /*
     int rc = 0;
     while((rc = read(db->fd, retget, MAXKEYLEN)) > 0){
         if(flag == 1){
@@ -131,7 +131,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         if(flag != 1){
             lseek(db->fd, MAXVALUELEN, SEEK_CUR);
         }
-    }
+    }*/
     free(retget);
     return NULL;
 }
