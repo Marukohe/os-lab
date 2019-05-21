@@ -127,6 +127,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
                 panic("read file failed");
                 return NULL;
             }
+            return retget;
         }else{
             lseek(db->fd, MAXVALUELEN, SEEK_CUR);
         }
