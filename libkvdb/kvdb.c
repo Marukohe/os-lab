@@ -121,17 +121,6 @@ char *kvdb_get(kvdb_t *db, const char *key){
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
     while((rc = read(db->fd, retget, 1)) > 0){
-        if(flag == 1){
-            return retget;
-        }
-        printf("%d\n", rc);
-        printf("%s\n", retget);
-        if(strncmp(retget, key, rc - 1) == 0){
-            flag = 1;
-        }
-        if(flag != 1){
-            lseek(db->fd, MAXVALUELEN, SEEK_CUR);
-        }
     }
     free(retget);
     return NULL;
