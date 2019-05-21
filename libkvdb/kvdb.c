@@ -7,9 +7,9 @@ ssize_t read_line(int fd, void *ret, ssize_t maxlen){
     ptr = ret;
     for(n = 1; n < maxlen; n++){
         if((rc = read(fd, &c, 1)) == 1){
-            *ptr++ = c;
             if(c == '\n')
                 break;
+            *ptr++ = c;
         }else if(rc == 0){
             *ptr = 0;
             return n - 1;
@@ -95,12 +95,12 @@ char *kvdb_get(kvdb_t *db, const char *key){
     int rc = 0;
     while((rc = read_line(db->fd, ret, MAXLEN))!=0){
         /*assert(0);*/
-        printf("%s", ret);
-        if(strncmp(ret, key, rc - 1) == 0){
-            flag = 1;
-        }
         if(flag == 1){
             return ret;
+        }
+        printf("%s\n", ret);
+        if(strncmp(ret, key, rc - 1) == 0){
+            flag = 1;
         }
     }
     /*free(ret);*/
