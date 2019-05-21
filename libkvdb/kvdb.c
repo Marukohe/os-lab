@@ -95,7 +95,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     int rc = 0;
     int keylen = 0;
     int valuelen = 0;
-    int writeflag = 0;
+    /*int writeflag = 0;*/
     while((rc = read_line(db->fd, buf, MAXKEYLEN)) != 0){
         keylen = atoi(buf);
         read_line(db->fd, buf, MAXKEYLEN);
@@ -108,9 +108,9 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
             rc = read_line(db->fd, buf, MAXKEYLEN); //读出key比较
             if(strncmp(buf, key,  keylen- 1) == 0){
                 if(valuelen - 1 < strlen(value)){
-                    writeflag = 1;
+                    /*writeflag = 1;*/
                 }else{
-                    writeflag = 0;
+                    /*writeflag = 0;*/
                 }
             }
         }
