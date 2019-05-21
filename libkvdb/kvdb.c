@@ -80,10 +80,10 @@ int writebuf(int fd, const char *buf, int len){
     return 0;
 }
 //a 旧的value长度, b 新的value长度
-int writeint(int fd, int a, int b){
-    char *foo1 = (char *)malloc(sizeof(char) * MAXKEYLEN);
-    char *foo2 = (char *)malloc(sizeof(char) * MAXKEYLEN);
-}
+/*int writeint(int fd, int a, int b){*/
+    /*char *foo1 = (char *)malloc(sizeof(char) * MAXKEYLEN);*/
+    /*char *foo2 = (char *)malloc(sizeof(char) * MAXKEYLEN);*/
+/*}*/
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(strlen(key) > MAXKEYLEN || strlen(value) > MAXVALUELEN){
