@@ -13,7 +13,7 @@ int main(){
     kvdb_put(&db, key, "three-easy");
     kvdb_put(&db, "helloworld", "three-easy-hello");
     kvdb_put(&db, key, "three-easyhaojiandan");
-    value = kvdb_get(&db, key);
+    value = kvdb_get(&db, "helloworld");
     kvdb_close(&db);
     /*if(value != NULL){*/
     printf("[%s]: [%s]\n", "hello", value);
