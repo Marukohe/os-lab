@@ -117,11 +117,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char *kvdb_get(kvdb_t *db, const char *key){
     char *retget = (char *)malloc(sizeof(char *));
-    /*int flag = 0;*/
+    int flag = 0;
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
     while((rc = read(db->fd, retget, MAXKEYLEN)) > 0){
-        /*flag = 1;*/
+        if(flag == 1){
+            return retget;
+        }
     }
     free(retget);
     return NULL;
