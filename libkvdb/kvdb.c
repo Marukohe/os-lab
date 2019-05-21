@@ -95,8 +95,8 @@ char *kvdb_get(kvdb_t *db, const char *key){
     int rc = 0;
     while((rc = read_line(db->fd, ret, MAXLEN))!=0){
         /*assert(0);*/
-        printf("%s\n", ret);
-        if(strcmp(ret, key) == 0){
+        printf("%s", ret);
+        if(strncmp(ret, key, rc - 1) == 0){
             flag = 1;
         }
         if(flag == 1){
