@@ -58,14 +58,14 @@ int kvdb_close(kvdb_t *db){
 //在kvdb_put执行之前db[key]已经有一个对应的字符串，它将被value覆盖。
 //====================================================
 
-int writebuf(int fd, const char *buf){
+int writebuf(int fd, const char *buf, int len){
     int ret = write(fd, buf, strlen(buf));
     if(ret < 0){
         panic("write buf failed");
         return -1;
     }
     char c = 0;
-    for(int i = 0; i < MAXLEN - strlen(buf) - 1; i++){
+    for(int i = 0; i < len - strlen(buf) - 1; i++){
         ret = write(fd, &c, 1);
         if(ret < 0){
             panic("write buf failed");
@@ -81,7 +81,7 @@ int writebuf(int fd, const char *buf){
 }
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
-    if(strlen(key) >= MAXLEN || strlen(value) >= MAXLEN){
+    if(strlen(key) >= MAXKEYLEN || strlen(value) >= MAXVALUELEN){
         printf("Sorry, My DataSet dosen't support such big string\n");
         return -1;
     }
@@ -90,18 +90,19 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     /*int rc = 0;*/
     int ret = 0;
     /*char c = 0;*/
-    while(read(db->fd, buf, MAXLEN) > 0){
+    while(read(db->fd, buf, MAXKEYLEN) > 0){
         if(strcmp(buf, key) == 0){
             /*flag = 1;*/
-            ret = writebuf(db->fd, value);
+            ret = writebuf(db->fd, value, MAXVALUELEN);
             return ret;
         }
+        lseek(db->fd, MAXVALUELEN, SEEK_CUR);
     }
     lseek(db->fd, 0, SEEK_END);
-    ret = writebuf(db->fd, key);
+    ret = writebuf(db->fd, key, MAXKEYLEN);
     if(ret < 0)
         return ret;
-    ret = writebuf(db->fd, value);
+    ret = writebuf(db->fd, value, MAXVALUELEN);
     /*free(buf);*/
     sync();
     return 0;
