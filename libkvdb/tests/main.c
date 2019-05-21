@@ -9,6 +9,8 @@
 #define NUMTHREADS 10
 #define TESTNUM 100
 #define FILESIZE 1000
+
+kvdb_t db;
 void test1(int testnum){
     char *key = (char *)malloc(sizeof(char)*FILESIZE);
     char *value;
@@ -41,7 +43,6 @@ void test1(int testnum){
 }
 
 void* thread_test(void * data){
-    kvdb_t db;
     int chret;
     chret = kvdb_open(&db, "a.db");
     if(chret < 0){
@@ -71,10 +72,10 @@ void* thread_test(void * data){
     }
     free(key);
     free(buf);
-    chret = kvdb_close(&db);
-    if(chret < 0){
-        panic("close file failed in tests");
-    }
+    /*chret = kvdb_close(&db);*/
+    /*if(chret < 0){*/
+        /*panic("close file failed in tests");*/
+    /*}*/
 }
 
 int pthread_test(uintptr_t no){
@@ -83,11 +84,31 @@ int pthread_test(uintptr_t no){
     for(t = 0; t < NUMTHREADS; t++){
         printf("Creating Thread %d\n", t + 1);
         rc = pthread_create(&thread[t], NULL, thread_test, (void *)(10 * no + t + 1));
-
+        if(rc){
+            printf("ERROR, return code is %d\n", rc);
+            panic("ERROR");
+        }
+    }
+    for(t = 0; t < NUMTHREADS; t++){
+        pthread_join(thread[t], NULL);
+    }
+    int err = kvdb_close(&db);
+    if(err == -1){
+        panic("close file failed in tests");
     }
 }
 
 int main(){
-    test1(100);
+    /*test1(100);*/
+    pid_t pid = fork();
+    if(pid == 0){
+        pthread_test(2);
+    }else{
+        pid_t ppid = fork();
+        if(ppid == 0)
+            pthread_test(2);
+        else
+            pthread_test(1);
+    }
     return 0;
 }
