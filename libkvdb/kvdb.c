@@ -117,7 +117,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     free(writechar);
-    free(buf);
+    /*free(buf);*/
     sync();
     return 0;
 }
