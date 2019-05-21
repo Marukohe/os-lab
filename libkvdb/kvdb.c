@@ -87,9 +87,9 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     char *buf = (char *)malloc(sizeof(char *));
     lseek(db->fd, 0, SEEK_SET);
-    int rc = 0;
+    /*int rc = 0;*/
     int ret = 0;
-    char c = 0;
+    /*char c = 0;*/
     while(read(db->fd, buf, MAXLEN) > 0){
         if(strcmp(buf, key) == 0){
             /*flag = 1;*/
