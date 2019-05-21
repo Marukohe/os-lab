@@ -4,9 +4,10 @@ ssize_t read_line(int fd, void *ret, ssize_t maxlen){
     ssize_t n, rc;
     char c, *ptr;
     ptr = ret;
+    char m = 0;
     for(n = 1; n < maxlen; n++){
         if((rc = read(fd, &c, 1)) == 1){
-            if(c == '\n')
+            if(c == m)
                 break;
             *ptr++ = c;
         }else if(rc == 0){
@@ -18,7 +19,7 @@ ssize_t read_line(int fd, void *ret, ssize_t maxlen){
         }
     }
     *ptr = 0;
-    return n;
+    return n - 1;
 }
 
 //====================================================
@@ -123,9 +124,9 @@ char *kvdb_get(kvdb_t *db, const char *key){
     char *retget = (char *)malloc(sizeof(char) * MAXVALUELEN);
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
-    while((rc = read(db->fd, retget, MAXKEYLEN)) > 0){
+    while((rc = read_line(db->fd, retget, MAXKEYLEN)) > 0){
         if(strcmp(retget, key) == 0){
-            rc = read(db->fd, retget, MAXVALUELEN);
+            rc = read_line(db->fd, retget, MAXVALUELEN);
             if(rc < 0){
                 free(retget);
                 panic("read file failed");
