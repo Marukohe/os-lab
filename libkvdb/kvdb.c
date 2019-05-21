@@ -67,8 +67,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
     int tmp = 0;
-    int flag = 1;           //是否存在key
-    int writeflag = 0;      //是否能存下value
+    int flag = 0;           //是否存在key
+    /*int writeflag = 0;      //是否能存下value*/
     while((rc = read_line(db->fd, buf, MAXLEN)) != 0){
         if(flag == 1){
             if(strlen(value) <= rc - 1){
