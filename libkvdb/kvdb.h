@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAXKEYLEN 128
-//#define MAXVALUELEN (16 * 1024 * 1014)
-#define MAXVALUELEN 128
+#define MAXVALUELEN (16 * 1024 * 1014)
+//#define MAXVALUELEN 128
 
 void panic(char *msg){
     printf("%s\n", msg);
