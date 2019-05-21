@@ -71,11 +71,11 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     int flag = 0;           //是否存在key
     /*int writeflag = 0;      //是否能存下value*/
     while((rc = read_line(db->fd, buf, MAXLEN)) != 0){
-        printf("%d\n", rc);
+        /*printf("%d\n", rc);*/
         if(flag == 1){
-            if(strncmp(value, buf, rc - 1) == 0)
-                return 0;
-            printf("%d\n", rc);
+            /*if(strncmp(value, buf, rc - 1) == 0)*/
+                /*return 0;*/
+            /*printf("%d\n", rc);*/
             if(strlen(value) <= rc - 1){
                 sprintf(writechar, "%s\n", value);
                 lseek(db->fd, 0 - rc, SEEK_CUR);
@@ -117,6 +117,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     free(writechar);
+    free(buf);
     sync();
     return 0;
 }
