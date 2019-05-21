@@ -71,7 +71,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     int flag = 0;
     printf("%d\n", MAXLEN);
     lseek(db->fd, 0, SEEK_SET);
-    while(read(db->fd, ret, MAXLEN)!=0){
+    while(read(db->fd, ret, 1)!=0){
         assert(0);
         printf("%s\n", ret);
         if(strcmp(ret, key) == 0){
