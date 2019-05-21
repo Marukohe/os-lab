@@ -124,6 +124,11 @@ char *kvdb_get(kvdb_t *db, const char *key){
         if(flag == 1){
             return retget;
         }
+        if(strcmp(retget, key) == 0){
+            flag = 1;
+        }else{
+            lseek(db->fd, MAXVALUELEN, SEEK_CUR);
+        }
     }
     free(retget);
     return NULL;
