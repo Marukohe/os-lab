@@ -95,6 +95,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         read_line(db->fd, buf, MAXKEYLEN);
         valuelen = atoi(buf);
         printf("%d %d\n", keylen, valuelen);
+        lseek(db->fd, keylen + valuelen, SEEK_CUR);
     }
     free(buf);
     sync();
