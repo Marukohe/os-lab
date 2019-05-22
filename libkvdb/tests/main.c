@@ -103,8 +103,8 @@ int pthread_test(uintptr_t no){
 }
 
 int main(){
-    test1(100);
-    /*
+    /*test1(100);*/
+
     pid_t pid = fork();
     if(pid == 0){
         pthread_test(2);
@@ -115,7 +115,7 @@ int main(){
         else
             pthread_test(1);
     }
-    */
+
     /*
     kvdb_open(&db, "a.db");
     const char *key = "operating-systems";
