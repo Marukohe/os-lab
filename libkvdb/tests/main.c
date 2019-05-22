@@ -15,7 +15,7 @@ void test1(int testnum){
     char *key = (char *)malloc(sizeof(char)*FILESIZE);
     char *value;
 
-    kvdb_t db;
+    /*kvdb_t db;*/
     kvdb_open(&db, "a.db"); // BUG: should check for errors
     /*kvdb_put(&db, key, "three-easy-pieces");*/
     char *buf = (char *)malloc(sizeof(char)*FILESIZE);
@@ -100,6 +100,7 @@ int pthread_test(uintptr_t no){
 
 int main(){
     /*test1(100);*/
+    /*
     pid_t pid = fork();
     if(pid == 0){
         pthread_test(2);
@@ -110,5 +111,10 @@ int main(){
         else
             pthread_test(1);
     }
+    */
+    kvdb_open(&db, "a.db");
+    const char *key = "operaing-systems";
+    kvdb_put(&db, key, "three-easy-pieces");
+    kvdb_close(&db);
     return 0;
 }

@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXKEYLEN 128
+#define MAXKEYLEN 130
 //#define MAXVALUELEN (16 * 1024 * 1014)
 #define MAXVALUELEN 128
 

@@ -1,10 +1,14 @@
 #include "kvdb.h"
 
-ssize_t read_line(int fd, void *ret, ssize_t maxlen){
+ssize_t read_line(int fd, void *ret, ssize_t maxlen, int flag){
     ssize_t n, rc;
     char c, *ptr;
     ptr = ret;
-    char m = 0;
+    char m;
+    if(flag == 1)
+        m = 0;     //1读到结束符
+    else
+        m = '\n';  //0读到换行符
     for(n = 1; n < maxlen; n++){
         if((rc = read(fd, &c, 1)) == 1){
             if(c == m)
@@ -91,26 +95,49 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
+    char *valuebuf = (char *)malloc(sizeof(char) * MAXKEYLEN);
     lseek(db->fd, 0, SEEK_SET);
-    /*int rc = 0;*/
-    int ret = 0;
+    int rc = 0;
+    /*int ret = 0;*/
     /*char c = 0;*/
-    while(read(db->fd, buf, MAXKEYLEN) > 0){
+    while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
+        rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+        int valuelen = atoi(valuebuf);
+        rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+        int flag = atoi(valuebuf);
         if(strcmp(buf, key) == 0){
-            /*flag = 1;*/
-            ret = writebuf(db->fd, value, MAXVALUELEN);
-            free(buf);
-            sync();
-            return ret;
+            if(flag == 0){
+                lseek(db->fd, valuelen + 1, SEEK_CUR);
+            }else{
+                if(valuelen < strlen(value)){
+                    lseek(db->fd, -1, SEEK_CUR);
+                    char c = '0';
+                    write(db->fd, &c, 1);
+                    lseek(db->fd, valuelen + 1, SEEK_CUR);
+                }else{
+                    sprintf(buf, "%s\n", value);
+                    rc = write(db->fd, buf, strlen(buf));
+                    if(rc <= 0){
+                        panic("write file failed in put");
+                        return -1;
+                    }
+                    return 0;
+                }
+            }
+        }else{
+            lseek(db->fd, valuelen + 1, SEEK_CUR);
         }
-        lseek(db->fd, MAXVALUELEN, SEEK_CUR);
     }
-    /*lseek(db->fd, 0, SEEK_END);*/
-    ret = writebuf(db->fd, key, MAXKEYLEN);
-    if(ret < 0)
-        return ret;
-    ret = writebuf(db->fd, value, MAXVALUELEN);
+    int flag = 1;
+    int len = strlen(value);
+    sprintf(buf, "%s\n%d\n%d\n%s\n", key, len, flag, value);
+    rc = write(db->fd, buf, strlen(buf));
+    if(rc <= 0){
+        panic("write file failed");
+        return -1;
+    }
     free(buf);
+    free(valuebuf);
     sync();
     return 0;
 }
@@ -127,7 +154,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     while((rc = read(db->fd, retget, MAXKEYLEN)) > 0){
         /*printf("%s\n", retget);*/
         if(strcmp(retget, key) == 0){
-            rc = read_line(db->fd, retget, MAXVALUELEN);
+            rc = read_line(db->fd, retget, MAXVALUELEN, 0);
             if(rc < 0){
                 free(retget);
                 panic("read file failed");
