@@ -19,6 +19,14 @@ void panic(char *msg){
     assert(0);
 }
 
+void checkret(int rc, char *msg){
+    if(rc <= 0){
+        panic(msg);
+        return -1;
+    }
+}
+
+
 struct kvdb {
     int fd;
 

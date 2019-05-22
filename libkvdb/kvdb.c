@@ -36,7 +36,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
     db->fd = ret;
     if(ret < 0){
         panic("open file failed");
-        return ret;
+        return -1;
     }
     return 0;
 }
@@ -71,14 +71,6 @@ int writebuf(int fd, const char *buf, int len){
     }
     char c = 0;
     ret = write(fd, &c, 1);
-    /*
-    for(int i = 0; i < len - strlen(buf); i++){
-        ret = write(fd, &c, 1);
-        if(ret < 0){
-            panic("write buf failed");
-            return -1;
-        }
-    }*/
     int offset = len - strlen(buf) - 1;
     lseek(fd, offset, SEEK_CUR);
     /*ret = write(fd, "\n", 1);*/
@@ -101,9 +93,12 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     /*int ret = 0;*/
     /*char c = 0;*/
     while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
+        checkret(rc, "read key");
         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+        checkret(rc, "read valuelen");
         int valuelen = atoi(valuebuf);
         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+        checkret(rc, "read flag");
         int flag = atoi(valuebuf);
         if(strcmp(buf, key) == 0){
             if(flag == 0){
@@ -117,10 +112,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
                 }else{
                     sprintf(buf, "%s\n", value);
                     rc = write(db->fd, buf, strlen(buf));
-                    if(rc <= 0){
-                        panic("write file failed in put");
-                        return -1;
-                    }
+                    checkret(rc, "write value");
                     return 0;
                 }
             }
@@ -132,10 +124,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     int len = strlen(value);
     sprintf(buf, "%s\n%d\n%d\n%s\n", key, len, flag, value);
     rc = write(db->fd, buf, strlen(buf));
-    if(rc <= 0){
-        panic("write file failed");
-        return -1;
-    }
+    checkret(rc, "write buf in database");
     free(buf);
     free(valuebuf);
     sync();
@@ -160,6 +149,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         /*printf("%s\n", retget);*/
         if(strcmp(retget, key) == 0 && flag == 1){
             rc = read_line(db->fd, retget, MAXVALUELEN, 0);
+            /*checkret(rc, "read value in get");*/
             if(rc < 0){
                 free(retget);
                 panic("read file failed");
