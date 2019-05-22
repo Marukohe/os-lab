@@ -113,7 +113,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
                     lseek(db->fd, -2, SEEK_CUR);
                     char c = '0';
                     write(db->fd, &c, 1);
-                    lseek(db->fd, valuelen + 1, SEEK_CUR);
+                    lseek(db->fd, valuelen + 2, SEEK_CUR);
                 }else{
                     sprintf(buf, "%s\n", value);
                     rc = write(db->fd, buf, strlen(buf));
