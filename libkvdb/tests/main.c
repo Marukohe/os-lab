@@ -115,6 +115,8 @@ int main(){
     kvdb_open(&db, "a.db");
     const char *key = "operating-systems";
     kvdb_put(&db, key, "three-easy-pieces");
+    kvdb_put(&db, key, "three-easy-pieces-pk");
+    kvdb_put(&db, key, "three-easy");
     kvdb_put(&db, "helloworld", "three-easy-pieces");
     kvdb_close(&db);
     return 0;
