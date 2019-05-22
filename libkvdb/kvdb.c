@@ -31,6 +31,10 @@ ssize_t read_line(int fd, void *ret, ssize_t maxlen, int flag){
 //====================================================
 
 int kvdb_open(kvdb_t * db, const char *filename){
+    if(db->fd >= 3){
+        Log("file has been opened");
+        return 0;
+    }
     int ret = open(filename, O_CREAT | O_RDWR, 0666);
     /*printf("%d\n", ret);*/
     db->fd = ret;
