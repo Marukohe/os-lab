@@ -71,7 +71,7 @@ void* thread_test(void * data){
     for(int i = 0; i < no; i++){
         sprintf(key, "operating-%d-system", i);
         value = kvdb_get(&db, key);
-        printf("[%s]: [%s]\n", buf, value);
+        printf("[%s]: [%s]\n", key, value);
         free(value);
     }
     free(key);
