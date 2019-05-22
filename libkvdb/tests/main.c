@@ -56,22 +56,22 @@ void* thread_test(void * data){
     char *buf = (char *)malloc(sizeof(char)*FILESIZE);
     char *value;
     uintptr_t no = (uintptr_t)data;
-    for(int i = 0; i < no; i++){
+    for(int i = 0; i < TESTNUM; i++){
         sprintf(key, "operating-%d-system", i);
         sprintf(buf, "operating-%d-system", i);
         kvdb_put(&db, key, buf);
     }
-    for(int i = 0; i < no; i++){
+    for(int i = 0; i < TESTNUM; i++){
         if((i % 2) == 0){
             sprintf(key, "operating-%d-system", i);
             sprintf(buf, "operating-%d-system-hello", i);
             kvdb_put(&db, key, buf);
         }
     }
-    for(int i = 0; i < no; i++){
+    for(int i = 0; i < TESTNUM; i++){
         sprintf(key, "operating-%d-system", i);
         value = kvdb_get(&db, key);
-        printf("[%s]: [%s]\n", key, value);
+        printf("[%s]: [%s]: [thread-%ld]\n", key, value, no);
         free(value);
     }
     free(key);
@@ -82,12 +82,13 @@ void* thread_test(void * data){
     /*}*/
 }
 
-int pthread_test(uintptr_t no){
-    int rc, t;
+int pthread_test(){
+    int rc;
+    uintptr_t t;
     pthread_t thread[NUMTHREADS];
     for(t = 0; t < NUMTHREADS; t++){
-        printf("Creating Thread %d\n", t + 1);
-        rc = pthread_create(&thread[t], NULL, thread_test, (void *)(10 * no + t + 1));
+        printf("Creating Thread %ld\n", t + 1);
+        rc = pthread_create(&thread[t], NULL, thread_test, (void *)(t));
         if(rc){
             printf("ERROR, return code is %d\n", rc);
             panic("ERROR");
