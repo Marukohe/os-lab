@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-#define NUMTHREADS 10
+#define NUMTHREADS 5
 #define TESTNUM 100
 #define FILESIZE 1000
 
