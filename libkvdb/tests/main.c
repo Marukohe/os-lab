@@ -99,7 +99,7 @@ int pthread_test(uintptr_t no){
 }
 
 int main(){
-    /*test1(100);*/
+    test1(100);
     /*
     pid_t pid = fork();
     if(pid == 0){
@@ -112,6 +112,7 @@ int main(){
             pthread_test(1);
     }
     */
+    /*
     kvdb_open(&db, "a.db");
     const char *key = "operating-systems";
     kvdb_put(&db, key, "three-easy-pieces");
@@ -122,5 +123,6 @@ int main(){
     printf("[%s]:[%s]\n", key, value);
     free(value);
     kvdb_close(&db);
+    */
     return 0;
 }
