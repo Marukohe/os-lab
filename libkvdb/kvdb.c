@@ -38,6 +38,8 @@ int kvdb_open(kvdb_t * db, const char *filename){
         panic("open file failed");
         return -1;
     }
+    flock(ret, LOCK_EX);
+    pthread_mutex_init(&(db->mutex), NULL);
     return 0;
 }
 
@@ -55,6 +57,8 @@ int kvdb_close(kvdb_t *db){
         panic("close file failed");
         return -1;
     }
+    flock(db->fd, LOCK_UN);
+    pthread_mutex_destroy(&(db->mutex));
     return 0;
 }
 
@@ -82,8 +86,10 @@ int writebuf(int fd, const char *buf, int len){
 }
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
+    pthread_mutex_lock(&(db->mutex));
     if(strlen(key) > MAXKEYLEN || strlen(value) > MAXVALUELEN){
-        printf("Sorry, My DataSet dosen't support such big string\n");
+        Log("Sorry, My DataSet dosen't support such big string\n");
+        pthread_mutex_unlock(&(db->mutex));
         return -1;
     }
     char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
@@ -96,17 +102,20 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         /*checkret(rc, "read key");*/
         if(rc <= 0){
             panic("read key");
+            pthread_mutex_unlock(&(db->mutex));
             return -1;
         }
         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
         if(rc <= 0){
-            panic("read value len");
+            panic("read value len failed");
+            pthread_mutex_unlock(&(db->mutex));
             return -1;
         }
         int valuelen = atoi(valuebuf);
         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
         if(rc <= 0){
             panic("read flag");
+            pthread_mutex_unlock(&(db->mutex));
             return -1;
         }
         int flag = atoi(valuebuf);
@@ -124,8 +133,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
                     rc = write(db->fd, buf, strlen(buf));
                     if(rc <= 0){
                         panic("write value");
+                        pthread_mutex_unlock(&(db->mutex));
                         return -1;
                     }
+                    pthread_mutex_unlock(&(db->mutex));
                     return 0;
                 }
             }
@@ -139,11 +150,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     rc = write(db->fd, buf, strlen(buf));
     if(rc <= 0){
         panic("write buf into database");
+        pthread_mutex_unlock(&(db->mutex));
         return -1;
     }
     free(buf);
     free(valuebuf);
     sync();
+    pthread_mutex_unlock(&(db->mutex));
     return 0;
 }
 
@@ -153,6 +166,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 //===================================================
 
 char *kvdb_get(kvdb_t *db, const char *key){
+    pthread_mutex_lock(&(db->mutex));
     char *retget = (char *)malloc(sizeof(char) * MAXVALUELEN);
     char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
     lseek(db->fd, 0, SEEK_SET);
@@ -168,9 +182,11 @@ char *kvdb_get(kvdb_t *db, const char *key){
             if(rc <= 0){
                 free(retget);
                 panic("read file failed");
+                pthread_mutex_unlock(&(db->mutex));
                 return NULL;
             }
             free(valuebuf);
+            pthread_mutex_unlock(&(db->mutex));
             return retget;
         }else{
             lseek(db->fd, valuelen + 1, SEEK_CUR);
@@ -178,6 +194,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     }
     free(valuebuf);
     free(retget);
+    pthread_mutex_unlock(&(db->mutex));
     return NULL;
 }
 

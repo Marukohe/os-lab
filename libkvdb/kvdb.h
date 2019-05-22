@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 #define MAXKEYLEN 130
 //#define MAXVALUELEN (16 * 1024 * 1014)
 #define MAXVALUELEN 128
@@ -19,10 +20,13 @@ void panic(char *msg){
     assert(0);
 }
 
+#define Log(format, ...) \
+    printf("\33[1;33m[%s,%d,%s] " format "\33[0m\n", \
+        __FILE__, __LINE__, __func__, ## __VA_ARGS__)
 
 struct kvdb {
     int fd;
-
+    pthread_mutex_t mutex;
 };
 typedef struct kvdb kvdb_t;
 
