@@ -149,22 +149,29 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char *kvdb_get(kvdb_t *db, const char *key){
     char *retget = (char *)malloc(sizeof(char) * MAXVALUELEN);
+    char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
-    while((rc = read(db->fd, retget, MAXKEYLEN)) > 0){
+    while((rc = read_line(db->fd, retget, MAXKEYLEN, 0)) > 0){
+        rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+        int valuelen = atoi(valuebuf);
+        rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+        int flag = atoi(valuebuf);
         /*printf("%s\n", retget);*/
-        if(strcmp(retget, key) == 0){
+        if(strcmp(retget, key) == 0 && flag == 1){
             rc = read_line(db->fd, retget, MAXVALUELEN, 0);
             if(rc < 0){
                 free(retget);
                 panic("read file failed");
                 return NULL;
             }
+            free(valuebuf);
             return retget;
         }else{
-            lseek(db->fd, MAXVALUELEN, SEEK_CUR);
+            lseek(db->fd, valuelen + 1, SEEK_CUR);
         }
     }
+    free(valuebuf);
     free(retget);
     return NULL;
 }
