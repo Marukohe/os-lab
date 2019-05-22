@@ -96,7 +96,7 @@ int pthread_test(uintptr_t no){
     for(t = 0; t < NUMTHREADS; t++){
         pthread_join(thread[t], NULL);
     }
-    assert(0);
+    /*assert(0);*/
     int err = kvdb_close(&db);
     if(err == -1){
         panic("close file failed in tests");
