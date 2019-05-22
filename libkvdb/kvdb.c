@@ -53,6 +53,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
 //====================================================
 
 int kvdb_close(kvdb_t *db){
+    Logb("close lock");
     pthread_mutex_lock(&(db->mutex));
     if(db->fd < 0){
         Log("file has been closed");
@@ -67,6 +68,7 @@ int kvdb_close(kvdb_t *db){
         return -1;
     }
     flock(db->fd, LOCK_UN);
+    Logb("close unlock");
     pthread_mutex_unlock(&(db->mutex));
     pthread_mutex_destroy(&(db->mutex));
     return 0;
@@ -96,6 +98,7 @@ int writebuf(int fd, const char *buf, int len){
 }
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
+    Logg("put lock");
     pthread_mutex_lock(&(db->mutex));
     if(strlen(key) > MAXKEYLEN || strlen(value) > MAXVALUELEN){
         Log("Sorry, My DataSet dosen't support such big string\n");
@@ -143,6 +146,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
                         pthread_mutex_unlock(&(db->mutex));
                         return -1;
                     }
+                    Logg("put unlock");
                     pthread_mutex_unlock(&(db->mutex));
                     return 0;
                 }
@@ -150,7 +154,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         }else{
             lseek(db->fd, valuelen + 1, SEEK_CUR);
         }
-        printf("2");
+        /*printf("2");*/
     }
     int flag = 1;
     int len = strlen(value);
@@ -164,6 +168,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     free(buf);
     free(valuebuf);
     sync();
+    Logg("put unlock");
     pthread_mutex_unlock(&(db->mutex));
     return 0;
 }
@@ -174,6 +179,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 //===================================================
 
 char *kvdb_get(kvdb_t *db, const char *key){
+    Logq("get lock");
     pthread_mutex_lock(&(db->mutex));
     char *retget = (char *)malloc(sizeof(char) * MAXVALUELEN);
     char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
@@ -194,15 +200,17 @@ char *kvdb_get(kvdb_t *db, const char *key){
                 return NULL;
             }
             free(valuebuf);
+            Logq("get unlock");
             pthread_mutex_unlock(&(db->mutex));
             return retget;
         }else{
             lseek(db->fd, valuelen + 1, SEEK_CUR);
         }
-        printf("1");
+        /*printf("1");*/
     }
     free(valuebuf);
     free(retget);
+    Logq("get unlock");
     pthread_mutex_unlock(&(db->mutex));
     return NULL;
 }
