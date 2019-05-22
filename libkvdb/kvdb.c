@@ -59,6 +59,7 @@ int kvdb_close(kvdb_t *db){
         return -1;
     }
     int ret = close(db->fd);
+    Log("file closed");
     if(ret < 0){
         panic("close file failed");
         return -1;
