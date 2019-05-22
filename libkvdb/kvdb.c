@@ -44,6 +44,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
     }
     flock(ret, LOCK_EX);
     pthread_mutex_init(&(db->mutex), NULL);
+    Log("mutex init");
     return 0;
 }
 
@@ -62,6 +63,7 @@ int kvdb_close(kvdb_t *db){
     Log("file closed");
     if(ret < 0){
         panic("close file failed");
+        pthread_mutex_unlock(&(db->mutex));
         return -1;
     }
     flock(db->fd, LOCK_UN);
