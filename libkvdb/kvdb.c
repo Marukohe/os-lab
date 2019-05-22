@@ -150,6 +150,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         }else{
             lseek(db->fd, valuelen + 1, SEEK_CUR);
         }
+        printf("2");
     }
     int flag = 1;
     int len = strlen(value);
@@ -198,6 +199,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         }else{
             lseek(db->fd, valuelen + 1, SEEK_CUR);
         }
+        printf("1");
     }
     free(valuebuf);
     free(retget);
