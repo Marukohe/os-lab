@@ -93,12 +93,22 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     /*int ret = 0;*/
     /*char c = 0;*/
     while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
-        checkret(rc, "read key");
+        /*checkret(rc, "read key");*/
+        if(rc <= 0){
+            panic("read key");
+            return -1;
+        }
         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
-        checkret(rc, "read valuelen");
+        if(rc <= 0){
+            panic("read value len");
+            return -1;
+        }
         int valuelen = atoi(valuebuf);
         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
-        checkret(rc, "read flag");
+        if(rc <= 0){
+            panic("read flag");
+            return -1;
+        }
         int flag = atoi(valuebuf);
         if(strcmp(buf, key) == 0){
             if(flag == 0){
@@ -112,7 +122,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
                 }else{
                     sprintf(buf, "%s\n", value);
                     rc = write(db->fd, buf, strlen(buf));
-                    checkret(rc, "write value");
+                    if(rc <= 0){
+                        panic("write value");
+                        return -1;
+                    }
                     return 0;
                 }
             }
@@ -124,7 +137,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     int len = strlen(value);
     sprintf(buf, "%s\n%d\n%d\n%s\n", key, len, flag, value);
     rc = write(db->fd, buf, strlen(buf));
-    checkret(rc, "write buf in database");
+    if(rc <= 0){
+        panic("write buf into database");
+        return -1;
+    }
     free(buf);
     free(valuebuf);
     sync();
@@ -149,8 +165,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         /*printf("%s\n", retget);*/
         if(strcmp(retget, key) == 0 && flag == 1){
             rc = read_line(db->fd, retget, MAXVALUELEN, 0);
-            /*checkret(rc, "read value in get");*/
-            if(rc < 0){
+            if(rc <= 0){
                 free(retget);
                 panic("read file failed");
                 return NULL;
