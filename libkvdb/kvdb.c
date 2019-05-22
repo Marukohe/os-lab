@@ -96,10 +96,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     char *valuebuf = (char *)malloc(sizeof(char) * MAXKEYLEN);
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
-    /*int ret = 0;*/
-    /*char c = 0;*/
     while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
-        /*checkret(rc, "read key");*/
         if(rc <= 0){
             panic("read key");
             pthread_mutex_unlock(&(db->mutex));
