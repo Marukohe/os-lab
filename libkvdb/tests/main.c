@@ -30,6 +30,10 @@ void test1(int testnum){
         sprintf(key, "operating-%d-sys-hello-world", i);
         if((i  % 2) == 0)
             kvdb_put(&db, buf, key);
+        else{
+            sprintf(key, "operating-%d-sys", i);
+            kvdb_put(&db, buf, key);
+        }
     }
     for(int i = 0; i < testnum; i++){
         sprintf(buf, "operating-%d-systems", i);
