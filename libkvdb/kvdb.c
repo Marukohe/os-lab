@@ -110,7 +110,7 @@ pthread_mutex_t lock;
 int kvdb_open(kvdb_t * db, const char *filename){
     pthread_mutex_lock(&lock);
     if(db->fd >= 3){
-        Log("file has been opened");
+        // Log("file has been opened");
         // flock(db->fd, LOCK_EX);
         // char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
         // char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
@@ -126,7 +126,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
         pthread_mutex_unlock(&lock);
         return 0;
     }
-    Log("file open");
+    // Log("file open");
     int ret = open(filename, O_CREAT | O_RDWR, 0666);
     // char *journame = (char *)malloc(sizeof(char) * MAXKEYLEN);
     // sprintf(journame, "%sjournal", filename);
@@ -143,7 +143,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
     flock(ret, LOCK_EX);
     /*pthread_rwlock_init(&(db->rw_lock), NULL);*/
     pthread_mutex_init(&(db->mutex), NULL);
-    Log("mutex init");
+    // Log("mutex init");
     pthread_mutex_unlock(&lock);
     return 0;
 }
@@ -154,16 +154,16 @@ int kvdb_open(kvdb_t * db, const char *filename){
 
 int kvdb_close(kvdb_t *db){
     pthread_mutex_lock(&lock);
-    Logb("close lock");
+    // Logb("close lock");
     pthread_mutex_lock(&(db->mutex));
     if(db->fd < 0){
-        Log("file has been closed");
+        // Log("file has been closed");
         pthread_mutex_unlock(&(db->mutex));
         pthread_mutex_unlock(&lock);
         return -1;
     }
     int ret = close(db->fd);
-    Log("file closed");
+    // Log("file closed");
     if(ret < 0){
         panic("close file failed");
         pthread_mutex_unlock(&(db->mutex));
@@ -171,7 +171,7 @@ int kvdb_close(kvdb_t *db){
         return -1;
     }
     flock(db->fd, LOCK_UN);
-    Logb("close unlock");
+    // Logb("close unlock");
     pthread_mutex_unlock(&(db->mutex));
     pthread_mutex_destroy(&(db->mutex));
     pthread_mutex_unlock(&lock);
