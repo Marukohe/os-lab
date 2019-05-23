@@ -50,7 +50,7 @@ void * test1(void *data){
 void* thread_test(void * data){
     int chret;
     chret = kvdb_open(&db, "a.db");
-    chret = kvdb_open(&dc, "c.db");
+    /*chret = kvdb_open(&dc, "c.db");*/
     if(chret < 0){
         panic("open file failed in tests");
     }
