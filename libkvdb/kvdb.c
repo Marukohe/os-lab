@@ -134,8 +134,8 @@ int kvdb_open(kvdb_t * db, const char *filename){
     /*printf("%d\n", ret);*/
     db->fd = ret;
     db->jfd = ret1;
-    sprintf(db->joname, "%s", journame);
-    free(journame);
+    db->joname = journame;
+    // free(journame);
     if(ret < 0){
         panic("open file failed");
         return -1;
