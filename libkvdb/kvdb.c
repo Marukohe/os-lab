@@ -157,7 +157,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
                         pthread_mutex_unlock(&(db->mutex));
                         return -1;
                     }
-                    Logg("put unlock");
+                    /*Logg("put unlock");*/
                     pthread_mutex_unlock(&(db->mutex));
                     return 0;
                 }
@@ -211,7 +211,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
                 return NULL;
             }
             free(valuebuf);
-            Logq("get unlock");
+            /*Logq("get unlock");*/
             pthread_mutex_unlock(&(db->mutex));
             return retget;
         }else{
