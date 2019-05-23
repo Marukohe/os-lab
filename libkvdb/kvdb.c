@@ -30,9 +30,13 @@ ssize_t read_line(int fd, void *ret, ssize_t maxlen, int flag){
 //如果文件不存在，则创建，如果文件存在，则在已有数据库的基础上进行操作。
 //====================================================
 
+pthread_mutex_t lock;
+
 int kvdb_open(kvdb_t * db, const char *filename){
+    pthread_mutex_lock(&lock);
     if(db->fd >= 3){
         Log("file has been opened");
+        pthread_mutex_unlock(&lock);
         return 0;
     }
     Log("file open");
@@ -46,6 +50,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
     flock(ret, LOCK_EX);
     pthread_rwlock_init(&(db->rw_lock), NULL);
     Log("mutex init");
+    pthread_mutex_unlock(&lock);
     return 0;
 }
 
@@ -54,11 +59,13 @@ int kvdb_open(kvdb_t * db, const char *filename){
 //====================================================
 
 int kvdb_close(kvdb_t *db){
+    pthread_mutex_lock(&lock);
     Logb("close lock");
     pthread_rwlock_wrlock(&(db->rw_lock));
     if(db->fd < 0){
         Log("file has been closed");
         pthread_rwlock_unlock(&(db->rw_lock));
+        pthread_mutex_unlock(&lock);
         return -1;
     }
     int ret = close(db->fd);
@@ -66,12 +73,14 @@ int kvdb_close(kvdb_t *db){
     if(ret < 0){
         panic("close file failed");
         pthread_rwlock_unlock(&(db->rw_lock));
+        pthread_mutex_unlock(&lock);
         return -1;
     }
     flock(db->fd, LOCK_UN);
     Logb("close unlock");
     pthread_rwlock_unlock(&(db->rw_lock));
     pthread_rwlock_destroy(&(db->rw_lock));
+    pthread_mutex_unlock(&lock);
     return 0;
 }
 
