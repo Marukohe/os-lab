@@ -121,6 +121,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
         }
         flock(db->fd, LOCK_UN);
         unlink(db->joname);
+        Logq("%s", db->joname);
         db->jfd = open(db->joname, O_CREAT | O_RDWR, 0666);
         pthread_mutex_unlock(&lock);
         return 0;
