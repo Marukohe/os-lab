@@ -41,14 +41,14 @@ int recover(kvdb_t *db, const char *key, const char *value){
         if(rc <= 0){
             panic("read key");
             free(buf);
-            free(value);
+            free(valuebuf);
             return -1;
         }
         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
         if(rc <= 0){
             panic("read value len failed");
             free(buf);
-            free(value);
+            free(valuebuf);
             return -1;
         }
         int valuelen = atoi(valuebuf);
@@ -56,7 +56,7 @@ int recover(kvdb_t *db, const char *key, const char *value){
         if(rc <= 0){
             panic("read flag");
             free(buf);
-            free(value);
+            free(valuebuf);
             return -1;
         }
         int flag = atoi(valuebuf);
@@ -75,13 +75,13 @@ int recover(kvdb_t *db, const char *key, const char *value){
                     if(rc <= 0){
                         panic("write value");
                         free(buf);
-                        free(value);
+                        free(valuebuf);
                         return -1;
                     }
                     /*Logg("put unlock");*/
                     sync();
                     free(buf);
-                    free(value);
+                    free(valuebuf);
                     return 0;
                 }
             }
@@ -97,7 +97,7 @@ int recover(kvdb_t *db, const char *key, const char *value){
     if(rc <= 0){
         panic("write buf into database");
         free(buf);
-        free(value);
+        free(valuebuf);
         return -1;
     }
     free(buf);
