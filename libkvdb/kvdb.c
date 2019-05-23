@@ -115,7 +115,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
         char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
         char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
         int rc = 0;
-        while((rc = read_line(db, buf, MAXKEYLEN, 0)) > 0){
+        while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
             read_line(db, valuebuf, MAXVALUELEN, 0);
             recover(db, buf, valuebuf);
         }
