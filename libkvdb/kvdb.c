@@ -111,17 +111,17 @@ int kvdb_open(kvdb_t * db, const char *filename){
     pthread_mutex_lock(&lock);
     if(db->fd >= 3){
         Log("file has been opened");
-        flock(db->fd, LOCK_EX);
-        char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
-        char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
-        int rc = 0;
-        while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
-            read_line(db->fd, valuebuf, MAXVALUELEN, 0);
-            recover(db, buf, valuebuf);
-        }
-        flock(db->fd, LOCK_UN);
-        unlink(db->joname);
-        db->jfd = open(db->joname, O_CREAT | O_RDWR, 0666);
+        // flock(db->fd, LOCK_EX);
+        // char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
+        // char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
+        // int rc = 0;
+        // while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
+        //     read_line(db->fd, valuebuf, MAXVALUELEN, 0);
+        //     recover(db, buf, valuebuf);
+        // }
+        // flock(db->fd, LOCK_UN);
+        // unlink(db->joname);
+        // db->jfd = open(db->joname, O_CREAT | O_RDWR, 0666);
         pthread_mutex_unlock(&lock);
         return 0;
     }
