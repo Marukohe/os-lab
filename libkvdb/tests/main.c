@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-#define NUMTHREADS 10
+#define NUMTHREADS 5
 #define TESTNUM 200
 #define FILESIZE 1000
 
@@ -107,19 +107,18 @@ int pthread_test(){
 int main(){
     /*test1(100);*/
 
-    /*
     pid_t pid = fork();
     if(pid == 0){
-        pthread_test(2);
+        pthread_test();
     }else{
         pid_t ppid = fork();
         if(ppid == 0)
-            pthread_test(2);
+            pthread_test();
         else
-            pthread_test(1);
+            pthread_test();
     }
-    */
-    pthread_test(1);
+
+    /*pthread_test(1);*/
 
     /*
     kvdb_open(&db, "a.db");
