@@ -110,7 +110,7 @@ pthread_mutex_t lock;
 int kvdb_open(kvdb_t * db, const char *filename){
     pthread_mutex_lock(&lock);
     if(db->fd >= 3){
-        // Log("file has been opened");
+        Log("file has been opened");
         // flock(db->fd, LOCK_EX);
         // char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
         // char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
@@ -157,7 +157,7 @@ int kvdb_close(kvdb_t *db){
     // Logb("close lock");
     pthread_mutex_lock(&(db->mutex));
     if(db->fd < 0){
-        // Log("file has been closed");
+        Log("file has been closed");
         pthread_mutex_unlock(&(db->mutex));
         pthread_mutex_unlock(&lock);
         return -1;

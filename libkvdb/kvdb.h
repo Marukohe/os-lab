@@ -16,7 +16,7 @@
 // #define MAXVALUELEN 128
 
 void panic(char *msg){
-    printf("%s\n", msg);
+    Log("%s\n", msg);
     // assert(0);
 }
 
