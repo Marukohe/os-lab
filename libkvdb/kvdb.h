@@ -17,7 +17,7 @@
 
 void panic(char *msg){
     printf("%s\n", msg);
-    assert(0);
+    // assert(0);
 }
 
 #define Log(format, ...) \

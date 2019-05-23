@@ -32,109 +32,109 @@ ssize_t read_line(int fd, void *ret, ssize_t maxlen, int flag){
 
 pthread_mutex_t lock;
 
-int recover(kvdb_t *db, const char *key, const char *value){
-    char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
-    char *valuebuf = (char *)malloc(sizeof(char) * MAXKEYLEN);
-    lseek(db->fd, 0, SEEK_SET);
-    int rc = 0;
-    while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
-        if(rc <= 0){
-            panic("read key");
-            free(buf);
-            free(valuebuf);
-            return -1;
-        }
-        rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
-        if(rc <= 0){
-            panic("read value len failed");
-            free(buf);
-            free(valuebuf);
-            return -1;
-        }
-        int valuelen = atoi(valuebuf);
-        rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
-        if(rc <= 0){
-            panic("read flag");
-            free(buf);
-            free(valuebuf);
-            return -1;
-        }
-        int flag = atoi(valuebuf);
-        if(strcmp(buf, key) == 0){
-            if(flag == 0){
-                lseek(db->fd, valuelen + 1, SEEK_CUR);
-            }else{
-                if(valuelen < strlen(value)){
-                    lseek(db->fd, -2, SEEK_CUR);
-                    char c = '0';
-                    write(db->fd, &c, 1);
-                    lseek(db->fd, valuelen + 2, SEEK_CUR);
-                }else{
-                    sprintf(buf, "%s\n", value);
-                    rc = write(db->fd, buf, strlen(buf));
-                    if(rc <= 0){
-                        panic("write value");
-                        free(buf);
-                        free(valuebuf);
-                        return -1;
-                    }
-                    /*Logg("put unlock");*/
-                    sync();
-                    free(buf);
-                    free(valuebuf);
-                    return 0;
-                }
-            }
-        }else{
-            lseek(db->fd, valuelen + 1, SEEK_CUR);
-        }
-        /*printf("2");*/
-    }
-    int flag = 1;
-    int len = strlen(value);
-    sprintf(buf, "%s\n%d\n%d\n%s\n", key, len, flag, value);
-    rc = write(db->fd, buf, strlen(buf));
-    if(rc <= 0){
-        panic("write buf into database");
-        free(buf);
-        free(valuebuf);
-        return -1;
-    }
-    free(buf);
-    free(valuebuf);
-    sync();
-    /*Logg("put unlock");*/
-    return 0;
-}
+// int recover(kvdb_t *db, const char *key, const char *value){
+//     char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
+//     char *valuebuf = (char *)malloc(sizeof(char) * MAXKEYLEN);
+//     lseek(db->fd, 0, SEEK_SET);
+//     int rc = 0;
+//     while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
+//         if(rc <= 0){
+//             panic("read key");
+//             free(buf);
+//             free(valuebuf);
+//             return -1;
+//         }
+//         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+//         if(rc <= 0){
+//             panic("read value len failed");
+//             free(buf);
+//             free(valuebuf);
+//             return -1;
+//         }
+//         int valuelen = atoi(valuebuf);
+//         rc = read_line(db->fd, valuebuf, MAXKEYLEN, 0);
+//         if(rc <= 0){
+//             panic("read flag");
+//             free(buf);
+//             free(valuebuf);
+//             return -1;
+//         }
+//         int flag = atoi(valuebuf);
+//         if(strcmp(buf, key) == 0){
+//             if(flag == 0){
+//                 lseek(db->fd, valuelen + 1, SEEK_CUR);
+//             }else{
+//                 if(valuelen < strlen(value)){
+//                     lseek(db->fd, -2, SEEK_CUR);
+//                     char c = '0';
+//                     write(db->fd, &c, 1);
+//                     lseek(db->fd, valuelen + 2, SEEK_CUR);
+//                 }else{
+//                     sprintf(buf, "%s\n", value);
+//                     rc = write(db->fd, buf, strlen(buf));
+//                     if(rc <= 0){
+//                         panic("write value");
+//                         free(buf);
+//                         free(valuebuf);
+//                         return -1;
+//                     }
+//                     /*Logg("put unlock");*/
+//                     sync();
+//                     free(buf);
+//                     free(valuebuf);
+//                     return 0;
+//                 }
+//             }
+//         }else{
+//             lseek(db->fd, valuelen + 1, SEEK_CUR);
+//         }
+//         /*printf("2");*/
+//     }
+//     int flag = 1;
+//     int len = strlen(value);
+//     sprintf(buf, "%s\n%d\n%d\n%s\n", key, len, flag, value);
+//     rc = write(db->fd, buf, strlen(buf));
+//     if(rc <= 0){
+//         panic("write buf into database");
+//         free(buf);
+//         free(valuebuf);
+//         return -1;
+//     }
+//     free(buf);
+//     free(valuebuf);
+//     sync();
+//     /*Logg("put unlock");*/
+//     return 0;
+// }
 
 int kvdb_open(kvdb_t * db, const char *filename){
     pthread_mutex_lock(&lock);
     if(db->fd >= 3){
         Log("file has been opened");
-        flock(db->fd, LOCK_EX);
-        char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
-        char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
-        int rc = 0;
-        while((rc = read_line(db->jfd, buf, MAXKEYLEN, 0)) > 0){
-            read_line(db->jfd, valuebuf, MAXVALUELEN, 0);
-            recover(db, buf, valuebuf);
-        }
-        flock(db->fd, LOCK_UN);
-        unlink(db->joname);
-        Logq("%s", db->joname);
-        db->jfd = open(db->joname, O_CREAT | O_RDWR, 0666);
+        // flock(db->fd, LOCK_EX);
+        // char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
+        // char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
+        // int rc = 0;
+        // while((rc = read_line(db->jfd, buf, MAXKEYLEN, 0)) > 0){
+        //     read_line(db->jfd, valuebuf, MAXVALUELEN, 0);
+        //     recover(db, buf, valuebuf);
+        // }
+        // flock(db->fd, LOCK_UN);
+        // unlink(db->joname);
+        // Logq("%s", db->joname);
+        // db->jfd = open(db->joname, O_CREAT | O_RDWR, 0666);
         pthread_mutex_unlock(&lock);
         return 0;
     }
     Log("file open");
     int ret = open(filename, O_CREAT | O_RDWR, 0666);
-    char *journame = (char *)malloc(sizeof(char) * MAXKEYLEN);
-    sprintf(journame, "%sjournal", filename);
-    int ret1 = open(journame, O_CREAT | O_RDWR, 0666);
+    // char *journame = (char *)malloc(sizeof(char) * MAXKEYLEN);
+    // sprintf(journame, "%sjournal", filename);
+    // int ret1 = open(journame, O_CREAT | O_RDWR, 0666);
     /*printf("%d\n", ret);*/
     db->fd = ret;
-    db->jfd = ret1;
-    db->joname = journame;
+    // db->jfd = ret1;
+    // db->joname = journame;
     // free(journame);
     if(ret < 0){
         panic("open file failed");
@@ -213,13 +213,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
     char *valuebuf = (char *)malloc(sizeof(char) * MAXKEYLEN);
-    flock(db->jfd, LOCK_EX);
-    sprintf(buf, "%s\n", key);
-    sprintf(valuebuf, "%s\n", value);
-    lseek(db->jfd, 0, SEEK_END);
-    write(db->jfd, buf, strlen(buf));
-    write(db->jfd, valuebuf, strlen(valuebuf));
-    flock(db->jfd, LOCK_UN);
+    // flock(db->jfd, LOCK_EX);
+    // sprintf(buf, "%s\n", key);
+    // sprintf(valuebuf, "%s\n", value);
+    // lseek(db->jfd, 0, SEEK_END);
+    // write(db->jfd, buf, strlen(buf));
+    // write(db->jfd, valuebuf, strlen(valuebuf));
+    // flock(db->jfd, LOCK_UN);
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
     while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
