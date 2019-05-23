@@ -179,7 +179,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     free(buf);
     free(valuebuf);
     sync();
-    Logg("put unlock");
+    /*Logg("put unlock");*/
     pthread_mutex_unlock(&(db->mutex));
     return 0;
 }

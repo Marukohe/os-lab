@@ -71,7 +71,7 @@ void* thread_test(void * data){
     for(int i = 0; i < TESTNUM; i++){
         sprintf(key, "operating-%d-system", i);
         value = kvdb_get(&db, key);
-        printf("[%s]: [%s]: [thread-%ld]\n", key, value, no);
+        printf("[%s]: [%s]: [thread-%ld]\n", key, value, (unsigned long)no);
         free(value);
     }
     free(key);
@@ -87,7 +87,7 @@ int pthread_test(){
     uintptr_t t;
     pthread_t thread[NUMTHREADS];
     for(t = 0; t < NUMTHREADS; t++){
-        printf("Creating Thread %ld\n", t + 1);
+        printf("Creating Thread %ld\n", (unsigned long)t + 1);
         rc = pthread_create(&thread[t], NULL, thread_test, (void *)(t));
         if(rc){
             printf("ERROR, return code is %d\n", rc);
