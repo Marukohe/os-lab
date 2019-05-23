@@ -11,7 +11,7 @@
 #define FILESIZE 1000
 
 kvdb_t db;
-kvdb_t dc;
+/*kvdb_t dc;*/
 void * test1(void *data){
     char *key = (char *)malloc(sizeof(char)*FILESIZE);
     char *value;
@@ -62,22 +62,22 @@ void* thread_test(void * data){
         sprintf(key, "operating-%d-system", i);
         sprintf(buf, "operating-%d-system", i);
         kvdb_put(&db, key, buf);
-        kvdb_put(&dc, key, buf);
+        /*kvdb_put(&dc, key, buf);*/
     }
     for(int i = 0; i < TESTNUM; i++){
         if((i % 2) == 0){
             sprintf(key, "operating-%d-system", i);
             sprintf(buf, "operating-%d-system-hello", i);
             kvdb_put(&db, key, buf);
-            kvdb_put(&dc, key, buf);
+            /*kvdb_put(&dc, key, buf);*/
         }
     }
     for(int i = 0; i < TESTNUM; i++){
         sprintf(key, "operating-%d-system", i);
-        if((i % 2) == 0 )
+        /*if((i % 2) == 0 )*/
             value = kvdb_get(&db, key);
-        else
-            value = kvdb_get(&dc, key);
+        /*else*/
+            /*value = kvdb_get(&dc, key);*/
         printf("[%s]: [%s]: [thread-%ld]\n", key, value, (unsigned long)no);
         free(value);
     }
