@@ -38,6 +38,7 @@ void panic(char *msg){
 
 struct kvdb {
     int fd;
+    int jfd;
     pthread_mutex_t mutex;
     //pthread_rwlock_t rw_lock;
 };

@@ -6,8 +6,8 @@
 #include <stdint.h>
 #include <assert.h>
 
-#define NUMTHREADS 5
-#define TESTNUM 200
+#define NUMTHREADS 2
+#define TESTNUM 20
 #define FILESIZE 1000
 
 kvdb_t db;

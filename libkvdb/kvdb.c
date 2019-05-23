@@ -41,8 +41,13 @@ int kvdb_open(kvdb_t * db, const char *filename){
     }
     Log("file open");
     int ret = open(filename, O_CREAT | O_RDWR, 0666);
+    char *journame = (char *)malloc(sizeof(char) * MAXKEYLEN);
+    sprintf(journame, "%sjournal", filename);
+    int ret1 = open(journame, O_CREAT | O_RDWR, 0666);
     /*printf("%d\n", ret);*/
     db->fd = ret;
+    db->jfd = ret1;
+    free(journame);
     if(ret < 0){
         panic("open file failed");
         return -1;
@@ -120,6 +125,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     char *buf = (char *)malloc(sizeof(char) * MAXKEYLEN);
     char *valuebuf = (char *)malloc(sizeof(char) * MAXKEYLEN);
+    flock(db->jfd, LOCK_EX);
+    sprintf(buf, "%s\n", key);
+    sprintf(valuebuf, "%s\n", value);
+    lseek(db->jfd, 0, SEEK_END);
+    write(db->jfd, buf, strlen(buf));
+    write(db->jfd, valuebuf, strlen(valuebuf));
+    flock(db->jfd, LOCK_UN);
     lseek(db->fd, 0, SEEK_SET);
     int rc = 0;
     while((rc = read_line(db->fd, buf, MAXKEYLEN, 0)) > 0){
