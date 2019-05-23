@@ -11,7 +11,7 @@
 #define FILESIZE 1000
 
 kvdb_t db;
-void test1(int testnum){
+void * test1(void *data){
     char *key = (char *)malloc(sizeof(char)*FILESIZE);
     char *value;
 
@@ -19,13 +19,13 @@ void test1(int testnum){
     kvdb_open(&db, "a.db"); // BUG: should check for errors
     /*kvdb_put(&db, key, "three-easy-pieces");*/
     char *buf = (char *)malloc(sizeof(char)*FILESIZE);
-    for(int i = 0; i < testnum; i++){
+    for(int i = 0; i < TESTNUM; i++){
         sprintf(buf, "operating-%d-systems", i);
         sprintf(key, "operating-%d-sys-hello", i);
         kvdb_put(&db, buf, key);
     }
 
-    for(int i = 0; i < testnum; i++){
+    for(int i = 0; i < TESTNUM; i++){
         sprintf(buf, "operating-%d-systems", i);
         sprintf(key, "operating-%d-sys-hello-world", i);
         if((i  % 2) == 0)
@@ -35,7 +35,7 @@ void test1(int testnum){
             kvdb_put(&db, buf, key);
         }
     }
-    for(int i = 0; i < testnum; i++){
+    for(int i = 0; i < TESTNUM; i++){
         sprintf(buf, "operating-%d-systems", i);
         value = kvdb_get(&db, buf);
         printf("[%s]: [%s]\n", buf, value);
@@ -88,7 +88,7 @@ int pthread_test(){
     pthread_t thread[NUMTHREADS];
     for(t = 0; t < NUMTHREADS; t++){
         printf("Creating Thread %ld\n", (unsigned long)t + 1);
-        rc = pthread_create(&thread[t], NULL, thread_test, (void *)(t));
+        rc = pthread_create(&thread[t], NULL, test1, (void *)(t));
         if(rc){
             printf("ERROR, return code is %d\n", rc);
             panic("ERROR");
