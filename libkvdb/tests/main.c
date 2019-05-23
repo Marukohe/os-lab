@@ -88,7 +88,7 @@ int pthread_test(){
     pthread_t thread[NUMTHREADS];
     for(t = 0; t < NUMTHREADS; t++){
         printf("Creating Thread %ld\n", (unsigned long)t + 1);
-        rc = pthread_create(&thread[t], NULL, test1, (void *)(t));
+        rc = pthread_create(&thread[t], NULL, thread_test, (void *)(t));
         if(rc){
             printf("ERROR, return code is %d\n", rc);
             panic("ERROR");
