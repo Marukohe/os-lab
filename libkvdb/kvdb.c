@@ -35,6 +35,7 @@ int kvdb_open(kvdb_t * db, const char *filename){
         Log("file has been opened");
         return 0;
     }
+    Log("file open");
     int ret = open(filename, O_CREAT | O_RDWR, 0666);
     /*printf("%d\n", ret);*/
     db->fd = ret;
