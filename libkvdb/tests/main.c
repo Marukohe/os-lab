@@ -11,6 +11,7 @@
 #define FILESIZE 1000
 
 kvdb_t db;
+kvdb_t dc;
 void * test1(void *data){
     char *key = (char *)malloc(sizeof(char)*FILESIZE);
     char *value;
@@ -49,6 +50,7 @@ void * test1(void *data){
 void* thread_test(void * data){
     int chret;
     chret = kvdb_open(&db, "a.db");
+    chret = kvdb_open(&dc, "c.db");
     if(chret < 0){
         panic("open file failed in tests");
     }
@@ -60,17 +62,22 @@ void* thread_test(void * data){
         sprintf(key, "operating-%d-system", i);
         sprintf(buf, "operating-%d-system", i);
         kvdb_put(&db, key, buf);
+        kvdb_put(&dc, key, buf);
     }
     for(int i = 0; i < TESTNUM; i++){
         if((i % 2) == 0){
             sprintf(key, "operating-%d-system", i);
             sprintf(buf, "operating-%d-system-hello", i);
             kvdb_put(&db, key, buf);
+            kvdb_put(&dc, key, buf);
         }
     }
     for(int i = 0; i < TESTNUM; i++){
         sprintf(key, "operating-%d-system", i);
-        value = kvdb_get(&db, key);
+        if((i % 2) == 0 )
+            value = kvdb_get(&db, key);
+        else
+            value = kvdb_get(&dc, key);
         printf("[%s]: [%s]: [thread-%ld]\n", key, value, (unsigned long)no);
         free(value);
     }
