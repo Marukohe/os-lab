@@ -40,6 +40,7 @@ struct kvdb {
     int fd;
     int jfd;
     pthread_mutex_t mutex;
+    char *joname;
     //pthread_rwlock_t rw_lock;
 };
 typedef struct kvdb kvdb_t;
