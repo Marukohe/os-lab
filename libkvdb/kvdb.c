@@ -109,7 +109,7 @@ int writebuf(int fd, const char *buf, int len){
 }
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
-    Logg("put lock [%s]", key);
+    /*Logg("put lock [%s]", key);*/
     pthread_mutex_lock(&(db->mutex));
     if(strlen(key) > MAXKEYLEN || strlen(value) > MAXVALUELEN){
         Log("Sorry, My DataSet dosen't support such big string\n");
@@ -190,7 +190,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 //===================================================
 
 char *kvdb_get(kvdb_t *db, const char *key){
-    Logq("get lock");
+    /*Logq("get lock");*/
     pthread_mutex_lock(&(db->mutex));
     char *retget = (char *)malloc(sizeof(char) * MAXVALUELEN);
     char *valuebuf = (char *)malloc(sizeof(char) * MAXVALUELEN);
