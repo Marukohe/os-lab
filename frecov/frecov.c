@@ -199,10 +199,11 @@ int main(int argc, char *argv[]) {
                 char cmd[1000] = "sha1sum ";
                 FILE *fp = fopen(filename, "w+");
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
+                fclose(fp);
                 strcat(cmd, filename);
                 system(cmd);
-                unlink(filename);
-                fclose(fp);
+                /*unlink(filename);*/
+                /*fclose(fp);*/
 
                 // int pipefds[2];
                 // int pipefds1[2];
