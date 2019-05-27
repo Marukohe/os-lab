@@ -201,6 +201,7 @@ int main(int argc, char *argv[]) {
                 fwrite(tmpfile, sizeof(uint8_t), bmp->bfSize, fp);
                 /*fclose(fp);*/
                 strcat(cmd, filename);
+                fflush(fp);
                 system(cmd);
                 unlink(filename);
                 fclose(fp);
