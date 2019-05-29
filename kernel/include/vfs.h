@@ -16,11 +16,11 @@ typedef struct {
   int (*close)(int fd);
 } MODULE(vfs);
 
-struct filesystem {
+typedef struct filesystem {
   //...
   fsops_t *ops;
   dev_t *dev;
-};
+}filesystem_t;
 
 typedef struct fsops {
   void (*init)(struct filesystem *fs, const char *name, dev_t *dev);
