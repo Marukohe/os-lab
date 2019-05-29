@@ -25,11 +25,11 @@ typedef struct {
 struct filesystem {
   //...
   fsops_t *ops;
-  dev_t *dev;
+  devices_t *dev;
 };
 
 struct fsops {
-  void (*init)(struct filesystem *fs, const char *name, dev_t *dev);
+  void (*init)(struct filesystem *fs, const char *name, device_t *dev);
   inode_t *(*lookup)(struct filesystem *fs, const char *path, int flags);
   int (*close)(inode_t *inode);
 };
