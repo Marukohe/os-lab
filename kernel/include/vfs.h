@@ -9,6 +9,9 @@ typedef struct fsops fsops_t;
 struct inode;
 typedef struct inode inode_t;
 
+struct file;
+typedef struct file file_t;
+
 typedef struct {
   void (*init)();
   int (*access)(const char *path, int mode);
@@ -60,11 +63,11 @@ struct inode {
   //...
 };
 
-typedef struct file {
+struct file {
   int refcnt; // 引用计数
   inode_t *inode;
   uint64_t offset;
   //...
-} file_t;
+};
 
 
