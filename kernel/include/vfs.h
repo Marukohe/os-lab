@@ -1,5 +1,8 @@
 #include <common.h>
 
+struct filesystem;
+typedef struct filesystem filesystem_t;
+
 typedef struct {
   void (*init)();
   int (*access)(const char *path, int mode);
@@ -16,11 +19,11 @@ typedef struct {
   int (*close)(int fd);
 } MODULE(vfs);
 
-typedef struct filesystem {
+struct filesystem {
   //...
   fsops_t *ops;
   dev_t *dev;
-}filesystem_t;
+};
 
 typedef struct fsops {
   void (*init)(struct filesystem *fs, const char *name, dev_t *dev);
