@@ -6,6 +6,9 @@ typedef struct filesystem filesystem_t;
 struct fsops;
 typedef struct fsops fsops_t;
 
+struct inode;
+typedef struct inode inode_t;
+
 typedef struct {
   void (*init)();
   int (*access)(const char *path, int mode);
@@ -25,7 +28,7 @@ typedef struct {
 struct filesystem {
   //...
   fsops_t *ops;
-  devices_t *dev;
+  device_t *dev;
 };
 
 struct fsops {
