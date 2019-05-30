@@ -2,10 +2,6 @@
 #include <vfs.h>
 extern void TODO();
 
-fsops_t file_ops{
-    .
-}
-
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
     fs = pmm->alloc(sizeof(filesystem_t));
@@ -22,4 +18,10 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
 int fsclose(inode_t *inode){
     TODO();
     return 0;
+}
+
+fsops_t fs_ops = {
+    .init = fsintit,
+    .lookup = lookup,
+    .close = fsclose,
 }

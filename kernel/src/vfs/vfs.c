@@ -1,10 +1,12 @@
 #include <common.h>
 #include <vfs.h>
 #include <klib.h>
+
+extern fsops_t fs_ops;
 #define FILESYSTEM(_) \
-    _(0, filesystem_t, "procfs", 1, &fsops_t) \
-    _(1, filesystem_t, "devfs",  2, &fsops_t) \
-    _(2, filesystem_t, "blkfs",  3, &fsops_t)
+    _(0, filesystem_t, "procfs", 1, &fs_ops) \
+    _(1, filesystem_t, "devfs",  2, &fs_ops) \
+    _(2, filesystem_t, "blkfs",  3, &fs_ops)
 
 #define FS_CNT(...) + 1
 filesystem_t filesys[0 FILESYSTEM(FS_CNT)];
