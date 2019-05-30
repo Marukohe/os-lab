@@ -1,7 +1,7 @@
 #include <common.h>
 #include <vfs.h>
 #include <klib.h>
-#define FILESYSTEM() \
+#define FILESYSTEM(_) \
     _(0, filesystem_t, "procfs", 1, &fsops_t) \
     _(1, filesystem_t, "devfs",  2, &fsops_t) \
     _(2, filesystem_t, "blkfs",  3, &fsops_t)
@@ -16,7 +16,7 @@ void TODO(){
 static filesystem_t *filesys_create(size_t fs_size, const char* fs_name, int fs_id, fsops_t *fs_ops){
     filesystem_t *filesys = pmm->alloc(sizeof(filesystem_t));
     *filesys = (filesystem_t){
-        .name = name,
+        .name = fs_name,
         .id = fs_id,
         .ops = fs_ops,
         /*.dev = dev,*/
@@ -24,7 +24,7 @@ static filesystem_t *filesys_create(size_t fs_size, const char* fs_name, int fs_
     return filesys;
 }
 
-#define FSCREATE(id, fs_type) \
+#define FSCREATE(id, fs_type, fs_name, fs_id, fs_ops) \
     filesys[id] = filesys_create(sizeof(fs_type), fs_name, fs_id, fs_ops);
 
 void init(){
