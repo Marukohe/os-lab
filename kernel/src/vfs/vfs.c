@@ -9,7 +9,7 @@ extern fsops_t fs_ops;
     _(2, filesystem_t, "blkfs",  3, &fs_ops)
 
 #define FS_CNT(...) + 1
-filesystem_t filesys[0 FILESYSTEM(FS_CNT)];
+filesystem_t *filesys[0 FILESYSTEM(FS_CNT)];
 
 void TODO(){
     assert(0);
