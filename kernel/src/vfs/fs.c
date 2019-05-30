@@ -23,4 +23,4 @@ fsops_t fs_ops = {
     .init = fsinit,
     .lookup = lookup,
     .close = fsclose,
-}
+};
