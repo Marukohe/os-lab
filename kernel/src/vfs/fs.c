@@ -20,7 +20,7 @@ int fsclose(inode_t *inode){
 }
 
 fsops_t fs_ops = {
-    .init = fsintit,
+    .init = fsinit,
     .lookup = lookup,
     .close = fsclose,
 }
