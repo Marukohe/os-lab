@@ -30,6 +30,8 @@ typedef struct {
 
 struct filesystem {
   //...
+  char *name;
+  int id;
   fsops_t *ops;
   device_t *dev;
 };

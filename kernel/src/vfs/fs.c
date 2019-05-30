@@ -2,8 +2,15 @@
 #include <vfs.h>
 extern void TODO();
 
+fsops_t file_ops{
+    .
+}
+
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
-    TODO();
+    /*TODO();*/
+    fs = pmm->alloc(sizeof(filesystem_t));
+    fs->name = name;
+    fs->ops =
     return;
 }
 
