@@ -6,7 +6,6 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
     fs = pmm->alloc(sizeof(filesystem_t));
     fs->name = name;
-    fs->ops =
     return;
 }
 
