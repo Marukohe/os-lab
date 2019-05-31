@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
+#include <vfs.h>
 
 /*#define OSDEBUG*/
 /*#define CONSUMER*/
@@ -75,6 +76,7 @@ static void os_init() {
   kmt->init();
   /*_vme_init(pmm->alloc, pmm->free);*/
   dev->init();
+  vfs->init();
 
 #ifdef TTY
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
