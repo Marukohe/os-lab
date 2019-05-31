@@ -4,8 +4,8 @@ extern void TODO();
 
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
-    fs = pmm->alloc(sizeof(filesystem_t));
-    fs->name = name;
+    /*fs = pmm->alloc(sizeof(filesystem_t));*/
+    /*fs->name = name;*/
     return;
 }
 

@@ -3,10 +3,11 @@
 #include <klib.h>
 
 extern fsops_t fs_ops;
+extern device_t *devices[0 8];
 #define FILESYSTEM(_) \
-    _(0, filesystem_t, "procfs", 1, &fs_ops) \
-    _(1, filesystem_t, "devfs",  2, &fs_ops) \
-    _(2, filesystem_t, "blkfs",  3, &fs_ops)
+    _(0, filesystem_t, "procfs", 1, &fs_ops, NULL) \
+    _(1, filesystem_t, "devfs",  2, &fs_ops, NULL) \
+    _(2, filesystem_t, "blkfs",  3, &fs_ops, &devices[1]);
 
 #define FS_CNT(...) + 1
 filesystem_t *filesys[0 FILESYSTEM(FS_CNT)];
@@ -15,23 +16,28 @@ void TODO(){
     assert(0);
 }
 
-static filesystem_t *filesys_create(size_t fs_size, const char* fs_name, int fs_id, fsops_t *fs_ops){
+static filesystem_t *filesys_create(size_t fs_size, const char* fs_name, int fs_id, fsops_t *fs_ops, device_t *dev){
     filesystem_t *filesys = pmm->alloc(sizeof(filesystem_t));
     *filesys = (filesystem_t){
         .name = fs_name,
         .id = fs_id,
         .ops = fs_ops,
-        /*.dev = dev,*/
+        .dev = dev,
     };
     return filesys;
 }
 
-#define FSCREATE(id, fs_type, fs_name, fs_id, fs_ops) \
-    filesys[id] = filesys_create(sizeof(fs_type), fs_name, fs_id, fs_ops);
+#define FSCREATE(id, fs_type, fs_name, fs_id, fs_ops, dev) \
+    filesys[id] = filesys_create(sizeof(fs_type), fs_name, fs_id, fs_ops, dev);
+
+#define FSINIT(id, fs_type, fs_name, fs_id, fs_ops, dev) \
+    filesys[id]->ops->init(filesys[id], fs_name, dev);
+
 
 void init(){
     /*TODO();*/
     FILESYSTEM(FSCREATE);
+    FILESYSTEM(FSINIT);
 
     return;
 }
