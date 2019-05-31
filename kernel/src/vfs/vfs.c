@@ -3,7 +3,7 @@
 #include <klib.h>
 
 extern fsops_t fs_ops;
-extern device_t *devices[0 8];
+extern device_t *devices[8];
 #define FILESYSTEM(_) \
     _(0, filesystem_t, "procfs", 1, &fs_ops, NULL) \
     _(1, filesystem_t, "devfs",  2, &fs_ops, NULL) \
