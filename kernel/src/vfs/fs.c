@@ -83,8 +83,9 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         if(!inodefind){
             if(offset == strlen(path)){
                 //创建一个inode写入磁盘
-                inode_t *inodecreat = pmm->alloc(sizeof(inode_t));
-                filesys[2]->dev->ops->write(filesys[2]->dev, inodeoffset, (void *)inodecreat, INODESIZE);
+                inode_t *inodect = pmm->alloc(sizeof(inode_t));
+                inodecreat(inodect, flags, fs, fs->dev);
+                filesys[2]->dev->ops->write(filesys[2]->dev, inodeoffset, (void *)inodect, INODESIZE);
                 pmm->free(inodecreat);
             }
         }
