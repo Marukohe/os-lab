@@ -8,6 +8,13 @@ extern inodeops_t inode_ops;
 #define BLOCKSIZE 4096
 #define DIRSIZE 512
 
+struct mnttable{
+    char *name;
+    filesystem_t fs;
+};
+
+struct mnttable mt[5];
+
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
     /*fs = pmm->alloc(sizeof(filesystem_t));*/
@@ -19,6 +26,8 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     fs->sinode->ptr = data;
     fs->sinode->fs = fs;
     fs->sinode->ops = &inode_ops;
+    mt[fs->id]->name = name;
+    mt[fd->id]->fs = fs;
     return;
 }
 
