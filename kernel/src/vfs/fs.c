@@ -38,7 +38,7 @@ static void getpath(char *get, const char *path, int offset){
     *get = '\0';
 }
 
-static void inodecreat(inode_t *inode, flags, filesystem_t *fs, device_t * dev){
+static void inodecreat(inode_t *inode, int flags, filesystem_t *fs, device_t * dev){
     inode->refcnt = 0;
     inode->flags = flags;
     inode->offset[0] = diskoffset;
@@ -85,7 +85,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                 //创建一个inode写入磁盘
                 inode_t *inodecreat = pmm->alloc(sizeof(inode_t));
                 filesys[2]->dev->ops->write(filesys[2]->dev, inodeoffset, (void *)inodecreat, INODESIZE);
-                pmm->free(inodecerat);
+                pmm->free(inodecreat);
             }
         }
     }
