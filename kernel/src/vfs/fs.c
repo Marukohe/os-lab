@@ -9,7 +9,7 @@ extern filesystem_t *filesys[3];
 #define BLOCKSIZE 4096
 #define DIRSIZE 512
 static int diskoffset = (4 << 14);
-static int inodeoffset = 0;
+/*static int inodeoffset = 0;*/
 
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
@@ -56,19 +56,19 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         /*printf("%s\n", get);*/
         offset += strlen(get) + 1;
 
-        uint8_t inodefind = false;
+        uint8_t inodefind = 0;
         for(int i = 0; i < dir->cnt; i++){
             if(dir->used[1] == 0) continue;
             if(strcmp(dir->name[i], get) == 0){
                 //获取目录块中记录的inode
                 filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[i], tmpnode, INODESIZE);
                 ret = (inode_t *)tmpnode;
-                if(ret->flags & flags == 0){
+                if((ret->flags & flags) == 0){
                     printf("Permission denied\n");
                     pmm->free(tmpnode);
                     return NULL;
                 }
-                inodefind = true;
+                inodefind = 1;
                 break;
             }
         }
