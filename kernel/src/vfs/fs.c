@@ -8,16 +8,17 @@ extern filesystem_t *filesys[3];
 #define INODESIZE (sizeof(inode_t))
 #define BLOCKSIZE 4096
 #define DIRSIZE 512
-static int diskoffset;
+static int diskoffset = (4 << 14);
+static int inodeoffset = 0;
 
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
-    /*fs = pmm->alloc(sizeof(filesystem_t));*/
-    /*fs->name = name;*/
+    //offsetblk写入磁盘
     void *data = pmm->alloc(sizeof(device_t));
+    data = (void *)dev;
     fs->sinode = pmm->alloc(sizeof(inode_t));
     fs->sinode->refcnt = 0;
-    fs->sinode->flags = 0;// TODO()
+    fs->sinode->flags = 7;
     fs->sinode->offset[0] = diskoffset;
     diskoffset += BLOCKSIZE;
     fs->sinode->ptr = data;
@@ -37,6 +38,8 @@ static void getpath(char *get, const char *path, int offset){
     *get = '\0';
 }
 
+/*static void inodecreat(inode_t *inode, flags, )*/
+
 inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
     inode_t *ret = fs->sinode;
@@ -44,6 +47,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     char *get = (char *)pmm->alloc(sizeof(DIRSIZE));
     void *tmpnode = pmm->alloc(INODESIZE);
     while(offset < strlen(path)){
+        //获取目录block
         void *buf = pmm->alloc(BLOCKSIZE);
         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
         dir_t *dir = (dir_t *)buf;
@@ -52,11 +56,25 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         /*printf("%s\n", get);*/
         offset += strlen(get) + 1;
 
+        uint8_t inodefind = false;
         for(int i = 0; i < dir->cnt; i++){
+            if(dir->used[1] == 0) continue;
             if(strcmp(dir->name[i], get) == 0){
+                //获取目录块中记录的inode
                 filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[i], tmpnode, INODESIZE);
                 ret = (inode_t *)tmpnode;
+                if(ret->flags & flags == 0){
+                    printf("Permission denied\n");
+                    pmm->free(tmpnode);
+                    return NULL;
+                }
+                inodefind = true;
                 break;
+            }
+        }
+        if(!inodefind){
+            if(offset == strlen(path)){
+
             }
         }
     }

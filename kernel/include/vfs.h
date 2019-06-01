@@ -1,7 +1,11 @@
 #include <common.h>
 #define OFFSETNUM 10
 
-// open mdoe
+// FILE MODE
+// ---------------------------------------
+#define RABLE 4
+#define WABLE 2
+#define XABLE 1
 
 struct filesystem;
 typedef struct filesystem filesystem_t;
@@ -33,6 +37,7 @@ typedef struct {
 
 typedef struct dir{
     int cnt;
+    uint8_t used[20];
     char name[20][100];
     int offset[20];
 }dir_t;
