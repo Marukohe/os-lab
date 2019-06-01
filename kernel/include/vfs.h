@@ -1,5 +1,7 @@
 #include <common.h>
 
+// open mdoe
+
 struct filesystem;
 typedef struct filesystem filesystem_t;
 
@@ -58,6 +60,7 @@ typedef struct inodeops {
 struct inode {
   //...
   int refcnt;
+  int flags;
   void *ptr;       // private data
   filesystem_t *fs;
   inodeops_t *ops; // 在inode被创建时，由文件系统的实现赋值
