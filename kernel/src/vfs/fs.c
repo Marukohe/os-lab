@@ -9,7 +9,7 @@ extern filesystem_t *filesys[3];
 #define BLOCKSIZE 4096
 #define DIRSIZE 512
 static int diskoffset = (4 << 14);
-/*static int inodeoffset = 0;*/
+static int inodeoffset = 0;
 
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
@@ -38,7 +38,15 @@ static void getpath(char *get, const char *path, int offset){
     *get = '\0';
 }
 
-/*static void inodecreat(inode_t *inode, flags, )*/
+static void inodecreat(inode_t *inode, flags, filesystem_t *fs, device_t * dev){
+    inode->refcnt = 0;
+    inode->flags = flags;
+    inode->offset[0] = diskoffset;
+    diskoffset += BLOCKSIZE;
+    inode->ptr = (void *)dev;
+    inode->fs = fs;
+    inode->ops = &inode_ops;
+}
 
 inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
@@ -74,7 +82,10 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         }
         if(!inodefind){
             if(offset == strlen(path)){
-
+                //创建一个inode写入磁盘
+                inode_t *inodecreat = pmm->alloc(sizeof(inode_t));
+                filesys[2]->dev->ops->write(filesys[2]->dev, inodeoffset, (void *)inodecreat, INODESIZE);
+                pmm->free(inodecerat);
             }
         }
     }
