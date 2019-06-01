@@ -18,7 +18,7 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     fs->sinode = pmm->alloc(sizeof(inode_t));
     fs->sinode->refcnt = 0;
     fs->sinode->flags = 0;// TODO()
-    fd->sinode->offset[0] = diskoffset;
+    fs->sinode->offset[0] = diskoffset;
     diskoffset += BLOCKSIZE;
     fs->sinode->ptr = data;
     fs->sinode->fs = fs;
@@ -39,12 +39,12 @@ static void getpath(char *get, const char *path, int offset){
 
 inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
-    inode_t *ret = fd->sinode;
+    inode_t *ret = fs->sinode;
     int offset = 0;
     char *get = (char *)pmm->alloc(sizeof(DIRSIZE));
     void *tmpnode = pmm->alloc(INODESIZE);
     while(offset < strlen(path)){
-        void *buf = pmm->alloc(BLOCKSZIZE);
+        void *buf = pmm->alloc(BLOCKSIZE);
         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
         dir_t *dir = (dir_t *)buf;
 
