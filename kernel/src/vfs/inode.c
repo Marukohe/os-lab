@@ -47,3 +47,15 @@ int inodeunlink(const char *name){
     TODO();
     return 0;
 }
+
+inodeops_t inode_ops = {
+    .open = inodeopen,
+    .close = inodeclose,
+    .read = inoderead,
+    .write = inodewrite,
+    .lseek = inodelseek,
+    .mkdir = inodemkdir,
+    .rmdir = inodermdir,
+    .link = inodelink,
+    .unlink = inodeunlink,
+};

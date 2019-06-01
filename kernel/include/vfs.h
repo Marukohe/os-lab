@@ -36,6 +36,7 @@ struct filesystem {
   int id;
   fsops_t *ops;
   device_t *dev;
+  inode_t *sinode;
 };
 
 struct fsops {
