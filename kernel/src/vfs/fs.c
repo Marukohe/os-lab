@@ -1,5 +1,6 @@
 #include <common.h>
 #include <vfs.h>
+#include <devices.h>
 extern void TODO();
 extern inodeops_t inode_ops;
 
