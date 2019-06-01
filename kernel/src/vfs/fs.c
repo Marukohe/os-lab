@@ -10,7 +10,7 @@ extern inodeops_t inode_ops;
 
 struct mnttable{
     char *name;
-    filesystem_t fs;
+    filesystem_t *fs;
 };
 
 struct mnttable mt[5];
