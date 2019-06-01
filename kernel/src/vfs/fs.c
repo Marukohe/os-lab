@@ -4,16 +4,11 @@
 #include <klib.h>
 extern void TODO();
 extern inodeops_t inode_ops;
-#define OFFSET (sizeof(inode_t))
+extern filesystem_t *filesys[3];
+#define INODESIZE (sizeof(inode_t))
 #define BLOCKSIZE 4096
 #define DIRSIZE 512
-
-struct mnttable{
-    char *name;
-    filesystem_t *fs;
-};
-
-struct mnttable mt[5];
+static int diskoffset;
 
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
@@ -23,11 +18,11 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     fs->sinode = pmm->alloc(sizeof(inode_t));
     fs->sinode->refcnt = 0;
     fs->sinode->flags = 0;// TODO()
+    fd->sinode->offset[0] = diskoffset;
+    diskoffset += BLOCKSIZE;
     fs->sinode->ptr = data;
     fs->sinode->fs = fs;
     fs->sinode->ops = &inode_ops;
-    mt[fs->id].name = name;
-    mt[fs->id].fs = fs;
     return;
 }
 
@@ -44,16 +39,30 @@ static void getpath(char *get, const char *path, int offset){
 
 inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
+    inode_t *ret = fd->sinode;
     int offset = 0;
     char *get = (char *)pmm->alloc(sizeof(DIRSIZE));
+    void *tmpnode = pmm->alloc(INODESIZE);
     while(offset < strlen(path)){
+        void *buf = pmm->alloc(BLOCKSZIZE);
+        filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
+        dir_t *dir = (dir_t *)buf;
+
         getpath(get, path, offset);
-        printf("%s\n", get);
+        /*printf("%s\n", get);*/
         offset += strlen(get) + 1;
+
+        for(int i = 0; i < dir->cnt; i++){
+            if(strcmp(dir->name[i], get) == 0){
+                filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[i], tmpnode, INODESIZE);
+                ret = (inode_t *)tmpnode;
+                break;
+            }
+        }
     }
     pmm->free(get);
 
-    return NULL;
+    return ret;
 }
 
 int fsclose(inode_t *inode){

@@ -5,9 +5,9 @@
 extern fsops_t fs_ops;
 extern device_t *devices[8];
 #define FILESYSTEM(_) \
-    _(0, filesystem_t, "procfs", 1, &fs_ops, NULL) \
-    _(1, filesystem_t, "devfs",  2, &fs_ops, NULL) \
-    _(2, filesystem_t, "blkfs",  3, &fs_ops, devices[1])
+    _(0, filesystem_t, "procfs", 0, &fs_ops, NULL) \
+    _(1, filesystem_t, "devfs",  1, &fs_ops, NULL) \
+    _(2, filesystem_t, "blkfs",  2, &fs_ops, devices[1])
 
 #define FS_CNT(...) + 1
 filesystem_t *filesys[0 FILESYSTEM(FS_CNT)];

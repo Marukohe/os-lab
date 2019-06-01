@@ -1,4 +1,5 @@
 #include <common.h>
+#define OFFSETNUM 10
 
 // open mdoe
 
@@ -30,6 +31,12 @@ typedef struct {
   int (*close)(int fd);
 } MODULE(vfs);
 
+typedef struct dir{
+    int cnt;
+    char name[20][100];
+    int offset[20];
+}dir_t;
+
 struct filesystem {
   //...
   const char *name;
@@ -38,6 +45,7 @@ struct filesystem {
   device_t *dev;
   inode_t *sinode;
 };
+
 
 struct fsops {
   void (*init)(struct filesystem *fs, const char *name, device_t *dev);
@@ -62,6 +70,7 @@ struct inode {
   //...
   int refcnt;
   int flags;
+  int offset[OFFSETNUM];
   void *ptr;       // private data
   filesystem_t *fs;
   inodeops_t *ops; // 在inode被创建时，由文件系统的实现赋值
