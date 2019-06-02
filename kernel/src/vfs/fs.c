@@ -11,13 +11,6 @@ extern filesystem_t *filesys[5];
 static int diskoffset = (4 << 14);
 static int inodeoffset = 0;
 
-struct mounttable{
-    char rootname[20];
-    int id[20];
-    int cnt;
-};
-
-struct mounttable mtt;
 
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/

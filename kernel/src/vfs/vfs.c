@@ -4,7 +4,7 @@
 
 extern fsops_t fs_ops;
 extern device_t *devices[8];
-extern struct mounttable mtt;
+mt_t *mtt;
 #define L3DEBUG
 
 #define FILESYSTEM(_) \
@@ -54,13 +54,14 @@ void check(inode_t *ret){
 }
 
 void mttinit(){
-    mtt.cnt = 3;
-    mtt.id[0] = 0;
-    strcpy(mtt.rootname[0], "proc");
-    mtt.id[1] = 1;
-    strcpy(mtt.rootname[1], "dev");
-    mtt.id[2] = 2;
-    strcpy(mtt.rootname[2], "/");
+    mtt = (mt_t *)pmm->alloc(sizeof(mt_t));
+    mtt->cnt = 3;
+    mtt->id[0] = 0;
+    strcpy(mtt->rootname[0], "proc");
+    mtt->id[1] = 1;
+    strcpy(mtt->rootname[1], "dev");
+    mtt->id[2] = 2;
+    strcpy(mtt->rootname[2], "/");
 }
 
 extern int filesysdecode(const char *path);
@@ -87,6 +88,7 @@ void init(){
     /*TODO();*/
     FILESYSTEM(FSCREATE);
     FILESYSTEM(FSINIT);
+    mttinit();
 
     /*vfstest();*/
     printf("%d\n", filesysdecode("/proc/hello"));
