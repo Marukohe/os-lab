@@ -59,14 +59,14 @@ void init(){
 #ifdef L3DEBUG
     const char *path = pmm->alloc(100);
     path = "/hello";
-    inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, O_CREAT|O_DIR);
+    inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, 7|O_CREAT|O_DIR);
     check(ret);
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7|O_CREAT|O_DIR);
     check(ret);
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", O_DIR);
     check(ret);
     /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7 | O_CREAT);*/
-    check(ret);
+    /*check(ret);*/
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7|O_CREAT);
     check(ret);
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7);
