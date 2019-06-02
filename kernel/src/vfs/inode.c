@@ -9,14 +9,12 @@ int filesysdecode(const char *path){
     int offset = 1;
     char *get = (char *)pmm->alloc(100);
     getpath(get, path, offset);
-    int ret = 0;
     for(int i = 0; i < mtt->cnt; i++){
         if(strcmp(get, mtt->rootname[i]) == 0){
             return i;
         }
-        ret++;
     }
-    return ret;
+    return 2;
 }
 
 int inodeopen(file_t *file, int flags){
