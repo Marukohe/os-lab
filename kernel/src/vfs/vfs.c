@@ -43,6 +43,15 @@ void Loginode(inode_t *node){
     Logg("%x", node->offset[0]);
 }
 
+void check(inode_t *ret){
+    if(ret == NULL){
+        Logg("Notfound");
+    }else{
+        Logg("Create dir");
+        Loginode(ret);
+    }
+}
+
 void init(){
     /*TODO();*/
     FILESYSTEM(FSCREATE);
@@ -51,12 +60,13 @@ void init(){
     const char *path = pmm->alloc(100);
     path = "/hello";
     inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, O_CREAT|O_DIR);
-    if(ret == NULL){
-        Logg("Notfound");
-    }else{
-        Logg("Create dir");
-        Loginode(ret);
-    }
+    check(ret);
+    ret = filesys[2]->ops->lookup(filesys[2], "hello/a/", O_CREAT|O_DIR);
+    check(ret);
+    ret = filesys[2]->ops->lookup(filesys[2], "hello/a/", O_DIR);
+    check(ret);
+    ret = filesys[2]->ops->lookup(filesys[2], "hello/a/", 0);
+    check(ret);
 #endif
 
     return;
