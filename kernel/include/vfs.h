@@ -99,7 +99,7 @@ struct file {
 };
 
 typedef struct mounttable{
-    char rootname[20];
+    char rootname[20][40];
     int id[20];
     int cnt;
 }mt_t;
