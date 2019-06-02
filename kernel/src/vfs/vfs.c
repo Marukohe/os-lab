@@ -4,7 +4,7 @@
 
 extern fsops_t fs_ops;
 extern device_t *devices[8];
-extern mounttable mtt;
+extern struct mounttable mtt;
 #define L3DEBUG
 
 #define FILESYSTEM(_) \
