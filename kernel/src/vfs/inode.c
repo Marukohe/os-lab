@@ -10,7 +10,9 @@ int filesysdecode(char *ret, const char *path){
     char *get = (char *)pmm->alloc(100);
     getpath(get, path, offset);
     offset += strlen(get);
-    ret = path + offset;
+    const char *cp;
+    cp = path + offset;
+    strcpy(ret, cp);
     printf("%s\n", ret);
     for(int i = 0; i < mtt->cnt; i++){
         if(strcmp(get, mtt->rootname[i]) == 0){
