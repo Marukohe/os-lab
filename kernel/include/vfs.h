@@ -83,6 +83,7 @@ struct inode {
   int flags;
   int is_dir;
   int offset[OFFSETNUM];
+  int pos;
   void *ptr;       // private data
   filesystem_t *fs;
   inodeops_t *ops; // 在inode被创建时，由文件系统的实现赋值
