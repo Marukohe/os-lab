@@ -2,7 +2,7 @@
 #include <vfs.h>
 #include <klib.h>
 extern void TODO();
-extern static void getpath(char *get, const char *path, int offset);
+extern void getpath(char *get, const char *path, int offset);
 extern mt_t *mtt;
 extern filesystem_t *filesys[5];
 int filesysdecode(const char *path){

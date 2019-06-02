@@ -29,7 +29,7 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     return;
 }
 
-static void getpath(char *get, const char *path, int offset){
+void getpath(char *get, const char *path, int offset){
     const char *cp;
     cp = path + offset;
     int len = strlen(path);
