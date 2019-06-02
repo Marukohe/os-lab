@@ -67,7 +67,7 @@ void init(){
     check(ret);
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7 | O_CREAT);
     check(ret);
-    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", O_CREAT);
+    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7|O_CREAT);
     check(ret);
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7);
     check(ret);
