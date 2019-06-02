@@ -48,10 +48,10 @@ static void inodecreat(inode_t *inode, int flags, int is_dir, filesystem_t *fs, 
     inode->ptr = (void *)dev;
     inode->fs = fs;
     inode->ops = &inode_ops;
-    char *tmp = pmm->alloc(BLOCKSIZE);
-    memset(tmp, 0, BLOCKSIZE);
-    filesys[2]->dev->ops->write(filesys[2]->dev, inode->offset[0], (void *)tmp, BLOCKSIZE);
-    pmm->free(tmp);
+    /*char *tmp = pmm->alloc(BLOCKSIZE);*/
+    /*memset(tmp, 0, BLOCKSIZE);*/
+    /*filesys[2]->dev->ops->write(filesys[2]->dev, inode->offset[0], (void *)tmp, BLOCKSIZE);*/
+    /*pmm->free(tmp);*/
 }
 
 inode_t *lookup(struct filesystem *fs, const char *path, int flags){
@@ -60,9 +60,9 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     int offset = 0;
     char *get = (char *)pmm->alloc(sizeof(DIRSIZE));
     void *tmpnode = pmm->alloc(INODESIZE);
+    void *buf = pmm->alloc(BLOCKSIZE);
     while(offset < strlen(path)){
         //获取目录block
-        void *buf = pmm->alloc(BLOCKSIZE);
         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
         dir_t *dir = (dir_t *)buf;
 
@@ -81,6 +81,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                     printf("Permission denied\n");
                     pmm->free(tmpnode);
                     pmm->free(get);
+                    pmm->free(buf);
                     return NULL;
                 }
                 if(offset == strlen(path)){
@@ -88,6 +89,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         printf("Dir or text not found\n");
                         pmm->free(tmpnode);
                         pmm->free(get);
+                        pmm->free(buf);
                         return NULL;
                     }
                 }
@@ -99,21 +101,43 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
             if(offset == strlen(path)){
                 if(flags & O_CREAT){
                     //创建一个inode写入磁盘
-                    /*if(flags & O_DIR){*/
-                    inode_t *inodect = pmm->alloc(sizeof(inode_t));
-                    inodecreat(inodect, flags, flags & O_DIR, fs, fs->dev);
-                    filesys[2]->dev->ops->write(filesys[2]->dev, inodeoffset, (void *)inodect, INODESIZE);
-                    ret = inodect;
-                    /*}else{*/
-                        /*inode_t *inodect = pmm->alloc(sizeof(inode_t));*/
-                        /*inodecreat(inodect, flags, O_DIR, fs, fs->dev);*/
-                        /*filesys[2]->dev->ops->write(filesys[2]->dev, inodeoffset, (void *)inodect, INODESIZE);*/
-                        /*ret = inodect;*/
-                    /*}*/
+                    if(flags & O_DIR){
+                        inode_t *inodect = pmm->alloc(sizeof(inode_t));
+                        inodecreat(inodect, flags, 1, fs, fs->dev);
+                        //inode写入磁盘
+                        inodect->pos = inodeoffset;
+                        inodeoffset += INODESIZE;
+                        filesys[2]->dev->ops->write(filesys[2]->dev, inodect->pos, (void *)inodect, INODESIZE);
+                        //更新目录项
+                        memset(buf, 0, BLOCKSIZE);
+                        filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
+                        dir_t *dir = (dir_t *)buf;
+                        strcpy(dir->name[dir->cnt], get);
+                        dir->offset[dir->cnt++] = inodect->pos;
+                        filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
+
+                        ret = inodect;
+                    }else{
+                        inode_t *inodect = pmm->alloc(sizeof(inode_t));
+                        inodecreat(inodect, flags, 0, fs, fs->dev);
+                        inodect->pos = inodeoffset;
+                        inodeoffset += INODESIZE;
+                        filesys[2]->dev->ops->write(filesys[2]->dev, inodeoffset, (void *)inodect, INODESIZE);
+
+                        memset(buf, 0, BLOCKSIZE);
+                        filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
+                        dir_t *dir = (dir_t *)buf;
+                        strcpy(dir->name[dir->cnt], get);
+                        dir->offset[dir->cnt++] = inodect->pos;
+                        filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
+
+                        ret = inodect;
+                    }
                 }else{
                     printf("Nothing to create\n");
                     pmm->free(get);
                     pmm->free(tmpnode);
+                    pmm->free(buf);
                     return NULL;
                 }
             }
@@ -121,6 +145,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     }
     pmm->free(get);
     pmm->free(tmpnode);
+    pmm->free(buf);
 
     return ret;
 }
