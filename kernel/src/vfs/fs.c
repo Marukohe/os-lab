@@ -15,7 +15,7 @@ struct mounttable{
     char rootname[20];
     int id[20];
     int cnt;
-}
+};
 
 struct mounttable mtt;
 
