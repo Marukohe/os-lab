@@ -57,7 +57,7 @@ static void inodecreat(inode_t *inode, int flags, int is_dir, filesystem_t *fs, 
 inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
     inode_t *ret = fs->sinode;
-    int offset = 0;
+    int offset = 1;
     char *get = (char *)pmm->alloc(sizeof(DIRSIZE));
     void *tmpnode = pmm->alloc(INODESIZE);
     void *buf = pmm->alloc(BLOCKSIZE);
