@@ -19,7 +19,7 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     fs->sinode = pmm->alloc(sizeof(inode_t));
     fs->sinode->refcnt = 0;
     fs->sinode->flags = 23;
-    fs->sinode->isdir = 1;
+    fs->sinode->is_dir = 1;
     fs->sinode->offset[0] = diskoffset;
     diskoffset += BLOCKSIZE;
     fs->sinode->ptr = data;
@@ -86,7 +86,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                 if(offset == strlen(path)){
                     if((!ret->is_dir && (flags & O_DIR)) || (ret->is_dir && !(flags & O_DIR))){
                         printf("Dir or text not found\n");
-                        pmm->alloc(tmpnode);
+                        pmm->free(tmpnode);
                         pmm->free(get);
                         return NULL;
                     }
