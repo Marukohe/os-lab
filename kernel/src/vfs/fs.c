@@ -48,7 +48,7 @@ static void inodecreat(inode_t *inode, int flags, int is_dir, filesystem_t *fs, 
     inode->ptr = (void *)dev;
     inode->fs = fs;
     inode->ops = &inode_ops;
-    char *tmp = pmm->alloc(BLOCKSZIE);
+    char *tmp = pmm->alloc(BLOCKSIZE);
     memset(tmp, 0, BLOCKSIZE);
     filesys[2]->dev->ops->write(filesys[2]->dev, inode->offset[0], (void *)tmp, BLOCKSIZE);
     pmm->free(tmp);
@@ -113,7 +113,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                 }else{
                     printf("Nothing to create\n");
                     pmm->free(get);
-                    pmm->free(tmpnode;)
+                    pmm->free(tmpnode);
                     return NULL;
                 }
             }
