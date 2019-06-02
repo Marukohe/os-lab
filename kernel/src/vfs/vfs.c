@@ -4,6 +4,8 @@
 
 extern fsops_t fs_ops;
 extern device_t *devices[8];
+#define L3DEBUG
+
 #define FILESYSTEM(_) \
     _(0, filesystem_t, "procfs", 0, &fs_ops, NULL) \
     _(1, filesystem_t, "devfs",  1, &fs_ops, NULL) \
@@ -38,6 +40,13 @@ void init(){
     /*TODO();*/
     FILESYSTEM(FSCREATE);
     FILESYSTEM(FSINIT);
+#ifdef L3DEBUG
+    const char *path = "/hello"
+    inode_t ret = filesys[2]->ops->lookup(filesys[2], path, O_CREAT|O_DIR);
+    if(ret == NULL){
+        Log("Notfound");
+    }
+#endif
 
     return;
 }
