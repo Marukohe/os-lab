@@ -55,7 +55,7 @@ int inodemkdir(const char *name){
     char *path = pmm->alloc(NAMELEN);
     int id = filesysdecode(path, name);
 
-    filesys[id]->opd->lookup(filesys[id], path, 7|O_CREAT|O_DIR);
+    filesys[id]->ops->lookup(filesys[id], path, 7|O_CREAT|O_DIR);
     pmm->free(path);
     return 0;
 }
