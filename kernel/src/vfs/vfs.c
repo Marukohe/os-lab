@@ -4,6 +4,7 @@
 
 extern fsops_t fs_ops;
 extern device_t *devices[8];
+extern mounttable mtt;
 #define L3DEBUG
 
 #define FILESYSTEM(_) \
@@ -12,7 +13,7 @@ extern device_t *devices[8];
     _(2, filesystem_t, "blkfs",  2, &fs_ops, devices[1])
 
 #define FS_CNT(...) + 1
-filesystem_t *filesys[0 FILESYSTEM(FS_CNT)];
+filesystem_t *filesys[5];
 
 void TODO(){
     assert(0);
@@ -52,10 +53,18 @@ void check(inode_t *ret){
     }
 }
 
-void init(){
-    /*TODO();*/
-    FILESYSTEM(FSCREATE);
-    FILESYSTEM(FSINIT);
+void mttinit(){
+    mtt.cnt = 3;
+    mtt.id[0] = 0;
+    strcpy(mtt.rootname[0], "proc");
+    mtt.id[1] = 1;
+    strcpy(mtt.rootname[1], "dev");
+    mtt.id[2] = 2;
+    strcpy(mtt.rootname[2], "/");
+}
+
+extern int filesysdecode(const char *path);
+void vfstest(){
 #ifdef L3DEBUG
     const char *path = pmm->alloc(100);
     path = "/hello";
@@ -72,6 +81,17 @@ void init(){
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7);
     check(ret);
 #endif
+}
+
+void init(){
+    /*TODO();*/
+    FILESYSTEM(FSCREATE);
+    FILESYSTEM(FSINIT);
+
+    /*vfstest();*/
+    printf("%d\n", filesysdecode("/proc/hello"));
+    printf("%d\n", filesysdecode("/dev/hello"));
+    printf("%d\n", filesysdecode("/hello"));
 
     return;
 }

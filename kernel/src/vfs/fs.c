@@ -4,12 +4,20 @@
 #include <klib.h>
 extern void TODO();
 extern inodeops_t inode_ops;
-extern filesystem_t *filesys[3];
+extern filesystem_t *filesys[5];
 #define INODESIZE (sizeof(inode_t))
 #define BLOCKSIZE 4096
 #define DIRSIZE 512
 static int diskoffset = (4 << 14);
 static int inodeoffset = 0;
+
+struct mounttable{
+    char rootname[20];
+    int id[20];
+    int cnt;
+}
+
+struct mounttable mtt;
 
 void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     /*TODO();*/
@@ -58,7 +66,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
     inode_t *ret = fs->sinode;
     int offset = 1;
-    char *get = (char *)pmm->alloc(sizeof(DIRSIZE));
+    char *get = (char *)pmm->alloc(DIRSIZE);
     void *tmpnode = pmm->alloc(INODESIZE);
     void *buf = pmm->alloc(BLOCKSIZE);
     while(offset < strlen(path)){
