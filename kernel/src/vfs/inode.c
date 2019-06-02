@@ -49,9 +49,9 @@ off_t inodelseek(file_t *file, off_t offset, int whence){
 
 int inodemkdir(const char *name){
     /*TODO();*/
-    int id = filesysdecode(name);
+    /*int id = filesysdecode(name);*/
 
-    filesys[id]->opd->lookup(filsys[id],)
+    /*filesys[id]->opd->lookup(filsys[id],)*/
     return 0;
 }
 
