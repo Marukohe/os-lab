@@ -98,6 +98,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
             }
         }
         if(!inodefind){
+            printf("%d\n", offset);
             if(offset == strlen(path)){
                 if(flags & O_CREAT){
                     //创建一个inode写入磁盘
