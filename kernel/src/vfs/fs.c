@@ -115,9 +115,22 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         memset(buf, 0, BLOCKSIZE);
                         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
                         dir_t *dir = (dir_t *)buf;
-                        strcpy(dir->name[dir->cnt], get);
-                        dir->used[dir->cnt] = 1;
-                        dir->offset[dir->cnt++] = inodect->pos;
+                        int tmp = 0;
+                        for(int k = 0; k < dir->cnt; k++){
+                            if(dir->used[k] == 0){
+                                tmp = k;
+                                break;
+                            }
+                        }
+                        if(tmp == dir->cnt){
+                            strcpy(dir->name[dir->cnt], get);
+                            dir->used[dir->cnt] = 1;
+                            dir->offset[dir->cnt++] = inodect->pos;
+                        }else{
+                            strcpy(dir->name[k], get);
+                            dir->used[k] = 1;
+                            dir->offset[k] = indect->pos;
+                        }
                         filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
 
                         ret = inodect;
