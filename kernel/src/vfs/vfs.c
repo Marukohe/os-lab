@@ -37,10 +37,10 @@ static filesystem_t *filesys_create(size_t fs_size, const char* fs_name, int fs_
 
 
 void Loginode(inode_t *node){
-    Logg("%d\n", node->refcnt);
-    Logg("%d\n", node->flags);
-    Logg("%d\n", node->is_dir);
-    Logg("%d\n", node->offset[0]);
+    Logg("%d", node->refcnt);
+    Logg("%d", node->flags);
+    Logg("%d", node->is_dir);
+    Logg("%x", node->offset[0]);
 }
 
 void init(){
