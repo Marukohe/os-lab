@@ -41,7 +41,8 @@ void init(){
     FILESYSTEM(FSCREATE);
     FILESYSTEM(FSINIT);
 #ifdef L3DEBUG
-    const char *path = "/hello"
+    const char *path = pmm->alloc(100);
+    path = "/hello";
     inode_t ret = filesys[2]->ops->lookup(filesys[2], path, O_CREAT|O_DIR);
     if(ret == NULL){
         Logg("Notfound");
