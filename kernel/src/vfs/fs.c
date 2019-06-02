@@ -84,7 +84,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                     pmm->free(buf);
                     return NULL;
                 }
-                if(offset == strlen(path)){
+                if(offset - 1 == strlen(path)){
                     if((!ret->is_dir && (flags & O_DIR)) || (ret->is_dir && !(flags & O_DIR))){
                         printf("Dir or text not found\n");
                         pmm->free(tmpnode);
@@ -99,7 +99,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         }
         if(!inodefind){
             printf("%d\n%d\n", offset, strlen(path));
-            if(offset == strlen(path)){
+            if(offset - 1 == strlen(path)){
                 printf("%d %d\n", flags & O_CREAT,flags & O_DIR);
                 if(flags & O_CREAT){
                     //创建一个inode写入磁盘
