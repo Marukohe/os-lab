@@ -95,6 +95,7 @@ void init(){
     printf("%d\n", filesysdecode(ret, "/proc/hello/ba/"));
     printf("%d\n", filesysdecode(ret, "/dev/hello"));
     printf("%d\n", filesysdecode(ret, "/hello"));
+    pmm->free(ret);
 
     return;
 }

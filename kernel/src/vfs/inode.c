@@ -1,19 +1,20 @@
 #include <common.h>
 #include <vfs.h>
 #include <klib.h>
+#define NAMELEN 100
 extern void TODO();
 extern void getpath(char *get, const char *path, int offset);
 extern mt_t *mtt;
 extern filesystem_t *filesys[5];
 int filesysdecode(char *ret, const char *path){
     int offset = 1;
-    char *get = (char *)pmm->alloc(100);
+    char *get = (char *)pmm->alloc(NAMELEN);
     getpath(get, path, offset);
     offset += strlen(get);
     const char *cp;
     cp = path + offset;
     strcpy(ret, cp);
-    printf("%s\n", ret);
+    /*printf("%s\n", ret);*/
     for(int i = 0; i < mtt->cnt; i++){
         if(strcmp(get, mtt->rootname[i]) == 0){
             pmm->free(get);
@@ -51,9 +52,11 @@ off_t inodelseek(file_t *file, off_t offset, int whence){
 
 int inodemkdir(const char *name){
     /*TODO();*/
-    /*int id = filesysdecode(name);*/
+    char *path = pmm->alloc(NAMELEN);
+    int id = filesysdecode(path, name);
 
-    /*filesys[id]->opd->lookup(filsys[id],)*/
+    filesys[id]->opd->lookup(filsys[id], path, 7|O_CREAT|O_DIR);
+    pmm->free(path);
     return 0;
 }
 
