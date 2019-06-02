@@ -46,6 +46,8 @@ void init(){
     inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, O_CREAT|O_DIR);
     if(ret == NULL){
         Logg("Notfound");
+    }else{
+        Logg("Create dir");
     }
 #endif
 
