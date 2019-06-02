@@ -100,7 +100,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         if(!inodefind){
             printf("%d\n%d\n", offset, strlen(path));
             if(offset == strlen(path)){
-                printf("%d %d\n", flags & O_CREATE,flags & O_DIR);
+                printf("%d %d\n", flags & O_CREAT,flags & O_DIR);
                 if(flags & O_CREAT){
                     //创建一个inode写入磁盘
                     if(flags & O_DIR){
