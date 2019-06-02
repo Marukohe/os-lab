@@ -7,6 +7,12 @@
 #define WABLE 2
 #define XABLE 1
 
+// LOOKUP MODE
+// ---------------------------------------
+#define O_CREAT 8
+#define O_DIR 16
+//#define O_
+
 struct filesystem;
 typedef struct filesystem filesystem_t;
 
@@ -75,6 +81,7 @@ struct inode {
   //...
   int refcnt;
   int flags;
+  int is_dir;
   int offset[OFFSETNUM];
   void *ptr;       // private data
   filesystem_t *fs;
