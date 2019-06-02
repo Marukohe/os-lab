@@ -5,15 +5,20 @@ extern void TODO();
 extern void getpath(char *get, const char *path, int offset);
 extern mt_t *mtt;
 extern filesystem_t *filesys[5];
-int filesysdecode(const char *path){
+int filesysdecode(char *ret, const char *path){
     int offset = 1;
     char *get = (char *)pmm->alloc(100);
     getpath(get, path, offset);
+    offset += strlen(get);
+    ret = path + offset;
+    printf("%s\n", ret);
     for(int i = 0; i < mtt->cnt; i++){
         if(strcmp(get, mtt->rootname[i]) == 0){
+            pmm->free(get);
             return i;
         }
     }
+    pmm->free(get);
     return 2;
 }
 
@@ -43,7 +48,10 @@ off_t inodelseek(file_t *file, off_t offset, int whence){
 }
 
 int inodemkdir(const char *name){
-    TODO();
+    /*TODO();*/
+    int id = filesysdecode(name);
+
+    filesys[id]->opd->lookup(filsys[id],)
     return 0;
 }
 

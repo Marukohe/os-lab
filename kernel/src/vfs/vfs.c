@@ -64,7 +64,7 @@ void mttinit(){
     strcpy(mtt->rootname[2], "/");
 }
 
-extern int filesysdecode(const char *path);
+extern int filesysdecode(char *ret, const char *path);
 void vfstest(){
 #ifdef L3DEBUG
     const char *path = pmm->alloc(100);
@@ -91,9 +91,10 @@ void init(){
     mttinit();
 
     /*vfstest();*/
-    printf("%d\n", filesysdecode("/proc/hello"));
-    printf("%d\n", filesysdecode("/dev/hello"));
-    printf("%d\n", filesysdecode("/hello"));
+    char *ret = pmm->alloc(100);
+    printf("%d\n", filesysdecode(ret, "/proc/hello/ba/"));
+    printf("%d\n", filesysdecode(ret, "/dev/hello"));
+    printf("%d\n", filesysdecode(ret, "/hello"));
 
     return;
 }
