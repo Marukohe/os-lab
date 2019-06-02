@@ -72,7 +72,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
 
         uint8_t inodefind = 0;
         for(int i = 0; i < dir->cnt; i++){
-            if(dir->used[1] == 0) continue;
+            if(dir->used[i] == 0) continue;
             if(strcmp(dir->name[i], get) == 0){
                 //获取目录块中记录的inode
                 filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[i], tmpnode, INODESIZE);
@@ -115,6 +115,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
                         dir_t *dir = (dir_t *)buf;
                         strcpy(dir->name[dir->cnt], get);
+                        dir->used[dit->cnt] = 1;
                         dir->offset[dir->cnt++] = inodect->pos;
                         filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
 
@@ -130,6 +131,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
                         dir_t *dir = (dir_t *)buf;
                         strcpy(dir->name[dir->cnt], get);
+                        dir->used[dir->cnt] = 1;
                         dir->offset[dir->cnt++] = inodect->pos;
                         filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
 
