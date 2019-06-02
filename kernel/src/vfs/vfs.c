@@ -65,8 +65,8 @@ void init(){
     check(ret);
     ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", O_DIR);
     check(ret);
-    /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 0);*/
-    /*check(ret);*/
+    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 0);
+    check(ret);
 #endif
 
     return;
