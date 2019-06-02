@@ -127,9 +127,9 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                             dir->used[dir->cnt] = 1;
                             dir->offset[dir->cnt++] = inodect->pos;
                         }else{
-                            strcpy(dir->name[k], get);
-                            dir->used[k] = 1;
-                            dir->offset[k] = inodect->pos;
+                            strcpy(dir->name[tmp], get);
+                            dir->used[tmp] = 1;
+                            dir->offset[tmp] = inodect->pos;
                         }
                         filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
 
