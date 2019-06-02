@@ -58,7 +58,7 @@ void init(){
     FILESYSTEM(FSINIT);
 #ifdef L3DEBUG
     const char *path = pmm->alloc(100);
-    path = "/hello";
+    path = "hello";
     inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, O_CREAT|O_DIR);
     check(ret);
     ret = filesys[2]->ops->lookup(filesys[2], "hello/a/", O_CREAT|O_DIR);

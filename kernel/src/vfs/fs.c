@@ -67,7 +67,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         dir_t *dir = (dir_t *)buf;
 
         getpath(get, path, offset);
-        /*printf("%s\n", get);*/
+        printf("%s\n", get);
         offset += strlen(get) + 1;
 
         uint8_t inodefind = 0;
