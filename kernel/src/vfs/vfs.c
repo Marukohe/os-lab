@@ -36,6 +36,13 @@ static filesystem_t *filesys_create(size_t fs_size, const char* fs_name, int fs_
     filesys[id]->ops->init(filesys[id], fs_name, dev);
 
 
+void Loginode(inode_t *node){
+    Logg("%d\n", node->refcnt);
+    Logg("%d\n", node->flags);
+    Logg("%d\n", node->is_dir);
+    Logg("%d\n", node->offset[0]);
+}
+
 void init(){
     /*TODO();*/
     FILESYSTEM(FSCREATE);
@@ -48,6 +55,7 @@ void init(){
         Logg("Notfound");
     }else{
         Logg("Create dir");
+        Loginode(ret);
     }
 #endif
 
