@@ -55,13 +55,45 @@ int inodemkdir(const char *name){
     char *path = pmm->alloc(NAMELEN);
     int id = filesysdecode(path, name);
 
-    filesys[id]->ops->lookup(filesys[id], path, 7|O_CREAT|O_DIR);
+    inode_t *dummy = filesys[id]->ops->lookup(filesys[id], path, 7|O_CREAT|O_DIR);
     pmm->free(path);
+    pmm->free(dummy);
     return 0;
 }
 
+char *splitpath(char *path, int offset){
+    int t = 0;
+    char *ret = pmm->alloc(NAMELEN);
+    for(int i = offset - 1; i >= 0; i--){
+        if(path[i] == '/')
+            t = i;
+    }
+    if(t == 0){
+        pmm->free(ret);
+        return NULL;
+    }
+    char *cp = path;
+    for(int i = 0; i < t; i++){
+        *ret++ = *cp++;
+    }
+    return ret;
+}
+
 int inodermdir(const char *name){
-    TODO();
+    /*TODO();*/
+    char *sonpath = pmm->alloc(NAMELEN);
+    int offset = strlen(sonpath);
+    int id = filesysdecode(sonpath, name);
+    char *fapath = splitpath(sonpath, offset);
+    inode_t *fa;
+    if(fapath = NULL){
+        fa = filesys[id]->sinode;
+    }else{
+        fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
+    }
+    inode_t *son = filesys[id]->ops->lookup(filesys[id], sonpath, 7|O_DIR);
+
+
     return 0;
 }
 
