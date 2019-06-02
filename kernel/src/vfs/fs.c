@@ -126,7 +126,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         inodecreat(inodect, flags, 0, fs, fs->dev);
                         inodect->pos = inodeoffset;
                         inodeoffset += INODESIZE;
-                        filesys[2]->dev->ops->write(filesys[2]->dev, inode->pos, (void *)inodect, INODESIZE);
+                        filesys[2]->dev->ops->write(filesys[2]->dev, inodect->pos, (void *)inodect, INODESIZE);
 
                         memset(buf, 0, BLOCKSIZE);
                         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
