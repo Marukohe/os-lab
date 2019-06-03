@@ -103,7 +103,7 @@ struct inode {
 struct file {
   int refcnt; // 引用计数
   inode_t *inode;
-  const char *path;
+  char *path;
   uint64_t offset;
   //...
 };
