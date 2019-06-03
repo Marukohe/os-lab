@@ -102,6 +102,12 @@ int inodermdir(const char *name){
         fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
     }
     inode_t *son = filesys[id]->ops->lookup(filesys[id], sonpath, 7|O_DIR);
+    if(son == NULL){
+        printf("ERROR! Not such dic\n");
+        pmm->free(sonpath);
+        pmm->free(fapath);
+        /*pmm->free(fa);*/
+    }
     /*Logw("fa pos: %x, fa->offset: %x", fa->pos, fa->offset[0]);*/
     //更新fa的目录项
     void *buf = pmm->alloc(BLOCKSIZE);
@@ -118,10 +124,9 @@ int inodermdir(const char *name){
         pmm->free(sonpath);
         pmm->free(fapath);
         pmm->free(son);
-        pmm->free(fa);
+        /*pmm->free(fa);*/
         return -1;
     }
-
 
     memset(buf, 0, BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, fa->offset[0], buf, BLOCKSIZE);
@@ -144,7 +149,7 @@ int inodermdir(const char *name){
     pmm->free(sonpath);
     pmm->free(fapath);
     pmm->free(son);
-    pmm->free(fa);
+    /*pmm->free(fa);*/
 
     return 0;
 }

@@ -84,6 +84,7 @@ void vfstest(){
     check(ret);
     vfs->mkdir("/hello/a/c");
     vfs->rmdir("/hello/a/c");
+    vfs->rmdir("/hello/a/b");
     /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7|O_CREAT);*/
     /*check(ret);*/
     /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7);*/
