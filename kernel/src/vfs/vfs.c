@@ -41,7 +41,7 @@ void Loginode(inode_t *node){
     Logg("%d", node->refcnt);
     Logg("%d", node->flags);
     Logg("%d", node->is_dir);
-    Logg("%x", node->pos);
+    Logg("pos: 0x%x", node->pos);
     Logg("%x", node->offset[0]);
 }
 
