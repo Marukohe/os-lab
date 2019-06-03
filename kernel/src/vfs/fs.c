@@ -115,7 +115,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         int tmpcnt = 0;
                         for(int i = 0; i < fs->cnt; i++){
                             if(fs->used[i] == 0){
-                                tmp = i;
+                                tmpcnt = i;
                                 break;
                             }
                         }
@@ -125,12 +125,12 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                             inodect->offset[0] = diskoffset;
                             diskoffset += BLOCKSIZE;
                             fs->used[fs->cnt] = 1;
-                            fs->offset[fs->cnt] = inodect->pos;
+                            fs->ioffset[fs->cnt] = inodect->pos;
                             fs->cnt += 1;
                         }else{
                             inode_t *dummynode = (inode_t *)pmm->alloc(INODESIZE);
                             filesys[2]->dev->ops->read(filesys[2]->dev, fs->offset[tmpcnt], (void *)dummynode, INODESIZE);
-                            inodect->pos = fs->offset[tmpcnt];
+                            inodect->pos = fs->ioffset[tmpcnt];
                             inodect->offset[0] = dummynode->offset[0];
                         }
                         filesys[2]->dev->ops->write(filesys[2]->dev, inodect->pos, (void *)inodect, INODESIZE);
