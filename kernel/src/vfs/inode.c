@@ -71,8 +71,10 @@ char *splitpath(char *path, int offset){
     char *ret = pmm->alloc(NAMELEN);
     for(int i = offset - 1; i >= 0; i--){
         Logp("hello %c", path[i]);
-        if(path[i] == '/')
+        if(path[i] == '/'){
             t = i;
+            break;
+        }
     }
     if(t == 0){
         pmm->free(ret);
