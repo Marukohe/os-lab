@@ -111,6 +111,7 @@ int inodermdir(const char *name){
         if(dir->used[i] == 1 && dir->offset[i] == son->pos){
             printf("rmdir successfully!\n");
             dir->used[i] = 0;
+            filesys[2]->dev->ops->write(filesys[2]->dev, fa->offset[0], (void *)dir, BLOCKSIZE);
             break;
         }
     }
