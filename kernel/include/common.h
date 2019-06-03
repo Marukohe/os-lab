@@ -7,6 +7,7 @@
 #include <x86.h>
 #include <kmt.h>
 #include <os.h>
+#include <vfs.h>
 
 #define MAXCPU 4
 #define MAXHANDLER 10
@@ -28,6 +29,7 @@ struct task {
     void (*entry)(void *arg);
     void *arg;
     enum TSKSTATE state;
+    file_t *fildes[NOFILE];
 };
 
 struct spinlock {
