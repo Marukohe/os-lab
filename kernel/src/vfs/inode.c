@@ -70,7 +70,7 @@ char *splitpath(char *path, int offset){
     Logp("%s %d", path, offset);
     char *ret = pmm->alloc(NAMELEN);
     for(int i = offset - 1; i >= 0; i--){
-        Logp("hello %c", path[i]);
+        /*Logp("hello %c", path[i]);*/
         if(path[i] == '/'){
             t = i;
             break;
@@ -95,6 +95,7 @@ int inodermdir(const char *name){
     int offset = strlen(sonpath);
     Logw("%s", sonpath);
     char *fapath = splitpath(sonpath, offset);
+    Logw("%s", fapath);
     inode_t *fa;
     if(fapath == NULL){
         Logw("hello?");
