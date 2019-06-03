@@ -26,6 +26,9 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     fs->sinode->ptr = data;
     fs->sinode->fs = fs;
     fs->sinode->ops = &inode_ops;
+    memset(fs->ioffset, -1, sizeof(ioffset));
+    memset(fs->used, 0, sizeof(used));
+    fs->cntinode = 0;
     return;
 }
 
@@ -44,8 +47,8 @@ static void inodecreat(inode_t *inode, int flags, int is_dir, filesystem_t *fs, 
     inode->refcnt = 0;
     inode->flags = flags;
     inode->is_dir = is_dir;
-    inode->offset[0] = diskoffset;
-    diskoffset += BLOCKSIZE;
+    /*inode->offset[0] = diskoffset;*/
+    /*diskoffset += BLOCKSIZE;*/
     inode->ptr = (void *)dev;
     inode->fs = fs;
     inode->ops = &inode_ops;
@@ -109,8 +112,27 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         inode_t *inodect = pmm->alloc(sizeof(inode_t));
                         inodecreat(inodect, flags, flags & O_DIR, fs, fs->dev);
                         //inode写入磁盘
-                        inodect->pos = inodeoffset;
-                        inodeoffset += INODESIZE;
+                        int tmpcnt = 0;
+                        for(int i = 0; i < fs->cnt; i++){
+                            if(fs->used[i] == 0){
+                                tmp = i;
+                                break;
+                            }
+                        }
+                        if(!tmpcnt){
+                            inodect->pos = inodeoffset;
+                            inodeoffset += INODESIZE;
+                            inodect->offset[0] = diskoffset;
+                            diskoffset += BLOCKSIZE;
+                            fs->used[fs->cnt] = 1;
+                            fs->offset[fs->cnt] = inodect->pos;
+                            fs->cnt += 1;
+                        }else{
+                            inode_t *dummynode = (inode_t *)pmm->alloc(INODESIZE);
+                            filesys[2]->dev->ops->read(filesys[2]->dev, fs->offset[tmpcnt], (void *)dummynode, INODESIZE);
+                            inodect->pos = fs->offset[tmpcnt];
+                            inodect->offset[0] = dummynode->offset[0];
+                        }
                         filesys[2]->dev->ops->write(filesys[2]->dev, inodect->pos, (void *)inodect, INODESIZE);
                         //更新目录项
                         memset(buf, 0, BLOCKSIZE);

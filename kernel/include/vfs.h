@@ -1,5 +1,6 @@
 #include <common.h>
 #define OFFSETNUM 10
+#define INODENUM 1000
 
 // FILE MODE
 // ---------------------------------------
@@ -52,6 +53,9 @@ struct filesystem {
   //...
   const char *name;
   int id;
+  int ioffset[INODENUM];
+  uint8_t used[INODENUM];
+  int cntinode;
   fsops_t *ops;
   device_t *dev;
   inode_t *sinode;
