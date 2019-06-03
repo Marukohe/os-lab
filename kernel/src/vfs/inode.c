@@ -70,7 +70,7 @@ char *splitpath(char *path, int offset){
     Logp("%s %d", path, offset);
     char *ret = pmm->alloc(NAMELEN);
     for(int i = offset - 1; i >= 0; i--){
-        Logp("%c", path[i]);
+        Logp("hello %c", path[i]);
         if(path[i] == '/')
             t = i;
     }
