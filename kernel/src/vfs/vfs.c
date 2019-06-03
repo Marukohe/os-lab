@@ -184,7 +184,7 @@ int open(const char *path, int flags){
 ssize_t read(int fd, void *buf, size_t nbyte){
     /*TODO();*/
     ssize_t ret;
-    ret = current->fildes[fd]->inode->ops->read(current->fildes[id]->inode, buf, nbyte);
+    ret = current->fildes[fd]->inode->ops->read(current->fildes[fd]->inode, buf, nbyte);
     return ret;
 }
 
@@ -192,7 +192,7 @@ ssize_t write(int fd, void *buf, size_t nbyte){
     /*TODO();*/
     ssize_t ret;
     ret = current->fildes[fd]->inode->ops->write(current->fildes[fd]->inode, buf, nbyte);
-    return 0;
+    return ret;
 }
 
 off_t lseek(int fd, off_t offset, int whence){
