@@ -1,3 +1,6 @@
+#ifndef __DEVICES_H__
+#define __DEVOCES_H__
+
 #include <common.h>
 #include <amdev.h>
 #include <klib.h>
@@ -81,7 +84,7 @@ typedef struct {
 } fb_t;
 
 // -------------------------------------------------------------------
-// Virtual console on fb 
+// Virtual console on fb
 
 struct character {
   uint32_t metadata;
@@ -104,3 +107,5 @@ typedef struct {
 extern char keymap[], keymap_shift[];
 
 #define TERM_FONT font_sans
+
+#endif

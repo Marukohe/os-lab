@@ -29,7 +29,7 @@ struct task {
     void (*entry)(void *arg);
     void *arg;
     enum TSKSTATE state;
-    file_t *fildes[NOFILE];
+    file_t *fildes[100];
 };
 
 struct spinlock {

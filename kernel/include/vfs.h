@@ -1,3 +1,6 @@
+#ifndef __VFS_H__
+#define __VFS_H__
+
 #include <common.h>
 #define OFFSETNUM 10
 #define INODENUM 1000
@@ -109,3 +112,5 @@ typedef struct mounttable{
     int id[20];
     int cnt;
 }mt_t;
+
+#endif
