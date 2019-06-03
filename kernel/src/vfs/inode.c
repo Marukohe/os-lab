@@ -23,6 +23,7 @@ int filesysdecode(char *ret, const char *path){
         }
     }
     pmm->free(get);
+    strcpy(ret, path);
     return 2;
 }
 
