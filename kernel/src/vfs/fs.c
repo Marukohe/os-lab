@@ -129,7 +129,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                             fs->cntinode += 1;
                         }else{
                             inode_t *dummynode = (inode_t *)pmm->alloc(INODESIZE);
-                            filesys[2]->dev->ops->read(filesys[2]->dev, fs->offset[tmpcnt], (void *)dummynode, INODESIZE);
+                            filesys[2]->dev->ops->read(filesys[2]->dev, fs->ioffset[tmpcnt], (void *)dummynode, INODESIZE);
                             inodect->pos = fs->ioffset[tmpcnt];
                             inodect->offset[0] = dummynode->offset[0];
                         }
