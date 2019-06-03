@@ -89,8 +89,8 @@ int inodermdir(const char *name){
     /*TODO();*/
 
     char *sonpath = pmm->alloc(NAMELEN);
-    int offset = strlen(sonpath);
     int id = filesysdecode(sonpath, name);
+    int offset = strlen(sonpath);
     Logw("%s", sonpath);
     char *fapath = splitpath(sonpath, offset);
     inode_t *fa;
