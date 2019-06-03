@@ -69,18 +69,17 @@ void vfstest(){
 #ifdef L3DEBUG
     const char *path = pmm->alloc(100);
     path = "/hello";
-    inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, 7|O_CREAT|O_DIR);
+    vfs->mkdir(path);
+    inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, 7|O_DIR);
     check(ret);
-    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7|O_CREAT|O_DIR);
-    check(ret);
-    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", O_DIR);
-    check(ret);
-    /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7 | O_CREAT);*/
+    /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7|O_CREAT|O_DIR);*/
     /*check(ret);*/
-    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7|O_CREAT);
-    check(ret);
-    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7);
-    check(ret);
+    /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", O_DIR);*/
+    /*check(ret);*/
+    /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7|O_CREAT);*/
+    /*check(ret);*/
+    /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7);*/
+    /*check(ret);*/
 #endif
 }
 
@@ -116,12 +115,14 @@ int unmount(const char *path){
 }
 
 int mkdir(const char *path){
-    TODO();
+    /*TODO();*/
+    filesys[2]->sinode->ops->inodemkdir(path);
     return 0;
 }
 
 int rmdir(const char *path){
-    TODO();
+    /*TODO();*/
+    filesys[2]->sinode->ops->inodermdir(path);
     return 0;
 }
 
