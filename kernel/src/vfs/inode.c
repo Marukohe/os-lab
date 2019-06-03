@@ -1,6 +1,7 @@
 #include <common.h>
 #include <vfs.h>
 #include <klib.h>
+#include <devices.h>
 #define NAMELEN 100
 extern void TODO();
 extern void getpath(char *get, const char *path, int offset);
