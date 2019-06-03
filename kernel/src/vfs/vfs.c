@@ -89,12 +89,12 @@ void init(){
     FILESYSTEM(FSINIT);
     mttinit();
 
-    vfstest();
-    /*char *ret = pmm->alloc(100);*/
-    /*printf("%d\n", filesysdecode(ret, "/proc/hello/ba/"));*/
-    /*printf("%d\n", filesysdecode(ret, "/dev/hello"));*/
-    /*printf("%d\n", filesysdecode(ret, "/hello"));*/
-    /*pmm->free(ret);*/
+    /*vfstest();*/
+    char *ret = pmm->alloc(100);
+    printf("%d\n", filesysdecode(ret, "/proc/hello/ba/"));
+    printf("%d\n", filesysdecode(ret, "/dev/hello"));
+    printf("%d\n", filesysdecode(ret, "/hello"));
+    pmm->free(ret);
 
     return;
 }
