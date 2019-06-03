@@ -113,7 +113,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         inodecreat(inodect, flags, flags & O_DIR, fs, fs->dev);
                         //inode写入磁盘
                         int tmpcnt = 0;
-                        for(int i = 0; i < fs->cnt; i++){
+                        for(int i = 0; i < fs->cntinode; i++){
                             if(fs->used[i] == 0){
                                 tmpcnt = i;
                                 break;
@@ -124,9 +124,9 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                             inodeoffset += INODESIZE;
                             inodect->offset[0] = diskoffset;
                             diskoffset += BLOCKSIZE;
-                            fs->used[fs->cnt] = 1;
-                            fs->ioffset[fs->cnt] = inodect->pos;
-                            fs->cnt += 1;
+                            fs->used[fs->cntinode] = 1;
+                            fs->ioffset[fs->cntinode] = inodect->pos;
+                            fs->cntinode += 1;
                         }else{
                             inode_t *dummynode = (inode_t *)pmm->alloc(INODESIZE);
                             filesys[2]->dev->ops->read(filesys[2]->dev, fs->offset[tmpcnt], (void *)dummynode, INODESIZE);
