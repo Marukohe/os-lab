@@ -87,7 +87,7 @@ int inodermdir(const char *name){
     int id = filesysdecode(sonpath, name);
     char *fapath = splitpath(sonpath, offset);
     inode_t *fa;
-    if(fapath = NULL){
+    if(fapath == NULL){
         fa = filesys[id]->sinode;
     }else{
         fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
@@ -100,12 +100,12 @@ int inodermdir(const char *name){
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1 && dir->offset[i] == son->pos){
             printf("rmdir successfully!\n");
-            dir->used[i = 0;
+            dir->used[i] = 0;
             break;
         }
     }
     for(int i = 0; i < filesys[id]->cntinode; i++){
-        if(filesys[id]->used[i] && filesys[id]->offset[i] == son->pos){
+        if(filesys[id]->used[i] && filesys[id]->ioffset[i] == son->pos){
             filesys[id]->used[i] = 0;
             break;
         }
