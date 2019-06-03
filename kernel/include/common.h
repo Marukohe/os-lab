@@ -29,6 +29,8 @@ struct task {
     void (*entry)(void *arg);
     void *arg;
     enum TSKSTATE state;
+    int fdcnt;
+    int fdused[100];
     file_t *fildes[100];
 };
 

@@ -4,6 +4,10 @@
 
 extern fsops_t fs_ops;
 extern device_t *devices[8];
+extern task_t *cputask[25];
+extern task_t *current_task[4];
+#define current (current_task[_cpu()])
+
 mt_t *mtt;
 #define L3DEBUG
 
@@ -98,7 +102,7 @@ void init(){
     FILESYSTEM(FSINIT);
     mttinit();
 
-    vfstest();
+    /*vfstest();*/
     /*char *ret = pmm->alloc(100);*/
     /*printf("%d\n", filesysdecode(ret, "/proc/hello/ba/"));*/
     /*printf("%d\n", filesysdecode(ret, "/dev/hello"));*/
@@ -146,8 +150,35 @@ int unlink(const char *path){
 }
 
 int open(const char *path, int flags){
-    TODO();
-    return 0;
+    /*TODO();*/
+    char *ret = pmm->alloc(100);
+    int id = filesysdecode(ret, path);
+    (file_t *)fd = pmm->alloc(sizeof(file_t));
+    fd->refcnt = 0;
+    inode_t *tmp = filesys[id]->ops->lookup(filesys[id], ret, flags);
+    if(tmp == NULL){
+        printf("open failed\n");
+        pmm->free(ret);
+        pmm->free(fd);
+        return -1;
+    }
+    fd->inode = tmp;
+    fd->path = ret;
+    fd->offset = 0;
+    int retfd = 0;
+    for(int i = 0; i < current->fdcnt; i++){
+        if(current->used[i] == 0){
+            retfd = i;
+            break;
+        }
+    }
+    if(retfd = 0){
+        retfd = current->fdcnt++;
+    }
+    current->fildes[retfd] = fd;
+    current->used[retfd] = 0;
+
+    return retfd;
 }
 
 ssize_t read(int fd, void *buf, size_t nbyte){
@@ -166,7 +197,11 @@ off_t lseek(int fd, off_t offset, int whence){
 }
 
 int close(int fd){
-    TODO();
+    /*TODO();*/
+    pmm->free(current->fildes[fd]->inode);
+    pmm->free(current->fildes[fd]->path);
+    pmm->free(current->fildes[fd]);
+    current->used[fd] = 0;
     return 0;
 }
 

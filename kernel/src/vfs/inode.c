@@ -65,6 +65,7 @@ int inodemkdir(const char *name){
     return 0;
 }
 
+// 寻找上一级路劲
 char *splitpath(char *path, int offset){
     int t = 0;
     /*Logp("%s %d", path, offset);*/

@@ -27,6 +27,9 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     task->entry = entry;
     task->arg = arg;
     task->state = FREET;
+    task->fdcnt = 0;
+    for(int i = 0; i < 100; i++)
+        task->fdused[i] = 0;
 
     _Area sstack;
     sstack.start = (void *)task->stack;
