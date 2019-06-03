@@ -116,13 +116,13 @@ int unmount(const char *path){
 
 int mkdir(const char *path){
     /*TODO();*/
-    filesys[2]->sinode->ops->inodemkdir(path);
+    filesys[2]->sinode->ops->mkdir(path);
     return 0;
 }
 
 int rmdir(const char *path){
     /*TODO();*/
-    filesys[2]->sinode->ops->inodermdir(path);
+    filesys[2]->sinode->ops->rmdir(path);
     return 0;
 }
 
