@@ -157,23 +157,6 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
 
                         ret = inodect;
-                    /*}else{*/
-                        /*inode_t *inodect = pmm->alloc(sizeof(inode_t));*/
-                        /*inodecreat(inodect, flags, 0, fs, fs->dev);*/
-                        /*inodect->pos = inodeoffset;*/
-                        /*inodeoffset += INODESIZE;*/
-                        /*filesys[2]->dev->ops->write(filesys[2]->dev, inodect->pos, (void *)inodect, INODESIZE);*/
-
-                        /*memset(buf, 0, BLOCKSIZE);*/
-                        /*filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);*/
-                        /*dir_t *dir = (dir_t *)buf;*/
-                        /*strcpy(dir->name[dir->cnt], get);*/
-                        /*dir->used[dir->cnt] = 1;*/
-                        /*dir->offset[dir->cnt++] = inodect->pos;*/
-                        /*filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);*/
-
-                        /*ret = inodect;*/
-                    /*}*/
                 }else{
                     printf("Nothing to create\n");
                     pmm->free(get);
