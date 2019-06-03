@@ -97,6 +97,7 @@ int inodermdir(const char *name){
         fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
     }
     inode_t *son = filesys[id]->ops->lookup(filesys[id], sonpath, 7|O_DIR);
+    Logy("fa pos: %x", fa->pos);
     //更新fa的目录项
     void *buf = pmm->alloc(BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, fa->offset[0], buf, BLOCKSIZE);
