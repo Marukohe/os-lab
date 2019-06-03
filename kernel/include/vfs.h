@@ -89,6 +89,7 @@ typedef struct inodeops {
 struct inode {
   //...
   int refcnt;
+  int fdoffset; //记录文件大小
   int flags;
   int is_dir;
   int offset[OFFSETNUM];

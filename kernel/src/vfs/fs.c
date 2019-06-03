@@ -46,6 +46,7 @@ void getpath(char *get, const char *path, int offset){
 static void inodecreat(inode_t *inode, int flags, int is_dir, filesystem_t *fs, device_t * dev){
     inode->refcnt = 0;
     inode->flags = flags;
+    inode->fdoffset = 0;
     inode->is_dir = is_dir;
     /*inode->offset[0] = diskoffset;*/
     /*diskoffset += BLOCKSIZE;*/
