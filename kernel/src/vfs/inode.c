@@ -110,9 +110,9 @@ int inodermdir(const char *name){
     int cntsonnode = 0;
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i])
-            cntnode++;
+            cntsonnode++;
     }
-    if(cntnode > 0){
+    if(cntsonnode > 0){
         printf("rmdir failed. This is not an empty dic\n");
         pmm->free(buf);
         pmm->free(sonpath);
