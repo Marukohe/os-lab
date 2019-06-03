@@ -67,6 +67,7 @@ int inodemkdir(const char *name){
 
 char *splitpath(char *path, int offset){
     int t = 0;
+    Logp("%s %d", path, offset);
     char *ret = pmm->alloc(NAMELEN);
     for(int i = offset - 1; i >= 0; i--){
         Logp("%c", path[i]);
