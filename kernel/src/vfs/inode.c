@@ -81,7 +81,7 @@ char *splitpath(char *path, int offset){
 
 int inodermdir(const char *name){
     /*TODO();*/
-    /*
+
     char *sonpath = pmm->alloc(NAMELEN);
     int offset = strlen(sonpath);
     int id = filesysdecode(sonpath, name);
@@ -93,7 +93,7 @@ int inodermdir(const char *name){
         fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
     }
     inode_t *son = filesys[id]->ops->lookup(filesys[id], sonpath, 7|O_DIR);
-    */
+
 
 
     return 0;
