@@ -157,6 +157,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         }
                         filesys[2]->dev->ops->write(filesys[2]->dev, ret->offset[0], (void *)dir, BLOCKSIZE);
 
+                        pmm->free(tmpnode);
                         ret = inodect;
                 }else{
                     printf("Nothing to create\n");
@@ -169,7 +170,6 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         }
     }
     pmm->free(get);
-    pmm->free(tmpnode);
     pmm->free(buf);
 
     return ret;
