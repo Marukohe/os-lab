@@ -44,7 +44,7 @@ ssize_t inoderead(file_t *file, char *buf, size_t size){
     filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
     char *cp;
     cp = buf + file->offset;
-    strcnpy(buf, cp, size);
+    strncpy(buf, cp, size);
     file->offset += size;
     pmm->free(red);
     return 0;
