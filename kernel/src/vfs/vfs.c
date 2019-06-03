@@ -167,7 +167,7 @@ int open(const char *path, int flags){
     fd->offset = 0;
     int retfd = 0;
     for(int i = 0; i < current->fdcnt; i++){
-        if(current->used[i] == 0){
+        if(current->fdused[i] == 0){
             retfd = i;
             break;
         }
@@ -176,7 +176,7 @@ int open(const char *path, int flags){
         retfd = current->fdcnt++;
     }
     current->fildes[retfd] = fd;
-    current->used[retfd] = 0;
+    current->fdused[retfd] = 1;
 
     return retfd;
 }
@@ -201,7 +201,7 @@ int close(int fd){
     pmm->free(current->fildes[fd]->inode);
     pmm->free(current->fildes[fd]->path);
     pmm->free(current->fildes[fd]);
-    current->used[fd] = 0;
+    current->fdsed[fd] = 0;
     return 0;
 }
 
