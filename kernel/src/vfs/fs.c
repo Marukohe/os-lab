@@ -6,8 +6,8 @@ extern void TODO();
 extern inodeops_t inode_ops;
 extern filesystem_t *filesys[5];
 #define INODESIZE (sizeof(inode_t))
-#define BLOCKSIZE 4096
-#define DIRSIZE 512
+/*#define BLOCKSIZE 4096*/
+/*#define DIRSIZE 512*/
 static int diskoffset = (4 << 14);
 static int inodeoffset = 0;
 

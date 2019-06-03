@@ -93,8 +93,23 @@ int inodermdir(const char *name){
         fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
     }
     inode_t *son = filesys[id]->ops->lookup(filesys[id], sonpath, 7|O_DIR);
-
-
+    //更新fa的目录项
+    void *buf = pmm->alloc(BLOCKSIZE);
+    filesys[2]->dev->ops->read(filesys[2]->dev, fa->offset[0], buf, BLOCKSIZE);
+    dir_t *dir = (dir_t *)buf;
+    for(int i = 0; i < dir->cnt; i++){
+        if(dir->used[i] == 1 && dir->offset[i] == son->pos){
+            printf("rmdir successfully!\n");
+            dir->used[i = 0;
+            break;
+        }
+    }
+    for(int i = 0; i < filesys[id]->cntinode; i++){
+        if(filesys[id]->used[i] && filesys[id]->offset[i] == son->pos){
+            filesys[id]->used[i] = 0;
+            break;
+        }
+    }
 
     return 0;
 }

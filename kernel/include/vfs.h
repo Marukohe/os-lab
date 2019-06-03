@@ -1,6 +1,8 @@
 #include <common.h>
 #define OFFSETNUM 10
 #define INODENUM 1000
+#define BLOCK 4096
+#define DIRSIZE 512
 
 // FILE MODE
 // ---------------------------------------
