@@ -47,12 +47,19 @@ ssize_t inoderead(file_t *file, char *buf, size_t size){
     strncpy(buf, cp, size);
     file->offset += size;
     pmm->free(red);
-    return 0;
+    return size;
 }
 
 ssize_t inodewrite(file_t *file, const char *buf, size_t size){
-    TODO();
-    return 0;
+    /*TODO();*/
+    char *red = (char *)pmm->alloc(BLOCKSIZE);
+    filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
+    char *cp = (char *)pmm->alloc(BLOCKSIZE);
+    strncpy(cp, buf, size);
+    strcat(red, cp);
+    file->offset += size;
+    filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
+    return size;
 }
 
 off_t inodelseek(file_t *file, off_t offset, int whence){
