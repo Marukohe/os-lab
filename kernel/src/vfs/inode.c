@@ -106,6 +106,7 @@ int inodermdir(const char *name){
         printf("ERROR! Not such dic\n");
         pmm->free(sonpath);
         pmm->free(fapath);
+        return -1;
         /*pmm->free(fa);*/
     }
     /*Logw("fa pos: %x, fa->offset: %x", fa->pos, fa->offset[0]);*/
