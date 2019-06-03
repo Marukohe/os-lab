@@ -84,6 +84,7 @@ char *splitpath(char *path, int offset){
     for(int i = 0; i < t; i++){
         *ret++ = *cp++;
     }
+    Logw("ret : %s", ret);
     return ret;
 }
 
