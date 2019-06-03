@@ -26,8 +26,8 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     fs->sinode->ptr = data;
     fs->sinode->fs = fs;
     fs->sinode->ops = &inode_ops;
-    memset(fs->ioffset, -1, sizeof(ioffset));
-    memset(fs->used, 0, sizeof(used));
+    memset(fs->ioffset, -1, sizeof(fs->ioffset));
+    memset(fs->used, 0, sizeof(fs->used));
     fs->cntinode = 0;
     return;
 }
