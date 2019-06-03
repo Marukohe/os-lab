@@ -182,12 +182,16 @@ int open(const char *path, int flags){
 }
 
 ssize_t read(int fd, void *buf, size_t nbyte){
-    TODO();
-    return 0;
+    /*TODO();*/
+    ssize_t ret;
+    ret = current->fildes[fd]->inode->ops->read(current->fildes[id]->inode, buf, nbyte);
+    return ret;
 }
 
 ssize_t write(int fd, void *buf, size_t nbyte){
-    TODO();
+    /*TODO();*/
+    ssize_t ret;
+    ret = current->fildes[fd]->inode->ops->write(current->fildes[fd]->inode, buf, nbyte);
     return 0;
 }
 
