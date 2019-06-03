@@ -92,6 +92,7 @@ int inodermdir(const char *name){
     char *fapath = splitpath(sonpath, offset);
     inode_t *fa;
     if(fapath == NULL){
+        Logw("hello?");
         fa = filesys[id]->sinode;
     }else{
         fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
