@@ -24,6 +24,7 @@ int filesysdecode(char *ret, const char *path){
     }
     pmm->free(get);
     strcpy(ret, path);
+    printf("%s\n", ret);
     return 2;
 }
 
