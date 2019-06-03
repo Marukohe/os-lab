@@ -72,8 +72,9 @@ void vfstest(){
     vfs->mkdir(path);
     inode_t *ret = filesys[2]->ops->lookup(filesys[2], path, 7|O_DIR);
     check(ret);
-    /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7|O_CREAT|O_DIR);*/
-    /*check(ret);*/
+    vfs->mkdir("/hello/a");
+    ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", 7|O_DIR);
+    check(ret);
     /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a", O_DIR);*/
     /*check(ret);*/
     /*ret = filesys[2]->ops->lookup(filesys[2], "/hello/a/c.txt", 7|O_CREAT);*/
