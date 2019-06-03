@@ -80,10 +80,7 @@ char *splitpath(char *path, int offset){
         pmm->free(ret);
         return NULL;
     }
-    char *cp = path;
-    for(int i = 0; i < t; i++){
-        *ret++ = *cp++;
-    }
+    strncpy(ret, path, t);
     Logw("ret : %s", ret);
     return ret;
 }
