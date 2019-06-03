@@ -172,7 +172,7 @@ int open(const char *path, int flags){
             break;
         }
     }
-    if(retfd = 0){
+    if(retfd == 0){
         retfd = current->fdcnt++;
     }
     current->fildes[retfd] = fd;
