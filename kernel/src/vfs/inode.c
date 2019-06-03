@@ -15,7 +15,7 @@ int filesysdecode(char *ret, const char *path){
     const char *cp;
     cp = path + offset;
     strcpy(ret, cp);
-    printf("%s\n", ret);
+    /*printf("%s\n", ret);*/
     for(int i = 0; i < mtt->cnt; i++){
         if(strcmp(get, mtt->rootname[i]) == 0){
             pmm->free(get);
@@ -24,7 +24,7 @@ int filesysdecode(char *ret, const char *path){
     }
     pmm->free(get);
     strcpy(ret, path);
-    printf("%s\n", ret);
+    /*printf("%s\n", ret);*/
     return 2;
 }
 
