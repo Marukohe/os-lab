@@ -46,7 +46,7 @@ void shell(void *name){
         line[nread - 1] = '\0';
         sprintf(text, "Echo: %s.\n", line);
         char *cmd = strsplit(line);
-        char args = name + strlen(cmd) + 1;
+        char *args = name + strlen(cmd) + 1;
         Logy("cmd: %s args: %s", cmd, args);
         vfs->write(stdout, text, strlen(text));
     }
