@@ -32,6 +32,7 @@ struct task {
     int fdcnt;
     int fdused[100];
     file_t *fildes[100];
+    char pwd[128];
 };
 
 struct spinlock {

@@ -3,6 +3,9 @@
 #include <devices.h>
 extern spinlock_t shelllock;
 extern spinlock_t yk;
+extern mt_t *mtt;
+extern task_t *current_task[4];
+#define current (current_task[_cpu()])
 
 char *strsplit(char *s1){
     char *cp = pmm->alloc(128);
@@ -20,12 +23,25 @@ char *strsplit(char *s1){
 
 static int shell_help(char *args);
 
+static int shell_pwd(char *args){
+    vfs->write(1, current->pwd, strlen(current->pwd));
+    return 0;
+}
+
+static int shell_cd(char *args){
+    if(strcmp(args == ".") == 0){
+        return 0;
+    }
+    return 0;
+}
+
 static struct{
     char *name;
     char *description;
     int (*handler) (char *);
 } shell_table [] = {
     {"help", "Display imformations about supported commands", shell_help},
+    {"pwd", "Display current workdir", shell_pwd},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))

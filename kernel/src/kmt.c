@@ -31,6 +31,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *a
     for(int i = 0; i < 100; i++)
         task->fdused[i] = 0;
 
+    strcpy(task[pwd], "/");
     _Area sstack;
     sstack.start = (void *)task->stack;
     sstack.end = (void *)(task->stack) + ST_SIZE;
