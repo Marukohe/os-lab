@@ -8,7 +8,7 @@
 extern void TODO();
 extern void getpath(char *get, const char *path, int offset);
 extern mt_t *mtt;
-extern filesystem_t *filesys[5];
+extern filesystem_t *filesys[FSNUM];
 int filesysdecode(char *ret, const char *path){
     int offset = 1;
     char *get = (char *)pmm->alloc(NAMELEN);

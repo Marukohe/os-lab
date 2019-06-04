@@ -4,7 +4,7 @@
 #include <klib.h>
 extern void TODO();
 extern inodeops_t inode_ops;
-extern filesystem_t *filesys[5];
+extern filesystem_t *filesys[FSNUM];
 #define INODESIZE (sizeof(inode_t))
 /*#define BLOCKSIZE 4096*/
 /*#define DIRSIZE 512*/

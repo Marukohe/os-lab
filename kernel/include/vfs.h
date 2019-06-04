@@ -2,6 +2,7 @@
 #define __VFS_H__
 
 #include <common.h>
+#define FSNUM 20
 #define OFFSETNUM 10
 #define INODENUM 1000
 #define BLOCKSIZE 4096
@@ -125,6 +126,7 @@ struct file {
 typedef struct mounttable{
     char rootname[20][40];
     int id[20];
+    int used[20];
     int cnt;
 }mt_t;
 

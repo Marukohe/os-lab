@@ -17,7 +17,7 @@ mt_t *mtt;
     _(2, filesystem_t, "blkfs",  2, &fs_ops, devices[1])
 
 #define FS_CNT(...) + 1
-filesystem_t *filesys[5];
+filesystem_t *filesys[FSNUM];
 
 void TODO(){
     assert(0);
@@ -67,6 +67,8 @@ void mttinit(){
     strcpy(mtt->rootname[1], "dev");
     mtt->id[2] = 2;
     strcpy(mtt->rootname[2], "/");
+    for(int i = 0; i < 3; i++)
+        mtt->used[i] = 1;
 }
 
 extern int filesysdecode(char *ret, const char *path);
@@ -133,7 +135,8 @@ int access(const char *path, int mode){
 }
 
 int mount(const char *path, filesystem_t *fs){
-    TODO();
+    /*TODO();*/
+
     return 0;
 }
 
