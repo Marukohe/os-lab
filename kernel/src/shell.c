@@ -3,8 +3,8 @@
 #include <devices.h>
 
 void shell(void *name){
-    int stdin = vfs->open(name, O_RDONLY);
-    int stdout = vfs->open(name, O_WRONLY);
+    int stdin = vfs->open(name, RABLE);
+    int stdout = vfs->open(name, WRABLE);
     while(1){
         char line[128], text[128];
         sprintf(text, "(%s) $ ", name);
