@@ -4,7 +4,7 @@
 extern spinlock_t shelllock;
 
 void shell(void *name){
-    kmt->spin_lock(&shellllock);
+    kmt->spin_lock(&shelllock);
     int stdin = vfs->open(name, RABLE);
     int stdout = vfs->open(name, WABLE);
     while(1){
