@@ -33,7 +33,7 @@ static int shell_pwd(char *args){
     return 0;
 }
 
-static int shell_cd(char *args){
+static int shell_cd(char *args){;
     char *text = pmm->alloc(128);
     if(args == NULL){
         strcpy(current->pwd, "/");
@@ -92,6 +92,40 @@ static int shell_cd(char *args){
     return 0;
 }
 
+static int shell_ls(char *args){
+    char text[128];
+    if(args == NULL || args[0] == '/'){
+        strcpy(text, current->pwd);
+    }else{
+        int off = strlen(args);
+        if(args[off - 1] == '/')
+            args[off - 1] = '\0';
+        sprintf(text, "%s/%s", current->pwd, args);
+    }
+    inode_t *node = filesys[2]->ope->lookup(filesys[2], text, O_DIR);
+    if(node == NULL){
+        sprintf(text, "Not such dir\n");
+        vfs->write(STROUT, text, strlen(text));
+        return 0;
+    }
+    void *buf = (char *)pmm->alloc(BLOCKSIZE);
+    filesys->dev->ops->read(filesys[2]->dev, node->offset[0], buf, BLOCKSIZE);
+    dir_t *dir = (dir_t *)dir;
+    char out[128];
+    for(int i = 0; i < dir->cnt; i++){
+        if(dir->used[i] == 1){
+            strcat(out, dir->name[i]);
+            strcat(out, "  ");
+        }
+    }
+    strcat(out, "\n");
+    vfs->write(STDOUT, out, strlen(out));
+    pmm->free(buf);
+    pmm->free(node);
+
+    return 0;
+}
+
 static struct{
     char *name;
     char *description;
@@ -100,6 +134,7 @@ static struct{
     {"help", "Display imformations about supported commands", shell_help},
     {"pwd", "Display current workdir", shell_pwd},
     {"cd", "Change current workdir", shell_cd},
+    {"ls", "Display files or dirs in curent workdir", shell_ls},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
