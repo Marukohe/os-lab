@@ -50,6 +50,7 @@ static int shell_cd(char *args){
         }
         if(flag == 1){
             Logb("flag == 1");
+            strcpt(current->pwd, "/");
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
         }else{
