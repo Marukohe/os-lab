@@ -17,27 +17,49 @@ char *strsplit(char *s1){
     pmm->free(cp);
     return NULL;
 }
-/*
-static int shell_help(char *args){
-    return 0;
-}
 
+static int shell_help(char *args);
 
 static struct{
     char *name;
-    char *descrition;
+    char *description;
     int (*handler) (char *);
 } shell_table [] = {
     {"help", "Display imformations about supported commands", shell_help},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
-*/
+
+static int shell_help(char *args){
+    int i;
+    char text[256];
+    if(arg == NULL){
+        for(int i = 0; i < NR_SHELL; i++){
+            printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
+            sprintf(text, "%s - %s\n", shell_table[i].name, shell_table[i].description);
+            vfs->write(1, text, strlen(text));
+        }
+    }else{
+        for(i = 0; i < NR_SHELL; i++){
+            if(strcmp(args, shell_table[i].name) == 0){
+                printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
+                sprintf(text, "%s - %s\n", shell_table[i].name, shell_table[i].description);
+                vfs->write(1, text, strlen(text));
+                return 0;
+            }
+        }
+        printf("Unknow command '%s'\n", args);
+        sprintf(text, "Unknow command '%s'\n", args);
+        vfs->write(1, text, strlen(text));
+    }
+    return 0;
+}
+
 
 void shell(void *name){
     /*kmt->spin_lock(&shelllock);*/
-    int stdin = vfs->open(name, RABLE);
-    int stdout = vfs->open(name, WABLE);
+    int stdin = vfs->open(name, RABLE);  //0
+    int stdout = vfs->open(name, WABLE); //1
     while(1){
         char line[128], text[128];
         sprintf(text, "(%s) $ ", name);
@@ -48,6 +70,18 @@ void shell(void *name){
         char *cmd = strsplit(line);
         char *args = line + strlen(cmd) + 1;
         Logy("cmd: %s args: %s", cmd, args);
+
+        int i;
+        for(int i = 0; i < NR_SHELL; i++){
+            if(strcmp(cmd, shell_table[i].name) == 0){
+                if(shell_table[i].handler(args) < 0){
+                    printf("%s failed\n", cmd);
+                }
+                break;
+            }
+        }
+        if(i == NR_SHELL) {printf("Unknown command '%s'\n", cmd);}
+
         vfs->write(stdout, text, strlen(text));
     }
     /*kmt->spin_unlock(&shelllock);*/
