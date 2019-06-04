@@ -10,7 +10,7 @@ char *strsplit(char *s1){
     for(int i = 0; i < strlen(s1); i++){
         if(s1[i] == ' '){
             off = i;
-            strncpy(cp, s1, off - 1);
+            strncpy(cp, s1, off);
             return cp;
         }
     }
@@ -46,7 +46,7 @@ void shell(void *name){
         line[nread - 1] = '\0';
         sprintf(text, "Echo: %s.\n", line);
         char *cmd = strsplit(line);
-        char *args = name + strlen(cmd) + 1;
+        char *args = line + strlen(cmd) + 1;
         Logy("cmd: %s args: %s", cmd, args);
         vfs->write(stdout, text, strlen(text));
     }
