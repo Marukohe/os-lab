@@ -6,7 +6,8 @@
 /*#define OSDEBUG*/
 /*#define CONSUMER*/
 #define IDLE
-#define TTY
+/*#define TTY*/
+#define SHELL
 
 #define TKNUM 25
 extern task_t *cputask[TKNUM];
@@ -71,6 +72,8 @@ void echo_task(void *name) {
   }
 }
 
+extern void shell(void *name);
+
 static void os_init() {
   pmm->init();
   kmt->init();
@@ -95,6 +98,10 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle2", idle, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle3", idle, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle4", idle, NULL);
+#endif
+
+#ifdef SHELL
+  kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty1");
 #endif
 
   kmt->sem_init(&emptysem, "empty", 10);
