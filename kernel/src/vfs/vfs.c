@@ -1,6 +1,7 @@
 #include <common.h>
 #include <vfs.h>
 #include <klib.h>
+#include <devices.h>
 
 extern fsops_t fs_ops;
 extern device_t *devices[8];
