@@ -113,8 +113,10 @@ static int shell_ls(char *args){
     filesys[2]->dev->ops->read(filesys[2]->dev, node->offset[0], buf, BLOCKSIZE);
     dir_t *dir = (dir_t *)dir;
     char out[128];
+    Logb("%s\n", dir->cnt);
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1){
+            printf("%s\n", dir->name[i]);
             strcat(out, dir->name[i]);
             strcat(out, "  ");
         }
