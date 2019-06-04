@@ -148,7 +148,7 @@ int mount(const char *path, filesystem_t *fs){
         mtt->cnt++;
     }
     strcpy(mtt->rootname[id], path);
-    filesys[id] = filesys_create(sizeof(filesys_t), path, id, &fs_ops, fs->dev);
+    filesys[id] = filesys_create(sizeof(filesystem_t), path, id, &fs_ops, fs->dev);
     filesys[id]->ops->init(filesys[id], path, filesys[id]->dev);
 
     return 0;
