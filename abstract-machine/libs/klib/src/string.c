@@ -123,5 +123,45 @@ void *memmove(void *dest, const void *src, size_t n){
     }
     return dest;
 }
+/*
+size_t strcspn(const char *s1, const char *s2){
+    const char *sc1, *sc2;
+    for(sc1 = s1; *sc1 != '\0'; ++sc1){
+        for(sc2 = s2; *sc2 != '\0'; ++sc2){
+            if(*sc1 == *sc2)
+                return sc1 - s1;
+        }
+    }
+    return sc1 - s1;
+}
 
+size_t strspn(const char *s1, const char *s2){
+    const char *sc1, *sc2;
+    for(sc1 = s1; *sc1 != '\0'; ++sc1){
+        for(sc2 = s2; ; ++sc2){
+            if(*sc2 == '\0')
+                return sc1 - s1;
+            else if(*sc1 == *sc2)
+                break;
+        }
+    }
+    return sc1 - s1;
+}
+
+char *strtok(char *s1, const char *s2){
+    char *sbegin, *send;
+    static char *ssave = "";
+    sbegin = s1 ? s1 : ssave;
+    sbegin += strspn(sbegin, s2);
+    if(*sbegin == '\0'){
+        ssave = "";
+        return NULL;
+    }
+    send = sbegin + strcspn(sbegin, s2);
+    if(*send != '\0')
+        *send ++ = '\0';
+    ssave = send;
+    return ebegin;
+}
+*/
 #endif
