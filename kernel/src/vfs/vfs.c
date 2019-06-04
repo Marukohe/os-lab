@@ -137,17 +137,17 @@ int access(const char *path, int mode){
 int mount(const char *path, filesystem_t *fs){
     /*TODO();*/
     int id = 0;
-    for(int i = 0; i < mmt->cnt; i++){
-        if(mtt->used[i] = 0){
+    for(int i = 0; i < mtt->cnt; i++){
+        if(mtt->used[i] == 0){
             id = i;
             break;
         }
     }
-    if(id = 0){
+    if(id == 0){
         id = mtt->cnt;
         mtt->cnt++;
     }
-    strcpt(mtt->rootname[i], path);
+    strcpy(mtt->rootname[id], path);
     filesys[id] = filesys_create(sizeof(filesys_t), path, id, &fs_ops, fs->dev);
     filesys[id]->ops->init(filesys[id], path, filesys[id]->dev);
 
@@ -157,7 +157,7 @@ int mount(const char *path, filesystem_t *fs){
 int unmount(const char *path){
     /*TODO();*/
     int id = -1;
-    for(int i = 0; i < mmt->cnt; i++){
+    for(int i = 0; i < mtt->cnt; i++){
         if(strcmp(mtt->rootname[i], path)){
             id = i;
             break;
