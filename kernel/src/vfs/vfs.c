@@ -233,7 +233,12 @@ int open(const char *path, int flags){
 ssize_t read(int fd, void *buf, size_t nbyte){
     /*TODO();*/
     if(current->fildes[fd]->inode == NULL){
-        device_t *dev = dev_lookup(current->fildes[fd]->path);
+        char *name = (char *)pmm->alloc(128);
+        for(int i = 1; i < strlen(current->fildes[fd]->path); i++)
+            name[i - 1] = current->fildes[fd]->path[i];
+        printf("devname: %s\n", name);
+        device_t *dev = dev_lookup(name);
+        pmm->free(name);
         int nread = dev->ops->read(dev, 0, buf, nbyte);
         current->fildes[fd]->offset += nread;
         return nread;
@@ -246,7 +251,12 @@ ssize_t read(int fd, void *buf, size_t nbyte){
 ssize_t write(int fd, void *buf, size_t nbyte){
     /*TODO();*/
     if(current->fildes[fd]->inode == NULL){
-        device_t *dev = dev_lookup(current->fildes[fd]->path);
+        char *name = (char *)pmm->alloc(128);
+        for(int i = 1; i < strlen(current->fildes[fd]->path); i++)
+            name[i - 1] = current->fildes[fd]->path[i];
+        printf("devname: %s\n", name);
+        device_t *dev = dev_lookup(name);
+        pmm->free(name);
         int nwrite = dev->ops->write(dev, 0, buf, nbyte);
         current->fildes[fd]->offset += nwrite;
         return nwrite;
