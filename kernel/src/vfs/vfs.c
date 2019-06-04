@@ -202,6 +202,7 @@ int open(const char *path, int flags){
     /*TODO();*/
     char *ret = pmm->alloc(100);
     int id = filesysdecode(ret, path);
+    Logb("%d\n", id);
     file_t *fd = (file_t *)pmm->alloc(sizeof(file_t));
     fd->refcnt = 0;
     inode_t *tmp = filesys[id]->ops->lookup(filesys[id], ret, flags);
