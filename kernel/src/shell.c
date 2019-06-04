@@ -62,7 +62,7 @@ void shell(void *name){
     int stdout = vfs->open(name, WABLE); //1
     while(1){
         char line[128], text[128];
-        sprintf(text, "(%s) $ ", name);
+        sprintf(text, "(%s) $ ", "maruko");
         vfs->write(stdout, text, strlen(text));
         int nread = vfs->read(stdin, line, sizeof(line));
         line[nread - 1] = '\0';
