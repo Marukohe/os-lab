@@ -63,9 +63,9 @@ void mttinit(){
     mtt = (mt_t *)pmm->alloc(sizeof(mt_t));
     mtt->cnt = 3;
     mtt->id[0] = 0;
-    strcpy(mtt->rootname[0], "/proc");
+    strcpy(mtt->rootname[0], "proc");
     mtt->id[1] = 1;
-    strcpy(mtt->rootname[1], "/dev");
+    strcpy(mtt->rootname[1], "dev");
     mtt->id[2] = 2;
     strcpy(mtt->rootname[2], "/");
     for(int i = 0; i < 3; i++)
