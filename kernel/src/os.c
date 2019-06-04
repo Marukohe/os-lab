@@ -19,6 +19,7 @@ extern struct spinlock pk;
 int cnthandler = 0;
 struct handlers schandlers[MAXHANDLER];
 spinlock_t yk;
+spinlock_t shelllock;
 
 sem_t fillsem;
 sem_t emptysem;
@@ -107,6 +108,7 @@ static void os_init() {
   kmt->sem_init(&emptysem, "empty", 10);
   kmt->sem_init(&fillsem, "fill", 0);
   kmt->spin_init(&yk, "yield lock");
+  kmt->spin_init(&shelllock, "shelllock");
 }
 
 static void hello() {

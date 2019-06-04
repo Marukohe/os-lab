@@ -3,6 +3,7 @@
 #include <devices.h>
 
 void shell(void *name){
+    kmt->spin_lock(&shellllock);
     int stdin = vfs->open(name, RABLE);
     int stdout = vfs->open(name, WABLE);
     while(1){
@@ -14,4 +15,5 @@ void shell(void *name){
         sprintf(text, "Echo: %s.\n", line);
         vfs->write(stdout, text, strlen(text));
     }
+    kmt->spin_unlock(&shelllock);
 }
