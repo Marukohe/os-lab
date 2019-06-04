@@ -13,13 +13,15 @@ int filesysdecode(char *ret, const char *path){
     int offset = 1;
     char *get = (char *)pmm->alloc(NAMELEN);
     getpath(get, path, offset);
+    char text[128];
+    sprintf(test, "/%s", get);
     offset += strlen(get);
     const char *cp;
     cp = path + offset;
     strcpy(ret, cp);
     /*printf("%s\n", ret);*/
     for(int i = 0; i < mtt->cnt; i++){
-        if(strcmp(get, mtt->rootname[i]) == 0){
+        if(strcmp(text, mtt->rootname[i]) == 0){
             pmm->free(get);
             return i;
         }
