@@ -114,7 +114,6 @@ void init(){
 
 int access(const char *path, int mode){
     /*TODO();*/
-    int ret = -1;
     char *decode = (char *)pmm->alloc(100);
     int id = filesysdecode(decode, path);
     inode_t *node;
