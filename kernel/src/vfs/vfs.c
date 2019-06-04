@@ -136,12 +136,41 @@ int access(const char *path, int mode){
 
 int mount(const char *path, filesystem_t *fs){
     /*TODO();*/
+    int id = 0;
+    for(int i = 0; i < mmt->cnt; i++){
+        if(mtt->used[i] = 0){
+            id = i;
+            break;
+        }
+    }
+    if(id = 0){
+        id = mtt->cnt;
+        mtt->cnt++;
+    }
+    strcpt(mtt->rootname[i], path);
+    filesys[id] = filesys_create(sizeof(filesys_t), path, id, &fs_ops, fs->dev);
+    filesys[id]->ops->init(filesys[id], path, filesys[id]->dev);
 
     return 0;
 }
 
 int unmount(const char *path){
-    TODO();
+    /*TODO();*/
+    int id = -1;
+    for(int i = 0; i < mmt->cnt; i++){
+        if(strcmp(mtt->rootname[i], path)){
+            id = i;
+            break;
+        }
+    }
+    if(id == -1 || mtt->used[id] == 0){
+        printf("Not such mnt filesystem\n");
+        return -1;
+    }
+    pmm->free(filesys[id]->sinode->ptr);
+    pmm->free(filesys[id]->sinode);
+    pmm->free(filesys[id]);
+    mtt->used[id] = 0;
     return 0;
 }
 
