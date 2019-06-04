@@ -203,23 +203,24 @@ int open(const char *path, int flags){
     file_t *fd = (file_t *)pmm->alloc(sizeof(file_t));
     fd->refcnt = 0;
     inode_t *tmp = filesys[id]->ops->lookup(filesys[id], ret, flags);
-    if(tmp == NULL){
+    if(id != 1 && tmp == NULL){
         printf("open failed\n");
         pmm->free(ret);
         pmm->free(fd);
         return -1;
     }
+
     fd->inode = tmp;
     fd->path = ret;
     fd->offset = 0;
-    int retfd = 0;
+    int retfd = -1;
     for(int i = 0; i < current->fdcnt; i++){
         if(current->fdused[i] == 0){
             retfd = i;
             break;
         }
     }
-    if(retfd == 0){
+    if(retfd == -1){
         retfd = current->fdcnt++;
     }
     current->fildes[retfd] = fd;
