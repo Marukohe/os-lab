@@ -3,6 +3,8 @@
 #include <klib.h>
 #include <devices.h>
 #define NAMELEN 100
+#define min(a, b) (a < b ? a : b)
+#define max(a, b) (a < b ? b : a)
 extern void TODO();
 extern void getpath(char *get, const char *path, int offset);
 extern mt_t *mtt;
@@ -44,21 +46,32 @@ ssize_t inoderead(file_t *file, char *buf, size_t size){
     filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
     char *cp;
     cp = buf + file->offset;
-    strncpy(buf, cp, size);
-    file->offset += size;
+    int cpsize = min(size, file->inode->filesize - file->offset);
+    if(cpsize == 0){
+        printf("offset at the end of the file\n");
+        return 0;
+    }
+    strncpy(buf, cp, cpsize);
+    file->offset += cpsize;
     pmm->free(red);
-    return size;
+    return cpsize;
 }
 
 ssize_t inodewrite(file_t *file, const char *buf, size_t size){
     /*TODO();*/
     char *red = (char *)pmm->alloc(BLOCKSIZE);
+    /*char *wback = (char *)pmm->alloc(BLOCKSIZE);*/
     filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
-    char *cp = (char *)pmm->alloc(BLOCKSIZE);
-    strncpy(cp, buf, size);
-    strcat(red, cp);
-    file->offset += size;
+    for(int i = 0; i < strlen(buf); i++){
+        red[file->offset+++] = buf[i];
+    }
+    for(int i = strlen(buf); i < size; i++){
+        red[file->offset++] = '\0';
+    }
+    file->inode->filesize = max(file->inode->filesize, file->offset);
+
     filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
+    pmm->free(red);
     return size;
 }
 
