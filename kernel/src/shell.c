@@ -15,7 +15,7 @@ char *strsplit(char *s1){
         }
     }
     strcpy(cp, s1);
-    return NULL;
+    return cp;
 }
 
 static int shell_help(char *args);
