@@ -76,7 +76,7 @@ void shell(void *name){
         Logy("cmd: %s args: %s", cmd, args);
 
         int i;
-        for(int i = 0; i < NR_SHELL; i++){
+        for(i = 0; i < NR_SHELL; i++){
             if(strcmp(cmd, shell_table[i].name) == 0){
                 if(shell_table[i].handler(args) < 0){
                     printf("%s failed\n", cmd);
