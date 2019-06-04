@@ -24,7 +24,9 @@ char *strsplit(char *s1){
 static int shell_help(char *args);
 
 static int shell_pwd(char *args){
-    vfs->write(1, current->pwd, strlen(current->pwd));
+    char text[128];
+    sprintf(text, "%s\n", current->pwd);
+    vfs->write(1, text, strlen(text));
     return 0;
 }
 
