@@ -34,7 +34,7 @@ static int shell_help(char *args){
     int i;
     char text[256];
     if(args == NULL){
-        for(int i = 0; i < NR_SHELL; i++){
+        for(i = 0; i < NR_SHELL; i++){
             printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
             sprintf(text, "%s - %s\n", shell_table[i].name, shell_table[i].description);
             vfs->write(1, text, strlen(text));
@@ -68,7 +68,11 @@ void shell(void *name){
         line[nread - 1] = '\0';
         sprintf(text, "Echo: %s.\n", line);
         char *cmd = strsplit(line);
-        char *args = line + strlen(cmd) + 1;
+        char *args;
+        if(strlen(line) == strlen(cmd))
+            args = NULL;
+        else
+            args = line + strlen(cmd) + 1;
         Logy("cmd: %s args: %s", cmd, args);
 
         int i;
