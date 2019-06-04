@@ -5,7 +5,7 @@
 
 /*#define OSDEBUG*/
 /*#define CONSUMER*/
-/*#define IDLE*/
+#define IDLE
 /*#define TTY*/
 #define SHELL
 
