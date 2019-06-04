@@ -38,7 +38,7 @@ static int shell_cd(char *args){
     if(strcmp(args, ".") == 0 || strcmp(args, "./") == 0){
         sprintf(text, "change dir to: %s\n", current->pwd);
         vfs->write(STDOUT, text, strlen(text));
-    }if(strcmp(args, "..") || strcmp(args, "../") == 0){
+    }else if(strcmp(args, "..") == 0 || strcmp(args, "../") == 0){
         int flag = 0;
         Logb("%d", mtt->cnt);
         for(int i = 0; i < mtt->cnt; i++){
@@ -58,7 +58,7 @@ static int shell_cd(char *args){
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
         }
-    }else if(strncmp(args, "/", 1)){
+    }else if(strncmp(args, "/", 1) == 0){
         int ret = vfs->access(args, D_OK);
         if(ret == 0){
             strcpy(current->pwd, args);
