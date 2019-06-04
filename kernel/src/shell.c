@@ -56,10 +56,10 @@ static int shell_cd(char *args){
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
         }
-    }else if(strncmp(args, "/")){
+    }else if(strncmp(args, "/", 1)){
         int ret = vfs->access(args, D_OK);
         if(ret == 0){
-            strcpy(currene->pwd, args);
+            strcpy(current->pwd, args);
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
         }else{
