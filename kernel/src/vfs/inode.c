@@ -77,8 +77,14 @@ ssize_t inodewrite(file_t *file, const char *buf, size_t size){
 }
 
 off_t inodelseek(file_t *file, off_t offset, int whence){
-    TODO();
-    return 0;
+    /*TODO();*/
+    switch(whence){
+        case SEEKSET: file->offset = offset; break;
+        case SEEKCUR: file->offset += offset; break;
+        case SEEKEND: file->offset = file->inode->filesize; break;
+        default: printf("Not such mode in lseek"); return -1;
+    }
+    return file->offset;
 }
 
 int inodemkdir(const char *name){

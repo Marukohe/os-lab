@@ -19,6 +19,12 @@
 #define O_DIR 16
 //#define O_
 
+// lseek MODE
+// ---------------------------------------
+#define SEEKSET 0
+#define SEEKCUR 1
+#define SEEKEND 2
+
 struct filesystem;
 typedef struct filesystem filesystem_t;
 

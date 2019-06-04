@@ -196,8 +196,10 @@ ssize_t write(int fd, void *buf, size_t nbyte){
 }
 
 off_t lseek(int fd, off_t offset, int whence){
-    TODO();
-    return 0;
+    /*TODO();*/
+    off_t ret;
+    ret = current->fildes[fd]->inode->ops->lseek(current->fildes[fd], offset, whence);
+    return ret;
 }
 
 int close(int fd){
