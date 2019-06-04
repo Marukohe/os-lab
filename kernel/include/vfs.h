@@ -25,6 +25,13 @@
 #define SEEKCUR 1
 #define SEEKEND 2
 
+// access MODE
+// ---------------------------------------
+#define R_OK 0
+#define W_OK 1
+#define X_OK 2
+#define F_OK 3
+
 struct filesystem;
 typedef struct filesystem filesystem_t;
 

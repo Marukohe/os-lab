@@ -113,7 +113,23 @@ void init(){
 }
 
 int access(const char *path, int mode){
-    TODO();
+    /*TODO();*/
+    int ret = -1;
+    char *decode = (char *)pmm->alloc(100);
+    int id = filesysdecode(decode, path);
+    inode_t *node;
+    switch(mode){
+        case R_OK: node = filesys[id]->ops->lookup(filesys[id], decode, RABLE); break;
+        case W_OK: node = filesys[id]->ops->lookup(filesys[id], decode, WABLE); break;
+        case X_OK: node = filesys[id]->ops->lookup(filesys[id], decode, XABLE); break;
+        case F_OK: node = filesys[id]->ops->lookup(filesys[id], decode, 7); break;
+        default: printf("Not such mode in access\n"); return -1;
+    }
+    pmm->free(decode);
+    if(node == NULL){
+        return -1;
+    }
+    pmm->free(node);
     return 0;
 }
 
