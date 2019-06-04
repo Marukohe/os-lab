@@ -38,9 +38,10 @@ static int shell_cd(char *args){
     if(strcmp(args, ".") == 0 || strcmp(args, "./") == 0){
         sprintf(text, "change dir to: %s\n", current->pwd);
         vfs->write(STDOUT, text, strlen(text));
-    }else if(strcmp(args, "..") || strcmp(args, "../") == 0){
+    }if(strcmp(args, "..") || strcmp(args, "../") == 0){
         int flag = 0;
         for(int i = 0; i < mtt->cnt; i++){
+            printf("%s\n", mtt->rootname[i]);
             if(mtt->used[i] == 1 && strcmp(mtt->rootname[i], current->pwd) == 0){
                 flag = 1;
                 break;
