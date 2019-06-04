@@ -4,7 +4,7 @@
 
 void shell(void *name){
     int stdin = vfs->open(name, RABLE);
-    int stdout = vfs->open(name, WRABLE);
+    int stdout = vfs->open(name, WABLE);
     while(1){
         char line[128], text[128];
         sprintf(text, "(%s) $ ", name);
