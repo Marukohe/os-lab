@@ -125,6 +125,7 @@ int access(const char *path, int mode){
         case W_OK: node = filesys[id]->ops->lookup(filesys[id], decode, WABLE); break;
         case X_OK: node = filesys[id]->ops->lookup(filesys[id], decode, XABLE); break;
         case F_OK: node = filesys[id]->ops->lookup(filesys[id], decode, 7); break;
+        case D_OK: node = filesys[id]->ops->lookup(filesys[id], decode, 7 | O_DIR); break;
         default: printf("Not such mode in access\n"); return -1;
     }
     pmm->free(decode);

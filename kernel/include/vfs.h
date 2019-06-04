@@ -32,6 +32,13 @@
 #define W_OK 1
 #define X_OK 2
 #define F_OK 3
+#define D_OK 4
+
+// STD
+// ---------------------------------------
+#define STDIN 0
+#define STDOUT 1
+#define STDERR 2
 
 struct filesystem;
 typedef struct filesystem filesystem_t;

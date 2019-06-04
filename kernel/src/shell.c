@@ -7,6 +7,9 @@ extern mt_t *mtt;
 extern task_t *current_task[4];
 #define current (current_task[_cpu()])
 
+extern char *splitpath(char *path, int offset);
+
+// 命令解析
 char *strsplit(char *s1){
     char *cp = pmm->alloc(128);
     int off = 0;
@@ -26,14 +29,47 @@ static int shell_help(char *args);
 static int shell_pwd(char *args){
     char text[128];
     sprintf(text, "%s\n", current->pwd);
-    vfs->write(1, text, strlen(text));
+    vfs->write(STDOUT, text, strlen(text));
     return 0;
 }
 
 static int shell_cd(char *args){
-    if(strcmp(args, ".") == 0){
-        return 0;
+    char *text = pmm->alloc(128);
+    if(strcmp(args, ".") == 0 || strcmp(args, "./") == 0){
+        sprintf(text, "change dir to: %s\n", current->pwd);
+        vfs->write(STDOUT, text, strlen(text));
+    }else if(strcmp(args, "..") || strcmp(args, "../") == 0){
+        int flag = 0;
+        for(int i = 0; i < mtt->cnt; i++){
+            if(mmt->used[i] == 1 && strcmp(mtt->rootname[i], current->pwd) == 0){
+                flag = 1;
+                break;
+            }
+        }
+        if(flag == 1){
+            sprintf(text, "change dir to: %s\n", current->pwd);
+            vfs->write(STDOUT, text, strlen(text));
+        }else{
+            char *pwd = splitpath(current->pwd, strlen(current->pwd));
+            strcpy(current->pwd, pwd);
+            pmm->free(pwd);
+            sprintf(text, "change dir to: %s\n", current->pwd);
+            vfs->write(STDOUT, text, strlen(text));
+        }
+    }else if(strncmp(args, "/")){
+        int ret = vfs->access(args, D_OK);
+        if(ret == 0){
+            strcpy(currene->pwd, args);
+            sprintf(text, "change dir to: %s\n", current->pwd);
+            vfs->write(STDOUT, text, strlen(text));
+        }else{
+            sprintf(text, "Not such Dictionary\n");
+            vfs->write(STDOUT, text, strlen(text));
+        }
+    }else{
+
     }
+    pmm->free(text);
     return 0;
 }
 
