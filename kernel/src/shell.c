@@ -14,7 +14,7 @@ char *strsplit(char *s1){
             return cp;
         }
     }
-    pmm->free(cp);
+    strcpy(cp, s1);
     return NULL;
 }
 
@@ -86,7 +86,7 @@ void shell(void *name){
         }
         if(i == NR_SHELL) {printf("Unknown command '%s'\n", cmd);}
 
-        vfs->write(stdout, text, strlen(text));
+        /*vfs->write(stdout, text, strlen(text));*/
     }
     /*kmt->spin_unlock(&shelllock);*/
 }
