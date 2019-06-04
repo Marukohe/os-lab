@@ -103,14 +103,14 @@ static int shell_ls(char *args){
             args[off - 1] = '\0';
         sprintf(text, "%s/%s", current->pwd, args);
     }
-    inode_t *node = filesys[2]->ope->lookup(filesys[2], text, O_DIR);
+    inode_t *node = filesys[2]->ops->lookup(filesys[2], text, O_DIR);
     if(node == NULL){
         sprintf(text, "Not such dir\n");
         vfs->write(STDOUT, text, strlen(text));
         return 0;
     }
     void *buf = (char *)pmm->alloc(BLOCKSIZE);
-    filesys->dev->ops->read(filesys[2]->dev, node->offset[0], buf, BLOCKSIZE);
+    filesys[2]->dev->ops->read(filesys[2]->dev, node->offset[0], buf, BLOCKSIZE);
     dir_t *dir = (dir_t *)dir;
     char out[128];
     for(int i = 0; i < dir->cnt; i++){
