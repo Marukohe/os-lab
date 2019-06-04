@@ -247,7 +247,7 @@ ssize_t write(int fd, void *buf, size_t nbyte){
     /*TODO();*/
     if(current->fildes[fd]->inode == NULL){
         device_t *dev = dev_lookup(current->fildes[fd]->path);
-        int nwrite = dev->ops->write(dev, 0, buf, size);
+        int nwrite = dev->ops->write(dev, 0, buf, nbyte);
         current->fildes[fd]->offset += nwrite;
         return nwrite;
     }
