@@ -63,7 +63,7 @@ ssize_t inodewrite(file_t *file, const char *buf, size_t size){
     /*char *wback = (char *)pmm->alloc(BLOCKSIZE);*/
     filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
     for(int i = 0; i < strlen(buf); i++){
-        red[file->offset+++] = buf[i];
+        red[file->offset++] = buf[i];
     }
     for(int i = strlen(buf); i < size; i++){
         red[file->offset++] = '\0';
