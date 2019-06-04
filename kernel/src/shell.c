@@ -29,7 +29,7 @@ static int shell_pwd(char *args){
 }
 
 static int shell_cd(char *args){
-    if(strcmp(args == ".") == 0){
+    if(strcmp(args, ".") == 0){
         return 0;
     }
     return 0;
@@ -42,6 +42,7 @@ static struct{
 } shell_table [] = {
     {"help", "Display imformations about supported commands", shell_help},
     {"pwd", "Display current workdir", shell_pwd},
+    {"cd", "Change current workdir", shell_cd},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
