@@ -5,6 +5,7 @@ extern spinlock_t shelllock;
 extern spinlock_t yk;
 extern mt_t *mtt;
 extern task_t *current_task[4];
+extern filesystem_t *filesys[FSNUM];
 #define current (current_task[_cpu()])
 
 extern char *splitpath(char *path, int offset);
@@ -105,7 +106,7 @@ static int shell_ls(char *args){
     inode_t *node = filesys[2]->ope->lookup(filesys[2], text, O_DIR);
     if(node == NULL){
         sprintf(text, "Not such dir\n");
-        vfs->write(STROUT, text, strlen(text));
+        vfs->write(STDOUT, text, strlen(text));
         return 0;
     }
     void *buf = (char *)pmm->alloc(BLOCKSIZE);
