@@ -43,9 +43,9 @@ int inodeclose(file_t *file){
 ssize_t inoderead(file_t *file, char *buf, size_t size){
     /*TODO();*/
     if(file->inode == NULL){
-        device_t *dev = dev_look(file->path);
+        device_t *dev = dev_lookup(file->path);
         int nread = dev->ops->read(dev, 0, buf, size);
-        filesys->offset += nread;
+        file->offset += nread;
         return nread;
     }
     char *red = (char *)pmm->alloc(BLOCKSIZE);
@@ -68,7 +68,7 @@ ssize_t inodewrite(file_t *file, const char *buf, size_t size){
     if(file->indoe = NULL){
         device_t *dev = dev_lookup(file->path);
         int nwrite = dev->ops->write(dev, 0, buf, size);
-        filesys->offset += nwrite;
+        file->offset += nwrite;
         return nwrite;
     }
     char *red = (char *)pmm->alloc(BLOCKSIZE);
