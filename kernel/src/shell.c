@@ -1,6 +1,7 @@
 #include <common.h>
 #include <vfs.h>
 #include <devices.h>
+extern spinlock_t shelllock;
 
 void shell(void *name){
     kmt->spin_lock(&shellllock);
