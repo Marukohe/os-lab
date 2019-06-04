@@ -43,6 +43,8 @@ int inodeclose(file_t *file){
 ssize_t inoderead(file_t *file, char *buf, size_t size){
     /*TODO();*/
     if(file->inode == NULL){
+        printf("file inode is NULL\n");
+        return -1;
         device_t *dev = dev_lookup(file->path);
         int nread = dev->ops->read(dev, 0, buf, size);
         file->offset += nread;
@@ -66,6 +68,8 @@ ssize_t inoderead(file_t *file, char *buf, size_t size){
 ssize_t inodewrite(file_t *file, const char *buf, size_t size){
     /*TODO();*/
     if(file->inode == NULL){
+        printf("file inode is NULL\n");
+        return -1;
         device_t *dev = dev_lookup(file->path);
         int nwrite = dev->ops->write(dev, 0, buf, size);
         file->offset += nwrite;

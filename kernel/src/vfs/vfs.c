@@ -231,6 +231,12 @@ int open(const char *path, int flags){
 
 ssize_t read(int fd, void *buf, size_t nbyte){
     /*TODO();*/
+    if(current->fildes[id]->inode == NULL){
+        device_t *dev = dev_lookup(file->path);
+        int nread = dev->ops->read(dev, 0, buf, size);
+        file->offset += nread;
+        return nread;
+    }
     ssize_t ret;
     ret = current->fildes[fd]->inode->ops->read(current->fildes[fd], buf, nbyte);
     return ret;
@@ -238,6 +244,12 @@ ssize_t read(int fd, void *buf, size_t nbyte){
 
 ssize_t write(int fd, void *buf, size_t nbyte){
     /*TODO();*/
+    if(current->fildes[fd]->node == NULL){
+        device_t *dev = dev_lookup(file->path);
+        int nwrite = dev->ops->write->(dev, 0, buf, size);
+        file->offset += nwrite;
+        return nwrite;
+    }
     ssize_t ret;
     ret = current->fildes[fd]->inode->ops->write(current->fildes[fd], buf, nbyte);
     return ret;
