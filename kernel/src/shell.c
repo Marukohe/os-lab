@@ -17,7 +17,7 @@ char *strsplit(char *s1){
     pmm->free(cp);
     return NULL;
 }
-
+/*
 static int shell_help(char *args){
     return 0;
 }
@@ -32,6 +32,7 @@ static struct{
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
+*/
 
 void shell(void *name){
     /*kmt->spin_lock(&shelllock);*/
