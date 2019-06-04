@@ -40,6 +40,7 @@ static int shell_cd(char *args){
         vfs->write(STDOUT, text, strlen(text));
     }if(strcmp(args, "..") || strcmp(args, "../") == 0){
         int flag = 0;
+        Logb("%d", mtt->cnt);
         for(int i = 0; i < mtt->cnt; i++){
             printf("%s\n", mtt->rootname[i]);
             if(mtt->used[i] == 1 && strcmp(mtt->rootname[i], current->pwd) == 0){
