@@ -144,6 +144,7 @@ void test(){
 
 static void os_run() {
   hello();
+  shell("/dev/tty1");
   /*test();*/
   _intr_write(1);
   while (1) {
