@@ -65,7 +65,7 @@ ssize_t inoderead(file_t *file, char *buf, size_t size){
 
 ssize_t inodewrite(file_t *file, const char *buf, size_t size){
     /*TODO();*/
-    if(file->inode = NULL){
+    if(file->inode == NULL){
         device_t *dev = dev_lookup(file->path);
         int nwrite = dev->ops->write(dev, 0, buf, size);
         file->offset += nwrite;
