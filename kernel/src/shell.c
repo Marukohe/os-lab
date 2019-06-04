@@ -71,14 +71,14 @@ static int shell_cd(char *args){
     }else{
         sprintf(text, "%s/", current->pwd);
         strcat(text, args);
-        int ret = vfs_access(text, D_OK);
+        int ret = vfs->access(text, D_OK);
         if(ret == 0){
-            strcpt(current->pwd, text);
+            strcpy(current->pwd, text);
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
         }else{
             sprintf(text, "Not such Dictionary\n");
-            vfs->write(STDOUT, text, strlent(text));
+            vfs->write(STDOUT, text, strlen(text));
         }
     }
     pmm->free(text);
