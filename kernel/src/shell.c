@@ -35,7 +35,11 @@ static int shell_pwd(char *args){
 
 static int shell_cd(char *args){
     char *text = pmm->alloc(128);
-    if(strcmp(args, ".") == 0 || strcmp(args, "./") == 0){
+    if(args == NULL){
+        strcpy(current->pwd, "/");
+        sprintf(text, "change dir to: %s\n", current->pwd);
+        vfs->write(STDOUT, text, strlen(text));
+    }else if(strcmp(args, ".") == 0 || strcmp(args, "./") == 0){
         sprintf(text, "change dir to: %s\n", current->pwd);
         vfs->write(STDOUT, text, strlen(text));
     }else if(strcmp(args, "..") == 0 || strcmp(args, "../") == 0){
@@ -143,6 +147,13 @@ void shell(void *name){
             args = NULL;
         else
             args = line + strlen(cmd) + 1;
+        int flag = 0;
+        for(int i = 0; i < strlen(args); i++){
+            if(args[i] != ' ')
+                flag = 1;
+        }
+        if(flag == 0)
+            args = NULL;
         Logy("cmd: %s args: %s", cmd, args);
 
         int i;
