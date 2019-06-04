@@ -14,7 +14,7 @@ int filesysdecode(char *ret, const char *path){
     char *get = (char *)pmm->alloc(NAMELEN);
     getpath(get, path, offset);
     char text[128];
-    sprintf(test, "/%s", get);
+    sprintf(text, "/%s", get);
     offset += strlen(get);
     const char *cp;
     cp = path + offset;
