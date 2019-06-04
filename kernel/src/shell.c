@@ -33,7 +33,7 @@ static struct{
 static int shell_help(char *args){
     int i;
     char text[256];
-    if(arg == NULL){
+    if(args == NULL){
         for(int i = 0; i < NR_SHELL; i++){
             printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
             sprintf(text, "%s - %s\n", shell_table[i].name, shell_table[i].description);
