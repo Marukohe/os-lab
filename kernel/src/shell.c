@@ -76,8 +76,10 @@ static int shell_cd(char *args){;
             vfs->write(STDOUT, text, strlen(text));
         }
     }else{
-        if(current->pwd[0] != '/')
+        if(strcmp(current->pwd, "/") == 0)
             sprintf(text, "%s/", current->pwd);
+        else
+            sprintf(text, "/");
         strcat(text, args);
         int ret = vfs->access(text, D_OK);
         Logg("access ret: %d, text: %s", ret, text);
