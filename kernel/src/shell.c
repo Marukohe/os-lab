@@ -147,6 +147,7 @@ static int shell_mkdir(char *args){
     }else{
         sprintf(text, "%s/%s", current->pwd, args);
     }
+    Logg("mkdir path %s",text);
     int ret = vfs->mkdir(text);
     if(ret == -1){
         sprintf(text, "mkdir failed\n");
