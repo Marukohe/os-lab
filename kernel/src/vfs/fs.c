@@ -86,6 +86,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
             Logp("node permission: %d get: %s dir->name[i]: %s dir->off: %d\n", ret->flags, get, dir->name[i], dir->offset[i]);
             if(strcmp(dir->name[i], get) == 0){
                 //获取目录块中记录的inode
+                memset(tmpnode, 0, INODESIZE);
                 filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[i], tmpnode, INODESIZE);
                 ret = (inode_t *)tmpnode;
                 Logy("pos: %d %d\n", ret->pos, dir->offset[i]);
