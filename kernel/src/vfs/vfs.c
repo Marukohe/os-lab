@@ -110,11 +110,11 @@ void init(){
     memset(buf, 0, BLOCKSIZE);
     dir_t *dir = (dir_t *)buf;
     dir->offset[0] = filesys[0]->sinode->pos;
-    Logy("proc offset:%d", filesys[0]->sinode->pos);
+    /*Logy("proc offset:%d", filesys[0]->sinode->pos);*/
     strcpy(dir->name[0], "proc");
     dir->used[0] = 1;
     dir->offset[1] = filesys[1]->sinode->pos;
-    Logy("dev offset:%d", filesys[1]->sinode->pos);
+    /*Logy("dev offset:%d", filesys[1]->sinode->pos);*/
     strcpy(dir->name[1], "dev");
     dir->used[1] = 1;
     dir->cnt = 2;
