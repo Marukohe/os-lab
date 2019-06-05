@@ -76,7 +76,7 @@ static int shell_cd(char *args){;
             vfs->write(STDOUT, text, strlen(text));
         }
     }else{
-        if(strcmp(current->pwd, "/") == 0)
+        if(strcmp(current->pwd, "/") != 0)
             sprintf(text, "%s/", current->pwd);
         else
             sprintf(text, "/");
