@@ -109,7 +109,6 @@ void init(){
     memset(buf, 0, BLOCKSIZE);
     dir_t *dir;
     dir->offset[0] = filesys[0]->sinode->pos;
-    dir->name[0] = "proc";
     strcpy(dir->name[0], "proc");
     dir->used[0] = 1;
     dir->offset[1] = filesys[1]->sinode->pos;
