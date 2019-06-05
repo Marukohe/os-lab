@@ -23,6 +23,8 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     fs->sinode->is_dir = 1;
     fs->sinode->offset[0] = diskoffset;
     diskoffset += BLOCKSIZE;
+    fs->sinode->pos = inodeoffset;
+    inodeoffset += INODESIZE;
     fs->sinode->ptr = data;
     fs->sinode->fs = fs;
     fs->sinode->ops = &inode_ops;

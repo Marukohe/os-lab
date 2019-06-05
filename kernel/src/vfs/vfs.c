@@ -104,15 +104,28 @@ void init(){
     FILESYSTEM(FSCREATE);
     FILESYSTEM(FSINIT);
     mttinit();
+    void *buf = pmm->alloc(BLOCKSIZE);
+    filesys[2]->dev->ops->read(filesys[2]->dev, filesys[2]->sinode->offset[0], buf, BLOCKSIZE);
+    memset(buf, 0, BLOCKSIZE);
+    dir_t *dir;
+    dir->offset[0] = filesys[0]->sinode->pos;
+    dir->name[0] = "proc";
+    strcpy(dir->name[0], "proc");
+    dir->used[0] = 1;
+    dir->offset[1] = filesys[1]->sinode->pos;
+    strcpt(dir->name[1], "dev");
+    dir->uded[1] = 1;
+    dir->cnt = 2;
+    filesys[2]->dev->ops->write(filesys[2]->dev, filesys[2]->sinode->offset[0], (void *)dir, BLOCKSIZE);
 
-    /*vfstest();*/
-    /*char *ret = pmm->alloc(100);*/
-    /*printf("%d\n", filesysdecode(ret, "/proc/hello/ba/"));*/
-    /*printf("%d\n", filesysdecode(ret, "/dev/hello"));*/
-    /*printf("%d\n", filesysdecode(ret, "/hello"));*/
-    /*pmm->free(ret);*/
+        /*vfstest();*/
+        /*char *ret = pmm->alloc(100);*/
+        /*printf("%d\n", filesysdecode(ret, "/proc/hello/ba/"));*/
+        /*printf("%d\n", filesysdecode(ret, "/dev/hello"));*/
+        /*printf("%d\n", filesysdecode(ret, "/hello"));*/
+        /*pmm->free(ret);*/
 
-    return;
+        return;
 }
 
 int access(const char *path, int mode){
