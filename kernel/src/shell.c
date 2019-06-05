@@ -62,6 +62,7 @@ static int shell_cd(char *args){;
             char *pwd = splitpath(current->pwd, strlen(current->pwd));
             strcpy(current->pwd, pwd);
             pmm->free(pwd);
+            assert(0);
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
         }
