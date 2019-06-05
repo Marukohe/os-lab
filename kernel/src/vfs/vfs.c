@@ -265,7 +265,7 @@ ssize_t read(int fd, void *buf, size_t nbyte){
         char *name = (char *)pmm->alloc(128);
         for(int i = 1; i < strlen(current->fildes[fd]->path); i++)
             name[i - 1] = current->fildes[fd]->path[i];
-        printf("devname: %s\n", name);
+        /*printf("devname: %s\n", name);*/
         device_t *dev = dev_lookup(name);
         pmm->free(name);
         int nread = dev->ops->read(dev, 0, buf, nbyte);

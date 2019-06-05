@@ -65,6 +65,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
     Logp("lookup path: %s", path);
     inode_t *ret = fs->sinode;
+    Logp("node permission: %d\n", ret->flags);
     int offset = 1;
     char *get = (char *)pmm->alloc(DIRSIZE);
     void *tmpnode = pmm->alloc(INODESIZE);
