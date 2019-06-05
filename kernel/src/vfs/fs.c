@@ -87,7 +87,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                 filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[i], tmpnode, INODESIZE);
                 ret = (inode_t *)tmpnode;
                 /*printf("%d\n%d\n", ret->flags, flags);*/
-                if((ret->flags & flags) == 0){
+                if((ret->flags & (flags & 7)) == 0){
                     printf("Permission denied\n");
                     pmm->free(tmpnode);
                     pmm->free(get);

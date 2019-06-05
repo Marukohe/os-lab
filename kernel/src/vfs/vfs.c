@@ -117,6 +117,20 @@ void init(){
     dir->used[1] = 1;
     dir->cnt = 2;
     filesys[2]->dev->ops->write(filesys[2]->dev, filesys[2]->sinode->offset[0], (void *)dir, BLOCKSIZE);
+    memset(buf, 0, BLOCKSIZE);
+    dir = (dir_t *)buf;
+    for(int i = 0; i < 8; i++)
+        dir->used[i] = 1;
+    dir->cnt = 8;
+    stcpy(dir->name[0], "ramdisk0");
+    stcpy(dir->name[1], "ramdisk1");
+    stcpy(dir->name[2], "input");
+    stcpy(dir->name[3], "fb");
+    stcpy(dir->name[4], "tty1");
+    stcpy(dir->name[5], "tty2");
+    stcpy(dir->name[6], "tty3");
+    stcpy(dir->name[7], "tty4");
+    filesys[2]->dev->ops->write(filesys[2]->dev, filesys[1]->sinode->offset[0], (void *)dir, BLOCKSIZE);
 
         /*vfstest();*/
         /*char *ret = pmm->alloc(100);*/
