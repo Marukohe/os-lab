@@ -164,6 +164,26 @@ static int shell_mkdir(char *args){
     return 0;
 }
 
+static int shell_rmdir(char *args){
+    char text[128];
+    if(args[0] == '/'){
+        strcpy(text, args);
+    }else if(strcmp(current->pwd, "/") == 0){
+        sprintf(text, "%s%s", current->pwd, args);
+    }else{
+        sprintf(text, "%s/%s", current->pwd, args);
+    }
+    Logg("rmdir path %s", text);
+    int ret = vfs->rmdir(text);
+    if(ret == -1){
+        sprintf(text, "rmdir failed\n");
+    }else{
+        sprintf(text, "rmdir successfully\n");
+    }
+    vfs->write(STDOUT, text, strlen(text));
+    return 0;
+}
+
 static struct{
     char *name;
     char *description;
@@ -174,6 +194,7 @@ static struct{
     {"cd", "Change current workdir", shell_cd},
     {"ls", "Display files or dirs in curent workdir", shell_ls},
     {"mkdir", "Create a dictionary", shell_mkdir},
+    {"rmdir", "Remove a dictionary", shell_rmdir},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
