@@ -107,6 +107,7 @@ static int shell_ls(char *args){
             args[off - 1] = '\0';
         sprintf(text, "%s/%s", current->pwd, args);
     }
+    Logg("ls path %s", text);
     inode_t *node = filesys[2]->ops->lookup(filesys[2], text, O_DIR);
     if(node == NULL){
         sprintf(text, "Not such dir\n");
