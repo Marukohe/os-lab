@@ -79,6 +79,7 @@ static int shell_cd(char *args){;
         sprintf(text, "%s/", current->pwd);
         strcat(text, args);
         int ret = vfs->access(text, D_OK);
+        Logg("access ret: %d, text: %s", ret, text);
         if(ret == 0){
             strcpy(current->pwd, text);
             sprintf(text, "change dir to: %s\n", current->pwd);
@@ -89,7 +90,7 @@ static int shell_cd(char *args){;
         }
     }
     pmm->free(text);
-    Logb("flag == 1");
+    /*Logb("flag == 1");*/
     return 0;
 }
 
