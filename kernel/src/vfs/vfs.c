@@ -118,6 +118,12 @@ void init(){
     strcpy(dir->name[1], "dev");
     dir->used[1] = 1;
     dir->cnt = 2;
+
+    filesys[2]->cntinode = 2;
+    filesys[2]->used[0] = filesys[2]->used[1] = 1;
+    filesys[2]->ioffset[0] = filesys[0]->sinode->pos;
+    filesys[2]->ioffset[1] = filesys[1]->sinode->pos;
+
     filesys[2]->dev->ops->write(filesys[2]->dev, filesys[2]->sinode->offset[0], (void *)dir, BLOCKSIZE);
     memset(buf, 0, BLOCKSIZE);
     dir = (dir_t *)buf;
