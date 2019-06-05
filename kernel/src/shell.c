@@ -108,7 +108,7 @@ static int shell_ls(char *args){
         sprintf(text, "%s/%s", current->pwd, args);
     }
     Logg("ls path %s", text);
-    inode_t *node = filesys[2]->ops->lookup(filesys[2], text, O_DIR);
+    inode_t *node = filesys[2]->ops->lookup(filesys[2], text, 7|O_DIR);
     if(node == NULL){
         sprintf(text, "Not such dir\n");
         vfs->write(STDOUT, text, strlen(text));
