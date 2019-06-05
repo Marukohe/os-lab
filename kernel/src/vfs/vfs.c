@@ -134,7 +134,9 @@ void init(){
 
     memset(buf, 0, BLOCKSIZE);
     sprintf(buf, "Never say never!\n");
+    node->filesize = strlen(buf);
     filesys[2]->dev->ops->write(filesys[2]->dev, node->offset[0],(void *)buf, BLOCKSIZE);
+    filesys[2]->dev->ops->write(filesys[2]->dev, node->pos, (void *)node, sizeof(inode_t));
 
     memset(buf, 0, BLOCKSIZE);
     dir = (dir_t *)buf;
