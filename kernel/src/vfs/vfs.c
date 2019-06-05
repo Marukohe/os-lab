@@ -107,7 +107,7 @@ void init(){
     void *buf = pmm->alloc(BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, filesys[2]->sinode->offset[0], buf, BLOCKSIZE);
     memset(buf, 0, BLOCKSIZE);
-    dir_t *dir;
+    dir_t *dir = (dir_t *)buf;
     dir->offset[0] = filesys[0]->sinode->pos;
     strcpy(dir->name[0], "proc");
     dir->used[0] = 1;
