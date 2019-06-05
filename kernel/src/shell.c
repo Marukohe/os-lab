@@ -111,7 +111,7 @@ static int shell_ls(char *args){
     }
     void *buf = (char *)pmm->alloc(BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, node->offset[0], buf, BLOCKSIZE);
-    dir_t *dir = (dir_t *)dir;
+    dir_t *dir = (dir_t *)buf;
     char out[128];
     memset(out, 0, sizeof(out));
     Logb("%s\n", dir->cnt);
