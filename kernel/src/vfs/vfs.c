@@ -122,14 +122,14 @@ void init(){
     for(int i = 0; i < 8; i++)
         dir->used[i] = 1;
     dir->cnt = 8;
-    stcpy(dir->name[0], "ramdisk0");
-    stcpy(dir->name[1], "ramdisk1");
-    stcpy(dir->name[2], "input");
-    stcpy(dir->name[3], "fb");
-    stcpy(dir->name[4], "tty1");
-    stcpy(dir->name[5], "tty2");
-    stcpy(dir->name[6], "tty3");
-    stcpy(dir->name[7], "tty4");
+    strcpy(dir->name[0], "ramdisk0");
+    strcpy(dir->name[1], "ramdisk1");
+    strcpy(dir->name[2], "input");
+    strcpy(dir->name[3], "fb");
+    strcpy(dir->name[4], "tty1");
+    strcpy(dir->name[5], "tty2");
+    strcpy(dir->name[6], "tty3");
+    strcpy(dir->name[7], "tty4");
     filesys[2]->dev->ops->write(filesys[2]->dev, filesys[1]->sinode->offset[0], (void *)dir, BLOCKSIZE);
 
         /*vfstest();*/
