@@ -161,7 +161,7 @@ int access(const char *path, int mode){
     if(node == NULL){
         return -1;
     }
-    pmm->free(node);
+    /*pmm->free(node);*/
     return 0;
 }
 
