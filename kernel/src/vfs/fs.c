@@ -83,6 +83,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
         uint8_t inodefind = 0;
         for(int i = 0; i < dir->cnt; i++){
             if(dir->used[i] == 0) continue;
+            Logp("node permission: %d get: %s dir->name[i]: %s\n", ret->flags, get, dir->name[i]);
             if(strcmp(dir->name[i], get) == 0){
                 //获取目录块中记录的inode
                 filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[i], tmpnode, INODESIZE);
