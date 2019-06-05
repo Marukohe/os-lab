@@ -302,8 +302,12 @@ static void kfree(void *ptr) {
 #endif
     kmt->spin_lock(&lk);
     kmem *myfree = (kmem *)(ptr-STSIZE);
+    if(myfree->state == FREE){
+        kmt->spin_unlock(&lk);
+        return;
+    }
     kmt->spin_lock(&pk);
-    assert(myfree->state==USING);
+    /*assert(myfree->state==USING);*/
     assert(myfree->size!=0);
     assert(myfree->prev!=NULL);
     assert(myfree->prev->next==myfree);
