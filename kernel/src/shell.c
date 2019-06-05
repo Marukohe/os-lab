@@ -184,6 +184,25 @@ static int shell_rmdir(char *args){
     return 0;
 }
 
+
+static int shell_cat(char *args){
+    char text[4096];
+    if(args[0] == '/'){
+        strcpy(text, args);
+    }else if(strcmp(current->pwd, "/") == 0){
+        sprintf(text, "%s%s", current->pwd, args);
+    }else{
+        sprintf(text, "%s/%s", current->pwd, args);
+    }
+    int fd = open(text, RABLE);
+    vfs->lseek(fd, 0, SEEKCUR);
+    memset(text, 0, BLOCKSIZE);
+    int nread = read(fd, text, 4096);
+    vfs->close(fd);
+    vfs->write(STDOUT, text, strlen(text));
+    return 0;
+}
+
 static struct{
     char *name;
     char *description;
@@ -195,6 +214,7 @@ static struct{
     {"ls", "Display files or dirs in curent workdir", shell_ls},
     {"mkdir", "Create a dictionary", shell_mkdir},
     {"rmdir", "Remove a dictionary", shell_rmdir},
+    {"cat", "Display context", shell_cat},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))

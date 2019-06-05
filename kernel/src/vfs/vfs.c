@@ -110,14 +110,16 @@ void init(){
     memset(buf, 0, BLOCKSIZE);
     dir_t *dir = (dir_t *)buf;
     dir->offset[0] = filesys[0]->sinode->pos;
-    /*Logy("proc offset:%d", filesys[0]->sinode->pos);*/
     strcpy(dir->name[0], "proc");
     dir->used[0] = 1;
+
     dir->offset[1] = filesys[1]->sinode->pos;
-    /*Logy("dev offset:%d", filesys[1]->sinode->pos);*/
     strcpy(dir->name[1], "dev");
     dir->used[1] = 1;
+
+
     dir->cnt = 2;
+
 
     filesys[2]->cntinode = 2;
     filesys[2]->used[0] = filesys[2]->used[1] = 1;
@@ -125,6 +127,9 @@ void init(){
     filesys[2]->ioffset[1] = filesys[1]->sinode->pos;
 
     filesys[2]->dev->ops->write(filesys[2]->dev, filesys[2]->sinode->offset[0], (void *)dir, BLOCKSIZE);
+
+    inode_t *node = filesys[2]->ops->lookup(filesys[2], "/Documents", 7|O_CREAT|O_DIR);
+
     memset(buf, 0, BLOCKSIZE);
     dir = (dir_t *)buf;
     for(int i = 0; i < 8; i++)
