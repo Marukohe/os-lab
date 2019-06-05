@@ -99,8 +99,10 @@ static int shell_cd(char *args){;
 
 static int shell_ls(char *args){
     char text[128];
-    if(args == NULL || args[0] == '/'){
+    if(args == NULL){
         strcpy(text, current->pwd);
+    }else if(args[0] == '/'){
+        strcpy(text, args);
     }else{
         int off = strlen(args);
         if(args[off - 1] == '/')
