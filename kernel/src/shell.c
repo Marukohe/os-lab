@@ -138,7 +138,7 @@ static int shell_ls(char *args){
 }
 
 
-static int shell(mkdir)(char *args){
+static int shell_mkdir(char *args){
     char text[128];
     if(args[0] == '/'){
         strcpy(text, args);
