@@ -128,7 +128,7 @@ void init(){
 
     filesys[2]->dev->ops->write(filesys[2]->dev, filesys[2]->sinode->offset[0], (void *)dir, BLOCKSIZE);
 
-    inode_t *node = filesys[2]->ops->lookup(filesys[2], "/Documents", 7|O_CREAT|O_DIR);
+    filesys[2]->ops->lookup(filesys[2], "/Documents", 7|O_CREAT|O_DIR);
 
     memset(buf, 0, BLOCKSIZE);
     dir = (dir_t *)buf;
