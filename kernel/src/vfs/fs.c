@@ -71,6 +71,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     void *buf = pmm->alloc(BLOCKSIZE);
     while(offset < strlen(path)){
         //获取目录block
+        Logw("Not in here");
         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
         dir_t *dir = (dir_t *)buf;
 

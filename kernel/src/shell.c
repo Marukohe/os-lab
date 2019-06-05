@@ -125,7 +125,7 @@ static int shell_ls(char *args){
     strcat(out, "\n");
     vfs->write(STDOUT, out, strlen(out));
     pmm->free(buf);
-    pmm->free(node);
+    /*pmm->free(node);*/
 
     return 0;
 }
