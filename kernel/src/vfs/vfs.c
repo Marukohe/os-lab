@@ -113,8 +113,8 @@ void init(){
     strcpy(dir->name[0], "proc");
     dir->used[0] = 1;
     dir->offset[1] = filesys[1]->sinode->pos;
-    strcpt(dir->name[1], "dev");
-    dir->uded[1] = 1;
+    strcpy(dir->name[1], "dev");
+    dir->used[1] = 1;
     dir->cnt = 2;
     filesys[2]->dev->ops->write(filesys[2]->dev, filesys[2]->sinode->offset[0], (void *)dir, BLOCKSIZE);
 
