@@ -211,7 +211,7 @@ int inodermdir(const char *name){
     }
     pmm->free(buf);
     pmm->free(sonpath);
-    pmm->free(fapath);
+    /*pmm->free(fapath);*/
     /*pmm->free(son);*/
     /*pmm->free(fa);*/
 
