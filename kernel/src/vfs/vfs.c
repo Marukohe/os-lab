@@ -207,14 +207,12 @@ int unmount(const char *path){
 
 int mkdir(const char *path){
     /*TODO();*/
-    filesys[2]->sinode->ops->mkdir(path);
-    return 0;
+    return filesys[2]->sinode->ops->mkdir(path);
 }
 
 int rmdir(const char *path){
     /*TODO();*/
-    filesys[2]->sinode->ops->rmdir(path);
-    return 0;
+    return filesys[2]->sinode->ops->rmdir(path);
 }
 
 int link(const char *oldpath, const char *newpath){

@@ -105,17 +105,6 @@ off_t inodelseek(file_t *file, off_t offset, int whence){
     return file->offset;
 }
 
-int inodemkdir(const char *name){
-    /*TODO();*/
-    char *path = pmm->alloc(NAMELEN);
-    int id = filesysdecode(path, name);
-    printf("path decode: %s\n", path);
-
-    inode_t *dummy = filesys[id]->ops->lookup(filesys[id], path, 7|O_CREAT|O_DIR);
-    pmm->free(path);
-    pmm->free(dummy);
-    return 0;
-}
 
 // 寻找上一级路劲
 char *splitpath(char *path, int offset){
@@ -136,6 +125,26 @@ char *splitpath(char *path, int offset){
     strncpy(ret, path, t);
     /*Logw("ret : %s", ret);*/
     return ret;
+}
+
+int inodemkdir(const char *name){
+    /*TODO();*/
+    char *path = pmm->alloc(NAMELEN);
+    int id = filesysdecode(path, name);
+    /*printf("path decode: %s\n", path);*/
+    int offset = strlen(path);
+    char *fapath = splitpath(path, offset);
+    ret = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
+    if(ret == NULL){
+        pmm->free(path);
+        pmm->free(fapath);
+        return -1;
+    }
+
+    inode_t *dummy = filesys[id]->ops->lookup(filesys[id], path, 7|O_CREAT|O_DIR);
+    pmm->free(path);
+    pmm->free(dummy);
+    return 0;
 }
 
 int inodermdir(const char *name){
