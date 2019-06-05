@@ -130,6 +130,12 @@ void init(){
 
     filesys[2]->ops->lookup(filesys[2], "/Documents", 7|O_CREAT|O_DIR);
 
+    inode_t *node = filesys[2]->ops->lookup(filesys[2], "/Documents/lyrics.txt", 7|O_CREAT);
+
+    memset(buf, 0, BLOCKSIZE);
+    sprintf(buf, "Never say never!\n");
+    filesys[2]->ops->write(filesys[2], node->offset[0],(void *)buf, BLOCKSIZE);
+
     memset(buf, 0, BLOCKSIZE);
     dir = (dir_t *)buf;
     for(int i = 0; i < 8; i++)
