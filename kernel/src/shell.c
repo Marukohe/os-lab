@@ -12,7 +12,7 @@ extern char *splitpath(char *path, int offset);
 
 // 命令解析
 char *strsplit(char *s1){
-    char *cp = pmm->alloc(128);
+    char *cp = (char *)pmm->alloc(128);
     int off = 0;
     for(int i = 0; i < strlen(s1); i++){
         if(s1[i] == ' '){
@@ -61,8 +61,8 @@ static int shell_cd(char *args){;
         }else{
             char *pwd = splitpath(current->pwd, strlen(current->pwd));
             strcpy(current->pwd, pwd);
-            pmm->free(pwd);
-            assert(0);
+            /*pmm->free(pwd);*/
+            /*assert(0);*/
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
         }
