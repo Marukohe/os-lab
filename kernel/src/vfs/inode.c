@@ -136,7 +136,7 @@ int inodemkdir(const char *name){
     char *fapath = splitpath(path, offset);
     Logg("fapath: %s", fapath);
     inode_t *ret = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
-    if(ret == NULL){
+    if(ret == NULL && fapath != NULL){
         pmm->free(path);
         pmm->free(fapath);
         return -1;
