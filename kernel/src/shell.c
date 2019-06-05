@@ -60,7 +60,12 @@ static int shell_cd(char *args){;
             vfs->write(STDOUT, text, strlen(text));
         }else{
             char *pwd = splitpath(current->pwd, strlen(current->pwd));
-            strcpy(current->pwd, pwd);
+            if(pwd == NULL){
+                strcpy(current->pwd, "/");
+            }else{
+                strcpy(current->pwd, pwd);
+                pmm->free(pwd);
+            }
             /*pmm->free(pwd);*/
             /*assert(0);*/
             sprintf(text, "change dir to: %s\n", current->pwd);
