@@ -194,10 +194,13 @@ static int shell_cat(char *args){
     }else{
         sprintf(text, "%s/%s", current->pwd, args);
     }
-    int fd = open(text, RABLE);
+    int fd = vfs->open(text, RABLE);
     vfs->lseek(fd, 0, SEEKCUR);
     memset(text, 0, BLOCKSIZE);
-    int nread = read(fd, text, 4096);
+    int nread = vfs->read(fd, text, 4096);
+    if(nread == -1){
+        sprintf(text, "cat file failed\n");
+    }
     vfs->close(fd);
     vfs->write(STDOUT, text, strlen(text));
     return 0;
