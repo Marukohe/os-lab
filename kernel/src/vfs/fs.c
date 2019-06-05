@@ -154,6 +154,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                                 tmp = k;
                                 break;
                             }
+                            tmp++;
                         }
                         if(tmp == dir->cnt){
                             strcpy(dir->name[dir->cnt], get);
