@@ -241,7 +241,9 @@ static int shell_rm(char *args){
 }
 
 static int shell_echo(char *args){
-    vfs->write(STDOUT, args, strlen(args));
+    char text[128];
+    sprintf(text, "%s\n", args);
+    vfs->write(STDOUT, text, strlen(text));
     return 0;
 }
 
