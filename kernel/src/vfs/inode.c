@@ -167,7 +167,7 @@ int inodermdir(const char *name){
     inode_t *son = filesys[id]->ops->lookup(filesys[id], sonpath, 7|O_DIR);
     int flag = 0; //目录
     if(son == NULL){
-        son = filesys[id]->ops->lookup(filesys[id], sonpath);
+        son = filesys[id]->ops->lookup(filesys[id], sonpath, 7);
         flag = 1; //文件
         if(son == NULL){
             printf("ERROR! Not such dic of file.\n");
@@ -201,7 +201,7 @@ int inodermdir(const char *name){
 
     memset(buf, 0, BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, fa->offset[0], buf, BLOCKSIZE);
-    dir = (dir_t *)buf;
+    dir_t *dir = (dir_t *)buf;
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1 && dir->offset[i] == son->pos){
             printf("rmdir successfully!\n");
