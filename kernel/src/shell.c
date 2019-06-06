@@ -213,9 +213,9 @@ static int shell_touch(char *args){
     if(args[0] == '/'){
         strcpy(text, args);
     }else if(strcmp(current->pwd, "/") == 0){
-        sprintf(text "%s%s", current->pwd, args);
+        sprintf(text, "%s%s", current->pwd, args);
     }else{
-        sprintf(text , "%s/%s", current->pwd, args);
+        sprintf(text, "%s/%s", current->pwd, args);
     }
     filesys[2]->ops->lookup(filesys[2], text, 7|O_CREAT);
     return 0;
