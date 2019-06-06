@@ -165,31 +165,38 @@ int inodermdir(const char *name){
         fa = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
     }
     inode_t *son = filesys[id]->ops->lookup(filesys[id], sonpath, 7|O_DIR);
+    int flag = 0; //目录
     if(son == NULL){
-        printf("ERROR! Not such dic\n");
-        pmm->free(sonpath);
-        pmm->free(fapath);
-        return -1;
-        /*pmm->free(fa);*/
+        son = filesys[id]->ops->lookup(filesys[id], sonpath);
+        flag = 1; //文件
+        if(son == NULL){
+            printf("ERROR! Not such dic of file.\n");
+            pmm->free(sonpath);
+            /*pmm->free(fapath);*/
+            return -1;
+            /*pmm->free(fa);*/
+        }
     }
     /*Logw("fa pos: %x, fa->offset: %x", fa->pos, fa->offset[0]);*/
     //更新fa的目录项
     void *buf = pmm->alloc(BLOCKSIZE);
-    filesys[2]->dev->ops->read(filesys[2]->dev, son->offset[0], buf, BLOCKSIZE);
-    dir_t *dir = (dir_t *)buf;
-    int cntsonnode = 0;
-    for(int i = 0; i < dir->cnt; i++){
-        if(dir->used[i])
-            cntsonnode++;
-    }
-    if(cntsonnode > 0){
-        printf("rmdir failed. This is not an empty dic\n");
-        pmm->free(buf);
+    if(flag == 0){
+        filesys[2]->dev->ops->read(filesys[2]->dev, son->offset[0], buf, BLOCKSIZE);
+        dir_t *dir = (dir_t *)buf;
+        int cntsonnode = 0;
+        for(int i = 0; i < dir->cnt; i++){
+            if(dir->used[i])
+                cntsonnode++;
+        }
+        if(cntsonnode > 0){
+            printf("rmdir failed. This is not an empty dic\n");
+            pmm->free(buf);
         pmm->free(sonpath);
         /*pmm->free(fapath);*/
         pmm->free(son);
         /*pmm->free(fa);*/
         return -1;
+        }
     }
 
     memset(buf, 0, BLOCKSIZE);
