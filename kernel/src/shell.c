@@ -325,7 +325,7 @@ void shell(void *name){
         Logy("cmd: %s args: %s", cmd, args);
         // 重定向
         int redir = 0;
-        int pos1, pos2;
+        int pos1 = 0, pos2 = 0;
         char text1[128], text2[128];
         for(int i = 0; i < strlen(args); i++){
             if(args[i] == '>'){
