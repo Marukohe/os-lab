@@ -376,7 +376,7 @@ void shell(void *name){
                     char *p2 = (char *)pmm->alloc(128);
                     extendpath(p1, text1);
                     extendpath(p2, text2);
-                    Logw("cat path p1: %s, p2: %s", p1, p2);
+                    Logw("cat path text1:%s, p1: %s, p2: %s",text1, p1, p2);
                     int fd1 = vfs->open(p1, 7);
                     vfs->read(fd1, text, 256);
                     shell_redir(p2, text);
