@@ -375,7 +375,8 @@ void shell(void *name){
                 }else if(strcmp(cmd, "echo") == 0){
                     //text1字符串,text2文件绝对路径
                     /*shell_dir()*/
-                    shell_redir(text2, text1);
+                    extendpass(text, text2);
+                    shell_redir(text, text1);
                     Logg("%s %s", text1, text2);
                 }else{
                     sprintf(text, "Command is not supported.\n");
