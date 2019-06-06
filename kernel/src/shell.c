@@ -225,14 +225,10 @@ static int shell_touch(char *args){
 }
 
 static int shell_rm(char *args){
+    if(args == NULL)
+        return 0;
     char text[128];
-    if(args[0] == '/'){
-        strcpy(text, args);
-    }else if(strcmp(current->pwd, "/") == 0){
-        sprintf(text, "%s%s", current->pwd, args);
-    }else{
-        sprintf(text, "%s/%s", current->pwd, args);
-    }
+    extendpass(text, args);
     int ret = vfs->access(text, F_OK);
     if(ret == -1){
         sprintf(text, "Not such file.\n");
@@ -327,7 +323,7 @@ void shell(void *name){
         if(flag == 0)
             args = NULL;
         Logy("cmd: %s args: %s", cmd, args);
-        /*
+        // 重定向
         int redir = 0;
         int pos1, pos2;
         char text1[128], text2[128];
@@ -346,11 +342,21 @@ void shell(void *name){
                         break;
                     }
                 }
-                strcpy()
+                strncpy(text1, args, pos1);
+                char *cpt = args + pos2;
+                strcpy(text2, cpt);
+                if(strcmp(cmd, "cat") == 0){
+                    Logg("%s %s", text1, text2);
+                }else if(strcmp(cmd, "echo") == 0){
+                    Logg("%s %s", text1, text2);
+                }
+                break;
             }
         }
-        */
+        if(redir == 1)
+            continue;
 
+        //选择执行函数
         int i;
         for(i = 0; i < NR_SHELL; i++){
             if(strcmp(cmd, shell_table[i].name) == 0){
@@ -360,7 +366,11 @@ void shell(void *name){
                 break;
             }
         }
-        if(i == NR_SHELL) {printf("Unknown command '%s'\n", cmd);}
+        if(i == NR_SHELL) {
+            /*printf("Unknown command '%s'\n", cmd);*/
+            sprintf(text, "Unknown command '%s'\n", cmd);
+            vfs->write(STDOUT, text, strlen(text));
+        }
 
         /*vfs->write(stdout, text, strlen(text));*/
     }
