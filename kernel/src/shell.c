@@ -218,7 +218,9 @@ static int shell_touch(char *args){
         sprintf(text, "%s/%s", current->pwd, args);
     }
     int ret = vfs->access(text, F_OK);
+    Logg("%d\n", ret);
     ret = ret | vfs->access(text, D_OK);
+    Logg("%d\n", ret);
     if(ret == 0){
         sprintf(text, "File already exists\n");
     }else{
