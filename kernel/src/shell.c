@@ -196,8 +196,8 @@ static int shell_cat(char *args){
     }
     int fd = vfs->open(text, RABLE);
     vfs->lseek(fd, 0, SEEKCUR);
-    memset(text, 0, BLOCKSIZE);
-    int nread = vfs->read(fd, text, 512);
+    memset(text, 0, 512);
+    int nread = vfs->read(fd, text, current->fildes[fd]->inode->filesize);
     if(nread == -1){
         sprintf(text, "cat file failed\n");
     }
