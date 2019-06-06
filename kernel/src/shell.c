@@ -217,7 +217,15 @@ static int shell_touch(char *args){
     }else{
         sprintf(text, "%s/%s", current->pwd, args);
     }
-    filesys[2]->ops->lookup(filesys[2], text, 7|O_CREAT);
+    int ret = vfs->access(text, F_OK);
+    ret = ret | vfs->access(text, D_OK);
+    if(ret == 0){
+        sprintf(text, "File already exists\n");
+    }else{
+        filesys[2]->ops->lookup(filesys[2], text, 7|O_CREAT);
+        sprintf(text, "Create file successfully\n");
+    }
+    vfs->write(STDOUT, text, strlen(text));
     return 0;
 }
 
