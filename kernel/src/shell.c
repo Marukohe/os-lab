@@ -325,8 +325,8 @@ void shell(void *name){
     int stdout = vfs->open(name, WABLE); //1
     while(1){
         char line[128], text[128];
-        memset(line, 0, 128);
-        memset(text, 0, 128);
+        memset(line, 0, sizeof(line));
+        memset(text, 0, sizeof(text));
         sprintf(text, "(%s) $ ", "maruko");
         vfs->write(stdout, text, strlen(text));
         int nread = vfs->read(stdin, line, sizeof(line));
@@ -380,10 +380,10 @@ void shell(void *name){
                     char *p2 = (char *)pmm->alloc(128);
                     extendpath(p1, text1);
                     extendpath(p2, text2);
-                    Logw("cat path text1:%s, p1: %s, p2: %s",text1, p1, p2);
+                    /*Logw("cat path text1:%s, p1: %s, p2: %s",text1, p1, p2);*/
                     int fd1 = vfs->open(p1, 7);
-                    vfs->read(fd1, text, 256);
-                    Logw("text: %s", text);
+                    memset(text, 0, 128);
+                    vfs->read(fd1, text, 128);
                     shell_redir(p2, text);
                     vfs->close(fd1);
                     pmm->free(p1);
@@ -393,6 +393,7 @@ void shell(void *name){
                 }else if(strcmp(cmd, "echo") == 0){
                     //text1字符串,text2文件绝对路径
                     /*shell_dir()*/
+                    memset(text, 0, 128);
                     extendpath(text, text2);
                     shell_redir(text, text1);
                     Logg("%s %s", text1, text2);
@@ -418,6 +419,7 @@ void shell(void *name){
         }
         if(i == NR_SHELL) {
             /*printf("Unknown command '%s'\n", cmd);*/
+            memset(text, 0, sizeof(text));
             sprintf(text, "Unknown command '%s'\n", cmd);
             vfs->write(STDOUT, text, strlen(text));
         }
