@@ -250,6 +250,7 @@ static int shell_echo(char *args){
 static int shell_redir(char *path, char *args){
     //将args写到path;
     char text[256];
+    Logg("redir path: %s args: %s", path, args);
     sprintf(text, "%s\n", args);
     int ret = vfs->access(path, F_OK);
     if(ret == -1){
