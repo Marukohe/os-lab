@@ -330,13 +330,13 @@ void shell(void *name){
         for(int i = 0; i < strlen(args); i++){
             if(args[i] == '>'){
                 redir = 1;
-                for(int j = i; j > 0; j--){
+                for(int j = i - 1; j > 0; j--){
                     if(args[j] != ' '){
                         pos1 = j;
                         break;
                     }
                 }
-                for(int i = args[i]; j > 0; j--){
+                for(int j = i + 1; j < strlen(args); j++){
                     if(args[j] != ' '){
                         pos2 = j;
                         break;
