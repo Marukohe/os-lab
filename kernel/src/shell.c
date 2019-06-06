@@ -203,7 +203,7 @@ static int shell_cat(char *args){
         sprintf(text, "cat file failed\n");
     }
     vfs->close(fd);
-    strcat(text, "\n");
+    /*strcat(text, "\n");*/
     vfs->write(STDOUT, text, strlen(text));
     return 0;
 }
