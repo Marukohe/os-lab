@@ -233,7 +233,7 @@ static int shell_rm(char *args){
     char text[128];
     if(args[0] == '/'){
         strcpy(text, args);
-    }else if(strcmp(curremt->pwd, "/") == 0){
+    }else if(strcmp(current->pwd, "/") == 0){
         sprintf(text, "%s%s", current->pwd, args);
     }else{
         sprintf(text, "%s/%s", current->pwd, args);
@@ -245,7 +245,7 @@ static int shell_rm(char *args){
         vfs->rmdir(text);
         sprintf(text, "rm file successfully.\n");
     }
-    vfs->write(STDOUT, test, strlen(text));
+    vfs->write(STDOUT, text, strlen(text));
     return 0;
 }
 
