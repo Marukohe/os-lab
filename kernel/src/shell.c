@@ -208,6 +208,19 @@ static int shell_cat(char *args){
     return 0;
 }
 
+static int shell_touch(char *args){
+    char text[128];
+    if(args[0] == '/'){
+        strcpy(text, args);
+    }else if(strcmp(current->pwd, "/") == 0){
+        sprintf(text "%s%s", current->pwd, args);
+    }else{
+        sprintf(text , "%s/%s", current->pwd, args);
+    }
+    filesys[2]->ops->lookup(filesys[2], text, 7|O_CREAT);
+    return 0;
+}
+
 static struct{
     char *name;
     char *description;
@@ -220,13 +233,14 @@ static struct{
     {"mkdir", "Create a dictionary", shell_mkdir},
     {"rmdir", "Remove a dictionary", shell_rmdir},
     {"cat", "Display context", shell_cat},
+    {"touch", "create a file", shell_touch},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
 
 static int shell_help(char *args){
     int i;
-    char text[256];
+    char text[512];
     if(args == NULL){
         for(i = 0; i < NR_SHELL; i++){
             printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
