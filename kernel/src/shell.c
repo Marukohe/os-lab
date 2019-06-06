@@ -220,12 +220,32 @@ static int shell_touch(char *args){
     int ret1 = vfs->access(text, F_OK);
     int ret2 = vfs->access(text, D_OK);
     if(!ret1 | !ret2){
-        sprintf(text, "File already exists\n");
+        sprintf(text, "Create file failed.\n");
     }else{
         filesys[2]->ops->lookup(filesys[2], text, 7|O_CREAT);
-        sprintf(text, "Create file successfully\n");
+        sprintf(text, "Create file successfully.\n");
     }
     vfs->write(STDOUT, text, strlen(text));
+    return 0;
+}
+
+static int shell_rm(char *args){
+    char text[128];
+    if(args[0] == '/'){
+        strcpy(text, args);
+    }else if(strcmp(curremt->pwd, "/") == 0){
+        sprintf(text, "%s%s", current->pwd, args);
+    }else{
+        sprintf(text, "%s/%s", current->pwd, args);
+    }
+    int ret = vfs->access(text, F_OK);
+    if(ret == -1){
+        sprintf(text, "Not such file.\n");
+    }else{
+        vfs->rmdir(text);
+        sprintf(text, "rm file successfully.\n");
+    }
+    vfs->write(STDOUT, test, strlen(text));
     return 0;
 }
 
@@ -242,6 +262,7 @@ static struct{
     {"rmdir", "Remove a dictionary", shell_rmdir},
     {"cat", "Display context", shell_cat},
     {"touch", "create a file", shell_touch},
+    {"rm", "remove a file", shell_rm},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
