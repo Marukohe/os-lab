@@ -255,7 +255,7 @@ static int shell_redir(char *path, char *args){
     int ret = vfs->access(path, F_OK);
     if(ret == -1){
         int fd = vfs->open(path, 7|O_CREAT);
-        Logg("ret == -1 %s", text);
+        Logg("ret == -1 %s fd %d", text, fd);
         vfs->write(fd, text, strlen(text));
         vfs->close(fd);
         return 0;
