@@ -342,7 +342,7 @@ void shell(void *name){
                         break;
                     }
                 }
-                strncpy(text1, args, pos1);
+                strncpy(text1, args, pos1 + 1);
                 char *cpt = args + pos2;
                 strcpy(text2, cpt);
                 if(strcmp(cmd, "cat") == 0){
