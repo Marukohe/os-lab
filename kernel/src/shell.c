@@ -7,7 +7,7 @@ extern mt_t *mtt;
 extern task_t *current_task[4];
 extern filesystem_t *filesys[FSNUM];
 #define current (current_task[_cpu()])
-#define SHELLDEBUG
+/*#define SHELLDEBUG*/
 
 extern char *splitpath(char *path, int offset);
 

@@ -55,7 +55,7 @@ ssize_t inoderead(file_t *file, char *buf, size_t size){
     char *red = (char *)pmm->alloc(BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
     char *cp;
-    cp = buf + file->offset;
+    cp = red + file->offset;
     int cpsize = min(size, file->inode->filesize - file->offset);
     if(cpsize == 0){
         printf("offset at the end of the file\n");
