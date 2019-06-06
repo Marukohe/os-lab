@@ -87,6 +87,7 @@ ssize_t inodewrite(file_t *file, const char *buf, size_t size){
         red[file->offset++] = '\0';
     }
     file->inode->filesize = max(file->inode->filesize, file->offset);
+    Logw("write: %s, filesize: %d", red, file->inode->filesize);
 
     filesys[2]->dev->ops->write(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
     filesys[2]->dev->ops->write(filesys[2]->dev, file->inode->pos, (void*)(file->inode), sizeof(inode_t));
