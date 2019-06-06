@@ -350,7 +350,7 @@ void shell(void *name){
                 }else if(strcmp(cmd, "echo") == 0){
                     Logg("%s %s", text1, text2);
                 }else{
-                    spintf(text, "Command is not supported.\n");
+                    sprintf(text, "Command is not supported.\n");
                     vfs->write(STDOUT, text, strlen(text));
                 }
                 break;
