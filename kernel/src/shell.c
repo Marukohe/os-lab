@@ -211,7 +211,7 @@ static int shell_touch(char *args){
     if(args == NULL)
         return 0;
     char text[128];
-    extendpadd(text, args);
+    extendpass(text, args);
     int ret1 = vfs->access(text, F_OK);
     int ret2 = vfs->access(text, D_OK);
     if(!ret1 | !ret2){
