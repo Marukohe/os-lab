@@ -261,7 +261,7 @@ void shell(void *name){
         int nread = vfs->read(stdin, line, sizeof(line));
         line[nread - 1] = '\0';
         sprintf(text, "Echo: %s.\n", line);
-#define SHELLDEBUG
+#ifdef SHELLDEBUG
         sprintf(line, "cat /Documents/lyrics.txt");
 #endif
         char *cmd = strsplit(line);
