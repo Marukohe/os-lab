@@ -203,7 +203,7 @@ static int shell_cat(char *args){
         sprintf(text, "cat file failed\n");
     }
     vfs->close(fd);
-    /*strcat(text, "\n");*/
+    strcat(text, "\n");
     vfs->write(STDOUT, text, strlen(text));
     return 0;
 }
@@ -397,7 +397,7 @@ void shell(void *name){
                     memset(text, 0, 128);
                     extendpath(text, text2);
                     shell_redir(text, text1);
-                    /*Logg("%s %s", text1, text2);*/
+                    Logg("%s %s", text1, text2);
                 }else{
                     sprintf(text, "Command is not supported.\n");
                     vfs->write(STDOUT, text, strlen(text));
