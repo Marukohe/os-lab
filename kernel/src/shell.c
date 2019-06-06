@@ -217,11 +217,11 @@ static int shell_touch(char *args){
     }else{
         sprintf(text, "%s/%s", current->pwd, args);
     }
-    int ret = vfs->access(text, F_OK);
+    int ret1 = vfs->access(text, F_OK);
     Logg("%d\n", ret);
-    ret = ret | vfs->access(text, D_OK);
+    int ret2 = vfs->access(text, D_OK);
     Logg("%d\n", ret);
-    if(ret == 0){
+    if(!ret1 | !ret2){
         sprintf(text, "File already exists\n");
     }else{
         filesys[2]->ops->lookup(filesys[2], text, 7|O_CREAT);
