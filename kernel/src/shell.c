@@ -7,6 +7,7 @@ extern mt_t *mtt;
 extern task_t *current_task[4];
 extern filesystem_t *filesys[FSNUM];
 #define current (current_task[_cpu()])
+#define SHELLDEBUG
 
 extern char *splitpath(char *path, int offset);
 
@@ -198,6 +199,7 @@ static int shell_cat(char *args){
     vfs->lseek(fd, 0, SEEKCUR);
     memset(text, 0, 512);
     int nread = vfs->read(fd, text, current->fildes[fd]->inode->filesize);
+    /*Logg("%d %s", nread, text);*/
     if(nread == -1){
         sprintf(text, "cat file failed\n");
     }
@@ -259,6 +261,9 @@ void shell(void *name){
         int nread = vfs->read(stdin, line, sizeof(line));
         line[nread - 1] = '\0';
         sprintf(text, "Echo: %s.\n", line);
+#define SHELLDEBUG
+        sprintf(line, "cat /Documents/lyrics.txt");
+#endif
         char *cmd = strsplit(line);
         char *args;
         if(strlen(line) == strlen(cmd))
