@@ -133,7 +133,7 @@ void init(){
     inode_t *node = filesys[2]->ops->lookup(filesys[2], "/Documents/lyrics.txt", 7|O_CREAT);
 
     memset(buf, 0, BLOCKSIZE);
-    sprintf(buf, "Never say never!\n");
+    sprintf(buf, "Never say never!");
     node->filesize = strlen(buf);
     filesys[2]->dev->ops->write(filesys[2]->dev, node->offset[0],(void *)buf, BLOCKSIZE);
     filesys[2]->dev->ops->write(filesys[2]->dev, node->pos, (void *)node, sizeof(inode_t));
@@ -174,7 +174,7 @@ int access(const char *path, int mode){
         case X_OK: node = filesys[id]->ops->lookup(filesys[id], decode, XABLE); break;
         case F_OK: node = filesys[id]->ops->lookup(filesys[id], decode, 7); break;
         case D_OK: node = filesys[id]->ops->lookup(filesys[id], decode, 7 | O_DIR); break;
-        default: printf("Not such mode in access."); return -1;
+        default: printf("Not such mode in access.\n"); return -1;
     }
     pmm->free(decode);
     if(node == NULL){
