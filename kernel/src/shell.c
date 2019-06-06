@@ -247,10 +247,30 @@ static int shell_echo(char *args){
     return 0;
 }
 
-/*static int shell_redir(char *args){*/
-    /*return 0;*/
-/*}*/
+static int shell_redir(char *path, char *args){
+    //将args写到path;
+    char text[256];
+    sprintf(text, "%s\n", args);
+    int ret = vfs->access(path, F_OK);
+    if(ret == -1){
+        int fd = vfs->open(path, 7|O_CREAT);
+        vfs->write(fd, text, strlen(text));
+        vfs->close(fd);
+        return 0;
+    }
+    ret = vfs->access(path, W_OK);
+    if(ret == -1){
+        sprintf(text, "Permission denied.\n");
+        vfs->write(STDOUT, text, strlen(text));
+        return -1;
+    }else{
+        int fd = vfs->open(path, 7);
+        vfs->write(fd, text, strlen(text));
+        vfs->close(fd);
+    }
 
+    return 0;
+}
 
 static struct{
     char *name;
@@ -348,8 +368,13 @@ void shell(void *name){
                 char *cpt = args + pos2;
                 strcpy(text2, cpt);
                 if(strcmp(cmd, "cat") == 0){
-                    Logg("%s %s", text1, text2);
+                    //text1文件绝对路径,text2文件绝对路径
+                    /*Logg("%s %s", text1, text2);*/
+
                 }else if(strcmp(cmd, "echo") == 0){
+                    //text1字符串,text2文件绝对路径
+                    /*shell_dir()*/
+                    shell_redir(text2, text1);
                     Logg("%s %s", text1, text2);
                 }else{
                     sprintf(text, "Command is not supported.\n");
