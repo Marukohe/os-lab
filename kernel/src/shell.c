@@ -186,7 +186,7 @@ static int shell_rmdir(char *args){
 
 
 static int shell_cat(char *args){
-    char text[4096];
+    char text[512];
     if(args[0] == '/'){
         strcpy(text, args);
     }else if(strcmp(current->pwd, "/") == 0){
@@ -197,7 +197,7 @@ static int shell_cat(char *args){
     int fd = vfs->open(text, RABLE);
     vfs->lseek(fd, 0, SEEKCUR);
     memset(text, 0, BLOCKSIZE);
-    int nread = vfs->read(fd, text, 4096);
+    int nread = vfs->read(fd, text, 512);
     if(nread == -1){
         sprintf(text, "cat file failed\n");
     }
