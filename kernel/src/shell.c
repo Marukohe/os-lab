@@ -252,7 +252,7 @@ static int shell_redir(char *path, char *args){
     //将args写到path;
     char text[128];
     Logg("redir path: %s args: %s", path, args);
-    /*sprintf(text, "%s\n", args);*/
+    sprintf(text, "%s", args);
     int ret = vfs->access(path, F_OK);
     if(ret == -1){
         int fd = vfs->open(path, 7|O_CREAT);
