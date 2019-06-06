@@ -186,7 +186,7 @@ int inodermdir(const char *name){
         printf("rmdir failed. This is not an empty dic\n");
         pmm->free(buf);
         pmm->free(sonpath);
-        pmm->free(fapath);
+        /*pmm->free(fapath);*/
         pmm->free(son);
         /*pmm->free(fa);*/
         return -1;
