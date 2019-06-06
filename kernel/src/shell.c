@@ -325,6 +325,8 @@ void shell(void *name){
     int stdout = vfs->open(name, WABLE); //1
     while(1){
         char line[128], text[128];
+        memset(line, 0, 128);
+        memset(text, 0, 128);
         sprintf(text, "(%s) $ ", "maruko");
         vfs->write(stdout, text, strlen(text));
         int nread = vfs->read(stdin, line, sizeof(line));
@@ -368,6 +370,7 @@ void shell(void *name){
                     }
                 }
                 memset(text1, 0, 128);
+                memset(text1, 0, 128);
                 strncpy(text1, args, pos1 + 1);
                 char *cpt = args + pos2;
                 strcpy(text2, cpt);
@@ -380,6 +383,7 @@ void shell(void *name){
                     Logw("cat path text1:%s, p1: %s, p2: %s",text1, p1, p2);
                     int fd1 = vfs->open(p1, 7);
                     vfs->read(fd1, text, 256);
+                    Logw("text: %s", text);
                     shell_redir(p2, text);
                     vfs->close(fd1);
                     pmm->free(p1);
