@@ -27,7 +27,7 @@ char *strsplit(char *s1){
 }
 
 //扩展为绝对路径
-static void extendpass(char *ret, char *args){
+static void extendpath(char *ret, char *args){
     if(args[0] == '/'){
         strcpy(ret, args);
     }else if(strcmp(current->pwd, "/") == 0){
@@ -160,7 +160,7 @@ static int shell_mkdir(char *args){
     char text[128];
     if(args == NULL)
         return 0;
-    extendpass(text, args);
+    extendpath(text, args);
     Logg("mkdir path %s",text);
     int ret = vfs->mkdir(text);
     if(ret == -1){
@@ -176,7 +176,7 @@ static int shell_rmdir(char *args){
     if(args == NULL)
         return 0;
     char text[128];
-    extendpass(text, args);
+    extendpath(text, args);
     Logg("rmdir path %s", text);
     int ret = vfs->rmdir(text);
     if(ret == -1){
@@ -193,7 +193,7 @@ static int shell_cat(char *args){
     if(args == NULL)
         return 0;
     char text[512];
-    extendpass(text, args);
+    extendpath(text, args);
     int fd = vfs->open(text, RABLE);
     vfs->lseek(fd, 0, SEEKCUR);
     memset(text, 0, 512);
@@ -211,7 +211,7 @@ static int shell_touch(char *args){
     if(args == NULL)
         return 0;
     char text[128];
-    extendpass(text, args);
+    extendpath(text, args);
     int ret1 = vfs->access(text, F_OK);
     int ret2 = vfs->access(text, D_OK);
     if(!ret1 | !ret2){
@@ -228,7 +228,7 @@ static int shell_rm(char *args){
     if(args == NULL)
         return 0;
     char text[128];
-    extendpass(text, args);
+    extendpath(text, args);
     int ret = vfs->access(text, F_OK);
     if(ret == -1){
         sprintf(text, "Not such file.\n");
@@ -372,12 +372,20 @@ void shell(void *name){
                 strcpy(text2, cpt);
                 if(strcmp(cmd, "cat") == 0){
                     //text1文件绝对路径,text2文件绝对路径
+                    char *p1 = (char *)pmm->alloc(128);
+                    char *p2 = (char *)pmm->alloc(128);
+                    extendpath(p1, text1);
+                    extendpath(p2, text2);
+                    int fd1 = vfs->open(p1);
+                    vfs->read(fd1, text);
+                    shell_redir(p2, text);
+                    close(fd1);
                     /*Logg("%s %s", text1, text2);*/
 
                 }else if(strcmp(cmd, "echo") == 0){
                     //text1字符串,text2文件绝对路径
                     /*shell_dir()*/
-                    extendpass(text, text2);
+                    extendpath(text, text2);
                     shell_redir(text, text1);
                     Logg("%s %s", text1, text2);
                 }else{
