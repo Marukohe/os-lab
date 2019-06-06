@@ -382,6 +382,13 @@ void shell(void *name){
                     extendpath(p1, text1);
                     extendpath(p2, text2);
                     /*Logw("cat path text1:%s, p1: %s, p2: %s",text1, p1, p2);*/
+                    int ret1 = vfs->access(p1, R_OK);
+                    if(ret1 == -1){
+                        memset(text, 0, sizeof(text));
+                        sprintf(text, "Not such File.\n");
+                        vfs->write(STDOUT, text, strlen(text));
+                        break;
+                    }
                     int fd1 = vfs->open(p1, 7);
                     memset(text, 0, 128);
                     vfs->read(fd1, text, 128);
