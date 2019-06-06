@@ -376,10 +376,13 @@ void shell(void *name){
                     char *p2 = (char *)pmm->alloc(128);
                     extendpath(p1, text1);
                     extendpath(p2, text2);
+                    Logw("cat path p1: %s, p2: %s", p1, p2);
                     int fd1 = vfs->open(p1, 7);
                     vfs->read(fd1, text, 256);
                     shell_redir(p2, text);
                     vfs->close(fd1);
+                    pmm->free(p1);
+                    pmm->free(p2);
                     /*Logg("%s %s", text1, text2);*/
 
                 }else if(strcmp(cmd, "echo") == 0){
