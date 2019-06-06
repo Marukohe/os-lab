@@ -293,7 +293,7 @@ static struct{
 
 static int shell_help(char *args){
     int i;
-    char text[512];
+    char text[128];
     if(args == NULL){
         for(i = 0; i < NR_SHELL; i++){
             printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
