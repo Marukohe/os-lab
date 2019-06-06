@@ -160,7 +160,7 @@ static int shell_mkdir(char *args){
     char text[128];
     if(args == NULL)
         return 0;
-    externpass(text, args);
+    extendpass(text, args);
     Logg("mkdir path %s",text);
     int ret = vfs->mkdir(text);
     if(ret == -1){
