@@ -253,10 +253,11 @@ static int shell_echo(char *args){
     vfs->write(STDOUT, args, strlen(args));
     return 0;
 }
-
+/*
 static int shell_redir(char *args){
-
+    return 0;
 }
+*/
 
 static struct{
     char *name;
