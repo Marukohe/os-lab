@@ -173,14 +173,10 @@ static int shell_mkdir(char *args){
 }
 
 static int shell_rmdir(char *args){
+    if(args == NULL)
+        return 0;
     char text[128];
-    if(args[0] == '/'){
-        strcpy(text, args);
-    }else if(strcmp(current->pwd, "/") == 0){
-        sprintf(text, "%s%s", current->pwd, args);
-    }else{
-        sprintf(text, "%s/%s", current->pwd, args);
-    }
+    extendpass(text, args);
     Logg("rmdir path %s", text);
     int ret = vfs->rmdir(text);
     if(ret == -1){
@@ -194,14 +190,10 @@ static int shell_rmdir(char *args){
 
 
 static int shell_cat(char *args){
+    if(args == NULL)
+        return 0;
     char text[512];
-    if(args[0] == '/'){
-        strcpy(text, args);
-    }else if(strcmp(current->pwd, "/") == 0){
-        sprintf(text, "%s%s", current->pwd, args);
-    }else{
-        sprintf(text, "%s/%s", current->pwd, args);
-    }
+    extendpass(text, args);
     int fd = vfs->open(text, RABLE);
     vfs->lseek(fd, 0, SEEKCUR);
     memset(text, 0, 512);
@@ -216,14 +208,10 @@ static int shell_cat(char *args){
 }
 
 static int shell_touch(char *args){
+    if(args == NULL)
+        return 0;
     char text[128];
-    if(args[0] == '/'){
-        strcpy(text, args);
-    }else if(strcmp(current->pwd, "/") == 0){
-        sprintf(text, "%s%s", current->pwd, args);
-    }else{
-        sprintf(text, "%s/%s", current->pwd, args);
-    }
+    extendpadd(text, args);
     int ret1 = vfs->access(text, F_OK);
     int ret2 = vfs->access(text, D_OK);
     if(!ret1 | !ret2){
