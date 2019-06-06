@@ -26,6 +26,17 @@ char *strsplit(char *s1){
     return cp;
 }
 
+//扩展为绝对路径
+static void extendpass(char *ret, char *args){
+    if(args[0] == '/'){
+        strcpy(ret, args);
+    }else if(strcmp(current->pwd, "/") == 0){
+        sprintf(ret, "/%s", args);
+    }else{
+        sprintf(ret, "%s/%s", current->pwd, args);
+    }
+}
+
 static int shell_help(char *args);
 
 static int shell_pwd(char *args){
@@ -147,13 +158,9 @@ static int shell_ls(char *args){
 
 static int shell_mkdir(char *args){
     char text[128];
-    if(args[0] == '/'){
-        strcpy(text, args);
-    }else if(strcmp(current->pwd, "/") == 0){
-        sprintf(text, "%s%s", current->pwd, args);
-    }else{
-        sprintf(text, "%s/%s", current->pwd, args);
-    }
+    if(args == NULL)
+        return 0;
+    externpass(text, args);
     Logg("mkdir path %s",text);
     int ret = vfs->mkdir(text);
     if(ret == -1){
@@ -253,11 +260,11 @@ static int shell_echo(char *args){
     vfs->write(STDOUT, args, strlen(args));
     return 0;
 }
-/*
-static int shell_redir(char *args){
-    return 0;
-}
-*/
+
+/*static int shell_redir(char *args){*/
+    /*return 0;*/
+/*}*/
+
 
 static struct{
     char *name;
@@ -332,6 +339,29 @@ void shell(void *name){
         if(flag == 0)
             args = NULL;
         Logy("cmd: %s args: %s", cmd, args);
+        /*
+        int redir = 0;
+        int pos1, pos2;
+        char text1[128], text2[128];
+        for(int i = 0; i < strlen(args); i++){
+            if(args[i] == '>'){
+                redir = 1;
+                for(int j = i; j > 0; j--){
+                    if(args[j] != ' '){
+                        pos1 = j;
+                        break;
+                    }
+                }
+                for(int i = args[i]; j > 0; j--){
+                    if(args[j] != ' '){
+                        pos2 = j;
+                        break;
+                    }
+                }
+                strcpy()
+            }
+        }
+        */
 
         int i;
         for(i = 0; i < NR_SHELL; i++){
