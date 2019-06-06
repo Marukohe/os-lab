@@ -249,6 +249,15 @@ static int shell_rm(char *args){
     return 0;
 }
 
+static int shell_echo(char *args){
+    vfs->write(STDOUT, args, strlen(args));
+    return 0;
+}
+
+static int shell_redir(char *args){
+
+}
+
 static struct{
     char *name;
     char *description;
@@ -263,6 +272,7 @@ static struct{
     {"cat", "Display context", shell_cat},
     {"touch", "create a file", shell_touch},
     {"rm", "remove a file", shell_rm},
+    {"echo", "Display input", shell_echo},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
