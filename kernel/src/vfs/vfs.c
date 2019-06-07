@@ -113,10 +113,10 @@ void init(){
     dir_t *dir = (dir_t *)buf;
 
     dir->offset[0] = filesys[2]->sinode->pos;
-    strcpy(dir->name[0] = ".");
+    strcpy(dir->name[0], ".");
     dir->used[0] = 1;
     dir->offset[1] = filesys[2]->sinode->pos;
-    strcpy(dir->name[1] = "..");
+    strcpy(dir->name[1], "..");
     dir->used[1] = 1;
 
     dir->offset[2] = filesys[0]->sinode->pos;
