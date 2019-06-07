@@ -280,8 +280,8 @@ static int shell_link(char *args){
         return 0;
     }
     char *oldpath = strsplit(args);
-    char *newpath = oldpath + strlen(newpath) + 1;
-    Log("%s %s", oldpath, newpath);
+    char *newpath = oldpath + strlen(oldpath) + 1;
+    Logg("%s %s", oldpath, newpath);
     return 0;
 }
 
