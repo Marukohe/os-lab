@@ -270,19 +270,19 @@ int link(const char *oldpath, const char *newpath){
     void *buf = pmm->alloc(BLOCKSIZE);
     filesys[idnew]->dev->ops->read(filesys[idnew]->dev, new->offset[0], buf, BLOCKSIZE);
     dir_t *dir = (dir_t *)buf;
-    int tmpcnt = 0;
-    for(int i = 0; i < dir->cnt; i++){
-        if(dir->used[i] == 0){
-            tmpcnt = i;
-            break;
-        }
-        tmpcnt++;
-    }
-    if(tmpcnt == dir->cnt){
-        strcpy(dir->name[tmpcnt], cp);
-        dir->used[dir->cnt] = 1;
-        dir->offset[dir->cnt++] = node->pos;
-    }
+    /*int tmpcnt = 0;*/
+    /*for(int i = 0; i < dir->cnt; i++){*/
+        /*if(dir->used[i] == 0){*/
+            /*tmpcnt = i;*/
+            /*break;*/
+        /*}*/
+        /*tmpcnt++;*/
+    /*}*/
+    /*if(tmpcnt == dir->cnt){*/
+    strcpy(dir->name[dir-cnt], cp);
+    dir->used[dir->cnt] = 1;
+    dir->offset[dir->cnt++] = node->pos;
+    /*}*/
     filesys[idnew]->dev->ops->write(filesys[idnew]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
 
     return 0;
