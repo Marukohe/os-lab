@@ -151,7 +151,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         int tmp = 0;
                         for(int k = 0; k < dir->cnt; k++){
                             if(dir->used[k] == 0){
-                                inode_t *noderef = (indoe_t *)pmm->alloc(INODESIZE);
+                                inode_t *noderef = (inode_t *)pmm->alloc(INODESIZE);
                                 noderef = filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[k], (void *)noderef, INODESIZE);
                                 if(noderef->refcnt == 0){
                                     tmp = k;
