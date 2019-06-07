@@ -383,8 +383,10 @@ off_t lseek(int fd, off_t offset, int whence){
 
 int close(int fd){
     /*TODO();*/
-    pmm->free(current->fildes[fd]->inode);
-    pmm->free(current->fildes[fd]->path);
+    if(current->fildes[fd]->inode != NULL)
+        pmm->free(current->fildes[fd]->inode);
+    if(current->fildes[fd]->path != NULL)
+        pmm->free(current->fildes[fd]->path);
     pmm->free(current->fildes[fd]);
     current->fdused[fd] = 0;
     return 0;
