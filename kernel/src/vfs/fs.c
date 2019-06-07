@@ -143,6 +143,21 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                             inodect->pos = fs->ioffset[tmpcnt];
                             inodect->offset[0] = dummynode->offset[0];
                         }
+                        if(flag & O_DIR){
+                            //创建.和..
+                            memset(buf, 0, BLOCKSIZE);
+                            dir_t *ddir = (dir_t *)buf;
+                            ddir->used[0] = ddir->used[1] = 1;
+                            strcpy(ddir->name[0], ".");
+                            strcpy(ddir->name[1], "..");
+                            strcpy(ddir->offset[0] = inodect->pos);
+                            strcpy(ddir->offset[1] = ret->pos);
+                            ddir->cnt = 2;
+                            filesys[2]->dev->ops->write(filesys[2]->dev, inodect->offset[0], (void *)ddir, BLOCKSIZE);
+                        }else{
+                            memset(buf, 0, BLOCKSIZE);
+                            filesys[2]->dev->ops->write(filesys[2]->dev, inodect->offset[0], buf, BLOCKSIZE);
+                        }
                         filesys[2]->dev->ops->write(filesys[2]->dev, inodect->pos, (void *)inodect, INODESIZE);
                         //更新目录项
                         memset(buf, 0, BLOCKSIZE);
