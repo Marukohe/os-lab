@@ -199,6 +199,8 @@ int inodermdir(const char *name){
         return -1;
         }
     }
+    son->refcnt -= 1;
+    filesys[2]->dev->ops->write(filesys[2]->dev, son->pos, (void *)son, INODESIZE);
 
     memset(buf, 0, BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, fa->offset[0], buf, BLOCKSIZE);
@@ -211,14 +213,16 @@ int inodermdir(const char *name){
             break;
         }
     }
-/*
-    for(int i = 0; i < filesys[id]->cntinode; i++){
-        if(filesys[id]->used[i] && filesys[id]->ioffset[i] == son->pos){
-            filesys[id]->used[i] = 0;
-            break;
+
+    if(son->refcnt == 0){
+        for(int i = 0; i < filesys[id]->cntinode; i++){
+            if(filesys[id]->used[i] && filesys[id]->ioffset[i] == son->pos){
+                filesys[id]->used[i] = 0;
+                break;
+            }
         }
     }
-*/
+
     pmm->free(buf);
     pmm->free(sonpath);
     /*pmm->free(fapath);*/
