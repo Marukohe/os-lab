@@ -335,14 +335,14 @@ static int shell_help(char *args){
     char text[128];
     if(args == NULL){
         for(i = 0; i < NR_SHELL; i++){
-            printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
+            /*printf("%s - %s\n", shell_table[i].name, shell_table[i].description);*/
             sprintf(text, "%s - %s\n", shell_table[i].name, shell_table[i].description);
             vfs->write(1, text, strlen(text));
         }
     }else{
         for(i = 0; i < NR_SHELL; i++){
             if(strcmp(args, shell_table[i].name) == 0){
-                printf("%s - %s\n", shell_table[i].name, shell_table[i].description);
+                /*printf("%s - %s\n", shell_table[i].name, shell_table[i].description);*/
                 sprintf(text, "%s - %s\n", shell_table[i].name, shell_table[i].description);
                 vfs->write(1, text, strlen(text));
                 return 0;
