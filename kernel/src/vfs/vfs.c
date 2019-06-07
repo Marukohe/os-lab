@@ -181,7 +181,7 @@ int access(const char *path, int mode){
     }
     pmm->free(decode);
     if(node == NULL){
-        kmt->spin_unlock(&vfslock);
+        /*kmt->spin_unlock(&vfslock);*/
         return -1;
     }
     /*pmm->free(node);*/
