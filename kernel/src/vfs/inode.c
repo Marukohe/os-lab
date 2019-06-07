@@ -200,7 +200,7 @@ int inodermdir(const char *name){
         }
     }
     son->refcnt -= 1;
-    filesys[2]->dev->ops->write(filesys[2]->dev, son->pos, (void *)son, INODESIZE);
+    filesys[2]->dev->ops->write(filesys[2]->dev, son->pos, (void *)son, sizeof(inode_t));
 
     memset(buf, 0, BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, fa->offset[0], buf, BLOCKSIZE);
