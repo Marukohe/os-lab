@@ -315,6 +315,7 @@ int unlink(const char *path){
     kmt->spin_lock(&vfslock);
     int ret = filesys[2]->sinode->ops->rmdir(path);
     kmt->spin_unlock(&vfslock);
+    return ret;
 
     /*
     char *ret = pmm->alloc(128);
