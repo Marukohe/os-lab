@@ -214,7 +214,7 @@ int inodermdir(const char *name){
             break;
         }
     }
-    pathdecode = sonpath + tmppath;
+    pathdecode = sonpath + tmppath + 1;
     Logw("pathcode: %s", pathdecode);
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1 && strcmp(dir->name[i], pathdecode) == 0){
