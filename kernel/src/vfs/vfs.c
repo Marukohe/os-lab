@@ -111,22 +111,30 @@ void init(){
     filesys[2]->dev->ops->read(filesys[2]->dev, filesys[2]->sinode->offset[0], buf, BLOCKSIZE);
     memset(buf, 0, BLOCKSIZE);
     dir_t *dir = (dir_t *)buf;
-    dir->offset[0] = filesys[0]->sinode->pos;
-    strcpy(dir->name[0], "proc");
-    dir->used[0] = 1;
 
-    dir->offset[1] = filesys[1]->sinode->pos;
-    strcpy(dir->name[1], "dev");
+    dir->offset[0] = filesys[2]->sinode->pos;
+    strcpy(dir->name[0] = ".");
+    dir->used[0] = 1;
+    dir->offset[1] = filesys[2]->sinode->pos;
+    strcpy(dir->name[1] = "..");
     dir->used[1] = 1;
 
+    dir->offset[2] = filesys[0]->sinode->pos;
+    strcpy(dir->name[2], "proc");
+    dir->used[2] = 1;
 
-    dir->cnt = 2;
+    dir->offset[3] = filesys[1]->sinode->pos;
+    strcpy(dir->name[3], "dev");
+    dir->used[3] = 1;
 
 
-    filesys[2]->cntinode = 2;
-    filesys[2]->used[0] = filesys[2]->used[1] = 1;
-    filesys[2]->ioffset[0] = filesys[0]->sinode->pos;
-    filesys[2]->ioffset[1] = filesys[1]->sinode->pos;
+    dir->cnt = 4;
+
+
+    filesys[2]->cntinode = 4;
+    filesys[2]->used[0] = filesys[2]->used[1] = filesys[2]->used[2] = filesys[2]->used[3] = 1;
+    filesys[2]->ioffset[2] = filesys[0]->sinode->pos;
+    filesys[2]->ioffset[3] = filesys[1]->sinode->pos;
 
     filesys[2]->dev->ops->write(filesys[2]->dev, filesys[2]->sinode->offset[0], (void *)dir, BLOCKSIZE);
 
