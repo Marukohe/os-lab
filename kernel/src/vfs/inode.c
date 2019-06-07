@@ -205,8 +205,18 @@ int inodermdir(const char *name){
     memset(buf, 0, BLOCKSIZE);
     filesys[2]->dev->ops->read(filesys[2]->dev, fa->offset[0], buf, BLOCKSIZE);
     dir_t *dir = (dir_t *)buf;
+    char *pathdecode;
+    int tmppath = 0;
+    Logw("sonpath %s\n", sonpath);
+    for(int i = strlen(sonpath) - 1; i >= 0; i--){
+        if(sonpath[i] == '/'){
+            tmpath = i;
+            break;
+        }
+    }
+    pathdecode = sonpath + tmppath;
     for(int i = 0; i < dir->cnt; i++){
-        if(dir->used[i] == 1 && dir->offset[i] == son->pos){
+        if(dir->used[i] == 1 && strcmp(dir->name[i], pathdecode) == 0){
             printf("rmdir successfully!\n");
             dir->used[i] = 0;
             filesys[2]->dev->ops->write(filesys[2]->dev, fa->offset[0], (void *)dir, BLOCKSIZE);
