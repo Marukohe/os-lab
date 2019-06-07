@@ -142,7 +142,7 @@ static int shell_ls(char *args){
     /*Logb("%s\n", dir->cnt);*/
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1){
-            printf("%s\n", dir->name[i]);
+            /*printf("%s\n", dir->name[i]);*/
             strcat(out, dir->name[i]);
             strcat(out, "  ");
         }
