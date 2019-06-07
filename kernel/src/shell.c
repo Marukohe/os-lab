@@ -196,7 +196,7 @@ static int shell_cat(char *args){
     extendpath(text, args);
     int red = vfs->access(text, R_OK);
     if(red == -1){
-        sprintf(text, "You can not cat that file");
+        sprintf(text, "You can not cat that file.\n");
         vfs->write(STDOUT, text, strlen(text));
         return 0;
     }
