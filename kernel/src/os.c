@@ -75,6 +75,10 @@ void echo_task(void *name) {
 
 extern void shell(void *name);
 
+void proccreate(char *path){
+    filesys[0]->ops->lookup(filesys[0], path, 7|O_CREAT);
+}
+
 static void os_init() {
   pmm->init();
   kmt->init();
@@ -103,6 +107,7 @@ static void os_init() {
 
 #ifdef SHELL
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty1");
+  proccreate("/cpuinfo");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty2");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty3");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty4");
