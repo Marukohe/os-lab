@@ -439,6 +439,7 @@ void shell(void *name){
                     /*shell_dir()*/
                     memset(text, 0, 128);
                     extendpath(text, text2);
+                    Logw("I'm here.");
                     shell_redir(text, text1);
                     Logg("%s %s", text1, text2);
                 }else{
