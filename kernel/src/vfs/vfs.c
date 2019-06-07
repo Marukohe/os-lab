@@ -256,7 +256,7 @@ int link(const char *oldpath, const char *newpath){
         cp = newpath + 1;
     }else{
         new = filesys[idnew]->ops->lookup(filesys[idnew], fapath, 7|O_DIR);
-        cp = strlen(fapath) + 1;
+        cp = newpath + strlen(fapath) + 1;
     }
 
     inode_t *node = filesys[idold]->ops->lookup(filesys[idold], retold, 7);
@@ -266,7 +266,7 @@ int link(const char *oldpath, const char *newpath){
         return -1;
     }
     void *buf = pmm->alloc(BLOCKSIZE);
-    filesys[id]->dev->ops->read(filesys[idnew]->dev, new->offset[0], buf, BLOCKSIZE);
+    filesys[idnew]->dev->ops->read(filesys[idnew]->dev, new->offset[0], buf, BLOCKSIZE);
     dir_t *dir = (dir_t *)buf;
     int tmpcnt = 0;
     for(int i = 0; i < dir->cnt; i++){
@@ -281,7 +281,7 @@ int link(const char *oldpath, const char *newpath){
         dir->used[dir->cnt] = 1;
         dir->offset[dir->cnt++] = node->pos;
     }
-    filesys[id]->dev->ops->write(filesys[idnew]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
+    filesys[idnew]->dev->ops->write(filesys[idnew]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
 
     return 0;
 }
