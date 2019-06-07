@@ -256,7 +256,7 @@ static int shell_redir(char *path, char *args){
     int ret = vfs->access(path, F_OK);
     if(ret == -1){
         int fd = vfs->open(path, 7|O_CREAT);
-        Logg("ret == -1 %s fd %d", text, fd);
+        /*Logg("ret == -1 %s fd %d", text, fd);*/
         vfs->write(fd, text, strlen(text));
         vfs->close(fd);
         return 0;
@@ -439,7 +439,7 @@ void shell(void *name){
                     /*shell_dir()*/
                     memset(text, 0, 128);
                     extendpath(text, text2);
-                    Logw("I'm here.");
+                    /*Logw("I'm here.");*/
                     shell_redir(text, text1);
                     /*Logg("%s %s", text1, text2);*/
                 }else{
