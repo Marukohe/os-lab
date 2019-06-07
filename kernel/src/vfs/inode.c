@@ -215,7 +215,7 @@ int inodermdir(const char *name){
         }
     }
     pathdecode = sonpath + tmppath;
-    Logw("pathcode: %s", pathcode);
+    Logw("pathcode: %s", pathdecode);
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1 && strcmp(dir->name[i], pathdecode) == 0){
             printf("rmdir successfully!\n");
