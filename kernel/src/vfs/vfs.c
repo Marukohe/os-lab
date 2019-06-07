@@ -364,7 +364,7 @@ ssize_t write(int fd, void *buf, size_t nbyte){
         device_t *dev = dev_lookup(name);
         pmm->free(name);
         /*assert(0);*/
-        Logw("I'm here");
+        /*Logw("I'm here");*/
         int nwrite = dev->ops->write(dev, 0, buf, nbyte);
         current->fildes[fd]->offset += nwrite;
         return nwrite;
