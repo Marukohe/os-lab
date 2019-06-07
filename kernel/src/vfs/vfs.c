@@ -305,7 +305,7 @@ int link(const char *oldpath, const char *newpath){
     dir->offset[dir->cnt++] = node->pos;
     /*}*/
     filesys[idnew]->dev->ops->write(filesys[idnew]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
-
+    Logw("I'm here");
     kmt->spin_unlock(&vfslock);
     return 0;
 }
