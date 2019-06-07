@@ -76,8 +76,16 @@ void echo_task(void *name) {
 
 extern void shell(void *name);
 
-void proccreate(char *path){
-    filesys[0]->ops->lookup(filesys[0], path, 7|O_CREAT);
+void proccreate(char *path, char *name){
+    char text[256];
+    sprintf(text, "/%s", path);
+    inode_t *node = filesys[0]->ops->lookup(filesys[0], text, 7|O_CREAT);
+    memset(text, 0, sizeof(text));
+    sprintf(text, "pid: %s\ntaskname: %s\ncreatetime: %d", path, name, uptime());
+    node->filesize = strlen(text);
+    filesys[2]->dev->ops->write(filesys[2]->dev, node->offset[0], (void *)text, strlen(text));
+    filesys[2]->dev->ops->write(filesys[2]->dev, node->pos, (void *)node, sizeof(inode_t));
+    pmm->free(node);
 }
 
 static void os_init() {
@@ -108,7 +116,7 @@ static void os_init() {
 
 #ifdef SHELL
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty1");
-  proccreate("/cpuinfo");
+  proccreate("1", "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty2");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty3");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty4");
