@@ -279,7 +279,7 @@ int link(const char *oldpath, const char *newpath){
         /*tmpcnt++;*/
     /*}*/
     /*if(tmpcnt == dir->cnt){*/
-    strcpy(dir->name[dir-cnt], cp);
+    strcpy(dir->name[dir->cnt], cp);
     dir->used[dir->cnt] = 1;
     dir->offset[dir->cnt++] = node->pos;
     /*}*/
