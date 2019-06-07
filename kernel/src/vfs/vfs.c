@@ -237,8 +237,10 @@ int rmdir(const char *path){
 
 int link(const char *oldpath, const char *newpath){
     /*TODO();*/
-    char *ret = pmm->alloc(128);
-    int id = filesysdecode(ret, oldpath);
+    char *retold = pmm->alloc(128);
+    char *retnew = pmm->alloc(128);
+    int idold = filesysdecode(retold, oldpath);
+    int idnew = filesysdecode(rewnew, newpath);
     int r1 = vfs->access(newpath, F_OK);
     if(r1 == 0){
         pmm->free(ret);
@@ -246,25 +248,25 @@ int link(const char *oldpath, const char *newpath){
         return -1;
     }
     inode_t *new;
-    int offset = strlen(newpath);
-    char *fapath = splitpath(newpath, offset);
+    int offset = strlen(retnew);
+    char *fapath = splitpath(retnew, offset);
     char *cp;
     if(fapath == NULL){
-        new = filesys[id]->sinode;
+        new = filesys[idnew]->sinode;
         cp = newpath + 1;
     }else{
-        new = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
+        new = filesys[idnew]->ops->lookup(filesys[idnew], fapath, 7|O_DIR);
         cp = strlen(fapath) + 1;
     }
 
-    inode_t *node = filesys[id]->ops->lookup(filesys[id], oldpath, 7);
+    inode_t *node = filesys[idold]->ops->lookup(filesys[idold], retold, 7);
     if(node == NULL){
         pmm->free(ret);
         printf("Not such file.\n");
         return -1;
     }
     void *buf = pmm->alloc(BLOCKSIZE);
-    filesys[id]->dev->ops->read(filesys[id]->dev, new->offset[0], buf, BLOCKSIZE);
+    filesys[id]->dev->ops->read(filesys[idnew]->dev, new->offset[0], buf, BLOCKSIZE);
     dir_t *dir = (dir_t *)buf;
     int tmpcnt = 0;
     for(int i = 0; i < dir->cnt; i++){
@@ -279,7 +281,7 @@ int link(const char *oldpath, const char *newpath){
         dir->used[dir->cnt] = 1;
         dir->offset[dir->cnt++] = node->pos;
     }
-    filesys[id]->dev->ops->write(filesys[id]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
+    filesys[id]->dev->ops->write(filesys[idnew]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
 
     return 0;
 }
