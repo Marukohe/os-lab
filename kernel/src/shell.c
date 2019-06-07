@@ -264,6 +264,9 @@ static int shell_redir(char *path, char *args){
         int fd = vfs->open(path, 7|O_CREAT);
         /*Logg("ret == -1 %s fd %d", text, fd);*/
         vfs->write(fd, text, strlen(text));
+        indode _t *node = current->fildes[fd]->inode;
+        node->filesize = strlen(text);
+        filesys[2]->ops->dev(filesys[2]->dev, node->pos, (void *)node, sizeof(inode_t));
         vfs->close(fd);
         return 0;
     }
@@ -275,6 +278,9 @@ static int shell_redir(char *path, char *args){
     }else{
         int fd = vfs->open(path, 7);
         vfs->write(fd, text, strlen(text));
+        indode _t *node = current->fildes[fd]->inode;
+        node->filesize = strlen(text);
+        filesys[2]->ops->dev(filesys[2]->dev, node->pos, (void *)node, sizeof(inode_t));
         vfs->close(fd);
     }
 
