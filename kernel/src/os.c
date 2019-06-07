@@ -95,6 +95,21 @@ static void os_init() {
   dev->init();
   vfs->init();
 
+  char text[128];
+  inode_t *node = filesys[0]->ops->lookup(filesys[0], "/cpuinfo", 7|O_CREAT);
+  memset(text, 0, sizeof(text));
+  char numtos[20];
+  for(int i = 0; i < _ncpu(); i++){
+      memset(numtos, 0, sizeof(numtos));
+      sprintf(numtos, "%d ", i);
+      strcat(text, numtos);
+  }
+  node->filesize = strlen(text);
+  filesys[2]->dev->ops->write(filesys[2]->dev, node->offset[0], (void *)text, strlen(text));
+  filesys[2]->dev->ops->write(filesys[2]->dev, node->pos, (void *)node, sizeof(inode_t));
+  pmm->free(node);
+
+
 #ifdef TTY
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
@@ -109,17 +124,24 @@ static void os_init() {
 
 #ifdef IDLE
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle1", idle, NULL);
+  proccreate("1", "idle1");
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle2", idle, NULL);
+  proccreate("2", "idle2");
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle3", idle, NULL);
+  proccreate("3", "idle3");
   kmt->create(pmm->alloc(sizeof(task_t)) , "idle4", idle, NULL);
+  proccreate("4", "idle4");
 #endif
 
 #ifdef SHELL
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty1");
-  proccreate("1", "tty1");
+  proccreate("5", "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty2");
+  proccreate("6", "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty3");
+  proccreate("7", "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty4");
+  proccreate("8", "tty4");
 #endif
 
   kmt->sem_init(&emptysem, "empty", 10);
