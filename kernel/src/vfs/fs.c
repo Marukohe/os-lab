@@ -64,21 +64,21 @@ static void inodecreat(inode_t *inode, int flags, int is_dir, filesystem_t *fs, 
 
 inode_t *lookup(struct filesystem *fs, const char *path, int flags){
     /*TODO();*/
-    Logp("lookup path: %s", path);
+    /*Logp("lookup path: %s", path);*/
     inode_t *ret = fs->sinode;
-    Logp("node permission: %d\n", ret->flags);
+    /*Logp("node permission: %d\n", ret->flags);*/
     int offset = 1;
     char *get = (char *)pmm->alloc(DIRSIZE);
     void *tmpnode = pmm->alloc(INODESIZE);
     void *buf = pmm->alloc(BLOCKSIZE);
     while(offset < strlen(path)){
         //获取目录block
-        Logw("Not in here");
+        /*Logw("Not in here");*/
         filesys[2]->dev->ops->read(filesys[2]->dev, ret->offset[0], buf, BLOCKSIZE);
         dir_t *dir = (dir_t *)buf;
 
         getpath(get, path, offset);
-        Logy("pathget: %s", get);
+        /*Logy("pathget: %s", get);*/
         offset += strlen(get) + 1;
 
         uint8_t inodefind = 0;
@@ -101,7 +101,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                 }
                 if(offset - 1 == strlen(path)){
                     if((!ret->is_dir && (flags & O_DIR)) || (ret->is_dir && !(flags & O_DIR))){
-                        printf("Dir or text not found\n");
+                        /*printf("Dir or text not found\n");*/
                         pmm->free(tmpnode);
                         pmm->free(get);
                         pmm->free(buf);
@@ -154,7 +154,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                                 inode_t *noderef = (inode_t *)pmm->alloc(INODESIZE);
                                 filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[k], (void *)noderef, INODESIZE);
                                 if(noderef->refcnt == 0){
-                                    Logg("noderef %d\n\n\n", noderef->refcnt);
+                                    /*Logg("noderef %d\n\n\n", noderef->refcnt);*/
                                     tmp = k;
                                     break;
                                 }
@@ -175,7 +175,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         pmm->free(tmpnode);
                         ret = inodect;
                 }else{
-                    printf("Nothing to create\n");
+                    /*printf("Nothing to create\n");*/
                     pmm->free(get);
                     pmm->free(tmpnode);
                     pmm->free(buf);

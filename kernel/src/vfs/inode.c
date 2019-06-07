@@ -87,7 +87,7 @@ ssize_t inodewrite(file_t *file, const char *buf, size_t size){
         red[file->offset++] = '\0';
     }
     file->inode->filesize = max(file->inode->filesize, file->offset);
-    Logw("write: %s, filesize: %d", red, file->inode->filesize);
+    /*Logw("write: %s, filesize: %d", red, file->inode->filesize);*/
 
     filesys[2]->dev->ops->write(filesys[2]->dev, file->inode->offset[0], red, BLOCKSIZE);
     filesys[2]->dev->ops->write(filesys[2]->dev, file->inode->pos, (void*)(file->inode), sizeof(inode_t));
@@ -135,7 +135,7 @@ int inodemkdir(const char *name){
     /*printf("path decode: %s\n", path);*/
     int offset = strlen(path);
     char *fapath = splitpath(path, offset);
-    Logg("fapath: %s", fapath);
+    /*Logg("fapath: %s", fapath);*/
     inode_t *ret = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
     if(ret == NULL && fapath != NULL){
         pmm->free(path);
@@ -207,7 +207,7 @@ int inodermdir(const char *name){
     dir_t *dir = (dir_t *)buf;
     char *pathdecode;
     int tmppath = 0;
-    Logw("sonpath %s\n", sonpath);
+    /*Logw("sonpath %s\n", sonpath);*/
     for(int i = strlen(sonpath) - 1; i >= 0; i--){
         if(sonpath[i] == '/'){
             tmppath = i;
@@ -215,7 +215,7 @@ int inodermdir(const char *name){
         }
     }
     pathdecode = sonpath + tmppath + 1;
-    Logw("pathcode: %s", pathdecode);
+    /*Logw("pathcode: %s", pathdecode);*/
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1 && strcmp(dir->name[i], pathdecode) == 0){
             printf("rmdir successfully!\n");
