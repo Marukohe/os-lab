@@ -261,7 +261,7 @@ static int shell_redir(char *path, char *args){
     sprintf(text, "%s", args);
     int ret = vfs->access(path, F_OK);
     if(ret == -1){
-        int fd = vfs->open(path, 7|O_CREAT);
+        int fd = vfs->open(path, 2|O_CREAT);
         /*Logg("ret == -1 %s fd %d", text, fd);*/
         vfs->write(fd, text, strlen(text));
         inode_t *node = current->fildes[fd]->inode;
@@ -276,7 +276,7 @@ static int shell_redir(char *path, char *args){
         vfs->write(STDOUT, text, strlen(text));
         return -1;
     }else{
-        int fd = vfs->open(path, 7);
+        int fd = vfs->open(path, 2);
         vfs->write(fd, text, strlen(text));
         inode_t *node = current->fildes[fd]->inode;
         node->filesize = strlen(text);

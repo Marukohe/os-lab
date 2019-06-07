@@ -80,7 +80,7 @@ extern void shell(void *name);
 void proccreate(char *path, char *name){
     char text[256];
     sprintf(text, "/%s", path);
-    inode_t *node = filesys[0]->ops->lookup(filesys[0], text, 7|O_CREAT);
+    inode_t *node = filesys[0]->ops->lookup(filesys[0], text, 5|O_CREAT);
     memset(text, 0, sizeof(text));
     sprintf(text, "pid: %s\ntaskname: %s\ncreatetime: %d", path, name, uptime());
     node->filesize = strlen(text);
@@ -97,7 +97,7 @@ static void os_init() {
   vfs->init();
 
   char text[128];
-  inode_t *node = filesys[0]->ops->lookup(filesys[0], "/cpuinfo", 7|O_CREAT);
+  inode_t *node = filesys[0]->ops->lookup(filesys[0], "/cpuinfo", 5|O_CREAT);
   memset(text, 0, sizeof(text));
   char numtos[20];
   for(int i = 0; i < _ncpu(); i++){
