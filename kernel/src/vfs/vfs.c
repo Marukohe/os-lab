@@ -253,10 +253,10 @@ int link(const char *oldpath, const char *newpath){
     char *cp;
     if(fapath == NULL){
         new = filesys[idnew]->sinode;
-        cp = newpath + 1;
+        cp = retnew + 1;
     }else{
         new = filesys[idnew]->ops->lookup(filesys[idnew], fapath, 7|O_DIR);
-        cp = newpath + strlen(fapath) + 1;
+        cp = retnew + strlen(fapath) + 1;
     }
 
     inode_t *node = filesys[idold]->ops->lookup(filesys[idold], retold, 7);
