@@ -282,6 +282,11 @@ static int shell_link(char *args){
     char *oldpath = strsplit(args);
     char *newpath = args + strlen(oldpath) + 1;
     Logg("%s %s", oldpath, newpath);
+    char *p1 = (char *)pmm->alloc(128);
+    char *p2 = (char *)pmm->alloc(128);
+    extendpath(p1, oldpath);
+    extendpath(p2, newpath);
+    Logg("%s %s", p1, p2);
     return 0;
 }
 
