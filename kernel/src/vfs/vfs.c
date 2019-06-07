@@ -255,6 +255,7 @@ int link(const char *oldpath, const char *newpath){
     /*TODO();*/
     Logw("I'm here.");
     kmt->spin_lock(&vfslock);
+    Logw("I'm here.");
     char *retold = pmm->alloc(128);
     char *retnew = pmm->alloc(128);
     int idold = filesysdecode(retold, oldpath);
