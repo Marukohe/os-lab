@@ -21,6 +21,7 @@ int cnthandler = 0;
 struct handlers schandlers[MAXHANDLER];
 spinlock_t yk;
 spinlock_t shelllock;
+spinlock_t vfslock;
 
 sem_t fillsem;
 sem_t emptysem;
@@ -148,6 +149,7 @@ static void os_init() {
   kmt->sem_init(&fillsem, "fill", 0);
   kmt->spin_init(&yk, "yield lock");
   kmt->spin_init(&shelllock, "shelllock");
+  kmt->spin_init(&vfslock, "vfslock");
 }
 
 static void hello() {

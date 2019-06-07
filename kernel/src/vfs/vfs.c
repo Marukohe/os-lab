@@ -7,6 +7,7 @@ extern fsops_t fs_ops;
 extern device_t *devices[8];
 extern task_t *cputask[25];
 extern task_t *current_task[4];
+extern spinlock_t vfslock;
 #define current (current_task[_cpu()])
 
 mt_t *mtt;
@@ -165,6 +166,7 @@ void init(){
 }
 
 int access(const char *path, int mode){
+    kmt->spin_lock(&vfslock);
     /*TODO();*/
     char *decode = (char *)pmm->alloc(100);
     int id = filesysdecode(decode, path);
@@ -179,14 +181,17 @@ int access(const char *path, int mode){
     }
     pmm->free(decode);
     if(node == NULL){
+        kmt->spin_unlock(&vfslock);
         return -1;
     }
     /*pmm->free(node);*/
+    kmt->spin_unlock(&vfslock);
     return 0;
 }
 
 int mount(const char *path, filesystem_t *fs){
     /*TODO();*/
+    kmt->spin_lock(&vfslock);
     int id = 0;
     for(int i = 0; i < mtt->cnt; i++){
         if(mtt->used[i] == 0){
@@ -202,11 +207,13 @@ int mount(const char *path, filesystem_t *fs){
     filesys[id] = filesys_create(sizeof(filesystem_t), path, id, &fs_ops, fs->dev);
     filesys[id]->ops->init(filesys[id], path, filesys[id]->dev);
 
+    kmt->spin_unlock(&vfslock);
     return 0;
 }
 
 int unmount(const char *path){
     /*TODO();*/
+    kmt->spin_lock(&vfslock);
     int id = -1;
     for(int i = 0; i < mtt->cnt; i++){
         if(strcmp(mtt->rootname[i], path)){
@@ -216,27 +223,37 @@ int unmount(const char *path){
     }
     if(id == -1 || mtt->used[id] == 0){
         printf("Not such mnt filesystem\n");
+        kmt->spin_unlock(&vfslock);
         return -1;
     }
     pmm->free(filesys[id]->sinode->ptr);
     pmm->free(filesys[id]->sinode);
     pmm->free(filesys[id]);
     mtt->used[id] = 0;
+    kmt->spin_unlock(&vfslock);
     return 0;
 }
 
 int mkdir(const char *path){
     /*TODO();*/
-    return filesys[2]->sinode->ops->mkdir(path);
+    kmt->spin_lock(&vfslock);
+    int ret = filesys[2]->sinode->ops->mkdir(path);
+    kmt->spin_unlock(&vfslock);
+    return ret;
+
 }
 
 int rmdir(const char *path){
     /*TODO();*/
-    return filesys[2]->sinode->ops->rmdir(path);
+    kmt->spin_lock(&vfslock);
+    int ret = filesys[2]->sinode->ops->rmdir(path);
+    kmt->spin_unlock(&vfslock);
+    return ret;
 }
 
 int link(const char *oldpath, const char *newpath){
     /*TODO();*/
+    kmt->spin_lock(&vfslock);
     char *retold = pmm->alloc(128);
     char *retnew = pmm->alloc(128);
     int idold = filesysdecode(retold, oldpath);
@@ -246,6 +263,7 @@ int link(const char *oldpath, const char *newpath){
         pmm->free(retold);
         pmm->free(retnew);
         printf("File exists.\n");
+        kmt->spin_unlock(&vfslock);
         return -1;
     }
     inode_t *new;
@@ -267,6 +285,7 @@ int link(const char *oldpath, const char *newpath){
         pmm->free(retnew);
         pmm->free(retold);
         printf("Not such file.\n");
+        kmt->spin_unlock(&vfslock);
         return -1;
     }
     void *buf = pmm->alloc(BLOCKSIZE);
@@ -287,12 +306,15 @@ int link(const char *oldpath, const char *newpath){
     /*}*/
     filesys[idnew]->dev->ops->write(filesys[idnew]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
 
+    kmt->spin_unlock(&vfslock);
     return 0;
 }
 
 int unlink(const char *path){
     /*TODO();*/
-    return filesys[2]->sinode->ops->rmdir(path);
+    kmt->spin_lock(&vfslock);
+    int ret = filesys[2]->sinode->ops->rmdir(path);
+    kmt->spin_unlock(&vfslock);
 
     /*
     char *ret = pmm->alloc(128);
@@ -304,6 +326,7 @@ int unlink(const char *path){
 
 int open(const char *path, int flags){
     /*TODO();*/
+    kmt->spin_lock(&vfslock);
     char *ret = pmm->alloc(100);
     int id = filesysdecode(ret, path);
     /*Logb("%d\n", id);*/
@@ -314,6 +337,7 @@ int open(const char *path, int flags){
         printf("open failed\n");
         pmm->free(ret);
         pmm->free(fd);
+        kmt->spin_unlock(&vfslock);
         return -1;
     }
 
@@ -332,6 +356,7 @@ int open(const char *path, int flags){
     }
     current->fildes[retfd] = fd;
     current->fdused[retfd] = 1;
+    kmt->spin_unlock(&vfslock);
 
     return retfd;
 }
@@ -349,8 +374,10 @@ ssize_t read(int fd, void *buf, size_t nbyte){
         current->fildes[fd]->offset += nread;
         return nread;
     }
+    kmt->spin_lock(&vfslock);
     ssize_t ret;
     ret = current->fildes[fd]->inode->ops->read(current->fildes[fd], buf, nbyte);
+    kmt->spin_unlock(&vfslock);
     return ret;
 }
 
@@ -369,26 +396,32 @@ ssize_t write(int fd, void *buf, size_t nbyte){
         current->fildes[fd]->offset += nwrite;
         return nwrite;
     }
+    kmt->spin_lock(&vfslock);
     ssize_t ret;
     ret = current->fildes[fd]->inode->ops->write(current->fildes[fd], buf, nbyte);
+    kmt->spin_unlock(&vfslock);
     return ret;
 }
 
 off_t lseek(int fd, off_t offset, int whence){
     /*TODO();*/
+    kmt->spin_lock(&vfslock);
     off_t ret;
     ret = current->fildes[fd]->inode->ops->lseek(current->fildes[fd], offset, whence);
+    kmt->spin_unlock(&vfslock);
     return ret;
 }
 
 int close(int fd){
     /*TODO();*/
+    kmt->spin_lock(&vfslock);
     if(current->fildes[fd]->inode != NULL)
         pmm->free(current->fildes[fd]->inode);
     if(current->fildes[fd]->path != NULL)
         pmm->free(current->fildes[fd]->path);
     pmm->free(current->fildes[fd]);
     current->fdused[fd] = 0;
+    kmt->spin_unlock(&vfslock);
     return 0;
 }
 
