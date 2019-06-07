@@ -143,7 +143,7 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                             inodect->pos = fs->ioffset[tmpcnt];
                             inodect->offset[0] = dummynode->offset[0];
                         }
-                        if(flag & O_DIR){
+                        if(flags & O_DIR){
                             //创建.和..
                             memset(buf, 0, BLOCKSIZE);
                             dir_t *ddir = (dir_t *)buf;
