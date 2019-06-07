@@ -275,6 +275,16 @@ static int shell_redir(char *path, char *args){
     return 0;
 }
 
+static int shell_link(char *args){
+    if(args == NULL){
+        return 0;
+    }
+    char *oldpath = strsplit(args);
+    char *newpath = oldpath + strlen(newpath) + 1;
+    Log("%s %s", oldpath, newpath);
+    return 0;
+}
+
 static struct{
     char *name;
     char *description;
@@ -290,6 +300,7 @@ static struct{
     {"touch", "create a file", shell_touch},
     {"rm", "remove a file", shell_rm},
     {"echo", "Display input", shell_echo},
+    {"link", "link two files", shell_link},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))

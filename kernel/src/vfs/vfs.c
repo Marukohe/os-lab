@@ -73,6 +73,7 @@ void mttinit(){
 }
 
 extern int filesysdecode(char *ret, const char *path);
+extern char *splitpath(char *path, int offset);
 void vfstest(){
 #ifdef L3DEBUG
     const char *path = pmm->alloc(100);
@@ -235,7 +236,51 @@ int rmdir(const char *path){
 }
 
 int link(const char *oldpath, const char *newpath){
-    TODO();
+    /*TODO();*/
+    char *ret = pmm->alloc(128);
+    int id = filesysdecode(ret, oldpath);
+    int r1 = vfs->access(newpath, F_OK);
+    if(r1 == 0){
+        pmm->free(ret);
+        printf("File exists.\n");
+        return -1;
+    }
+    inode_t *new;
+    int offset = strlen(newpath);
+    char *fapath = splitpath(newpath, offset);
+    char *cp;
+    if(fapath == NULL){
+        new = filesys[id]->sinode;
+        cp = newpath + 1;
+    }else{
+        new = filesys[id]->ops->lookup(filesys[id], fapath, 7|O_DIR);
+        cp = strlen(fapath) + 1;
+    }
+
+    inode_t *node = filesys[id]->ops->lookup(filesys[id], oldpath, 7);
+    if(node == NULL){
+        pmm->free(ret);
+        printf("Not such file.\n");
+        return -1;
+    }
+    void *buf = pmm->alloc(BLOCKSIZE);
+    filesys[id]->dev->ops->read(filesys[id]->dev, new->offset[0], buf, BLOCKSIZE);
+    dir_t *dir = (dir_t *)buf;
+    int tmpcnt = 0;
+    for(int i = 0; i < dir->cnt; i++){
+        if(dir->used[i] == 0){
+            tmpcnt = i;
+            break;
+        }
+        tmpcnt++;
+    }
+    if(tmpcnt == dir->cnt){
+        strcpy(dir->name[tmpcnt], cp);
+        dir->used[dir->cnt] = 1;
+        dir->offset[dir->cnt++] = node->pos;
+    }
+    filesys[id]->dev->ops->write(filesys[id]->dev, new->offset[0], (void *)dir, BLOCKSIZE);
+
     return 0;
 }
 

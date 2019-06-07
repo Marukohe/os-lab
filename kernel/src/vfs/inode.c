@@ -227,7 +227,7 @@ int inodermdir(const char *name){
 }
 
 int inodelink(const char *name, inode_t *inode){
-    TODO();
+    /*TODO();*/
     return 0;
 }
 
