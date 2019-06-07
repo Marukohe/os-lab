@@ -303,7 +303,7 @@ static int shell_unlink(char *args){
         return 0;
     }
     char text[128];
-    externpath(text, args);
+    extendpath(text, args);
     Logg("%s", text);
     return 0;
 }
