@@ -287,6 +287,7 @@ static int shell_link(char *args){
     extendpath(p1, oldpath);
     extendpath(p2, newpath);
     Logg("%s %s", p1, p2);
+    vfs->link(p1, p2);
     return 0;
 }
 
