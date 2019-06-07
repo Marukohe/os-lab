@@ -293,6 +293,18 @@ static int shell_link(char *args){
         sprintf(text, "Link files failed.\n");
         vfs->write(STDOUT, text, strlen(text));
     }
+    pmm->free(p1);
+    pmm->free(p2);
+    return 0;
+}
+
+static int shell_unlink(char *args){
+    if(args == NULL){
+        return 0;
+    }
+    char text[128];
+    externpath(text, args);
+    Logg("%s", text);
     return 0;
 }
 
@@ -308,10 +320,11 @@ static struct{
     {"mkdir", "Create a dictionary", shell_mkdir},
     {"rmdir", "Remove a dictionary", shell_rmdir},
     {"cat", "Display context", shell_cat},
-    {"touch", "create a file", shell_touch},
-    {"rm", "remove a file", shell_rm},
+    {"touch", "Create a file", shell_touch},
+    {"rm", "Remove a file", shell_rm},
     {"echo", "Display input", shell_echo},
-    {"link", "link two files", shell_link},
+    {"link", "Link two files", shell_link},
+    {"unlink", "Unlink a file", shell_unlink},
 };
 
 #define NR_SHELL (sizeof(shell_table) / sizeof(shell_table[0]))
