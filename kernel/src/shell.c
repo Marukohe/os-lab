@@ -287,7 +287,12 @@ static int shell_link(char *args){
     extendpath(p1, oldpath);
     extendpath(p2, newpath);
     Logg("%s %s", p1, p2);
-    vfs->link(p1, p2);
+    int ret = vfs->link(p1, p2);
+    char text[56];
+    if(ret == -1){
+        sprintf(text, "Link files failed.\n");
+        vfs->write(STDOUT, text, strlen(text));
+    }
     return 0;
 }
 
