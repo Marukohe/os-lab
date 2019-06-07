@@ -166,7 +166,7 @@ void init(){
 }
 
 int access(const char *path, int mode){
-    kmt->spin_lock(&vfslock);
+    /*kmt->spin_lock(&vfslock);*/
     /*TODO();*/
     char *decode = (char *)pmm->alloc(100);
     int id = filesysdecode(decode, path);
@@ -185,7 +185,7 @@ int access(const char *path, int mode){
         return -1;
     }
     /*pmm->free(node);*/
-    kmt->spin_unlock(&vfslock);
+    /*kmt->spin_unlock(&vfslock);*/
     return 0;
 }
 
@@ -253,9 +253,9 @@ int rmdir(const char *path){
 
 int link(const char *oldpath, const char *newpath){
     /*TODO();*/
-    Logw("I'm here.");
+    /*Logw("I'm here.");*/
     kmt->spin_lock(&vfslock);
-    Logw("I'm here.");
+    /*Logw("I'm here.");*/
     char *retold = pmm->alloc(128);
     char *retnew = pmm->alloc(128);
     int idold = filesysdecode(retold, oldpath);
@@ -288,7 +288,7 @@ int link(const char *oldpath, const char *newpath){
         pmm->free(retnew);
         pmm->free(retold);
         printf("Not such file.\n");
-        Logw("I'm here.");
+        /*Logw("I'm here.");*/
         kmt->spin_unlock(&vfslock);
         return -1;
     }
