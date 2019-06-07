@@ -441,6 +441,7 @@ void shell(void *name){
                     extendpath(text, text2);
                     Logw("I'm here.");
                     shell_redir(text, text1);
+                    Logw("I'm here.");
                     Logg("%s %s", text1, text2);
                 }else{
                     sprintf(text, "Command is not supported.\n");
