@@ -289,7 +289,13 @@ int link(const char *oldpath, const char *newpath){
 }
 
 int unlink(const char *path){
-    TODO();
+    /*TODO();*/
+    /*
+    char *ret = pmm->alloc(128);
+    int id = filesysdecode(ret, path);
+    int offset  = strlen(path);
+    char *fpath = splitpath(path, offset);
+    */
     return 0;
 }
 
