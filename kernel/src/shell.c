@@ -194,6 +194,12 @@ static int shell_cat(char *args){
         return 0;
     char text[512];
     extendpath(text, args);
+    int red = vfs->access(text, R_OK);
+    if(red == -1){
+        sprintf(text, "You can not cat that file");
+        vfs->write(STDOUT, text, strlen(text));
+        return 0;
+    }
     int fd = vfs->open(text, RABLE);
     vfs->lseek(fd, 0, SEEKCUR);
     memset(text, 0, 512);
