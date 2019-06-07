@@ -290,13 +290,14 @@ int link(const char *oldpath, const char *newpath){
 
 int unlink(const char *path){
     /*TODO();*/
+    return filesys[2]->sinode->ops->rmdir(path);
+
     /*
     char *ret = pmm->alloc(128);
     int id = filesysdecode(ret, path);
     int offset  = strlen(path);
     char *fpath = splitpath(path, offset);
     */
-    return 0;
 }
 
 int open(const char *path, int flags){
