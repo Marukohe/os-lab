@@ -47,7 +47,7 @@ void getpath(char *get, const char *path, int offset){
 }
 
 static void inodecreat(inode_t *inode, int flags, int is_dir, filesystem_t *fs, device_t * dev){
-    inode->refcnt = 0;
+    inode->refcnt = 1;
     inode->flags = flags;
     inode->filesize = 0;
     inode->is_dir = is_dir;
