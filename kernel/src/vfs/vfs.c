@@ -243,7 +243,8 @@ int link(const char *oldpath, const char *newpath){
     int idnew = filesysdecode(rewnew, newpath);
     int r1 = vfs->access(newpath, F_OK);
     if(r1 == 0){
-        pmm->free(ret);
+        pmm->free(retold);
+        pmm->free(retnew);
         printf("File exists.\n");
         return -1;
     }
