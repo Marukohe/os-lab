@@ -304,6 +304,7 @@ static int shell_unlink(char *args){
     }
     char text[128];
     extendpath(text, args);
+    vfs->unlink(text);
     Logg("%s", text);
     return 0;
 }

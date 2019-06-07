@@ -261,6 +261,8 @@ int link(const char *oldpath, const char *newpath){
     }
 
     inode_t *node = filesys[idold]->ops->lookup(filesys[idold], retold, 7);
+    node->refcnt += 1;
+    filesys[2]->dev->ops->write(filesys[2]->dev, node->pos, (void *)node, sizeof(inode_t));
     if(node == NULL){
         pmm->free(retnew);
         pmm->free(retold);
