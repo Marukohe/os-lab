@@ -57,16 +57,16 @@ static int shell_cd(char *args){;
         vfs->write(STDOUT, text, strlen(text));
     }else if(strcmp(args, "..") == 0 || strcmp(args, "../") == 0){
         int flag = 0;
-        Logb("%d", mtt->cnt);
+        /*Logb("%d", mtt->cnt);*/
         for(int i = 0; i < mtt->cnt; i++){
-            printf("%s\n", mtt->rootname[i]);
+            /*printf("%s\n", mtt->rootname[i]);*/
             if(mtt->used[i] == 1 && strcmp(mtt->rootname[i], current->pwd) == 0){
                 flag = 1;
                 break;
             }
         }
         if(flag == 1){
-            Logb("flag == 1");
+            /*Logb("flag == 1");*/
             strcpy(current->pwd, "/");
             sprintf(text, "change dir to: %s\n", current->pwd);
             vfs->write(STDOUT, text, strlen(text));
