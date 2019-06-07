@@ -103,6 +103,9 @@ static void os_init() {
 
 #ifdef SHELL
   kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty1");
+  kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty2");
+  kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty3");
+  kmt->create(pmm->alloc(sizeof(task_t)) , "shell", shell, "/dev/tty4");
 #endif
 
   kmt->sem_init(&emptysem, "empty", 10);
