@@ -100,7 +100,7 @@ static int shell_cd(char *args){;
             sprintf(text, "/");
         strcat(text, args);
         int ret = vfs->access(text, D_OK);
-        Logg("access ret: %d, text: %s", ret, text);
+        /*Logg("access ret: %d, text: %s", ret, text);*/
         if(ret == 0){
             strcpy(current->pwd, text);
             sprintf(text, "change dir to: %s\n", current->pwd);
@@ -127,7 +127,7 @@ static int shell_ls(char *args){
             args[off - 1] = '\0';
         sprintf(text, "%s/%s", current->pwd, args);
     }
-    Logg("ls path %s", text);
+    /*Logg("ls path %s", text);*/
     inode_t *node = filesys[2]->ops->lookup(filesys[2], text, 7|O_DIR);
     if(node == NULL){
         sprintf(text, "Not such dir\n");
@@ -139,7 +139,7 @@ static int shell_ls(char *args){
     dir_t *dir = (dir_t *)buf;
     char out[128];
     memset(out, 0, sizeof(out));
-    Logb("%s\n", dir->cnt);
+    /*Logb("%s\n", dir->cnt);*/
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1){
             printf("%s\n", dir->name[i]);
@@ -161,7 +161,7 @@ static int shell_mkdir(char *args){
     if(args == NULL)
         return 0;
     extendpath(text, args);
-    Logg("mkdir path %s",text);
+    /*Logg("mkdir path %s",text);*/
     int ret = vfs->mkdir(text);
     if(ret == -1){
         sprintf(text, "mkdir failed\n");
@@ -177,7 +177,7 @@ static int shell_rmdir(char *args){
         return 0;
     char text[128];
     extendpath(text, args);
-    Logg("rmdir path %s", text);
+    /*Logg("rmdir path %s", text);*/
     int ret = vfs->rmdir(text);
     if(ret == -1){
         sprintf(text, "rmdir failed\n");
@@ -251,7 +251,7 @@ static int shell_echo(char *args){
 static int shell_redir(char *path, char *args){
     //将args写到path;
     char text[128];
-    Logg("redir path: %s args: %s", path, args);
+    /*Logg("redir path: %s args: %s", path, args);*/
     sprintf(text, "%s", args);
     int ret = vfs->access(path, F_OK);
     if(ret == -1){
@@ -281,12 +281,12 @@ static int shell_link(char *args){
     }
     char *oldpath = strsplit(args);
     char *newpath = args + strlen(oldpath) + 1;
-    Logg("%s %s", oldpath, newpath);
+    /*Logg("%s %s", oldpath, newpath);*/
     char *p1 = (char *)pmm->alloc(128);
     char *p2 = (char *)pmm->alloc(128);
     extendpath(p1, oldpath);
     extendpath(p2, newpath);
-    Logg("%s %s", p1, p2);
+    /*Logg("%s %s", p1, p2);*/
     int ret = vfs->link(p1, p2);
     char text[56];
     if(ret == -1){
@@ -305,7 +305,7 @@ static int shell_unlink(char *args){
     char text[128];
     extendpath(text, args);
     vfs->unlink(text);
-    Logg("%s", text);
+    /*Logg("%s", text);*/
     return 0;
 }
 
@@ -386,7 +386,7 @@ void shell(void *name){
         }
         if(flag == 0)
             args = NULL;
-        Logy("cmd: %s args: %s", cmd, args);
+        /*Logy("cmd: %s args: %s", cmd, args);*/
         // 重定向
         int redir = 0;
         int pos1 = 0, pos2 = 0;
@@ -441,7 +441,7 @@ void shell(void *name){
                     extendpath(text, text2);
                     Logw("I'm here.");
                     shell_redir(text, text1);
-                    Logg("%s %s", text1, text2);
+                    /*Logg("%s %s", text1, text2);*/
                 }else{
                     sprintf(text, "Command is not supported.\n");
                     vfs->write(STDOUT, text, strlen(text));
