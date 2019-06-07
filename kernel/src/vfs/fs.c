@@ -18,7 +18,7 @@ void fsinit(struct filesystem *fs, const char *name, device_t *dev){
     void *data = pmm->alloc(sizeof(device_t));
     data = (void *)dev;
     fs->sinode = pmm->alloc(sizeof(inode_t));
-    fs->sinode->refcnt = 0;
+    fs->sinode->refcnt = 1;
     fs->sinode->flags = 23;
     fs->sinode->is_dir = 1;
     fs->sinode->offset[0] = diskoffset;
@@ -151,8 +151,12 @@ inode_t *lookup(struct filesystem *fs, const char *path, int flags){
                         int tmp = 0;
                         for(int k = 0; k < dir->cnt; k++){
                             if(dir->used[k] == 0){
-                                tmp = k;
-                                break;
+                                inode_t *noderef = (indoe_t *)pmm->alloc(INODESIZE);
+                                noderef = filesys[2]->dev->ops->read(filesys[2]->dev, dir->offset[k], (void *)noderef, INODESIZE);
+                                if(noderef->refcnt == 0){
+                                    tmp = k;
+                                    break;
+                                }
                             }
                             tmp++;
                         }

@@ -70,9 +70,9 @@ typedef struct {
 
 typedef struct dir{
     int cnt;
-    uint8_t used[20];
-    char name[20][100];
-    int offset[20];
+    uint8_t used[30];
+    char name[30][100];
+    int offset[30];
 }dir_t;
 
 struct filesystem {
