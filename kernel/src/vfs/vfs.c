@@ -262,7 +262,8 @@ int link(const char *oldpath, const char *newpath){
 
     inode_t *node = filesys[idold]->ops->lookup(filesys[idold], retold, 7);
     if(node == NULL){
-        pmm->free(ret);
+        pmm->free(retnew);
+        pmm->free(retold);
         printf("Not such file.\n");
         return -1;
     }
