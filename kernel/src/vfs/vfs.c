@@ -240,7 +240,7 @@ int link(const char *oldpath, const char *newpath){
     char *retold = pmm->alloc(128);
     char *retnew = pmm->alloc(128);
     int idold = filesysdecode(retold, oldpath);
-    int idnew = filesysdecode(rewnew, newpath);
+    int idnew = filesysdecode(retnew, newpath);
     int r1 = vfs->access(newpath, F_OK);
     if(r1 == 0){
         pmm->free(retold);
