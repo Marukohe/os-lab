@@ -210,11 +210,12 @@ int inodermdir(const char *name){
     Logw("sonpath %s\n", sonpath);
     for(int i = strlen(sonpath) - 1; i >= 0; i--){
         if(sonpath[i] == '/'){
-            tmpath = i;
+            tmppath = i;
             break;
         }
     }
     pathdecode = sonpath + tmppath;
+    Logw("pathcode: %s", pathcode);
     for(int i = 0; i < dir->cnt; i++){
         if(dir->used[i] == 1 && strcmp(dir->name[i], pathdecode) == 0){
             printf("rmdir successfully!\n");
