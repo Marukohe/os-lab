@@ -211,14 +211,14 @@ int inodermdir(const char *name){
             break;
         }
     }
-
+/*
     for(int i = 0; i < filesys[id]->cntinode; i++){
         if(filesys[id]->used[i] && filesys[id]->ioffset[i] == son->pos){
             filesys[id]->used[i] = 0;
             break;
         }
     }
-
+*/
     pmm->free(buf);
     pmm->free(sonpath);
     /*pmm->free(fapath);*/
