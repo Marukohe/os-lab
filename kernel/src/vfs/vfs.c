@@ -253,6 +253,7 @@ int rmdir(const char *path){
 
 int link(const char *oldpath, const char *newpath){
     /*TODO();*/
+    Logw("I'm here.");
     kmt->spin_lock(&vfslock);
     char *retold = pmm->alloc(128);
     char *retnew = pmm->alloc(128);
@@ -263,6 +264,7 @@ int link(const char *oldpath, const char *newpath){
         pmm->free(retold);
         pmm->free(retnew);
         printf("File exists.\n");
+        Logw("I'm here.");
         kmt->spin_unlock(&vfslock);
         return -1;
     }
@@ -285,6 +287,7 @@ int link(const char *oldpath, const char *newpath){
         pmm->free(retnew);
         pmm->free(retold);
         printf("Not such file.\n");
+        Logw("I'm here.");
         kmt->spin_unlock(&vfslock);
         return -1;
     }
