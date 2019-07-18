@@ -11,17 +11,15 @@ extern task_t *current_task[4];
 
 _Context *kmt_context_save(_Event ev, _Context *context){
     if(current) current->context = *context;
-    if(!current) return context;
-    return &current->context;
+    return NULL;
 }
 
 int flag_switch(){
-    int res = 0;
     for(int i = 0; i < 4; i++){
         if(i!=_cpu() && current_task[i]->id == current->id)
-            res = 1;
+            return 1;
     }
-    return res;
+    return 0;
 }
 
 _Context *kmt_context_switch(_Event ev, _Context *context){
