@@ -77,9 +77,7 @@ void read_list(const char *dirPath){
 			P[pidnum].pid = pidnum;
 			//printf("num: %d\n",pidnum);
 			char path[100];
-			strcpy(path,DEFAULT_DIR);
-			strcat(path,file->d_name);
-			strcat(path,"/status");
+            Assert(snprintf(path,sizeof(path)-1,"%s%s/status",DEFAULT_DIR,file->d_name)>0,"path is too long");
 			//printf("%s\n",path);
 			FILE * fp = fopen(path,"r");
 			//assert(fp!=NULL);
@@ -116,9 +114,7 @@ void read_list(const char *dirPath){
 			//}
 			fclose(fp);
 			char path2[100];
-			strcpy(path2,DEFAULT_DIR);
-			strcat(path2,file->d_name);
-			strcat(path2,"/task/");
+            Assert(snprintf(path2,sizeof(path2)-1,"%s%s/task/",DEFAULT_DIR,file->d_name)>0,"path is too long");
 
 			DIR * dir1;
 			dir1 = opendir(path2);
@@ -130,9 +126,7 @@ void read_list(const char *dirPath){
 					P[pidnum2].pid = pidnum2;
 					P[pidnum2].fa = pidnum;
 					P[pidnum].son[P[pidnum].cntson++] = pidnum2;
-					strcpy(P[pidnum2].pidname,"{");
-					strcat(P[pidnum2].pidname,P[pidnum].pidname);
-					strcat(P[pidnum2].pidname,"}");
+                    snprintf(P[pidnum2].pidname,100,"{%s}",P[pidnum].pidname);
 				}
 			}
 			closedir(dir1);
@@ -141,25 +135,13 @@ void read_list(const char *dirPath){
 	closedir(dir);
 }
 
-int number_count(int a){
-	int k=0;
-	while(a!=0){
-		a/=10;
-		k++;
-	}
-	return k;
-}
-
-void rec(int ppid,bool is_p,int init_above){
-	int cnt_is_above = 0;
-	cnt_is_above += init_above;
+void rec(int ppid,bool is_p,int cnt_is_above){
 	int pid_s = search_tree(ppid);
 	printf("%s",P[pid_s].pidname);
 	P[pid_s].flag = 1;
 	cnt_is_above += strlen(P[pid_s].pidname);
 	if(is_p) {
-		printf("(%d)",P[pid_s].pid);
-		cnt_is_above += (number_count(P[pid_s].pid)+2);
+		cnt_is_above += printf("(%d)",P[pid_s].pid);
 	}
 	if(P[pid_s].cntson==0){
 		printf("\n");
@@ -189,7 +171,7 @@ void rec(int ppid,bool is_p,int init_above){
 				//	is_above[cnt_is_above1-1]=1;
 				count_son++;
 			}
-			else if(count_son==P[pid_s].cntson-1){ 
+			else if(count_son==P[pid_s].cntson-1){
 				int k = 1;
 				while(is_above[k]!=2){
 					if(is_above[k]==1) {
@@ -219,7 +201,7 @@ void rec(int ppid,bool is_p,int init_above){
 				}
 				count_son++;
 			}
-			else{ 
+			else{
 				int k = 1;
 				while(is_above[k]!=2){
 					if(is_above[k]==1) {
@@ -239,7 +221,7 @@ void rec(int ppid,bool is_p,int init_above){
 			}
 			rec(P[i].pid,is_p,cnt_is_above1);
 		}
-	}	
+	}
 	//printf("\n");
 }
 
